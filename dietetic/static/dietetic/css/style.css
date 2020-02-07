@@ -1,7 +1,39 @@
-.row {
-    border-width: 3px;
-    background-color: #52E396;
+
+#header, #login_nav, #nav, div{
+    border-top: 3px blue solid;
+    border-bottom: 3px blue solid;
+    border-left: 3px blue solid;
+    border-right: 3px blue solid;
 }
-.col-lg {
-    padding: 2px;
+
+#header{
+    height : 180px;
 }
+
+#informations{
+    height : 400px;
+}
+
+#nav{
+    height : 70px;
+}
+
+#tabs{
+    align-content : center;
+    height : 50px;
+}
+
+#login_nav{
+    margin-top : 30px ;
+    height : 200px;
+}
+
+.col-lg-offset-10 {
+    margin-left: 80%;
+}
+
+.col-lg-offset-3 {
+    margin-left: 25%;
+}
+
+

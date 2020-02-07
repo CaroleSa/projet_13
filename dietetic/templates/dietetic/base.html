@@ -20,33 +20,32 @@
 </head>
 
 <body>
-    <div class="container">
+    <div class="container-fluid">
 
-    <header>
-        <div class="row">
-            <div class="col-lg-12">En tête</div>
-        </div>
-    </header>
-    <nav>
-        <div class="row">
-            <div class="col-lg-offset-8 col-lg-4">Onglets connexion</div>
-        </div>
-    </nav>
-    <div>
-        <div class="row">
-            <div class="col-lg-12">Image</div>
-        </div>
-    </div>
-    <nav>
-        <div class="row">
-            <div class="col-lg-4">Mon Compte</div>
-            <div class="col-lg-4">Mon suivi</div>
-            <div class="col-lg-4">Mes résultats</div>
-        </div>
-    </nav>
+        <header>
+      	    <div class="row">
+       		    <div class="col-lg-12" id="header">
+          			    <nav class="row">
+            				<div class="col-lg-offset-10 col-lg-2" id="login_nav">Onglets connexion</div>
+			            </nav>
+                </div>
+	        </div>
+        </header>
+
+        <nav>
+            <div class="row" id="nav">
+                <div class="col-lg-12">
+                    <div class="row" id="tabs">
+                        <div class="col-lg-offset-3 col-lg-2">Mon Compte</div>
+                        <div class="col-lg-2">Mon suivi</div>
+                        <div class="col-lg-2">Mes résultats</div>
+                    </div>
+            </div>
+        </nav>
+
     <section>
         <div class="row">
-            <div class="col-lg-12">Informations</div>
+            <div class="col-lg-12" id="informations">Informations</div>
         </div>
     </section>
     <footer>
@@ -54,6 +53,7 @@
             <div class="col-lg-12">Pied de page</div>
         </div>
     </footer>
+    </div>
 
   <!-- CDN Jquery -->
   <script src="//code.jquery.com/jquery-1.12.0.min.js"></script>
