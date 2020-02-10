@@ -1,21 +1,5 @@
 {% extends 'dietetic/base.html' %}
 
-
-{% block login_nav %}
-<div class="col-lg-offset-10 col-lg-2" id="login_nav">
-    <div class="tabs_html">
-        <div class="tabs">
-            <div class="tab_y tab"><a onclick="location.href='{% url 'index' %}'">&nbsp;Me connecter&nbsp;</a></div>
-            <div class="tab_n tab"><a onclick="location.href='{% url 'account:create_account' %}'">&nbsp;Créer mon compte&nbsp;</a></div>
-        </div>
-        <div class="contents">
-            formulaire de connexion
-        </div>
-    </div>
-</div>
-{% endblock %}
-
-
 {% block nav_middle %}
 <div class="col-lg-12">
     <div class="row" id="tabs_middle">

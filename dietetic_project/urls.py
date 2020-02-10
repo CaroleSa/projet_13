@@ -20,7 +20,8 @@ from django.conf import settings
 from dietetic import views
 
 urlpatterns = [
-    url(r'^$', views.index),
+    url(r'^$', views.index, name="index"),
+    url(r'^account/', include('account.urls', namespace='account')),
     path('admin/', admin.site.urls)
 ]
 

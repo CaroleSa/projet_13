@@ -26,8 +26,11 @@
       	    <div class="row">
        		    <div class="col-lg-12" id="header">
           			    <nav class="row">
-                            {% block login_nav %}
-                            {% endblock %}
+                            {% if create_account == "True" %}
+                                {% include 'account/create_account.html' %}
+                            {% else %}
+                                {% include 'account/login.html' %}
+                            {% endif %}
 			            </nav>
                 </div>
 	        </div>
