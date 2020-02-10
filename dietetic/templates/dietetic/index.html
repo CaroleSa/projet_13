@@ -1,0 +1,32 @@
+{% extends 'dietetic/base.html' %}
+
+
+{% block login_nav %}
+<div class="col-lg-offset-10 col-lg-2" id="login_nav">
+    <div class="tabs_html">
+        <div class="tabs">
+            <div class="tab_y tab"><a href="quoi.html">&nbsp;Me connecter&nbsp;</a></div>
+            <div class="tab_n tab"><a href="qui.html">&nbsp;Créer mon compte&nbsp;</a></div>
+        </div>
+        <div class="contents">
+            formulaire de connexion
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+
+{% block nav_middle %}
+<div class="col-lg-12">
+    <div class="row" id="tabs_middle">
+        <div class="col-lg-offset-3 col-lg-2">Mon Compte</div>
+        <div class="col-lg-2">Mon suivi</div>
+        <div class="col-lg-2">Mes résultats</div>
+    </div>
+</div>
+{% endblock %}
+
+
+{% block informations %}
+<div class="col-lg-12" id="informations">Informations sur le site : page d'accueil</div>
+{% endblock %}
