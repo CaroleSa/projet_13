@@ -2,7 +2,7 @@
 <div class="col-lg-offset-10 col-lg-2" id="login_nav">
     <div class="tabs_html">
         <div class="tabs">
-            <div class="tab_n tab"><a onclick="location.href='{% url 'index' %}'">&nbsp;Me connecter&nbsp;</a></div>
+            <a href="{% url 'account:login' %}" ><div class="tab_n tab">&nbsp;Me connecter&nbsp;</div></a>
             <div class="tab_y tab">&nbsp;Créer mon compte&nbsp;</div>
         </div>
         <div class="contents">

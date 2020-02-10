@@ -38,15 +38,22 @@
 
         <nav>
             <div class="row">
-                {% block nav_middle %}
-                {% endblock %}
+                <div class="col-lg-12">
+                    <div class="row" id="tabs_middle">
+                        <a class="col-lg-offset-3 col-lg-2 btn btn-success" href="{% url 'account:my_account' %}">Mon Compte</a>
+                        <a class="btn btn-warning col-lg-2" href="{% url 'dietetic:dietetic_space' %}">Mon suivi</a>
+                        <a class="btn btn-info col-lg-2" href="{% url 'dietetic:my_results' %}">Mes résultats</a>
+                    </div>
+                </div>
             </div>
         </nav>
 
         <section>
             <div class="row">
-                {% block informations %}
-                {% endblock %}
+                <div class="col-lg-12" id="informations">
+                    {% block informations %}
+                    {% endblock %}
+                </div>
             </div>
         </section>
 

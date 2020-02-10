@@ -22,6 +22,7 @@ from dietetic import views
 urlpatterns = [
     url(r'^$', views.index, name="index"),
     url(r'^account/', include('account.urls', namespace='account')),
+    url(r'^dietetic/', include('dietetic.urls', namespace='dietetic')),
     path('admin/', admin.site.urls)
 ]
 
