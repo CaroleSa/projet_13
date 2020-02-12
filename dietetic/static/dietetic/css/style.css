@@ -1,5 +1,3 @@
-
-
 #header, #nav, #informations, #footer, #tabs_middle{
     border-top: 3px blue solid;
     border-bottom: 3px blue solid;
@@ -7,38 +5,53 @@
     border-right: 3px blue solid;
 }
 
-#header{
-    height : 200px;
+#header {
+  min-height: 20vh;
 }
 
-#informations{
-    height : 430px;
+#login_nav{
+    margin-top : 5vh;
 }
 
 #tabs_middle{
     align-content : center;
-    height : 50px;
+    min-height : 5vh;
 }
 
-#login_nav{
-    margin-top : 30px ;
-    min-height : 200px;
+#informations{
+    min-height : 65vh;
 }
+
+#footer {
+    min-height : 7vh;
+}
+
+.btn {
+    border-left: 2px black outset;
+    border-bottom: 2px black outset;
+    border-top: 2px black outset;
+    border-right: 2px black outset;
+}
+
+
+
+
+
+
+
+
+
+
 
 .col-lg-offset-10 {
     margin-left: 80%;
 }
 
-.col-lg-offset-3 {
-    margin-left: 25%;
+.col-lg-offset-4 {
+    margin-left: 33%;
 }
 
-#footer {
-    position:absolute;
-    width:100%;
-    height : 50px;
-    bottom: 0px;
-}
+
 
 
 /*  login tab   */
