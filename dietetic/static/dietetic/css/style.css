@@ -1,3 +1,5 @@
+
+
 #header, #nav, #informations, #footer, #tabs_middle{
     border-top: 3px blue solid;
     border-bottom: 3px blue solid;
@@ -22,29 +24,61 @@
     min-height : 65vh;
 }
 
+#discussion_space, #my_results{
+    min-height : 50vh;
+    padding : 3vh;
+    margin-top : 7vh;
+    margin-bottom : 5vh;
+    border-top: 2px black outset;
+    border-bottom: 2px black outset;
+    border-left: 2px black outset;
+    border-right: 2px black outset;
+    border-radius: 10px 10px 10px 10px;
+    box-shadow : 6px 6px 20px black;
+}
+
+h2{
+    text-decoration : underline;
+}
+
+#card{
+    padding : 3vh;
+    margin-top : 10vh;
+    margin-bottom : 10vh;
+    border-top: 2px black outset;
+    border-bottom: 2px black outset;
+    border-left: 2px black outset;
+    border-right: 2px black outset;
+    border-radius: 10px 10px 10px 10px;
+    box-shadow : 6px 6px 20px black;
+}
+
+/*  in progress   */
+#graphic{
+    padding : 3vh;
+    margin-top : 0vh;
+    margin-bottom : 10vh;
+    border-top: 2px black outset;
+    border-bottom: 2px black outset;
+    border-left: 2px black outset;
+    border-right: 2px black outset;
+    border-radius: 10px 10px 10px 10px;
+}
+
 #footer {
     min-height : 7vh;
 }
 
-.btn {
-    border-left: 2px black outset;
-    border-bottom: 2px black outset;
-    border-top: 2px black outset;
-    border-right: 2px black outset;
-}
-
-
-
-
-
-
-
-
-
-
-
 .col-lg-offset-10 {
     margin-left: 80%;
+}
+
+.col-lg-offset-1 {
+    margin-left: 8%;
+}
+
+.col-lg-offset-2 {
+    margin-left: 16%;
 }
 
 .col-lg-offset-4 {
@@ -52,10 +86,15 @@
 }
 
 
-
+/*  buttons   */
+.btn {
+    border-left: 2px black outset;
+    border-bottom: 2px black outset;
+    border-top: 2px black outset;
+    border-right: 2px black outset;
+}
 
 /*  login tab   */
-
 .tab
 {
         display:inline-block;
