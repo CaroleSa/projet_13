@@ -8,7 +8,6 @@
          url('../fonts/Cantarell-Regular-webfont.svg#cantarellregular') format('svg');
     font-weight: normal;
     font-style: normal;
-
 }
 
 
@@ -56,7 +55,7 @@
         background:rgb(162, 152, 141);
         border-bottom:1px solid black;
         color : rgb(0,0,0);
-        border-radius: 10px 10px 0px 0px;
+        border-radius: 5px 5px 0px 0px;
 }
 .tab_y
 {
@@ -64,7 +63,7 @@
         border-bottom:0px solid black;
         padding-bottom:4px;
         font-weight : bold ;
-        border-radius: 10px 10px 0px 0px;
+        border-radius: 5px 5px 0px 0px;
 }
 .contents
 {
@@ -73,7 +72,7 @@
         margin-top:-1px;
         margin-left:3px;
         padding:5px;
-        border-radius: 0px 10px 10px 10px;
+        border-radius: 0px 5px 5px 5px;
         box-shadow : 6px 6px 20px black;
 }
 h1
@@ -96,6 +95,9 @@ h1
     border-top: 2px black outset;
     border-right: 2px black outset;
 }
+i {
+    font-size : 2em;
+}
 
 
 /*  SECTION   */
@@ -103,10 +105,11 @@ h1
     background-image : url("../img/background_section.jpg");
     background-size: 40vh;
     background-position : top;
-    min-height : 65vh;
+    min-height : 63vh;
     box-shadow : 0px 5px 10px grey;
 }
-h1{
+#home_text{
+    font-size : 2em ;
     font-family : 'cantarellregular', Arial, "Arial black";
     color : rgb(65, 47, 26);
 }
@@ -114,7 +117,7 @@ h2{
     text-decoration : underline;
 }
 #home_text{
-    text-align : center;
+    text-align : left;
     margin-top : 10vh;
 }
 #text_my_results, #graphic_my_results, #text_my_account{
