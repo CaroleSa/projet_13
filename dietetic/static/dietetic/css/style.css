@@ -3,7 +3,6 @@
     font-family: 'cantarellregular';
     src: url('../fonts/Cantarell-Regular-webfont.eot');
     src: url('../fonts/Cantarell-Regular-webfont.eot?#iefix') format('embedded-opentype'),
-         url('../fonts/Cantarell-Regular-webfont.woff2') format('woff2'),
          url('../fonts/Cantarell-Regular-webfont.woff') format('woff'),
          url('../fonts/Cantarell-Regular-webfont.ttf') format('truetype'),
          url('../fonts/Cantarell-Regular-webfont.svg#cantarellregular') format('svg');
@@ -29,7 +28,7 @@
 
 
 /*  FOR THE TEST - TO DELETE   */
-#header, #nav, #informations, #footer, #button_nav{
+#header, #nav{
     border-top: 3px blue solid;
     border-bottom: 3px blue solid;
     border-left: 3px blue solid;
@@ -104,10 +103,14 @@ h1
 
 /*  SECTION   */
 #informations{
+    background-image : url("../img/background_section.jpg");
+    background-size: 40vh;
+    background-position : top;
     min-height : 65vh;
 }
 h1{
     font-family : 'cantarellregular', Arial, "Arial black";
+    color : rgb(65, 47, 26);
 }
 h2{
     text-decoration : underline;
@@ -143,6 +146,7 @@ h2{
     background-position : top;
 }
 #discussion_space, #my_results, #my_account{
+    background-color : rgb(255, 249, 216);
     min-height : 50vh;
     padding : 3vh;
     margin-top : 7vh;
