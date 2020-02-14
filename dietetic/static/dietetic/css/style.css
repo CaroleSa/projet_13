@@ -1,100 +1,34 @@
+/*  BOOTSTRAP   */
+.col-lg-offset-10 {
+    margin-left: 80%;
+}
+.col-lg-offset-1 {
+    margin-left: 8%;
+}
+.col-lg-offset-2 {
+    margin-left: 16%;
+}
+.col-lg-offset-4 {
+    margin-left: 33%;
+}
 
 
-#header, #nav, #informations, #footer, #tabs_middle{
+/*  FOR THE TEST - TO DELETE   */
+#header, #nav, #informations, #footer, #button_nav, #text_my_results, #graphic_my_results{
     border-top: 3px blue solid;
     border-bottom: 3px blue solid;
     border-left: 3px blue solid;
     border-right: 3px blue solid;
 }
 
+
+/*  HEADER + LOGIN NAV   */
 #header {
   min-height: 20vh;
 }
-
 #login_nav{
     margin-top : 5vh;
 }
-
-#tabs_middle{
-    align-content : center;
-    min-height : 5vh;
-}
-
-#informations{
-    min-height : 65vh;
-}
-
-#discussion_space, #my_results{
-    min-height : 50vh;
-    padding : 3vh;
-    margin-top : 7vh;
-    margin-bottom : 5vh;
-    border-top: 2px black outset;
-    border-bottom: 2px black outset;
-    border-left: 2px black outset;
-    border-right: 2px black outset;
-    border-radius: 10px 10px 10px 10px;
-    box-shadow : 6px 6px 20px black;
-}
-
-h2{
-    text-decoration : underline;
-}
-
-#card{
-    padding : 3vh;
-    margin-top : 10vh;
-    margin-bottom : 10vh;
-    border-top: 2px black outset;
-    border-bottom: 2px black outset;
-    border-left: 2px black outset;
-    border-right: 2px black outset;
-    border-radius: 10px 10px 10px 10px;
-    box-shadow : 6px 6px 20px black;
-}
-
-/*  in progress   */
-#graphic{
-    padding : 3vh;
-    margin-top : 0vh;
-    margin-bottom : 10vh;
-    border-top: 2px black outset;
-    border-bottom: 2px black outset;
-    border-left: 2px black outset;
-    border-right: 2px black outset;
-    border-radius: 10px 10px 10px 10px;
-}
-
-#footer {
-    min-height : 7vh;
-}
-
-.col-lg-offset-10 {
-    margin-left: 80%;
-}
-
-.col-lg-offset-1 {
-    margin-left: 8%;
-}
-
-.col-lg-offset-2 {
-    margin-left: 16%;
-}
-
-.col-lg-offset-4 {
-    margin-left: 33%;
-}
-
-
-/*  buttons   */
-.btn {
-    border-left: 2px black outset;
-    border-bottom: 2px black outset;
-    border-top: 2px black outset;
-    border-right: 2px black outset;
-}
-
-/*  login tab   */
 .tab
 {
         display:inline-block;
@@ -137,4 +71,76 @@ h1
 {
         margin:0px;
         padding:0px;
+}
+
+
+/*  NAV   */
+#button_nav{
+    align-content : center;
+    min-height : 5vh;
+}
+.btn {
+    border-left: 2px black outset;
+    border-bottom: 2px black outset;
+    border-top: 2px black outset;
+    border-right: 2px black outset;
+}
+
+
+/*  SECTION   */
+#informations{
+    min-height : 65vh;
+}
+
+
+/*  results page   */
+h2{
+    text-decoration : underline;
+}
+#text_my_results, #graphic_my_results{
+    min-height : 45vh;
+}
+#graphic{
+    padding : 3vh;
+    border-top: 2px black outset;
+    border-bottom: 2px black outset;
+    border-left: 2px black outset;
+    border-right: 2px black outset;
+    border-radius: 10px 10px 10px 10px;
+}
+
+
+/*  discussion_space page   */
+#card{
+    padding : 3vh;
+    margin-top : 10vh;
+    margin-bottom : 10vh;
+    border-top: 2px black outset;
+    border-bottom: 2px black outset;
+    border-left: 2px black outset;
+    border-right: 2px black outset;
+    border-radius: 10px 10px 10px 10px;
+    box-shadow : 6px 6px 20px black;
+    background-image : url("../img/apple.jpg");
+    background-repeat : no-repeat ;
+    background-size: 45vh;
+    background-position : top;
+}
+#discussion_space, #my_results{
+    min-height : 50vh;
+    padding : 3vh;
+    margin-top : 7vh;
+    margin-bottom : 5vh;
+    border-top: 2px black outset;
+    border-bottom: 2px black outset;
+    border-left: 2px black outset;
+    border-right: 2px black outset;
+    border-radius: 10px 10px 10px 10px;
+    box-shadow : 6px 6px 20px black;
+}
+
+
+/*  FOOTER   */
+#footer {
+    min-height : 7vh;
 }
