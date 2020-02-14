@@ -16,6 +16,9 @@
 .col-lg-offset-10 {
     margin-left: 80%;
 }
+.col-lg-offset-9 {
+    margin-left: 75%;
+}
 .col-lg-offset-1 {
     margin-left: 8%;
 }
@@ -27,18 +30,10 @@
 }
 
 
-/*  FOR THE TEST - TO DELETE   */
-#header, #nav{
-    border-top: 3px blue solid;
-    border-bottom: 3px blue solid;
-    border-left: 3px blue solid;
-    border-right: 3px blue solid;
-}
-
-
 /*  HEADER + LOGIN NAV   */
 #header {
   min-height: 20vh;
+  background-color : rgb(100, 69, 52);
 }
 #login_nav{
     margin-top : 5vh;
@@ -54,32 +49,32 @@
 }
 .tab a
 {
-        color:#000000;
         text-decoration:none;
 }
 .tab_n
 {
-        background:#bbbbbb;
+        background:rgb(162, 152, 141);
         border-bottom:1px solid black;
+        color : rgb(0,0,0);
+        border-radius: 10px 10px 0px 0px;
 }
 .tab_y
 {
-        background:#dddddd;
+        background:rgb(227, 216, 211);
         border-bottom:0px solid black;
         padding-bottom:4px;
+        font-weight : bold ;
+        border-radius: 10px 10px 0px 0px;
 }
 .contents
 {
-        background-color:#dddddd;
+        background-color:rgb(227, 216, 211);
         border:1px solid black;
         margin-top:-1px;
+        margin-left:3px;
         padding:5px;
-}
-ul
-{
-        margin-top:0px;
-        margin-bottom:0px;
-        margin-left:-10px
+        border-radius: 0px 10px 10px 10px;
+        box-shadow : 6px 6px 20px black;
 }
 h1
 {
@@ -88,10 +83,12 @@ h1
 }
 
 
-/*  NAV   */
+/*  NAV  */
 #button_nav{
     align-content : center;
-    min-height : 5vh;
+    min-height : 6vh;
+    background-color : rgb(227, 216, 211);
+    box-shadow : 0px -5px 20px black;
 }
 .btn {
     border-left: 2px black outset;
@@ -107,6 +104,7 @@ h1
     background-size: 40vh;
     background-position : top;
     min-height : 65vh;
+    box-shadow : 0px 5px 10px grey;
 }
 h1{
     font-family : 'cantarellregular', Arial, "Arial black";
@@ -146,7 +144,7 @@ h2{
     background-position : top;
 }
 #discussion_space, #my_results, #my_account{
-    background-color : rgb(255, 249, 216);
+    background-color : rgb(255, 255, 255);
     min-height : 50vh;
     padding : 3vh;
     margin-top : 7vh;
@@ -163,4 +161,6 @@ h2{
 /*  FOOTER   */
 #footer {
     min-height : 7vh;
+    background-color : rgb(227, 216, 211);
 }
+
