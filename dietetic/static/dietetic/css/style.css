@@ -32,7 +32,7 @@
 /*  HEADER + LOGIN NAV   */
 #header {
   min-height: 20vh;
-  background-color : rgb(100, 69, 52);
+  background-color : rgb(255, 255, 255);
 }
 #login_nav{
     margin-top : 5vh;
@@ -43,7 +43,6 @@
         margin-left:3px;
         margin-right:3px;
         padding:3px;
-        border:1px solid black;
         cursor:pointer;
 }
 .tab a
@@ -53,27 +52,21 @@
 .tab_n
 {
         background:rgb(162, 152, 141);
-        border-bottom:1px solid black;
         color : rgb(0,0,0);
-        border-radius: 5px 5px 0px 0px;
 }
 .tab_y
 {
         background:rgb(227, 216, 211);
-        border-bottom:0px solid black;
         padding-bottom:4px;
         font-weight : bold ;
-        border-radius: 5px 5px 0px 0px;
 }
 .contents
 {
         background-color:rgb(227, 216, 211);
-        border:1px solid black;
         margin-top:-1px;
         margin-left:3px;
         padding:5px;
         border-radius: 0px 5px 5px 5px;
-        box-shadow : 6px 6px 20px black;
 }
 h1
 {
@@ -84,19 +77,15 @@ h1
 
 /*  NAV  */
 #button_nav{
-    align-content : center;
     min-height : 6vh;
-    background-color : rgb(227, 216, 211);
-    box-shadow : 0px -5px 20px black;
-}
-.btn {
-    border-left: 2px black outset;
-    border-bottom: 2px black outset;
-    border-top: 2px black outset;
-    border-right: 2px black outset;
+    background-color : rgb(255, 255, 255);
+    box-shadow : 0px -1px 20px grey;
 }
 i {
     font-size : 2em;
+}
+#user, #poll, #home, #clipboard{
+    color : rgb(65, 200, 26);
 }
 
 

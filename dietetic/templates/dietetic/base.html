@@ -49,10 +49,10 @@
             <div class="row">
                 <div class="col-lg-12">
                     <div class="row" id="button_nav">
-                        <a class="btn btn-default col-lg-offset-4 col-lg-1" href="{% url 'index' %}"><i class="fas fa-home"></i></br>Accueil</a>
-                        <a class="btn btn-success col-lg-1" href="{% url 'account:my_account' %}"><i class="fas fa-user"></i></br>Mon Compte</a>
-                        <a class="btn btn-warning col-lg-1" href="{% url 'dietetic:dietetic_space' %}"><i class="fas fa-clipboard"></i></br>Mon suivi</a>
-                        <a class="btn btn-info col-lg-1" href="{% url 'dietetic:my_results' %}"><i class="fas fa-poll"></i></br>Mes résultats</a>
+                        <a id="home" class="btn col-lg-offset-4 col-lg-1" href="{% url 'index' %}"><i class="fas fa-home"></i></br>Accueil</a>
+                        <a id="user" class="btn col-lg-1" href="{% url 'account:my_account' %}"><i class="fas fa-user"></i></br>Mon Compte</a>
+                        <a id="clipboard" class="btn col-lg-1" href="{% url 'dietetic:dietetic_space' %}"><i class="fas fa-clipboard"></i></br>Mon suivi</a>
+                        <a id="poll" class="btn col-lg-1" href="{% url 'dietetic:my_results' %}"><i class="fas fa-poll"></i></br>Mes résultats</a>
                     </div>
                 </div>
             </div>
