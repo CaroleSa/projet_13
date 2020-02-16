@@ -13,31 +13,18 @@ $card.on('click', function() {
 //     logo nav animation
 
 const color = {
-  	user: ["/account/my_account/", "30,0,200"],
-  	poll: ["/dietetic/my_results/", "30,0,200"],
-  	home: ["/", "30,0,200"],
-  	clipboard: ["/dietetic/dietetic_space/", "30,0,200"],
+  	user: ["/account/my_account/", "52, 151, 49"],
+  	poll: ["/dietetic/my_results/", "222, 32, 101"],
+  	home: ["/", "31, 148, 229"],
+  	clipboard: ["/dietetic/dietetic_space/", "236, 131, 19"]
 };
-for (elt in color){
-    var $logo_url = color.elt[0];
+for (const elt in color){
+    var $logo_url = color[elt][0];
     var $url = window.location.pathname;
     if ($url == $logo_url) {
-        alert(color.elt)
-  	    var $logo = $("#"+color.elt+"");
-  	    var $color = color.elt[1];
+        var $logo = $("#"+elt+"");
+  	    var $color = color[elt][1];
   	    $logo.css('color', "rgb("+$color+")");
-  	    $logo.css('background-color', "rgb("+$color+")");
+  	    $logo.css('background-color', "rgb(233,226,218)");
     }
 }
-
-
-//     works ok
-var $url = window.location.pathname;
-if ($url == "/account/my_account/") {
-  	var $user = $('#user');
-  	$user.css('color', "rgb(52, 151, 49)");
-  	$user.css('background-color', "rgb( 241, 235, 228 )");
-}
-
-
-
