@@ -13,13 +13,22 @@ $card.on('click', function() {
 //     logo nav animation
 
 var $button = $('#button_nav');
-$button.on('mouseover', function(event) {
-  var $id_elt = "#"+event.target.id;
+const color = {
+  	user: "30,0,200",
+  	poll: "30,100,200",
+  	home: "40,70,200",
+  	clipboard: "30,20,80",
+};
+$button.on('click', function(event) {
+
+
+
+  var $id_name = event.target.id;
+
+  var $id_elt = "#"+$id_name;
+
   var $logo = $(''+$id_elt+'');
-  $logo.css('color', "rgb(30,20,200)");
-});
-$button.on('mouseleave', function(event) {
-    var $id_elt = "#"+event.target.id;
-    var $logo = $(''+$id_elt+'');
-    $logo.css('color', "rgb(0,0,0)");
+
+  var $color = $id_name.css(color);
+  alert($color)
 });

@@ -85,7 +85,22 @@ i {
     font-size : 2em;
 }
 #user, #poll, #home, #clipboard{
-    color : rgb(65, 200, 26);
+    color : rgb(0, 0, 0);
+}
+#user:hover{
+    color : rgb(52, 151, 49);
+}
+#user:active{
+    color : rgb(52, 151, 49);
+}
+#poll:hover{
+    color : rgb(222, 32, 101);
+}
+#home:hover{
+    color : rgb(31, 148, 229);
+}
+#clipboard:hover{
+    color : rgb(236, 131, 19);
 }
 
 
@@ -141,12 +156,8 @@ h2{
     padding : 3vh;
     margin-top : 7vh;
     margin-bottom : 5vh;
-    border-top: 2px black outset;
     border-bottom: 2px black outset;
-    border-left: 2px black outset;
     border-right: 2px black outset;
-    border-radius: 10px 10px 10px 10px;
-    box-shadow : 6px 6px 20px black;
 }
 
 
