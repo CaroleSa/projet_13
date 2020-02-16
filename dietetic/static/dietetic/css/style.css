@@ -31,8 +31,11 @@
 
 /*  HEADER + LOGIN NAV   */
 #header {
-  min-height: 20vh;
-  background-color : rgb(255, 255, 255);
+    background-image : url("../img/background_header.jpg");
+    background-size: 250vh;
+    background-position : left left;
+    min-height: 20vh;
+    background-color : rgb(255, 255, 255);
 }
 #login_nav{
     margin-top : 5vh;
@@ -41,7 +44,7 @@
 {
         display:inline-block;
         margin-left:3px;
-        margin-right:3px;
+        margin-right:-9px;
         padding:3px;
         cursor:pointer;
 }
@@ -51,11 +54,13 @@
 }
 .tab_n
 {
+        text-align : center;
         background:rgb(162, 152, 141);
         color : rgb(0,0,0);
 }
 .tab_y
 {
+        text-align : center;
         background:rgb(227, 216, 211);
         padding-bottom:4px;
         font-weight : bold ;
@@ -66,7 +71,8 @@
         margin-top:-1px;
         margin-left:3px;
         padding:5px;
-        border-radius: 0px 5px 5px 5px;
+        border-radius: 0px 0px 5px 5px;
+        max-width:43vh;
 }
 h1
 {
