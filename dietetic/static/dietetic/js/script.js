@@ -12,23 +12,32 @@ $card.on('click', function() {
 
 //     logo nav animation
 
-var $button = $('#button_nav');
 const color = {
-  	user: "30,0,200",
-  	poll: "30,100,200",
-  	home: "40,70,200",
-  	clipboard: "30,20,80",
+  	user: ["/account/my_account/", "30,0,200"],
+  	poll: ["/dietetic/my_results/", "30,0,200"],
+  	home: ["/", "30,0,200"],
+  	clipboard: ["/dietetic/dietetic_space/", "30,0,200"],
 };
-$button.on('click', function(event) {
+for (elt in color){
+    var $logo_url = color.elt[0];
+    var $url = window.location.pathname;
+    if ($url == $logo_url) {
+        alert(color.elt)
+  	    var $logo = $("#"+color.elt+"");
+  	    var $color = color.elt[1];
+  	    $logo.css('color', "rgb("+$color+")");
+  	    $logo.css('background-color', "rgb("+$color+")");
+    }
+}
+
+
+//     works ok
+var $url = window.location.pathname;
+if ($url == "/account/my_account/") {
+  	var $user = $('#user');
+  	$user.css('color', "rgb(52, 151, 49)");
+  	$user.css('background-color', "rgb( 241, 235, 228 )");
+}
 
 
 
-  var $id_name = event.target.id;
-
-  var $id_elt = "#"+$id_name;
-
-  var $logo = $(''+$id_elt+'');
-
-  var $color = $id_name.css(color);
-  alert($color)
-});
