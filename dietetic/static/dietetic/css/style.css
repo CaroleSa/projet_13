@@ -153,7 +153,7 @@ h2{
     background-size: 45vh;
     background-position : top;
 }
-#discussion_space, #my_results, #my_account{
+#discussion_space, #text_my_results, #graphic_my_results, #my_account{
     background-color : rgb(255, 255, 255);
     min-height : 50vh;
     padding : 3vh;
