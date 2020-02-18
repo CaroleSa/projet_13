@@ -163,8 +163,13 @@ h2{
 
 
 /*  FOOTER   */
-#footer {
+#footer{
     min-height : 7vh;
     background-color : rgb(227, 216, 211);
 }
-
+.logo_link{
+    margin-top : 1.5vh;
+}
+.fa-github-square{
+    margin-left : 2vh;
+}
