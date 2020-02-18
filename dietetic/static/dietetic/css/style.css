@@ -12,11 +12,17 @@
 
 
 /*  BOOTSTRAP   */
+.col-lg-offset-11 {
+    margin-left: 88%;
+}
 .col-lg-offset-10 {
     margin-left: 80%;
 }
 .col-lg-offset-9 {
     margin-left: 75%;
+}
+.col-lg-offset-8 {
+    margin-left: 66%;
 }
 .col-lg-offset-1 {
     margin-left: 8%;
@@ -40,42 +46,36 @@
 #login_nav{
     margin-top : 5vh;
 }
-.tab
-{
+.tab{
         display:inline-block;
         margin-left:3px;
-        margin-right:-9px;
+        margin-right:-10px;
         padding:3px;
         cursor:pointer;
 }
-.tab a
-{
+.tab a{
         text-decoration:none;
 }
-.tab_n
-{
+.tab_n{
         text-align : center;
         background:rgb(162, 152, 141);
         color : rgb(0,0,0);
 }
-.tab_y
-{
+.tab_y{
         text-align : center;
         background:rgb(227, 216, 211);
         padding-bottom:4px;
         font-weight : bold ;
 }
-.contents
-{
+.contents{
         background-color:rgb(227, 216, 211);
         margin-top:-1px;
         margin-left:3px;
         padding:5px;
         border-radius: 0px 0px 5px 5px;
-        max-width:43vh;
+
 }
-h1
-{
+h1{
         margin:0px;
         padding:0px;
 }
@@ -142,9 +142,7 @@ h2{
     padding : 3vh;
     margin-top : 10vh;
     margin-bottom : 10vh;
-    border-top: 2px black outset;
     border-bottom: 2px black outset;
-    border-left: 2px black outset;
     border-right: 2px black outset;
     border-radius: 10px 10px 10px 10px;
     box-shadow : 6px 6px 20px black;
