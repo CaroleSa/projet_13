@@ -19,7 +19,7 @@ class RobotQuestionType(models.Model):
 
 class UserAnswer(models.Model):
     discussion_space = models.ManyToManyField(RobotQuestion, through='RobotAnswer')
-    text = models.CharField(max_length=200, unique=True)
+    text = models.CharField(max_length=200, null=True, unique=True)
 
 
 class RobotAdvices(models.Model):
@@ -28,10 +28,10 @@ class RobotAdvices(models.Model):
 
 
 class RobotAnswer(models.Model):
-    user_answer = models.ForeignKey(UserAnswer)
-    robot_question = models.ForeignKey(RobotQuestion)
-    robot_advices = models.ForeignKey(RobotAdvices)
-    text = models.CharField(max_length=700)
+    user_answer = models.ForeignKey(UserAnswer, on_delete=models.CASCADE)
+    robot_question = models.ForeignKey(RobotQuestion, on_delete=models.CASCADE)
+    robot_advices = models.ForeignKey(RobotAdvices, on_delete=models.CASCADE)
+    text = models.CharField(max_length=700, null=True)
 
 
 class RobotAdviceType(models.Model):
