@@ -11,17 +11,35 @@ from datetime.date import today
 
 class StatusUser(models.Model):
     user = models.OneToOneField(IdentityUser, on_delete=models.CASCADE)
-    groups =
-    user_permissions =
-    is_staff = models.BooleanField(default=False)
-    is_superuser = models.BooleanField(default=False)
-    is_active = models.BooleanField(default=True)
+    groups = models.ManyToManyField(blank=True, help_text='The groups this user belongs to. '
+                                                          'A user will get all permissions granted '
+                                                          'to each of their groups.',
+                                    related_name='user_set',
+                                    related_query_name='user',
+                                    to='auth.Group',
+                                    verbose_name='groups')
+    user_permissions = models.ManyToManyField(blank=True, help_text='Specific permissions for this user.',
+                                              related_name='user_set',
+                                              related_query_name='user',
+                                              to='auth.Permission',
+                                              verbose_name='user permissions')
+    is_staff = models.BooleanField(default=False, help_text='Designates whether the user '
+                                                            'can log into this admin site.',
+                                   verbose_name='staff status')
+    is_superuser = models.BooleanField(default=False,
+                                       help_text='Designates that this user has all permissions without '
+                                                 'explicitly assigning them.',
+                                       verbose_name='superuser status')
+    is_active = models.BooleanField(default=True, help_text='Designates whether this user should '
+                                                            'be treated as active. Unselect this instead '
+                                                            'of deleting accounts.',
+                                    verbose_name='active')
 
 
 class HistoryUser(models.Model):
     user = models.OneToOneField(IdentityUser, on_delete=models.CASCADE)
-    date_joined = models.DateTimeField(default=timezone.now)
-    last_login =
+    date_joined = models.DateTimeField(default=django.utils.timezone.now, verbose_name='date joined')
+    last_login = models.DateTimeField(blank=True, null=True, verbose_name='last login')
 
 
 class ProfileUser(models.Model):
@@ -37,6 +55,8 @@ class ResultsUser(models.Model):
 
 
 class IdentityUser(AbstractBaseUser):
-    username = models.CharField(max_length=25, unique=True)
-    email = models.EmailField(unique=True)
-    password =
+    username = models.CharField(max_length=150, unique=True, validators=[django.contrib.auth.
+                                validators.UnicodeUsernameValidator()],
+                                verbose_name='username')
+    email = models.EmailField(max_length=254, unique=True, verbose_name='email address')
+    password = models.CharField(max_length=128, verbose_name='password')

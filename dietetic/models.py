@@ -9,7 +9,7 @@ from django.conf import settings
 
 
 class RobotQuestion(models.Model):
-    text = models.CharField(max_length=300, unique=True)
+    text = models.CharField(max_length=700, unique=True)
 
 
 class RobotQuestionType(models.Model):
@@ -24,14 +24,14 @@ class UserAnswer(models.Model):
 
 class RobotAdvices(models.Model):
     advices_to_user = models.ManyToManyField(settings.AUTH_USER_MODEL)
-    text = models.CharField(max_length=500, unique=True)
+    text = models.CharField(max_length=700, unique=True)
 
 
 class RobotAnswer(models.Model):
-    user_answer = models.ForeignKey(UserAnswer, on_delete=models.CASCADE)
-    robot_question = models.ForeignKey(RobotQuestion, on_delete=models.CASCADE)
-    robot_advices = models.ForeignKey(RobotAdvices, on_delete=models.CASCADE)
-    text = models.CharField(max_length=500)
+    user_answer = models.ForeignKey(UserAnswer)
+    robot_question = models.ForeignKey(RobotQuestion)
+    robot_advices = models.ForeignKey(RobotAdvices)
+    text = models.CharField(max_length=700)
 
 
 class RobotAdviceType(models.Model):
