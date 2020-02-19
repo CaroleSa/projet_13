@@ -5,6 +5,7 @@
 
 # imports
 from django.db import models
+from django.conf import settings
 
 
 class RobotQuestion(models.Model):
@@ -22,8 +23,7 @@ class UserAnswer(models.Model):
 
 
 class RobotAdvices(models.Model):
-    # replace RobotQuestion to IdentityUser
-    advices_to_user = models.ManyToManyField(RobotQuestion)
+    advices_to_user = models.ManyToManyField(settings.AUTH_USER_MODEL)
     text = models.CharField(max_length=500, unique=True)
 
 
