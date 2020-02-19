@@ -1,5 +1,13 @@
-from django.contrib import admin
-from django.contrib.auth.admin import UserAdmin
-from .models import User
+#! /usr/bin/env python3
+# coding: UTF-8
 
-admin.site.register(User, UserAdmin)
+""" Admin account app """
+
+# imports
+from django.contrib import admin
+from account.models import IdentityUser
+
+
+@admin.register(IdentityUser)
+class CustomUserAdmin(admin.ModelAdmin):
+    pass

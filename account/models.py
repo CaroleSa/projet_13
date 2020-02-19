@@ -17,6 +17,9 @@ class IdentityUser(AbstractBaseUser):
                                 verbose_name='username')
     email = models.EmailField(max_length=254, unique=True, verbose_name='email address')
     password = models.CharField(max_length=128, verbose_name='password')
+    USERNAME_FIELD = 'username'
+    EMAIL_FIELD = "email"
+    REQUIRED_FIELDS = ["email"]
 
 
 class StatusUser(models.Model):
