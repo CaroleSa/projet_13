@@ -43,6 +43,8 @@ class IdentityUser(AbstractBaseUser):
                                 verbose_name='username')
     email = models.EmailField(max_length=254, unique=True, verbose_name='email address')
     password = models.CharField(max_length=128, verbose_name='password')
+    last_login = models.DateTimeField(blank=True, null=True, verbose_name='last login')
+
     USERNAME_FIELD = 'username'
     EMAIL_FIELD = "email"
     REQUIRED_FIELDS = ["email"]
@@ -80,7 +82,6 @@ class StatusUser(models.Model):
 class HistoryUser(models.Model):
     user = models.OneToOneField(IdentityUser, on_delete=models.CASCADE)
     date_joined = models.DateTimeField(default=now, verbose_name='date joined')
-    last_login = models.DateTimeField(blank=True, null=True, verbose_name='last login')
 
 
 class ProfileUser(models.Model):
