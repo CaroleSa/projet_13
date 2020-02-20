@@ -1,7 +1,7 @@
 #! /usr/bin/env python3
 # coding: UTF-8
 
-""" TestModel class """
+""" TestsModels class """
 
 
 # imports
@@ -10,8 +10,8 @@ from django.contrib.auth import get_user_model
 from django.conf import settings
 
 
-class TestModel(TestCase):
-    """ TestModel class :
+class TestsModels(TestCase):
+    """ TestsModels class :
     test_add_user method
     """
 
@@ -21,13 +21,13 @@ class TestModel(TestCase):
 
         # data for test_add_user method
         self.username1 = 'pseudo1'
-        self.email1 = 'pseudo1@test.com'
+        self.email1 = 'pseudo1@tests.com'
         self.password1 = 'password1'
         self.id_user1 = 1
 
         # create user account
         self.username2 = 'pseudo2'
-        self.email2 = 'pseudo2@test.com'
+        self.email2 = 'pseudo2@tests.com'
         self.password2 = 'password2'
         self.id_user2 = 2
         self.user.objects.create_user(id=self.id_user2, username=self.username2, email=self.email2,
