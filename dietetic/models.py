@@ -28,12 +28,12 @@ class RobotAdvices(models.Model):
 
 
 class UserAnswer(models.Model):
-    discussion_space = models.ManyToManyField(RobotQuestion, through='RobotAnswer')
+    discussion_space = models.ManyToManyField(RobotQuestion, through='DiscussionSpace')
     text = models.CharField(max_length=200, null=True, unique=True)
 
 
-class RobotAnswer(models.Model):
+class DiscussionSpace(models.Model):
     user_answer = models.ForeignKey(UserAnswer, on_delete=models.CASCADE)
     robot_question = models.ForeignKey(RobotQuestion, on_delete=models.CASCADE)
     robot_advices = models.ForeignKey(RobotAdvices, on_delete=models.CASCADE)
-    text = models.CharField(max_length=700, null=True)
+    robot_answer = models.CharField(max_length=700, null=True)

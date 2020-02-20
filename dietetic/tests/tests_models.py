@@ -8,7 +8,8 @@
 from unittest import TestCase
 from django.contrib.auth import get_user_model
 from django.conf import settings
-from dietetic.models import RobotQuestion, RobotQuestionType, RobotAdviceType, UserAnswer, RobotAdvices
+from dietetic.models import RobotQuestion, RobotQuestionType, RobotAdviceType, \
+    UserAnswer, RobotAdvices, DiscussionSpace
 from django.db.utils import IntegrityError
 
 
@@ -20,6 +21,12 @@ class TestsModels(TestCase):
     def setUp(self):
         # get custom user model
         self.user = get_user_model()
+
+        # delete all data in database
+        models_list = [RobotQuestion, RobotQuestionType, RobotAdviceType,
+                      UserAnswer, RobotAdvices, DiscussionSpace]
+        for table in models_list:
+            table.objects.all().delete()
 
         # create user account
         self.username2 = 'pseudo2'
@@ -37,6 +44,14 @@ class TestsModels(TestCase):
             pass
         self.robot_question_type = RobotQuestionType.objects.get(type=type)
 
+        # create robot question
+        question = "Question"
+        try:
+            RobotQuestion.objects.create(text=question, robot_question_type=self.robot_question_type)
+        except IntegrityError:
+            pass
+        self.robot_question = RobotQuestion.objects.get(text=question)
+
         # create robot advice type
         type = "Recette"
         try:
@@ -44,6 +59,22 @@ class TestsModels(TestCase):
         except IntegrityError:
             pass
         self.robot_advice_type = RobotAdviceType.objects.get(type=type)
+
+        # create user answer
+        answer = "Non"
+        try:
+            UserAnswer.objects.create(text=answer)
+        except IntegrityError:
+            pass
+        self.user_answer = UserAnswer.objects.get(text=answer)
+
+        # create robot advices
+        advice = "is a robot advice"
+        try:
+            RobotAdvices.objects.create(text=advice, robot_advice_type=self.robot_advice_type)
+        except IntegrityError:
+            pass
+        self.robot_advices = RobotAdvices.objects.get(text=advice)
 
     def test_add_robot_question(self):
         """ Test create robot question """
@@ -94,3 +125,17 @@ class TestsModels(TestCase):
             pass
         advice_exists = RobotAdvices.objects.get(text=advice)
         self.assertTrue(advice_exists)
+
+    def test_add_discussion_space(self):
+        """ Test add discussion space """
+        answer = "is an answer test"
+        try:
+            DiscussionSpace.objects.create(robot_answer=answer, robot_question=self.robot_question,
+                                           user_answer=self.user_answer, robot_advices=self.robot_advices)
+        except IntegrityError:
+            pass
+        discussion_exists = DiscussionSpace.objects.get(robot_answer=answer)
+        self.assertTrue(discussion_exists)
+
+    def test_add_advices_to_user(self):
+        pass
