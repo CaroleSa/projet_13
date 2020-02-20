@@ -23,7 +23,7 @@ class TestModel(TestCase):
         self.id_user = 1
 
     def test_add_user(self):
-        self.user.objects.create_user(id=self.id_user, username=self.pseudo, email=self.email, password=self.password)
+        self.user.objects.create_user(id=self.id_user, username=self.username, email=self.email, password=self.password)
 
         # try to get the user data
         try:

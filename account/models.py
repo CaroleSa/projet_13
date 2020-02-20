@@ -5,43 +5,36 @@
 
 # imports
 from django.db import models
-from django.contrib.auth.models import AbstractBaseUser
+from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
 from django.contrib.auth.validators import UnicodeUsernameValidator
 from django.utils.timezone import now
 from datetime import date
 
 
-class MyUserManager(BaseUserManager):
-    def create_user(self, email, date_of_birth, password=None):
+class UserManager(BaseUserManager):
+    def create_user(self, username, email, password, **extra_fields):
         """
-        Creates and saves a User with the given email, date of
-        birth and password.
+        Create and save a user with the given username, email, and password.
         """
-        if not email:
-            raise ValueError('Users must have an email address')
-
-        user = self.model(
-            email=self.normalize_email(email),
-            date_of_birth=date_of_birth,
-        )
-
+        if not username:
+            raise ValueError('The given username must be set')
+        email = self.normalize_email(email)
+        username = self.model.normalize_username(username)
+        user = self.model(username=username, email=email, **extra_fields)
         user.set_password(password)
         user.save(using=self._db)
         return user
 
-    def create_superuser(self, email, date_of_birth, password=None):
-        """
-        Creates and saves a superuser with the given email, date of
-        birth and password.
-        """
-        user = self.create_user(
-            email,
-            password=password,
-            date_of_birth=date_of_birth,
-        )
-        user.is_admin = True
-        user.save(using=self._db)
-        return user
+    def create_superuser(self, username, email, password, **extra_fields):
+        extra_fields.setdefault('is_staff', True)
+        extra_fields.setdefault('is_superuser', True)
+
+        if extra_fields.get('is_staff') is not True:
+            raise ValueError('Superuser must have is_staff=True.')
+        if extra_fields.get('is_superuser') is not True:
+            raise ValueError('Superuser must have is_superuser=True.')
+
+        return self._create_user(username, email, password, **extra_fields)
 
 
 class IdentityUser(AbstractBaseUser):
@@ -53,6 +46,8 @@ class IdentityUser(AbstractBaseUser):
     USERNAME_FIELD = 'username'
     EMAIL_FIELD = "email"
     REQUIRED_FIELDS = ["email"]
+
+    objects = UserManager()
 
 
 class StatusUser(models.Model):
