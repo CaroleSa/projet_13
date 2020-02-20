@@ -16,26 +16,52 @@ class TestModel(TestCase):
     """
 
     def setUp(self):
+        # get custom user model
         self.user = get_user_model()
-        self.username = 'pseudo'
-        self.email = 'test@test2.com'
-        self.password = 'testtest'
-        self.id_user = 1
+
+        # data for test_add_user method
+        self.username1 = 'pseudo1'
+        self.email1 = 'pseudo1@test.com'
+        self.password1 = 'password1'
+        self.id_user1 = 1
+
+        # create user account
+        self.username2 = 'pseudo2'
+        self.email2 = 'pseudo2@test.com'
+        self.password2 = 'password2'
+        self.id_user2 = 2
+        self.user.objects.create_user(id=self.id_user2, username=self.username2, email=self.email2,
+                                      password=self.password2)
 
     def test_add_user(self):
-        self.user.objects.create_user(id=self.id_user, username=self.username, email=self.email, password=self.password)
+        """ Test create user account """
+        user_created = self.user.objects.create_user(id=self.id_user1, username=self.username1, email=self.email1,
+                                                     password=self.password1)
+        self.assertIn(str(user_created), self.username1)
 
-        # try to get the user data
-        try:
-            self.user.objects.get(id=self.id_user)
-            data = True
-        except self.user.DoesNotExist:
-            data = False
-        self.assertTrue(data)
+    def test_get_user_created(self):
+        """ Test get account user created or not created """
+        # try to get the data from an existing user (id = 2)
+        # and from an nonexistent user (id = 5)
+        dict_id_method = {self.id_user2: self.assertTrue, '5': self.assertFalse}
+        for id_user, method in dict_id_method.items():
+            try:
+                self.user.objects.get(id=id_user)
+                get_user = True
+            except self.user.DoesNotExist:
+                get_user = False
+            method(get_user)
 
-        try:
-            self.user.objects.get(id='5')
-            data = True
-        except self.user.DoesNotExist:
-            data = False
-        self.assertFalse(data)
+    def test_user_deactivate(self):
+        user = self.user.objects.get(id=self.id_user2)
+        user.is_active = False
+        user.save()
+        self.assertFalse(user.is_active)
+
+    def test_add_profile_user(self):
+        # to do
+        pass
+
+    def test_add_results_user(self):
+        # to do
+        pass
