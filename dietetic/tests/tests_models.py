@@ -29,18 +29,19 @@ class TestsModels(TestCase):
         self.user.objects.create_user(id=self.id_user2, username=self.username2, email=self.email2,
                                       password=self.password2)
 
-        # create robot question
+        # create robot question type
+        type = "Questions type"
         try:
-            RobotQuestion.objects.create(text="One question")
+            RobotQuestionType.objects.create(type=type)
         except IntegrityError:
             pass
-        self.robot_question = RobotQuestion.objects.get(text="One question")
+        self.robot_question_type = RobotQuestionType.objects.get(type=type)
 
     def test_add_question_robot(self):
         """ Test create robot question """
         question = "Question test"
         try:
-            RobotQuestion.objects.create(text=question)
+            RobotQuestion.objects.create(text=question, robot_question_type=self.robot_question_type)
         except IntegrityError:
             pass
         question_exists = RobotQuestion.objects.get(text=question)
@@ -50,7 +51,7 @@ class TestsModels(TestCase):
         """ Test create robot question type """
         type = "Start questions"
         try:
-            RobotQuestionType.objects.create(type=type, robot_question=self.robot_question)
+            RobotQuestionType.objects.create(type=type)
         except IntegrityError:
             pass
         type_exists = RobotQuestionType.objects.get(type=type)
