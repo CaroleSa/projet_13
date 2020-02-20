@@ -10,6 +10,7 @@ from django.contrib.auth import get_user_model
 from django.conf import settings
 from dietetic.models import RobotQuestion, RobotQuestionType, RobotAdviceType, \
     UserAnswer, RobotAdvices, DiscussionSpace
+from account.models import IdentityUser
 from django.db.utils import IntegrityError
 
 
@@ -35,6 +36,7 @@ class TestsModels(TestCase):
         self.id_user2 = 2
         self.user.objects.create_user(id=self.id_user2, username=self.username2, email=self.email2,
                                       password=self.password2)
+        self.user_created = IdentityUser.objects.get(username=self.username2)
 
         # create robot question type
         type = "Questions type"
@@ -138,4 +140,4 @@ class TestsModels(TestCase):
         self.assertTrue(discussion_exists)
 
     def test_add_advices_to_user(self):
-        pass
+        self.robot_advices.advices_to_user.add(self.user_created)
