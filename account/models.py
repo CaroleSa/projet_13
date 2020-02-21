@@ -83,14 +83,23 @@ class HistoryUser(models.Model):
     user = models.OneToOneField(IdentityUser, on_delete=models.CASCADE)
     date_joined = models.DateTimeField(default=now, verbose_name='date joined')
 
+    def __str__(self):
+        return self.date_joined
+
 
 class ProfileUser(models.Model):
     user = models.OneToOneField(IdentityUser, on_delete=models.CASCADE)
     starting_weight = models.DecimalField(max_digits=4, decimal_places=1, null=True)
     final_weight = models.DecimalField(max_digits=4, decimal_places=1, null=True)
 
+    def __str__(self):
+        return self.starting_weight, self.final_weight
+
 
 class ResultsUser(models.Model):
     user = models.ForeignKey(IdentityUser, on_delete=models.CASCADE)
     weighing_date = models.DateField(default=date.today, null=True)
     weight = models.DecimalField(max_digits=4, decimal_places=1, null=True)
+
+    def __str__(self):
+        return self.weighing_date, self.weight

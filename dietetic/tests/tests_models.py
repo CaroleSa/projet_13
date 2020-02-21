@@ -10,7 +10,6 @@ from django.contrib.auth import get_user_model
 from django.conf import settings
 from dietetic.models import RobotQuestion, RobotQuestionType, RobotAdviceType, \
     UserAnswer, RobotAdvices, DiscussionSpace
-from account.models import IdentityUser
 from django.db.utils import IntegrityError
 
 
@@ -25,7 +24,7 @@ class TestsModels(TestCase):
 
         # delete all data in database
         models_list = [RobotQuestion, RobotQuestionType, RobotAdviceType,
-                      UserAnswer, RobotAdvices, DiscussionSpace, IdentityUser]
+                      UserAnswer, RobotAdvices, DiscussionSpace, self.user]
         for table in models_list:
             table.objects.all().delete()
 
@@ -35,7 +34,7 @@ class TestsModels(TestCase):
         self.password2 = 'password2'
         self.user.objects.create_user(username=self.username2, email=self.email2,
                                       password=self.password2)
-        self.user_created = IdentityUser.objects.get(username=self.username2)
+        self.user_created = self.user.objects.get(username=self.username2)
 
         # create robot question type
         type = "Questions type"

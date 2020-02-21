@@ -8,7 +8,7 @@
 from unittest import TestCase
 from django.contrib.auth import get_user_model
 from django.conf import settings
-from account.models import ResultsUser, IdentityUser
+from account.models import ResultsUser, ProfileUser
 
 
 class TestsModels(TestCase):
@@ -21,7 +21,7 @@ class TestsModels(TestCase):
         self.user = get_user_model()
 
         # delete all data in database
-        models_list = [IdentityUser]
+        models_list = [self.user]
         for table in models_list:
             table.objects.all().delete()
 
@@ -59,17 +59,33 @@ class TestsModels(TestCase):
                 get_user = False
             method(get_user)
 
+    def test_get_data_user_created(self):
+        """ Test get data user created """
+        data = self.user.objects.values_list('email')
+        email = data.get(username=self.username2)[0]
+        self.assertEqual(email, self.email2)
+
     def test_user_deactivate(self):
+        """ Test user deactivate """
         user = self.user.objects.get(id=self.id_user2)
         user.is_active = False
         user.save()
         self.assertFalse(user.is_active)
 
-    def test_add_profile_user(self):
-        # to do
-        pass
+    def test_add_get_profile_user(self):
+        """ Test create user profile and get data """
+        starting_weight = 100
+        final_weight = 80
+        ProfileUser.objects.create(user=self.user_created, starting_weight=starting_weight, final_weight=final_weight)
+        data = ProfileUser.objects.values_list('starting_weight')
+        get_weight_user = data.get(user=self.user_created)
+        self.assertEqual(get_weight_user[0], starting_weight)
 
-    def test_add_results_user(self):
-        """ Test create user results """
-        ResultsUser.objects.create(user=self.user_created, weighing_date="2020-05-20", weight="55")
-
+    def test_add_get_results_user(self):
+        """ Test create user results and get results """
+        weight = 55.0
+        date = "2020-05-20"
+        ResultsUser.objects.create(user=self.user_created, weighing_date=date, weight=weight)
+        data = ResultsUser.objects.values_list('weight').filter(weighing_date=date)
+        get_weight_user = data.get(user=self.user_created)
+        self.assertEqual(get_weight_user[0], weight)
