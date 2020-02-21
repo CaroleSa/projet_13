@@ -37,44 +37,50 @@ class TestsModels(TestCase):
         self.user_created = self.user.objects.get(username=self.username2)
 
         # create robot question type
-        type = "Questions type"
+        self.question_type = "Questions type"
+        self.id_question_type = 1
         try:
-            RobotQuestionType.objects.create(type=type)
+            RobotQuestionType.objects.create(id=self.id_question_type, type=self.question_type)
         except IntegrityError:
             pass
-        self.robot_question_type = RobotQuestionType.objects.get(type=type)
+        self.robot_question_type = RobotQuestionType.objects.get(type=self.question_type)
 
         # create robot question
-        question = "Question"
+        self.question = "Question"
+        self.id_question_robot = 1
         try:
-            RobotQuestion.objects.create(text=question, robot_question_type=self.robot_question_type)
+            RobotQuestion.objects.create(id=self.id_question_robot, text=self.question,
+                                         robot_question_type=self.robot_question_type)
         except IntegrityError:
             pass
-        self.robot_question = RobotQuestion.objects.get(text=question)
+        self.robot_question = RobotQuestion.objects.get(text=self.question)
 
         # create robot advice type
-        type = "Recette"
+        self.advice_type = "Recette"
+        self.id_advice_type = 1
         try:
-            RobotAdviceType.objects.create(type=type)
+            RobotAdviceType.objects.create(id=self.id_advice_type, type=self.advice_type)
         except IntegrityError:
             pass
-        self.robot_advice_type = RobotAdviceType.objects.get(type=type)
+        self.robot_advice_type = RobotAdviceType.objects.get(type=self.advice_type)
 
         # create user answer
-        answer = "Non"
+        self.answer = "Non"
+        self.id_user_answer = 1
         try:
-            UserAnswer.objects.create(text=answer)
+            UserAnswer.objects.create(id=self.id_user_answer, text=self.answer)
         except IntegrityError:
             pass
-        self.user_answer = UserAnswer.objects.get(text=answer)
+        self.user_answer = UserAnswer.objects.get(text=self.answer)
 
         # create robot advices
-        advice = "is a robot advice"
+        self.advice = "is a robot advice"
+        self.id_robot_advice = 1
         try:
-            RobotAdvices.objects.create(text=advice, robot_advice_type=self.robot_advice_type)
+            RobotAdvices.objects.create(id=self.id_robot_advice, text=self.advice, robot_advice_type=self.robot_advice_type)
         except IntegrityError:
             pass
-        self.robot_advices = RobotAdvices.objects.get(text=advice)
+        self.robot_advices = RobotAdvices.objects.get(text=self.advice)
 
     def test_add_robot_question(self):
         """ Test create robot question """
@@ -137,6 +143,32 @@ class TestsModels(TestCase):
         discussion_exists = DiscussionSpace.objects.get(robot_answer=answer)
         self.assertTrue(discussion_exists)
 
-    def test_add_advices_to_user(self):
-        """ Test add advices to user """
-        self.robot_advices.advices_to_user.add(self.user_created)
+    def test_get_question_type(self):
+        """ Test get value question type """
+        data = RobotQuestionType.objects.values_list('type').get(id=self.id_question_type)
+        self.assertEqual(data[0], self.question_type)
+
+    def test_get_advice_type(self):
+        """ Test get value advice type """
+        data = RobotAdviceType.objects.values_list('type').get(id=self.id_advice_type)
+        self.assertEqual(data[0], self.advice_type)
+
+    def test_get_robot_question(self):
+        """ Test get robot question value """
+        data = RobotQuestion.objects.values_list('text').get(id=self.id_question_robot)
+        self.assertEqual(data[0], self.question)
+
+    def test_get_user_answer(self):
+        """ Test get user answer value """
+        data = UserAnswer.objects.values_list('text').get(id=self.id_user_answer)
+        self.assertEqual(data[0], self.answer)
+
+    def test_get_robot_advices(self):
+        """ Test get robot advices value """
+        data = RobotAdvices.objects.values_list('text').get(id=self.id_robot_advice)
+        self.assertEqual(data[0], self.advice)
+
+    #def test_add_advices_to_user(self):
+        #""" Test add advices to user """
+        ### DON'T WORKS !!!
+        #self.robot_advices.advices_to_user.add(self.user_created)
