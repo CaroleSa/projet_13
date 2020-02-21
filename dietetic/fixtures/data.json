@@ -1,18 +1,49 @@
 [
   {
-    "model": "myapp.person",
+    "model": "dietetic.RobotQuestionType",
     "pk": 1,
     "fields": {
-      "first_name": "John",
-      "last_name": "Lennon"
+      "type": ""
     }
   },
   {
-    "model": "myapp.person",
-    "pk": 2,
+    "model": "dietetic.RobotAdviceType",
+    "pk": 1,
     "fields": {
-      "first_name": "Paul",
-      "last_name": "McCartney"
+      "type": ""
+    }
+  },
+  {
+    "model": "dietetic.RobotQuestion",
+    "pk": 1,
+    "fields": {
+      "robot_question_type": "",
+      "text": ""
+    }
+  },
+  {
+    "model": "dietetic.RobotAdvices",
+    "pk": 1,
+    "fields": {
+      "robot_advice_type": "",
+      "text": ""
+    }
+  },
+  {
+    "model": "dietetic.UserAnswer",
+    "pk": 1,
+    "fields": {
+      "text": ""
+    }
+  },
+  {
+    "model": "dietetic.DiscussionSpace",
+    "pk": 1,
+    "fields": {
+      "user_answer": "",
+      "robot_question": "",
+      "robot_advices": "",
+      "robot_answer": ""
     }
   }
 ]
