@@ -25,7 +25,7 @@ class TestsModels(TestCase):
 
         # delete all data in database
         models_list = [RobotQuestion, RobotQuestionType, RobotAdviceType,
-                      UserAnswer, RobotAdvices, DiscussionSpace]
+                      UserAnswer, RobotAdvices, DiscussionSpace, IdentityUser]
         for table in models_list:
             table.objects.all().delete()
 
@@ -33,8 +33,7 @@ class TestsModels(TestCase):
         self.username2 = 'pseudo2'
         self.email2 = 'pseudo2@tests.com'
         self.password2 = 'password2'
-        self.id_user2 = 2
-        self.user.objects.create_user(id=self.id_user2, username=self.username2, email=self.email2,
+        self.user.objects.create_user(username=self.username2, email=self.email2,
                                       password=self.password2)
         self.user_created = IdentityUser.objects.get(username=self.username2)
 
@@ -140,4 +139,5 @@ class TestsModels(TestCase):
         self.assertTrue(discussion_exists)
 
     def test_add_advices_to_user(self):
+        """ Test add advices to user """
         self.robot_advices.advices_to_user.add(self.user_created)

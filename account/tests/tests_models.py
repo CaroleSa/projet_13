@@ -8,6 +8,7 @@
 from unittest import TestCase
 from django.contrib.auth import get_user_model
 from django.conf import settings
+from account.models import ResultsUser, IdentityUser
 
 
 class TestsModels(TestCase):
@@ -18,6 +19,11 @@ class TestsModels(TestCase):
     def setUp(self):
         # get custom user model
         self.user = get_user_model()
+
+        # delete all data in database
+        models_list = [IdentityUser]
+        for table in models_list:
+            table.objects.all().delete()
 
         # data for test_add_user method
         self.username1 = 'pseudo1'
@@ -32,6 +38,7 @@ class TestsModels(TestCase):
         self.id_user2 = 2
         self.user.objects.create_user(id=self.id_user2, username=self.username2, email=self.email2,
                                       password=self.password2)
+        self.user_created = self.user.objects.get(id=self.id_user2)
 
     def test_add_user(self):
         """ Test create user account """
@@ -63,5 +70,6 @@ class TestsModels(TestCase):
         pass
 
     def test_add_results_user(self):
-        # to do
-        pass
+        """ Test create user results """
+        ResultsUser.objects.create(user=self.user_created, weighing_date="2020-05-20", weight="55")
+
