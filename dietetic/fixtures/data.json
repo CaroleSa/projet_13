@@ -3,16 +3,50 @@
     "model": "dietetic.RobotQuestionType",
     "pk": 1,
     "fields": {
-      "type": ""
+      "type": "start"
     }
   },
+  {
+    "model": "dietetic.RobotQuestionType",
+    "pk": 2,
+    "fields": {
+      "type": "in progress"
+    }
+  },
+  {
+    "model": "dietetic.RobotQuestionType",
+    "pk": 3,
+    "fields": {
+      "type": "end"
+    }
+  },
+
+
+
   {
     "model": "dietetic.RobotAdviceType",
     "pk": 1,
     "fields": {
-      "type": ""
+      "type": "conseil"
     }
   },
+  {
+    "model": "dietetic.RobotAdviceType",
+    "pk": 2,
+    "fields": {
+      "type": "challenge"
+    }
+  },
+  {
+    "model": "dietetic.RobotAdviceType",
+    "pk": 3,
+    "fields": {
+      "type": "recette"
+    }
+  },
+
+
+
   {
     "model": "dietetic.RobotQuestion",
     "pk": 1,
@@ -21,6 +55,9 @@
       "text": ""
     }
   },
+
+
+
   {
     "model": "dietetic.RobotAdvices",
     "pk": 1,
@@ -29,13 +66,222 @@
       "text": ""
     }
   },
+
+
+
   {
     "model": "dietetic.UserAnswer",
     "pk": 1,
     "fields": {
-      "text": ""
+      "text": "oui"
     }
   },
+  {
+    "model": "dietetic.UserAnswer",
+    "pk": 2,
+    "fields": {
+      "text": "non"
+    }
+  },
+  {
+    "model": "dietetic.UserAnswer",
+    "pk": 3,
+    "fields": {
+      "text": "j'hésite encore ..."
+    }
+  },
+  {
+    "model": "dietetic.UserAnswer",
+    "pk": 4,
+    "fields": {
+      "text": "je bois moins d'1L5 par jour car je n'aime pas ça"
+    }
+  },
+  {
+    "model": "dietetic.UserAnswer",
+    "pk": 5,
+    "fields": {
+      "text": "je bois moins d'1L5 par jour car je n'ai pas soif"
+    }
+  },
+  {
+    "model": "dietetic.UserAnswer",
+    "pk": 6,
+    "fields": {
+      "text": "je bois moins d'1L5 par jour car je n'y pense jamais"
+    }
+  },
+  {
+    "model": "dietetic.UserAnswer",
+    "pk": 7,
+    "fields": {
+      "text": "je les bois facilement"
+    }
+  },
+  {
+    "model": "dietetic.UserAnswer",
+    "pk": 8,
+    "fields": {
+      "text": "oui, tous les jours"
+    }
+  },
+  {
+    "model": "dietetic.UserAnswer",
+    "pk": 9,
+    "fields": {
+      "text": "de temps en temps, pour les évènements"
+    }
+  },
+  {
+    "model": "dietetic.UserAnswer",
+    "pk": 10,
+    "fields": {
+      "text": "jamais"
+    }
+  },
+  {
+    "model": "dietetic.UserAnswer",
+    "pk": 11,
+    "fields": {
+      "text": "non, pas du tout… Je n'aime pas ça !"
+    }
+  },
+  {
+    "model": "dietetic.UserAnswer",
+    "pk": 12,
+    "fields": {
+      "text": "oui, je marche ou fais du sport plus intense 30 minutes ou plus par jour"
+    }
+  },
+  {
+    "model": "dietetic.UserAnswer",
+    "pk": 13,
+    "fields": {
+      "text": "j'aimerais mettre en place une activité mais je ne trouve pas le temps pour en faire …"
+    }
+  },
+  {
+    "model": "dietetic.UserAnswer",
+    "pk": 14,
+    "fields": {
+      "text": "je n'ai pas encore pris le temps d'y réfléchir …"
+    }
+  },
+  {
+    "model": "dietetic.UserAnswer",
+    "pk": 15,
+    "fields": {
+      "text": "je fais du sport le week-end ou quelques jours dans la semaine"
+    }
+  },
+  {
+    "model": "dietetic.UserAnswer",
+    "pk": 16,
+    "fields": {
+      "text": "oui, occasionnellement"
+    }
+  },
+  {
+    "model": "dietetic.UserAnswer",
+    "pk": 17,
+    "fields": {
+      "text": "oui car je ne dore pas assez"
+    }
+  },
+  {
+    "model": "dietetic.UserAnswer",
+    "pk": 18,
+    "fields": {
+      "text": "oui, pourtant je dore 7h minimum par nuit"
+    }
+  },
+  {
+    "model": "dietetic.UserAnswer",
+    "pk": 19,
+    "fields": {
+      "text": "non, tout va très bien !"
+    }
+  },
+  {
+    "model": "dietetic.UserAnswer",
+    "pk": 20,
+    "fields": {
+      "text": "oui, mais cela vient du fait que je ne mange pas assez sur les repas"
+    }
+  },
+  {
+    "model": "dietetic.UserAnswer",
+    "pk": 21,
+    "fields": {
+      "text": "oui, mais je ne sais pas vraiment pourquoi"
+    }
+  },
+  {
+    "model": "dietetic.UserAnswer",
+    "pk": 22,
+    "fields": {
+      "text": "non, je n'ai pas ce problème"
+    }
+  },
+  {
+    "model": "dietetic.UserAnswer",
+    "pk": 23,
+    "fields": {
+      "text": "varier tes repas"
+    }
+  },
+  {
+    "model": "dietetic.UserAnswer",
+    "pk": 24,
+    "fields": {
+      "text": "manger plus en quantité : tu as faim"
+    }
+  },
+  {
+    "model": "dietetic.UserAnswer",
+    "pk": 25,
+    "fields": {
+      "text": "manger des plats en sauce"
+    }
+  },
+  {
+    "model": "dietetic.UserAnswer",
+    "pk": 26,
+    "fields": {
+      "text": "ne plus faire attention au contenu de ton assiette"
+    }
+  },
+  {
+    "model": "dietetic.UserAnswer",
+    "pk": 27,
+    "fields": {
+      "text": "manger des aliments sucrés"
+    }
+  },
+  {
+    "model": "dietetic.UserAnswer",
+    "pk": 28,
+    "fields": {
+      "text": "sculpter ta silhouette"
+    }
+  },
+  {
+    "model": "dietetic.UserAnswer",
+    "pk": 29,
+    "fields": {
+      "text": "te remotiver"
+    }
+  },
+  {
+    "model": "dietetic.UserAnswer",
+    "pk": 30,
+    "fields": {
+      "text": "tout va très bien... rien à signaler !"
+    }
+  },
+
+
+
   {
     "model": "dietetic.DiscussionSpace",
     "pk": 1,
