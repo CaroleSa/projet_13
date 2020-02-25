@@ -51,11 +51,138 @@
     "model": "dietetic.RobotQuestion",
     "pk": 1,
     "fields": {
-      "robot_question_type": "",
-      "text": ""
+      "robot_question_type": "1",
+      "text": "Bonjour, je me présente DietiChallenge ! Mon objectif à partir d'aujourd'hui est de t'aider dans ton parcours de perte de poids en la rendant plus attrayante ! Mais avant de nous lancer dans cette FOLLE aventure, j'ai besoin d'en connaître plus sur toi ! Es-tu prêt(e) ?"
     }
   },
-
+  {
+    "model": "dietetic.RobotQuestion",
+    "pk": 2,
+    "fields": {
+      "robot_question_type": "1",
+      "text": "D'après toi, as-tu des connaissances en diététique suffisantes pour t'aider à perdre du poids ?"
+    }
+  },
+  {
+    "model": "dietetic.RobotQuestion",
+    "pk": 3,
+    "fields": {
+      "robot_question_type": "1",
+      "text": "As-tu des problèmes de santé ou des traitements particuliers ?"
+    }
+  },
+  {
+    "model": "dietetic.RobotQuestion",
+    "pk": 4,
+    "fields": {
+      "robot_question_type": "1",
+      "text": "Penses-tu à boire assez d'eau dans la journée ? On comptera les boissons chaudes également."
+    }
+  },
+  {
+    "model": "dietetic.RobotQuestion",
+    "pk": 5,
+    "fields": {
+      "robot_question_type": "1",
+      "text": "Mets-tu du sucre dans tes boissons chaudes ?"
+    }
+  },
+  {
+    "model": "dietetic.RobotQuestion",
+    "pk": 6,
+    "fields": {
+      "robot_question_type": "1",
+      "text": "Pour toi, les boissons sucrées et alcoolisées c'est ..."
+    }
+  },
+  {
+    "model": "dietetic.RobotQuestion",
+    "pk": 7,
+    "fields": {
+      "robot_question_type": "1",
+      "text": "Manges-tu souvent au restaurant ?"
+    }
+  },
+  {
+    "model": "dietetic.RobotQuestion",
+    "pk": 8,
+    "fields": {
+      "robot_question_type": "1",
+      "text": "Fais-tu une activité physique ?"
+    }
+  },
+  {
+    "model": "dietetic.RobotQuestion",
+    "pk": 9,
+    "fields": {
+      "robot_question_type": "1",
+      "text": "Te sens-tu souvent fatigué(e) ?"
+    }
+  },
+  {
+    "model": "dietetic.RobotQuestion",
+    "pk": 10,
+    "fields": {
+      "robot_question_type": "1",
+      "text": "Les légumes sont ils présents dans ton assiette midi et soir ? Attention ! Les pommes de terre, lentilles et autres légumes secs ne font pas parti de cette catégorie."
+    }
+  },
+  {
+    "model": "dietetic.RobotQuestion",
+    "pk": 11,
+    "fields": {
+      "robot_question_type": "1",
+      "text": "Manges-tu des féculents à tous les repas ? On comptera dans cette catégorie le pain, les pâtes, le riz, les légumes secs, ..."
+    }
+  },
+  {
+    "model": "dietetic.RobotQuestion",
+    "pk": 12,
+    "fields": {
+      "robot_question_type": "1",
+      "text": "As-tu faim dans la journée ?"
+    }
+  },
+  {
+    "model": "dietetic.RobotQuestion",
+    "pk": 13,
+    "fields": {
+      "robot_question_type": "1",
+      "text": "As-tu parfois des envies d'aliments sucrés ?"
+    }
+  },
+  {
+    "model": "dietetic.RobotQuestion",
+    "pk": 14,
+    "fields": {
+      "robot_question_type": "1",
+      "text": "Ca y est ! Nous sommes arrivé au bout du questionnaire. J'ai bien pris note de tes réponses. Voilà comment va se passer la suite… Ton parcours débute dès aujourd'hui. Pour cela, il te faudra te peser 1 fois par semaine, pas plus ! Chaque jour de pesée, tu me retrouve ici pour m'informer de tes résultats. De mon coté, je te prépare un nouveau challenge ou un conseil à appliquer rigoureusement chaque semaine ! Alors c'est parti ! Pour débuter ta semaine, il te faut juste cliquer sur la carte à coté... à la semaine prochaine !!!"
+    }
+  },
+  {
+    "model": "dietetic.RobotQuestion",
+    "pk": 15,
+    "fields": {
+      "robot_question_type": "2",
+      "text": "Actuellement, tu éprouves le besoin de ...(plusieurs réponses sont possibles) :"
+    }
+  },
+  {
+    "model": "dietetic.RobotQuestion",
+    "pk": 16,
+    "fields": {
+      "robot_question_type": "3",
+      "text": "Félicitation ! Tu as atteint ton objectif ! Il faut fêter tout ça !!! Bon par contre... j'imagine que tu tiens à rester sur ce poids maintenant ?"
+    }
+  },
+  {
+    "model": "dietetic.RobotQuestion",
+    "pk": 17,
+    "fields": {
+      "robot_question_type": "3",
+      "text": "Félicitation ! Tu as atteint ton premier objectif ! Souhaites-tu renouveller un nouvel objectif ?"
+    }
+  },
 
 
   {
@@ -192,7 +319,7 @@
     "model": "dietetic.UserAnswer",
     "pk": 18,
     "fields": {
-      "text": "oui, pourtant je dore 7h minimum par nuit"
+      "text": "oui, pippourtant je dore 7h minimum par nuit"
     }
   },
   {
@@ -279,7 +406,62 @@
       "text": "tout va très bien... rien à signaler !"
     }
   },
-
+  {
+    "model": "dietetic.UserAnswer",
+    "pk": 31,
+    "fields": {
+      "text": "je pense qu'il me manque quelques notions"
+    }
+  },
+  {
+    "model": "dietetic.UserAnswer",
+    "pk": 32,
+    "fields": {
+      "text": "au minimum une fois par jour"
+    }
+  },
+  {
+    "model": "dietetic.UserAnswer",
+    "pk": 33,
+    "fields": {
+      "text": "1 à 2 fois par semaine"
+    }
+  },
+  {
+    "model": "dietetic.UserAnswer",
+    "pk": 34,
+    "fields": {
+      "text": "occasionnellement"
+    }
+  },
+  {
+    "model": "dietetic.UserAnswer",
+    "pk": 35,
+    "fields": {
+      "text": "parfois"
+    }
+  },
+  {
+    "model": "dietetic.UserAnswer",
+    "pk": 36,
+    "fields": {
+      "text": "je n'en bois pas"
+    }
+  },
+  {
+    "model": "dietetic.UserAnswer",
+    "pk": 37,
+    "fields": {
+      "text": ""
+    }
+  },
+  {
+    "model": "dietetic.UserAnswer",
+    "pk": 38,
+    "fields": {
+      "text": "non, c'était juste pour passer de bonnes vacances"
+    }
+  },
 
 
   {
