@@ -10,9 +10,9 @@ def create_account(request):
     return render(request, "dietetic/index.html", context)
 
 def login(request):
-    form = Account()
-    context = {'form': form}
+    context = {}
     return render(request, "dietetic/index.html", context)
 
 def my_account(request):
-    return render(request, "account/my_account.html")
+    context = {}
+    return render(request, "account/my_account.html", context)
