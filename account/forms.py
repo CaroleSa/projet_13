@@ -19,9 +19,8 @@ class Account(ModelForm):
         model = settings.AUTH_USER_MODEL
         fields = ["username", "email", "password"]
         widgets = {
-            'username': TextInput(attrs={'class': 'form-control', 'Placeholder': 'Pseudo'}),
-            'email': EmailInput(attrs={'class': 'form-control', 'Placeholder': 'Adresse e-mail'}),
-            'password': PasswordInput(attrs={'class': 'form-control',
-                                             'Placeholder': 'Mot de passe à 8 caractères',
-                                             'type': 'password', 'maxlength': '8', 'minlength':"8"})
+            'username': TextInput(attrs={'class': 'form-control'),
+            'email': EmailInput(attrs={'class': 'form-control'}),
+            'password': TextInput(attrs={'class': 'form-control', 'type': 'password',
+                                         'maxlength': '8', 'minlength':"8"})
         }
