@@ -6,9 +6,9 @@
 
 # Imports
 from django.conf import settings
-from .forms import Account
+from .forms import LoginForm
 
 
 def login_form(request):
-    form = Account()
+    form = LoginForm()
     return {'form': form}

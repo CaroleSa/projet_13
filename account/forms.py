@@ -5,12 +5,12 @@
 
 
 # Imports
-from django.forms import ModelForm, TextInput, EmailInput
+from django.forms import ModelForm, TextInput, EmailInput, Charfield
 from django.contrib.auth import get_user_model
 
 
-class Account(ModelForm):
-    """ ModelForm Account
+class LoginForm(ModelForm):
+    """ ModelForm LoginForm
     model : custom User
     fields : username, email and password """
 

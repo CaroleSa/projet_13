@@ -1,6 +1,5 @@
 from django.shortcuts import render
 from django import template
-from .forms import Account
 
 
 
