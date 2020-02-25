@@ -6,7 +6,7 @@
 
 # Imports
 from django.forms import ModelForm, TextInput, EmailInput
-from django.conf import settings
+from django.contrib.auth import get_user_model
 
 
 class Account(ModelForm):
@@ -16,11 +16,11 @@ class Account(ModelForm):
 
     class Meta:
         """ Meta class """
-        model = settings.AUTH_USER_MODEL
+        model = get_user_model()
         fields = ["username", "email", "password"]
         widgets = {
-            'username': TextInput(attrs={'class': 'form-control'),
+            'username': TextInput(attrs={'class': 'form-control'}),
             'email': EmailInput(attrs={'class': 'form-control'}),
             'password': TextInput(attrs={'class': 'form-control', 'type': 'password',
-                                         'maxlength': '8', 'minlength':"8"})
+                                         'maxlength': '8', 'minlength': "8"})
         }

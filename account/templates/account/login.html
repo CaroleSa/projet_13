@@ -1,5 +1,11 @@
-    <div class="tab_y tab col-lg-6">&nbsp;Me connecter&nbsp;</div>
-    <a href="{% url 'account:create_account' %}" ><div class="tab_n tab col-lg-6">&nbsp;Créer mon compte&nbsp;</div></a>
-</div>
+<div class="tab_y tab col-lg-6">&nbsp;Me connecter&nbsp;</div>
+<a href="{% url 'account:create_account' %}" ><div class="tab_n tab col-lg-6">&nbsp;Créer mon compte&nbsp;</div></a>
 <div class="contents col-lg-12">
-    formulaire de connexion
+    <form class="col-lg-offset-2 col-lg-8" action="{% url 'account:login' %}" method="post">{% csrf_token %}
+        <br><p>Adresse e-mail</p>
+        <label for="{{ form.email.id_for_label }}">{{ form.email }}<br>
+        <p>Mot de passe</p>
+        <label for="{{ form.password.id_for_label }}">{{ form.password }}<br>
+        <input type="submit" value="M'identifier"><br>
+    </form>
+</div>

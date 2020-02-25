@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from django import template
+from .forms import Account
 
 
 
@@ -9,7 +10,9 @@ def create_account(request):
     return render(request, "dietetic/index.html", context)
 
 def login(request):
-    return render(request, "dietetic/index.html")
+    form = Account()
+    context = {'form': form}
+    return render(request, "dietetic/index.html", context)
 
 def my_account(request):
     return render(request, "account/my_account.html")
