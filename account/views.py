@@ -7,7 +7,8 @@
 from django.shortcuts import render
 from .forms import CreateAccountForm
 import re
-from django.contrib.auth import get_user_model, authenticate, login
+from django.contrib.auth import get_user_model, authenticate
+from django.contrib.auth import login as auth_login
 
 def create_account(request):
     user = get_user_model()
@@ -41,11 +42,10 @@ def create_account(request):
 
             # create user's account and login user
             else:
-                user.objects.create_user(username=pseudo, email=email, password=password)
-                user = authenticate(username=pseudo, email=email, password=password)
-                login(request, user)
+                user = user.objects.create_user(username=pseudo, email=email, password=password)
+                auth_login(request, user)
                 context = {"create_account": "False", "confirm_message": "Votre compte a bien été créé."}
-    print(context)
+
     return render(request, "dietetic/index.html", context)
 
 
