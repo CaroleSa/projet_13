@@ -10,7 +10,7 @@
         <input type="submit" value="Valider"><br>
     </form>
     {% else %}
-    <br><a>{{confirm_message}}</a><br>
+    <br><a>&nbsp;{{confirm_message}}&nbsp;</a><br>
     <br><a>Vous êtes désormais connecté.</a><br>
     <br><form action="{% url 'index' %}" method="post">{% csrf_token %}
         <input type="hidden" name="logout" value="True" />

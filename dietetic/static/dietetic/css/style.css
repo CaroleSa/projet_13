@@ -40,11 +40,13 @@
     background-image : url("../img/background_header.jpg");
     background-size: 250vh;
     background-position : left left;
-    min-height: 20vh;
+    height: 32vh;
     background-color : rgb(255, 255, 255);
 }
 #login_nav{
-    margin-top : 5vh;
+    margin-top : 2vh;
+    position: relative;
+    z-index: 2;
 }
 .tab{
         display:inline-block;
@@ -73,7 +75,6 @@
         margin-left:3px;
         padding:5px;
         border-radius: 0px 0px 5px 5px;
-
 }
 h1{
         margin:0px;
@@ -86,6 +87,8 @@ h1{
     min-height : 6vh;
     background-color : rgb(255, 255, 255);
     box-shadow : 0px -1px 20px grey;
+    position: relative;
+    z-index: 1;
 }
 i {
     font-size : 2em;
@@ -112,7 +115,7 @@ i {
     background-image : url("../img/background_section.jpg");
     background-size: 40vh;
     background-position : top;
-    min-height : 63vh;
+    min-height : 80vh;
     box-shadow : 0px 5px 10px grey;
 }
 #home_text{
