@@ -11,6 +11,10 @@
     </form>
     {% else %}
     <br><a>{{confirm_message}}</a><br>
-    <br><input type="button" value="Me déconnecter"><br>
+    <br><a>Vous êtes désormais connecté.</a><br>
+    <br><form action="{% url 'index' %}" method="post">{% csrf_token %}
+        <input type="hidden" name="logout" value="True" />
+        <input type="submit" onclick="location.href='{% url 'index' %}'" value="Me déconnecter"/><br><br>
+    </form>
     {% endif %}
 </div>

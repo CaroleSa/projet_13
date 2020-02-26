@@ -5,7 +5,7 @@
 
 # Imports
 from django.shortcuts import render
-from .forms import CreateAccountForm
+from .forms import CreateAccountForm, LoginForm
 import re
 from django.contrib.auth import get_user_model, authenticate
 from django.contrib.auth import login as auth_login
@@ -23,8 +23,7 @@ def create_account(request):
         pseudo = request.POST.get('username')
         email = request.POST.get('email')
         password = request.POST.get('password')
-        print(email, pseudo, password, form.is_valid(), form.errors.as_data().items())
-
+        print(email, form.errors.as_data().items())
         # create an error message if the user's account exists
         if form.is_valid() is False:
             try:
@@ -38,7 +37,7 @@ def create_account(request):
             regex = r"^[a-z0-9-_.]+@[a-z0-9-]+\.(com|fr)$"
             result = re.match(regex, email)
             if result is None:
-                context["error_message"] = ["Adresse e-mail non valide."]
+                context["error_message"] = "Adresse e-mail non valide."
 
             # create user's account and login user
             else:
@@ -50,8 +49,27 @@ def create_account(request):
 
 
 def login(request):
+    user = get_user_model()
+
+    # create a context
     context = {}
+
+    # get data
+    if request.method == 'POST':
+        form = LoginForm(request.POST)
+        email = request.POST.get('email')
+        password = request.POST.get('password')
+        user_authenticate = authenticate(email=email, password=password)
+
+        # if user exists
+        if user_authenticate:
+            login(request, user_authenticate)
+            mail = request.user.email
+            context = {'message': "Bonjour {} ! Vous êtes bien connecté.".format(mail)}
+            return render(request, 'food/index.html', context)
+
     return render(request, "dietetic/index.html", context)
+
 
 def my_account(request):
     context = {}
