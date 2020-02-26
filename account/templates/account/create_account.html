@@ -1,5 +1,14 @@
-    <a href="{% url 'account:login' %}" ><div class="tab_n tab col-lg-6">&nbsp;Me connecter&nbsp;</div></a>
-    <div class="tab_y tab col-lg-6">&nbsp;Créer mon compte&nbsp;</div>
+<a href="{% url 'account:login' %}" ><div class="tab_n tab col-lg-6">&nbsp;Me connecter&nbsp;</div></a>
+<div class="tab_y tab col-lg-6">&nbsp;Créer mon compte&nbsp;</div>
+<div class="contents col-lg-12">
+    <form class="col-lg-offset-2 col-lg-8" action="{% url 'account:create_account' %}" method="post">{% csrf_token %}
+        <br><p>Pseudo</p>
+        <label for="{{ form_create_account.username.id_for_label }}">{{ form_create_account.username }}<br>
+        <p>Adresse e-mail</p>
+        <label for="{{ form_login.email.id_for_label }}">{{ form_login.email }}<br>
+        <p>Mot de passe</p>
+        <label for="{{ form_create_account.password.id_for_label }}">{{ form_create_account.password }}<br>
+        <p>{{error_message}}</p><br>
+        <input type="submit" value="Valider"><br>
+    </form>
 </div>
-<div class="contents">
-    formulaire de création de compte

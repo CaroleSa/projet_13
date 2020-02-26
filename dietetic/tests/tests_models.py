@@ -7,7 +7,6 @@
 # imports
 from unittest import TestCase
 from django.contrib.auth import get_user_model
-from django.conf import settings
 from dietetic.models import RobotQuestion, RobotQuestionType, RobotAdviceType, \
     UserAnswer, RobotAdvices, DiscussionSpace
 from django.db.utils import IntegrityError

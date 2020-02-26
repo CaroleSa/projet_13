@@ -11,4 +11,11 @@ from .forms import LoginForm
 
 def login_form(request):
     form = LoginForm()
-    return {'form': form}
+    return {'form_login': form}
+
+
+def authentication_status(request):
+    if request.user.is_authenticated:
+        return {'authenticated': 'True'}
+
+    return {'authenticated': 'False'}

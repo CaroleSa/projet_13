@@ -38,16 +38,15 @@ class UserManager(BaseUserManager):
 
 
 class IdentityUser(AbstractBaseUser):
-    username = models.CharField(max_length=150, unique=True,
-                                validators=[UnicodeUsernameValidator()],
+    username = models.CharField(max_length=150, validators=[UnicodeUsernameValidator()],
                                 verbose_name='username')
     email = models.EmailField(max_length=254, unique=True, verbose_name='email address')
     password = models.CharField(max_length=128, verbose_name='password')
     last_login = models.DateTimeField(blank=True, null=True, verbose_name='last login')
 
-    USERNAME_FIELD = 'username'
-    EMAIL_FIELD = "email"
-    REQUIRED_FIELDS = ["email"]
+    USERNAME_FIELD = 'email'
+    EMAIL_FIELD = 'email'
+    REQUIRED_FIELDS = ['username']
 
     objects = UserManager()
 
