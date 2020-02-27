@@ -10,58 +10,49 @@ import re
 from django.contrib.auth import get_user_model, authenticate
 from django.contrib.auth import login as auth_login
 
+
 def create_account(request):
     user = get_user_model()
 
     # create a context
     form = CreateAccountForm()
     context = {'form_create_account': form, "create_account": "True"}
-    print("Carole", request.method)
+
     # get data
     if request.method == 'POST':
         form = CreateAccountForm(request.POST)
         pseudo = request.POST.get('username')
         email = request.POST.get('email')
         password = request.POST.get('password')
-        print("erreurici", email, form.is_valid(), form.errors.as_data().items())
 
-        regex = r"^[a-zA-Z0-9$@%*+\-_!\S]+$"
-        result = re.match(regex, password)
-        if result is None:
-            context["error_message"] = "Mot de passe non valide : peut contenir lettres, chiffres ou symboles ($@%*+\-_!), sans espace."
-
-        # create an error message if the user's account exists
-        if form.is_valid() is False:
-            regex = r"^[a-z0-9-_.]+@[a-z0-9-]+\.(com|fr)$"
-            result = re.match(regex, email)
+        # checks the validity of the password, email and pseudo format
+        dict = {password: [r"^[a-zA-Z0-9$@%*+\-_!\S]+$", "Mot de passe non valide : peut contenir lettres, "
+                                                         "chiffres ou symboles $@%*+\-_! sans espace. "
+                                                         "Doit être composé de 8 caractères minimum."],
+                email: [r"^[a-z0-9-_.]+@[a-z0-9-]+\.(com|fr)$", "Adresse e-mail non valide."],
+                pseudo: [r"^[a-zA-Z0-9\S]+$", "Pseudo non valide : peut contenir lettres ou chiffres, "
+                                              "sans espace ni symbole."]}
+        for data, regex_message in dict.items():
+            regex = regex_message[0]
+            result = re.match(regex, data)
             if result is None:
-                context["error_message"] = "Adresse e-mail non valide."
-            regex = r"^[a-zA-Z0-9\S]+$"
-            result = re.match(regex, pseudo)
-            if result is None:
-                context["error_message"] = "Pseudo non valide : peut contenir lettres ou chiffres, sans espace ni symbole."
+                context["error_message"] = regex_message[1]
+                return render(request, "dietetic/index.html", context)
 
-            else:
-                try:
-                    user.objects.get(email=email)
-                    context["error_message"] = "Ce compte existe déjà."
-                except user.DoesNotExist:
-                    pass
-
-        # create an error message if email isn't valid
+        # create user's account and login user
         if form.is_valid() is True:
-            regex = r"^[a-z0-9-_.]+@[a-z0-9-]+\.(com|fr)$"
-            result = re.match(regex, email)
-            if result is None:
-                context["error_message"] = "Adresse e-mail non valide."
-
-            # create user's account and login user
-            else:
-                user = user.objects.create_user(username=pseudo, email=email, password=password)
-                auth_login(request, user)
-                context = {"create_account": "False",
-                           "confirm_message": "Votre compte a bien été créé.",
-                           "login_message": "Bonjour {} ! Vous êtes bien connecté.".format(pseudo)}
+            user = user.objects.create_user(username=pseudo, email=email, password=password)
+            auth_login(request, user)
+            context = {"create_account": "False",
+                       "confirm_message": "Votre compte a bien été créé.",
+                       "login_message": "Bonjour {} ! Vous êtes bien connecté.".format(pseudo)}
+        # create an other error message
+        else:
+            try:
+                user.objects.get(email=email)
+                context["error_message"] = "Ce compte existe déjà."
+            except user.DoesNotExist:
+                context["error_message"] = "Formulaire non valide."
 
     return render(request, "dietetic/index.html", context)
 
