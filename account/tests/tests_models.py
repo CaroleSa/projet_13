@@ -7,7 +7,9 @@
 # imports
 from unittest import TestCase
 from django.contrib.auth import get_user_model
-from account.models import ResultsUser, ProfileUser
+from account.models import ResultsUser, ProfileUser, HistoryUser
+from datetime import date
+import re
 
 
 class TestsModels(TestCase):
@@ -43,7 +45,7 @@ class TestsModels(TestCase):
         """ Test create user account """
         user_created = self.user.objects.create_user(id=self.id_user1, username=self.username1, email=self.email1,
                                                      password=self.password1)
-        self.assertIn(str(user_created), self.username1)
+        self.assertIn(self.username1, str(user_created))
 
     def test_get_user_created(self):
         """ Test get account user created or not created """
@@ -88,3 +90,13 @@ class TestsModels(TestCase):
         data = ResultsUser.objects.values_list('weight').filter(weighing_date=date)
         get_weight_user = data.get(user=self.user_created)
         self.assertEqual(get_weight_user[0], weight)
+
+    def test_add_get_history_user(self):
+        """ Test get user's history data """
+        HistoryUser.objects.create(user=self.user_created)
+        data = HistoryUser.objects.values_list("date_joined")
+        date_data = data.get(user=self.user_created)
+        date_create_account_list = re.findall('\d+', str(date_data))[0:3]
+        today = date.today()
+        today_list = [str(today.year), str(today.month), str(today.day)]
+        self.assertEqual(date_create_account_list, today_list)

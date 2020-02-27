@@ -9,6 +9,7 @@ from .forms import CreateAccountForm, LoginForm
 import re
 from django.contrib.auth import get_user_model, authenticate
 from django.contrib.auth import login as auth_login
+from .models import HistoryUser, IdentityUser
 
 
 def create_account(request):
@@ -88,5 +89,13 @@ def login(request):
 
 
 def my_account(request):
+    user = get_user_model()
+    pseudo = request.user.username
+    email = request.user.email
+    id_user = request.user.id
+
+    HistoryUser.objects.get(user=id_user)
+    print(date_account_creation)
+
     context = {}
     return render(request, "account/my_account.html", context)
