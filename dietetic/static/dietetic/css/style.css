@@ -40,7 +40,7 @@
     background-image : url("../img/background_header.jpg");
     background-size: 250vh;
     background-position : left left;
-    height: 32vh;
+    height: 27vh;
     background-color : rgb(255, 255, 255);
 }
 #login_nav{
@@ -131,7 +131,7 @@ i {
     background-image : url("../img/background_section.jpg");
     background-size: 40vh;
     background-position : top;
-    min-height : 80vh;
+    min-height : 58vh;
     box-shadow : 0px 5px 10px grey;
 }
 #home_text{
