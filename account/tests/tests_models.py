@@ -7,7 +7,7 @@
 # imports
 from unittest import TestCase
 from django.contrib.auth import get_user_model
-from account.models import ResultsUser, ProfileUser, HistoryUser
+from account.models import ResultsUser, ProfileUser, HistoryUser, StatusUser
 from datetime import date
 import re
 
@@ -92,7 +92,7 @@ class TestsModels(TestCase):
         self.assertEqual(get_weight_user[0], weight)
 
     def test_add_get_history_user(self):
-        """ Test get user's history data """
+        """ Test add and get user's history data """
         HistoryUser.objects.create(user=self.user_created)
         data = HistoryUser.objects.values_list("date_joined")
         date_data = data.get(user=self.user_created)

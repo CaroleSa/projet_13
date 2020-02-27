@@ -173,12 +173,21 @@ h2{
 }
 #discussion_space, #text_my_results, #graphic_my_results, #my_account{
     background-color : rgb(255, 255, 255);
-    min-height : 50vh;
+    max-height : 47vh;
     padding : 3vh;
-    margin-top : 7vh;
-    margin-bottom : 5vh;
+    margin-top : 5vh;
     border-bottom: 2px black outset;
     border-right: 2px black outset;
+}
+.fa-user-times, .fa-key{
+    font-size : 2em ;
+    color : rgb(   0, 0, 0   );
+}
+.fa-user-times:hover{
+    color : rgb( 173, 36, 9 );
+}
+.fa-key:hover{
+    color : rgb(   20, 126, 62   );
 }
 
 

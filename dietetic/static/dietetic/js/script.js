@@ -27,3 +27,14 @@ for (const elt in color){
   	    $logo.css('background-color', "rgb(233,226,218)");
     }
 }
+
+
+//     delete account
+
+$('.fa-user-times').on('click', function() {
+$.ajax({
+data : {delete_account: "True"},
+type : 'POST',
+url : ''
+});
+});

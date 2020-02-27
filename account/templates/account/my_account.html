@@ -6,9 +6,15 @@
     <div id="my_account" class="col-lg-offset-1 col-lg-10">
         <div id="text_my_account" class="col-lg-5">
             <h2>Mon compte</h2></br>
-            <p>Date de création du compte :</p></br>
-            <p>Identifiant :</p>
-            <p>Supprimer mon compte et modifier mon mot de passe :</p>
+            <p>Inscrit depuis le {{date_create_account}}</p><hr />
+            <p class="bold">Pseudo : <font color="green">{{pseudo}}</font></p><hr />
+            <p class="bold">Adresse e-mail : <font color="blue">{{email}}</font></p><hr />
+            <form action="{% url 'index' %}" method="post">{% csrf_token %}
+                  <input type="hidden" name="delete_account" value="True" />
+                  <input type="image"  /><i class="fas fa-user-times"></i>
+              </form>
+            <p><a href="{% url 'account:my_account' %}"><i class="fas fa-key"></i></a>&nbsp;&nbsp;&nbsp;Modifier mon mot de passe</p>
+            <p><a href="{% url 'index' %}"><i class="fas fa-user-times"></i></a>&nbsp;&nbsp;&nbsp;Supprimer mon compte</p>
         </div>
     </div>
 </div>
