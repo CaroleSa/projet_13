@@ -12,8 +12,10 @@
     </form>
     {% else %}
     {% if login_message %}
-    <br><a>&nbsp;{{confirm_message}}&nbsp;</a><br>
-    <br><a>&nbsp;{{login_message}}&nbsp;</a><br>
+    {% if confirm_message %}
+    <br><a class="col-lg-offset-2 col-lg-8">&nbsp;{{confirm_message}}&nbsp;</a><br>
+    {% endif %}
+    <br><a class="col-lg-offset-2 col-lg-8">&nbsp;{{login_message}}&nbsp;</a><br>
     {% endif %}
     <br><form action="{% url 'index' %}" method="post">{% csrf_token %}
         <input type="hidden" name="logout" value="True" />

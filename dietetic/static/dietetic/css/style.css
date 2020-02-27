@@ -95,7 +95,7 @@ h1{
 
 /*  NAV  */
 #button_nav{
-    min-height : 6vh;
+    height : 7.5vh;
     background-color : rgb(255, 255, 255);
     box-shadow : 0px -1px 20px grey;
     position: relative;
