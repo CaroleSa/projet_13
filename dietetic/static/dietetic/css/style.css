@@ -83,6 +83,10 @@ input{
 .grey{
     color: grey;
 }
+.red-bold{
+    color: red;
+    font-weight : bold ;
+}
 h1{
         margin:0px;
         padding:0px;

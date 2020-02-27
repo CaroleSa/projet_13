@@ -16,21 +16,26 @@ def create_account(request):
     # create a context
     form = CreateAccountForm()
     context = {'form_create_account': form, "create_account": "True"}
-
+    print("Carole", request.method)
     # get data
     if request.method == 'POST':
         form = CreateAccountForm(request.POST)
         pseudo = request.POST.get('username')
         email = request.POST.get('email')
         password = request.POST.get('password')
-        print(email, form.errors.as_data().items())
+        print("erreurici", email, form.is_valid(), form.errors.as_data().items())
         # create an error message if the user's account exists
         if form.is_valid() is False:
-            try:
-                user.objects.get(email=email)
-                context["error_message"] = "Ce compte existe déjà."
-            except user.DoesNotExist:
-                pass
+            regex = r"^[a-z0-9-_.]+@[a-z0-9-]+\.(com|fr)$"
+            result = re.match(regex, email)
+            if result is None:
+                context["error_message"] = "Adresse e-mail non valide."
+            else:
+                try:
+                    user.objects.get(email=email)
+                    context["error_message"] = "Ce compte existe déjà."
+                except user.DoesNotExist:
+                    pass
 
         # create an error message if email isn't valid
         if form.is_valid() is True:
