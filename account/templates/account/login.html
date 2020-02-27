@@ -6,15 +6,18 @@
         <br><p>Adresse e-mail</p>
         <label for="{{ form_login.email.id_for_label }}">{{ form_login.email }}<br>
         <p>Mot de passe</p>
-        <label for="{{ form_login.password.id_for_label }}">{{ form_login.password }}<br>
-        <input type="submit" value="Valider"><br>
+        <label for="{{ form_login.password.id_for_label }}">{{ form_login.password }}
+        <p>&nbsp;{{error_message}}&nbsp;</p>
+        <input class="col-lg-offset-2 col-lg-8" type="submit" value="Valider"><br>
     </form>
     {% else %}
+    {% if login_message %}
     <br><a>&nbsp;{{confirm_message}}&nbsp;</a><br>
-    <br><a>Vous êtes désormais connecté.</a><br>
+    <br><a>&nbsp;{{login_message}}&nbsp;</a><br>
+    {% endif %}
     <br><form action="{% url 'index' %}" method="post">{% csrf_token %}
         <input type="hidden" name="logout" value="True" />
-        <input type="submit" onclick="location.href='{% url 'index' %}'" value="Me déconnecter"/><br><br>
+        <input class="col-lg-offset-2 col-lg-8" type="submit" onclick="location.href='{% url 'index' %}'" value="Me déconnecter"/><br><br>
     </form>
     {% endif %}
 </div>

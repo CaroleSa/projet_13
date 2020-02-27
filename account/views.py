@@ -43,7 +43,9 @@ def create_account(request):
             else:
                 user = user.objects.create_user(username=pseudo, email=email, password=password)
                 auth_login(request, user)
-                context = {"create_account": "False", "confirm_message": "Votre compte a bien été créé."}
+                context = {"create_account": "False",
+                           "confirm_message": "Votre compte a bien été créé.",
+                           "login_message": "Bonjour {} ! Vous êtes bien connecté.".format(pseudo)}
 
     return render(request, "dietetic/index.html", context)
 
@@ -56,17 +58,24 @@ def login(request):
 
     # get data
     if request.method == 'POST':
-        form = LoginForm(request.POST)
         email = request.POST.get('email')
         password = request.POST.get('password')
         user_authenticate = authenticate(email=email, password=password)
 
-        # if user exists
+        # login user if the user exists
         if user_authenticate:
-            login(request, user_authenticate)
-            mail = request.user.email
-            context = {'message': "Bonjour {} ! Vous êtes bien connecté.".format(mail)}
-            return render(request, 'food/index.html', context)
+            auth_login(request, user_authenticate)
+            pseudo = request.user.username
+            context = {'login_message': "Bonjour {} ! Vous êtes bien connecté.".format(pseudo)}
+
+        # create an error message if the user don't exists
+        # or if the password is false
+        else:
+            try:
+                user.objects.get(email=email)
+                context["error_message"] = "Le mot de passe est incorrect."
+            except user.DoesNotExist:
+                context["error_message"] = "Ce compte n'existe pas."
 
     return render(request, "dietetic/index.html", context)
 
