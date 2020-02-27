@@ -24,12 +24,23 @@ def create_account(request):
         email = request.POST.get('email')
         password = request.POST.get('password')
         print("erreurici", email, form.is_valid(), form.errors.as_data().items())
+
+        regex = r"^[a-zA-Z0-9$@%*+\-_!\S]+$"
+        result = re.match(regex, password)
+        if result is None:
+            context["error_message"] = "Mot de passe non valide : peut contenir lettres, chiffres ou symboles ($@%*+\-_!), sans espace."
+
         # create an error message if the user's account exists
         if form.is_valid() is False:
             regex = r"^[a-z0-9-_.]+@[a-z0-9-]+\.(com|fr)$"
             result = re.match(regex, email)
             if result is None:
                 context["error_message"] = "Adresse e-mail non valide."
+            regex = r"^[a-zA-Z0-9\S]+$"
+            result = re.match(regex, pseudo)
+            if result is None:
+                context["error_message"] = "Pseudo non valide : peut contenir lettres ou chiffres, sans espace ni symbole."
+
             else:
                 try:
                     user.objects.get(email=email)

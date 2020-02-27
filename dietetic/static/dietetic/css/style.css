@@ -83,9 +83,14 @@ input{
 .grey{
     color: grey;
 }
-.red-bold{
+.red{
     color: red;
+}
+.bold{
     font-weight : bold ;
+}
+.center{
+    text-align:center;
 }
 h1{
         margin:0px;
@@ -95,7 +100,7 @@ h1{
 
 /*  NAV  */
 #button_nav{
-    height : 7.5vh;
+    min-height : 7.5vh;
     background-color : rgb(255, 255, 255);
     box-shadow : 0px -1px 20px grey;
     position: relative;

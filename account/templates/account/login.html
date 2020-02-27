@@ -7,15 +7,15 @@
         <label for="{{ form_login.email.id_for_label }}">{{ form_login.email }}<br>
         <p>Mot de passe</p>
         <label for="{{ form_login.password.id_for_label }}">{{ form_login.password }}
-        <p class="red-bold">&nbsp;{{error_message}}&nbsp;</p>
+        <br><p class="red bold center col-lg-12">{{error_message}}</p>
         <input class="col-lg-offset-2 col-lg-8" type="submit" value="Valider"><br>
     </form>
     {% else %}
     {% if login_message %}
     {% if confirm_message %}
-    <br><a class="col-lg-offset-2 col-lg-8">&nbsp;{{confirm_message}}&nbsp;</a><br>
+    <br><a class="col-lg-12">{{confirm_message}}</a>
     {% endif %}
-    <br><a class="col-lg-offset-2 col-lg-8">&nbsp;{{login_message}}&nbsp;</a><br>
+    <br><a class="col-lg-12">{{login_message}}</a><br>
     {% endif %}
     <br><form action="{% url 'index' %}" method="post">{% csrf_token %}
         <input type="hidden" name="logout" value="True" />

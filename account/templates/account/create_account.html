@@ -2,13 +2,13 @@
 <div class="tab_y tab col-lg-6">&nbsp;Créer mon compte&nbsp;</div>
 <div class="contents col-lg-12">
     <form class="col-lg-offset-2 col-lg-8" action="{% url 'account:create_account' %}" method="post">{% csrf_token %}
-        <br><p>Pseudo<em class="grey">&nbsp;(sans espaces)</em></p>
+        <br><p>Pseudo</p>
         <label for="{{ form_create_account.username.id_for_label }}">{{ form_create_account.username }}<br>
         <p>Adresse e-mail</p>
         <label for="{{ form_login.email.id_for_label }}">{{ form_login.email }}<br>
-        <p>Mot de passe<em class="grey">&nbsp;(8 caractères)</em></p>
+        <p>Mot de passe<em class="grey">&nbsp;(min 8 caractères)</em></p>
         <label for="{{ form_create_account.password.id_for_label }}">{{ form_create_account.password }}
-        <p class="red-bold">&nbsp;{{error_message}}&nbsp;</p>
+        <br><p class="red bold center col-lg-12">{{error_message}}</p>
         <input class="col-lg-offset-2 col-lg-8" type="submit" value="Valider"><br>
     </form>
 </div>
