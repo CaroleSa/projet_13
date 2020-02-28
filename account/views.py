@@ -66,6 +66,12 @@ def create_account(request):
 
 def login(request):
     user = get_user_model()
+    # test
+    try:
+        user_account = user.objects.get(email="test@test.fr")
+        print(user_account.is_active, "avant authentification")
+    except:
+        pass
 
     # create a context
     context = {}
@@ -75,24 +81,23 @@ def login(request):
         email = request.POST.get('email')
         password = request.POST.get('password')
         user_authenticate = authenticate(email=email, password=password)
-        user = user.objects.get(id=user_authenticate.id)
 
-        # login user if the user exists
-        if user_authenticate and user.is_active is True:
+        # login user if the user exists and this account is activate
+        if user_authenticate and user_authenticate.is_active is True:
             auth_login(request, user_authenticate)
-            pseudo = request.user.username
-            context = {'login_message': "Bonjour {} ! Vous êtes bien connecté.".format(pseudo)}
+            context = {'login_message': "Bonjour {} ! Vous êtes bien connecté.".format(request.user.username)}
 
         # create an error message if the user don't exists
         # or if the password is false
         else:
-            if user.is_active is True:
+            if user_authenticate.is_active is False:
                 context["error_message"] = "Ce compte a été supprimé."
-            try:
-                user.objects.get(email=email)
-                context["error_message"] = "Le mot de passe est incorrect."
-            except user.DoesNotExist:
-                context["error_message"] = "Ce compte n'existe pas."
+            else:
+                try:
+                    user.objects.get(email=email)
+                    context["error_message"] = "Le mot de passe est incorrect."
+                except user.DoesNotExist:
+                    context["error_message"] = "Ce compte n'existe pas."
 
     return render(request, "dietetic/index.html", context)
 

@@ -4,17 +4,28 @@
 {% block informations %}
 <div class="row">
     <div id="my_account" class="col-lg-offset-1 col-lg-10">
-        <div id="text_my_account" class="col-lg-5">
+        <div class="row">
+        <div id="text_my_account" class="col-lg-3">
             <h2>Mon compte</h2></br>
             <p>Inscrit depuis le {{date_create_account}}</p><hr />
             <p class="bold">Pseudo : <font color="green">{{pseudo}}</font></p><hr />
             <p class="bold">Adresse e-mail : <font color="blue">{{email}}</font></p><hr />
-            <form action="{% url 'index' %}" method="post">{% csrf_token %}
-                  <input type="hidden" name="delete_account" value="True" />
-                  <input type="image"  /><i class="fas fa-user-times"></i>
-              </form>
-            <p><a href="{% url 'account:my_account' %}"><i class="fas fa-key"></i></a>&nbsp;&nbsp;&nbsp;Modifier mon mot de passe</p>
-            <p><a href="{% url 'index' %}"><i class="fas fa-user-times"></i></a>&nbsp;&nbsp;&nbsp;Supprimer mon compte</p>
+        </div>
+        <div class="col-lg-3">
+            <p><i class="fas fa-key"></i>&nbsp;&nbsp;&nbsp;Gestion du compte</p>
+            <form id="form_password" action="{% url 'account:my_account' %}" method="post">{% csrf_token %}
+                <input type="hidden" name="edit_password" value="True" />
+                <p>Modifier mon mot de passe :</p>
+                <label for="{{ form_login.password.id_for_label }}">{{ form_login.password }}
+            </form></br>
+
+            <form id="delete_account" action="{% url 'index' %}" method="post">{% csrf_token %}
+                <input type="hidden" name="delete_account" value="True" />
+                <input type="submit" class="fas fa-user-times" value="&#xf235;">&nbsp;&nbsp;&nbsp;Supprimer mon compte
+            </form>
+
+
+        </div>
         </div>
     </div>
 </div>

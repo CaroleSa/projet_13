@@ -182,7 +182,12 @@ h2{
 .fa-user-times, .fa-key{
     font-size : 2em ;
     color : rgb(   0, 0, 0   );
+    background-color : rgb(233,226,218);
+    border-radius: 10px 10px 10px 10px;
+    padding:1vh;
+    border:none;
 }
+
 .fa-user-times:hover{
     color : rgb( 173, 36, 9 );
 }

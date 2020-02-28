@@ -5,18 +5,17 @@ from django.contrib.auth import get_user_model, logout
 def index(request):
     context = {}
     user = get_user_model()
-    user = user.objects.get(id=request.user.id)
-    print(user.is_active)
 
     # USER'S DEACTIVATION AND DISPLAY THE INDEX PAGE
     # if the user clicks on the logo "supprimer mon compte"
     delete_account = request.POST.get('delete_account', 'False')
     if delete_account == 'True':
-        user = request.user
+        user_account = user.objects.get(email=request.user.email)
         logout(request)
-        user.is_active = False
-        user.save()
-        context = {'confirm_message': "Votre compte a bien été supprimé."}
+        user_account.is_active = False
+        user_account.save()
+        print(user_account.is_active, user_account.email, "quand compte supprimé")
+        context = {'error_message': "Votre compte a bien été supprimé."}
 
     # USER'S DISCONNECTION AND DISPLAY THE INDEX PAGE
     # if the user clicks on the button "me déconnecter"

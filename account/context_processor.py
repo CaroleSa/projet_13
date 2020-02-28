@@ -7,10 +7,19 @@
 # Imports
 from django.conf import settings
 from .forms import LoginForm
+from django.contrib.auth import get_user_model, authenticate
 
 
 def login_form(request):
     form = LoginForm()
+    user = get_user_model()
+    # to deleted
+    try:
+        user_account = user.objects.get(email=request.user.email)
+        print(user_account.is_active, request.user.email)
+    except:
+        pass
+
     return {'form_login': form}
 
 

@@ -29,12 +29,11 @@ for (const elt in color){
 }
 
 
-//     delete account
+var $input = $("#form_password");
+$input.css('visibility', "hidden");
+var $key = $(".fa-key");
+$key.on('click', function() {
+    $input.css('visibility', "");
+});
 
-$('.fa-user-times').on('click', function() {
-$.ajax({
-data : {delete_account: "True"},
-type : 'POST',
-url : ''
-});
-});
+
