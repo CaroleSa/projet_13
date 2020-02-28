@@ -105,7 +105,6 @@ def login(request):
 
 
 def my_account(request):
-    user = get_user_model()
 
     # get and display user's data
     date_data = HistoryUser.objects.values_list("date_joined").get(user=request.user.id)
@@ -116,20 +115,21 @@ def my_account(request):
 
     context = {"date_create_account": date_create_account_str, "email": email, "pseudo": pseudo}
 
-    # USER'S DEACTIVATION AND DISPLAY THE INDEX PAGE
-    # if the user clicks on the logo "supprimer mon compte"
-    delete_account = request.POST.get('delete_account', 'False')
-    if delete_account == 'True':
-        user_account = user.objects.get(email=request.user.email)
-        logout(request)
-        user_account.is_active = False
-        user_account.save()
-        print(user_account.is_active, user_account.email, "quand compte supprimé")
-        context = {'error_message': "Votre compte a bien été supprimé."}
-        return render(request, "dietetic/index.html", context)
-
-    # edit user's password
     if request.method == 'POST':
+
+        # USER'S DEACTIVATION AND DISPLAY THE INDEX PAGE
+        # if the user clicks on the logo "supprimer mon compte"
+        delete_account = request.POST.get('delete_account', 'False')
+        if delete_account == 'True':
+            user = request.user
+            logout(request)
+            user.is_active = False
+            user.save()
+            print(user.is_active, user.email, "quand compte supprimé")
+            context = {'error_message': "Votre compte a bien été supprimé."}
+            return render(request, "dietetic/index.html", context)
+
+        # edit user's password
         user = get_user_model()
         password = request.POST.get('password')
         new_password = request.POST.get('new_password')

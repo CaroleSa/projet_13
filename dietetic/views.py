@@ -4,11 +4,10 @@ from django.contrib.auth import get_user_model, logout
 
 def index(request):
     context = {}
-    user = get_user_model()
-
     # USER'S DISCONNECTION AND DISPLAY THE INDEX PAGE
     # if the user clicks on the button "me déconnecter"
     logout_user = request.POST.get('logout', 'False')
+
     if logout_user == 'True':
         logout(request)
 
