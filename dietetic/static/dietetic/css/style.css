@@ -187,7 +187,10 @@ h2{
     padding:1vh;
     border:none;
 }
-
+#submit_password{
+    background-color : rgb(233,226,218);
+    border:none;
+}
 .fa-user-times:hover{
     color : rgb( 173, 36, 9 );
 }

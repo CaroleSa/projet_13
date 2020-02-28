@@ -82,15 +82,17 @@ def login(request):
         password = request.POST.get('password')
         user_authenticate = authenticate(email=email, password=password)
 
+        user_account = user.objects.get(email=email)
+
         # login user if the user exists and this account is activate
-        if user_authenticate and user_authenticate.is_active is True:
+        if user_authenticate and user_account.is_active is True:
             auth_login(request, user_authenticate)
             context = {'login_message': "Bonjour {} ! Vous êtes bien connecté.".format(request.user.username)}
 
         # create an error message if the user don't exists
         # or if the password is false
         else:
-            if user_authenticate.is_active is False:
+            if user.is_active is False:
                 context["error_message"] = "Ce compte a été supprimé."
             else:
                 try:
@@ -103,16 +105,34 @@ def login(request):
 
 
 def my_account(request):
-    user = get_user_model()
-
-    # get user's data
+    # get and display user's data
     data = HistoryUser.objects.values_list("date_joined")
     date_data = data.get(user=request.user.id)
     date_create_account_list = re.findall('\d+', str(date_data))[0:3]
     date_create_account_str = ""+date_create_account_list[2]+" "+calendar.month_name[int(date_create_account_list[1])]+" "+date_create_account_list[0]+""
-
     email = request.user.email
     pseudo = request.user.username
 
     context = {"date_create_account": date_create_account_str, "email": email, "pseudo": pseudo}
+
+    # edit user's password
+    if request.method == 'POST':
+        user = get_user_model()
+        password = request.POST.get('password')
+        new_password = request.POST.get('new_password')
+        email = user.objects.values_list("email").get(id=request.user.id)[0]
+        user_authenticate = authenticate(email=email, password=password)
+        if user_authenticate:
+            regex = r"^[a-zA-Z0-9$@%*+\-_!\S]+$"
+            result = re.match(regex, new_password)
+            if result is None:
+                context["error_new_password"] = "invalide"
+            else:
+                user = user.objects.get(email=email)
+                user.set_password(new_password)
+                user.save()
+                context["confirm_message"] = "Votre mot de passe a bien été modifié."
+        else:
+            context["error_actual_password"] = "incorrect"
+
     return render(request, "account/my_account.html", context)

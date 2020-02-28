@@ -27,13 +27,3 @@ for (const elt in color){
   	    $logo.css('background-color', "rgb(233,226,218)");
     }
 }
-
-
-var $input = $("#form_password");
-$input.css('visibility', "hidden");
-var $key = $(".fa-key");
-$key.on('click', function() {
-    $input.css('visibility', "");
-});
-
-

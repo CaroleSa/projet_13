@@ -5,20 +5,24 @@
 <div class="row">
     <div id="my_account" class="col-lg-offset-1 col-lg-10">
         <div class="row">
-        <div id="text_my_account" class="col-lg-3">
+        <div id="text_my_account" class="col-lg-offset-1 col-lg-3">
             <h2>Mon compte</h2></br>
             <p>Inscrit depuis le {{date_create_account}}</p><hr />
             <p class="bold">Pseudo : <font color="green">{{pseudo}}</font></p><hr />
-            <p class="bold">Adresse e-mail : <font color="blue">{{email}}</font></p><hr />
+            <p class="bold">Adresse e-mail : <font color="blue">{{email}}</font></p><hr /></br>
+            <p class="red bold">{{confirm_message}}</p>
         </div>
-        <div class="col-lg-3">
-            <p><i class="fas fa-key"></i>&nbsp;&nbsp;&nbsp;Gestion du compte</p>
+        <div class="col-lg-offset-1 col-lg-3">
+            <p><i class="fas fa-key"></i>&nbsp;&nbsp;&nbsp;Modifier mon mot de passe</p>
             <form id="form_password" action="{% url 'account:my_account' %}" method="post">{% csrf_token %}
-                <input type="hidden" name="edit_password" value="True" />
-                <p>Modifier mon mot de passe :</p>
-                <label for="{{ form_login.password.id_for_label }}">{{ form_login.password }}
+                <p>mot de passe actuel <font color="red">{{error_actual_password}}</font></p>
+                <label for="{{ form_login.password.id_for_label }}">{{ form_login.password }}</br>
+                <p>nouveau mot de passe <font color="red">{{error_new_password}}</font></p>
+                <input class='form-control' type="password" minlength="8" name="new_password"></br>
+                <input id="submit_password" class='form-control col-lg-offset-2 col-lg-8' type="submit" value="valider">
             </form></br>
-
+            </div>
+            <div class="col-lg-offset-1 col-lg-3">
             <form id="delete_account" action="{% url 'index' %}" method="post">{% csrf_token %}
                 <input type="hidden" name="delete_account" value="True" />
                 <input type="submit" class="fas fa-user-times" value="&#xf235;">&nbsp;&nbsp;&nbsp;Supprimer mon compte
