@@ -7,7 +7,7 @@
 from django.shortcuts import render
 from .forms import CreateAccountForm, LoginForm
 import re
-from django.contrib.auth import get_user_model, authenticate
+from django.contrib.auth import get_user_model, authenticate, logout
 from django.contrib.auth import login as auth_login
 from .models import HistoryUser, IdentityUser, StatusUser
 import calendar
@@ -105,15 +105,28 @@ def login(request):
 
 
 def my_account(request):
+    user = get_user_model()
+
     # get and display user's data
-    data = HistoryUser.objects.values_list("date_joined")
-    date_data = data.get(user=request.user.id)
+    date_data = HistoryUser.objects.values_list("date_joined").get(user=request.user.id)
     date_create_account_list = re.findall('\d+', str(date_data))[0:3]
     date_create_account_str = ""+date_create_account_list[2]+" "+calendar.month_name[int(date_create_account_list[1])]+" "+date_create_account_list[0]+""
     email = request.user.email
     pseudo = request.user.username
 
     context = {"date_create_account": date_create_account_str, "email": email, "pseudo": pseudo}
+
+    # USER'S DEACTIVATION AND DISPLAY THE INDEX PAGE
+    # if the user clicks on the logo "supprimer mon compte"
+    delete_account = request.POST.get('delete_account', 'False')
+    if delete_account == 'True':
+        user_account = user.objects.get(email=request.user.email)
+        logout(request)
+        user_account.is_active = False
+        user_account.save()
+        print(user_account.is_active, user_account.email, "quand compte supprimé")
+        context = {'error_message': "Votre compte a bien été supprimé."}
+        return render(request, "dietetic/index.html", context)
 
     # edit user's password
     if request.method == 'POST':
