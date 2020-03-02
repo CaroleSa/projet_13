@@ -136,7 +136,6 @@ def my_account(request):
         user = get_user_model()
         password = request.POST.get('password')
         new_password = request.POST.get('new_password')
-        email = user.objects.values_list("email").get(id=request.user.id)[0]
         user_authenticate = authenticate(email=email, password=password)
         if user_authenticate:
             regex = r"^[a-zA-Z0-9$@%*+\-_!\S]+$"
