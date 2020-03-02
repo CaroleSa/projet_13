@@ -83,24 +83,25 @@ def login(request):
         password = request.POST.get('password')
         user_authenticate = authenticate(email=email, password=password)
 
-        user_account = user.objects.get(email=email)
+        try:
+            user_account = user.objects.get(email=email)
 
-        # login user if the user exists and this account is activate
-        if user_authenticate and user_account.is_active is True:
-            auth_login(request, user_authenticate)
-            context = {'login_message': "Bonjour {} ! Vous êtes bien connecté.".format(request.user.username)}
+            # login user if the user exists and this account is activate
+            if user_authenticate and user_account.is_active is True:
+                auth_login(request, user_authenticate)
+                context = {'login_message': "Bonjour {} ! Vous êtes bien connecté.".format(request.user.username)}
 
-        # create an error message if the user don't exists
-        # or if the password is false
-        else:
-            if user.is_active is False:
-                context["error_message"] = "Ce compte a été supprimé."
+            # create an error message if the user don't exists
+            # or if the password is false
             else:
-                try:
+                if user.is_active is False:
+                    context["error_message"] = "Ce compte a été supprimé."
+                else:
                     user.objects.get(email=email)
                     context["error_message"] = "Le mot de passe est incorrect."
-                except user.DoesNotExist:
-                    context["error_message"] = "Ce compte n'existe pas."
+
+        except user.DoesNotExist:
+            context["error_message"] = "Ce compte n'existe pas."
 
     return render(request, "dietetic/index.html", context)
 
@@ -128,6 +129,8 @@ def my_account(request):
             logout(request)
             user.is_active = False
             user.save()
+            test = StatusUser.objects.values_list("is_active").get(user=request.user.id)
+            print("test", test)
             print(user.is_active, user.email, "quand compte supprimé")
             context = {'error_message': "Votre compte a bien été supprimé."}
             return render(request, "dietetic/index.html", context)
