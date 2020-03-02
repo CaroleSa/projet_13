@@ -148,7 +148,7 @@
     "pk": 13,
     "fields": {
       "robot_question_type": "1",
-      "text": "As-tu parfois des envies d'aliments sucrés ?"
+      "text": "Grignotes-tu après les repas ?"
     }
   },
   {
@@ -156,12 +156,20 @@
     "pk": 14,
     "fields": {
       "robot_question_type": "1",
-      "text": "Ca y est ! Nous sommes arrivé au bout du questionnaire. J'ai bien pris note de tes réponses. Voilà comment va se passer la suite… Ton parcours débute dès aujourd'hui. Pour cela, il te faudra te peser 1 fois par semaine, pas plus ! Chaque jour de pesée, tu me retrouve ici pour m'informer de tes résultats. De mon coté, je te prépare un nouveau challenge ou un conseil à appliquer rigoureusement chaque semaine ! Alors c'est parti ! Pour débuter ta semaine, il te faut juste cliquer sur la carte à coté... à la semaine prochaine !!!"
+      "text": "As-tu parfois des envies d'aliments sucrés ?"
     }
   },
   {
     "model": "dietetic.RobotQuestion",
     "pk": 15,
+    "fields": {
+      "robot_question_type": "1",
+      "text": "Ca y est ! Nous sommes arrivé au bout du questionnaire. J'ai bien pris note de tes réponses. Voilà comment va se passer la suite… Ton parcours débute dès aujourd'hui. Pour cela, il te faudra te peser 1 fois par semaine, pas plus ! Chaque jour de pesée, tu me retrouve ici pour m'informer de tes résultats. De mon coté, je te prépare un nouveau challenge ou un conseil à appliquer rigoureusement chaque semaine ! Alors c'est parti ! Pour débuter ta semaine, il te faut juste cliquer sur la carte à coté... à la semaine prochaine !!!"
+    }
+  },
+  {
+    "model": "dietetic.RobotQuestion",
+    "pk": 16,
     "fields": {
       "robot_question_type": "2",
       "text": "Actuellement, tu éprouves le besoin de ...(plusieurs réponses sont possibles) :"
@@ -169,7 +177,7 @@
   },
   {
     "model": "dietetic.RobotQuestion",
-    "pk": 16,
+    "pk": 17,
     "fields": {
       "robot_question_type": "3",
       "text": "Félicitation ! Tu as atteint ton objectif ! Il faut fêter tout ça !!! Bon par contre... j'imagine que tu tiens à rester sur ce poids maintenant ?"
@@ -177,7 +185,7 @@
   },
   {
     "model": "dietetic.RobotQuestion",
-    "pk": 17,
+    "pk": 18,
     "fields": {
       "robot_question_type": "3",
       "text": "Félicitation ! Tu as atteint ton premier objectif ! Souhaites-tu renouveller un nouvel objectif ?"
