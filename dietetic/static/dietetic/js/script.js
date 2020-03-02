@@ -45,5 +45,5 @@ if ($error != "") {
 var $key = $(".fa-key");
 $key.on('click', function() {
     $input.css('visibility', "");
-    $confirm_message.css('visibility', "hidden");
+    $confirm_message.hide();
 });
