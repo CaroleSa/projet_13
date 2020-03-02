@@ -150,7 +150,7 @@ h2{
     text-align : left;
     margin-top : 10vh;
 }
-#text_my_results, #graphic_my_results, #text_my_account{
+#text_my_results, #graphic_my_results, #text_my_account, #text_program{
     min-height : 45vh;
 }
 #graphic{
@@ -174,7 +174,7 @@ h2{
     background-size: 45vh;
     background-position : top;
 }
-#discussion_space, #text_my_results, #graphic_my_results, #my_account{
+#discussion_space, #text_my_results, #graphic_my_results, #my_account, #my_program{
     background-color : rgb(255, 255, 255);
     height : 47vh;
     padding : 3vh;
