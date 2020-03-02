@@ -32,6 +32,20 @@
   },
   {
     "model": "dietetic.RobotAdviceType",
+    "pk": 6,
+    "fields": {
+      "type": "p6"
+    }
+  },
+  {
+    "model": "dietetic.RobotAdviceType",
+    "pk": 9,
+    "fields": {
+      "type": "p9"
+    }
+  },
+  {
+    "model": "dietetic.RobotAdviceType",
     "pk": 10,
     "fields": {
       "type": "p10"
@@ -589,6 +603,46 @@
       "robot_advices": ""
     }
   },
+  {
+    "model": "dietetic.DiscussionSpace",
+    "pk": 13,
+    "fields": {
+      "robot_question": "5",
+      "user_answer": "8",
+      "robot_answer": "",
+      "robot_advices": "5"
+    }
+  },
+  {
+    "model": "dietetic.DiscussionSpace",
+    "pk": 14,
+    "fields": {
+      "robot_question": "5",
+      "user_answer": "35",
+      "robot_answer": "",
+      "robot_advices": "6"
+    }
+  },
+  {
+    "model": "dietetic.DiscussionSpace",
+    "pk": 15,
+    "fields": {
+      "robot_question": "5",
+      "user_answer": "10",
+      "robot_answer": "",
+      "robot_advices": ""
+    }
+  },
+  {
+    "model": "dietetic.DiscussionSpace",
+    "pk": 16,
+    "fields": {
+      "robot_question": "5",
+      "user_answer": "36",
+      "robot_answer": "",
+      "robot_advices": ""
+    }
+  },
 
 
 
@@ -623,5 +677,20 @@
       "robot_advice_type": "10",
       "text": "Je pense à boire : L'eau semble être un ami oublié de ton quotidien ! Et pourtant, si tu savais !!! Boire va permettre de réveiller tes capacités mentales et physiques, d'hydrater ta peau et c'est un allié perte de poids indéniable, … grâce à l'eau tu vas être au top de ta forme ! Alors c'est parti, je te propose un challenge hydratation cette semaine : sortir ta bouteille d'eau du placard pour lui rendre visite régulièrement... ! Voici ce que je te propose : boire 1 grand verre d'eau dès le réveil, puis 3 à 4 gorgées d'eau après chaque passage aux toilettes ! L'objectif de ce challenge est de constater le changement, tant bien au niveau du bien-être, que du poids. Allé ! Hop ! C'est parti !"
     }
-  }
+  },
+  {
+    "model": "dietetic.RobotAdvices",
+    "pk": 5,
+    "fields": {
+      "robot_advice_type": "6",
+      "text": "Le sucre ... faux ami : Le sucre apporte un moment de plaisir mais il n'est pas indispensable à l'organisme. Il ne va pas te rendre service : stocké facilement sous forme de gras, il va limiter voir stopper ta perte de poids. Voici donc ton challenge de la semaine : boire toutes tes boissons chaudes sans sucre ! Je conçois que cela n'est peut-être pas évident pour toi... mais c'est le but d'un challenge que de te pousser à dépasser tes limites .  Ce dernier dure 1 semaine, nous sommes donc d'accord pour dire que c'est largement faisable ! Alors c'est parti ! Atteignons cet objectif !"
+    }
+  },
+    {
+    "model": "dietetic.RobotAdvices",
+    "pk": 6,
+    "fields": {
+      "robot_advice_type": "9",
+      "text": "Le sucre ... faux ami : Voici mon conseil de la semaine. Le sucre apporte un moment de plaisir mais il n'est pas indispensable à l'organisme. Il ne va pas te rendre service : stocké facilement sous forme de gras, il va limiter voir stopper ta perte de poids. Et d'autant plus s'il est consommé en dehors d'un repas ! Cela vaut pour le sucre pure mais aussi pour les sodas, les gâteaux, ... Les produits sucrés sont donc fortement déconseillés si tu veux perdre du poids. Ou alors, occasionnelement et au cours d'un repas. Le sucre appelant au sucre, il est parfois plus simple de ne pas en manger du tout. C'est selon la sensibilité de chacun."
+  },
 ]
