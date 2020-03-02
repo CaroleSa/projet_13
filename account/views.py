@@ -9,6 +9,7 @@ from .forms import CreateAccountForm, LoginForm
 import re
 from django.contrib.auth import get_user_model, authenticate, logout
 from django.contrib.auth import login as auth_login
+from django.contrib.auth import update_session_auth_hash
 from .models import HistoryUser, IdentityUser, StatusUser
 import calendar
 import locale
@@ -107,11 +108,13 @@ def login(request):
 def my_account(request):
 
     # get and display user's data
-    date_data = HistoryUser.objects.values_list("date_joined").get(user=request.user.id)
-    date_create_account_list = re.findall('\d+', str(date_data))[0:3]
-    date_create_account_str = ""+date_create_account_list[2]+" "+calendar.month_name[int(date_create_account_list[1])]+" "+date_create_account_list[0]+""
     email = request.user.email
     pseudo = request.user.username
+    date_data = HistoryUser.objects.values_list("date_joined").get(user=request.user.id)
+    date_create_account_list = re.findall('\d+', str(date_data))[0:3]
+    date_create_account_str = ""+date_create_account_list[2]+" "\
+                              +calendar.month_name[int(date_create_account_list[1])]\
+                              +" "+date_create_account_list[0]+""
 
     context = {"date_create_account": date_create_account_str, "email": email, "pseudo": pseudo}
 
@@ -144,6 +147,7 @@ def my_account(request):
                 user = user.objects.get(email=email)
                 user.set_password(new_password)
                 user.save()
+                update_session_auth_hash(request, user)
                 context["confirm_message"] = "Votre mot de passe a bien été modifié."
         else:
             context["error_actual_password"] = "incorrect"
