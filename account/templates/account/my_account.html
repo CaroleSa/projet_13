@@ -10,17 +10,19 @@
             <p>Inscrit depuis le {{date_create_account}}</p><hr />
             <p class="bold">Pseudo : <font color="green">{{pseudo}}</font></p><hr />
             <p class="bold">Adresse e-mail : <font color="blue">{{email}}</font></p><hr /></br>
-            <p class="red bold">{{confirm_message}}</p>
         </div>
         <div class="col-lg-offset-1 col-lg-3">
             <p><i class="fas fa-key"></i>&nbsp;&nbsp;&nbsp;Modifier mon mot de passe</p>
+            {% if confirm_message %}
+                <p id="confirm"><font color="green">{{confirm_message}}</font></p>
+            {% endif %}
             <form id="form_password" action="{% url 'account:my_account' %}" method="post">{% csrf_token %}
-                <p>mot de passe actuel <font color="red">{{error_actual_password}}</font></p>
+                <p>mot de passe actuel <font class="error" color="red">{{error_actual_password}}</font></p>
                 <label for="{{ form_login.password.id_for_label }}">{{ form_login.password }}</br>
-                <p>nouveau mot de passe <font color="red">{{error_new_password}}</font></p>
+                <p>nouveau mot de passe <font class="error" color="red">{{error_new_password}}</font></p>
                 <input class='form-control' type="password" minlength="8" name="new_password"></br>
                 <input id="submit_password" class='form-control col-lg-offset-2 col-lg-8' type="submit" value="valider">
-            </form></br>
+            </form>
             </div>
             <div class="col-lg-offset-1 col-lg-3">
             <form id="delete_account" action="{% url 'account:my_account' %}" method="post">{% csrf_token %}

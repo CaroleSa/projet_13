@@ -28,3 +28,22 @@ for (const elt in color){
   	    $logo.css('background-color', "rgb(233,226,218)");
     }
 }
+
+
+//     display account option if user clicks on the button key
+
+var $input = $("#form_password");
+var $confirm_message = $("#confirm");
+$confirm_message.css('visibility', "");
+var $error = $(".error").text();
+if ($error != "") {
+    $input.css('visibility', "");
+    }else {
+  	$input.css('visibility', "hidden");
+}
+
+var $key = $(".fa-key");
+$key.on('click', function() {
+    $input.css('visibility', "");
+    $confirm_message.css('visibility', "hidden");
+});
