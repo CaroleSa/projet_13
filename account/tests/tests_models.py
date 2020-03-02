@@ -85,11 +85,18 @@ class TestsModels(TestCase):
     def test_add_get_results_user(self):
         """ Test create user results and get results """
         weight = 55.0
-        date = "2020-05-20"
+        date = "2020-5-20"
         ResultsUser.objects.create(user=self.user_created, weighing_date=date, weight=weight)
+
         data = ResultsUser.objects.values_list('weight').filter(weighing_date=date)
         get_weight_user = data.get(user=self.user_created)
         self.assertEqual(get_weight_user[0], weight)
+
+        data = ResultsUser.objects.values_list('weighing_date').filter(weight=weight)
+        date_data = data.get(user=self.user_created)
+        date_data_list = re.findall('\d+', str(date_data))
+        date_weight = ""+date_data_list[0]+"-"+date_data_list[1]+"-"+date_data_list[2]+""
+        self.assertEqual(date_weight, date)
 
     def test_add_get_history_user(self):
         """ Test add and get user's history data """

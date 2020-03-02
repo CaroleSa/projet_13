@@ -23,6 +23,7 @@ def my_results(request):
     context = {}
     return render(request, 'dietetic/my_results.html', context)
 
+
 def program(request):
     context = {}
     return render(request, 'dietetic/program.html', context)
