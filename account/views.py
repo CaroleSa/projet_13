@@ -54,6 +54,7 @@ def create_account(request):
             context = {"create_account": "False",
                        "confirm_message": "Votre compte a bien été créé.",
                        "login_message": "Bonjour {} ! Vous êtes bien connecté.".format(pseudo)}
+
         # create an other error message
         else:
             try:
@@ -67,12 +68,6 @@ def create_account(request):
 
 def login(request):
     user = get_user_model()
-    # test
-    try:
-        user_account = user.objects.get(email="test@test.fr")
-        print(user_account.is_active, "avant authentification")
-    except:
-        pass
 
     # create a context
     context = {}
@@ -100,7 +95,6 @@ def login(request):
                 else:
                     user.objects.get(email=email)
                     context["error_message"] = "Le mot de passe est incorrect."
-
         except user.DoesNotExist:
             context["error_message"] = "Ce compte n'existe pas."
 
@@ -108,7 +102,6 @@ def login(request):
 
 
 def my_account(request):
-
     # get and display user's data
     email = request.user.email
     pseudo = request.user.username
@@ -117,7 +110,6 @@ def my_account(request):
     date_create_account_str = ""+date_create_account_list[2]+" "\
                               +calendar.month_name[int(date_create_account_list[1])]\
                               +" "+date_create_account_list[0]+""
-
     context = {"date_create_account": date_create_account_str, "email": email, "pseudo": pseudo}
 
     if request.method == 'POST':
