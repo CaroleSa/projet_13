@@ -15,7 +15,8 @@ const color = {
   	user: ["/account/my_account/", "52, 151, 49"],
   	poll: ["/dietetic/my_results/", "222, 32, 101"],
   	home: ["/", "31, 148, 229"],
-  	clipboard: ["/dietetic/dietetic_space/", "236, 131, 19"]
+  	clipboard: ["/dietetic/dietetic_space/", "236, 131, 19"],
+  	program: ["/dietetic/program/", "190, 120, 50"]
 };
 for (const elt in color){
     var $logo_url = color[elt][0];

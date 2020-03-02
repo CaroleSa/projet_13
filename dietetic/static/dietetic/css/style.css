@@ -109,7 +109,7 @@ h1{
 i {
     font-size : 2em;
 }
-#user, #poll, #home, #clipboard{
+#user, #poll, #home, #clipboard, #program{
     color : rgb(0, 0, 0);
 }
 #user:hover{
@@ -123,6 +123,9 @@ i {
 }
 #clipboard:hover{
     color : rgb(236, 131, 19);
+}
+#program:hover{
+    color : rgb(190, 120, 50);
 }
 
 
