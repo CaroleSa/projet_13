@@ -25,9 +25,9 @@
 
   {
     "model": "dietetic.RobotAdviceType",
-    "pk": 1,
+    "pk": 3,
     "fields": {
-      "type": "conseil"
+      "type": "p3"
     }
   },
   {
@@ -39,7 +39,7 @@
   },
   {
     "model": "dietetic.RobotAdviceType",
-    "pk": 3,
+    "pk": 1,
     "fields": {
       "type": "recette"
     }
@@ -52,7 +52,7 @@
     "pk": 1,
     "fields": {
       "robot_question_type": "1",
-      "text": "Bonjour, je me présente DietiChallenge ! Mon objectif à partir d'aujourd'hui est de t'aider dans ton parcours de perte de poids en la rendant plus attrayante ! Mais avant de nous lancer dans cette FOLLE aventure, j'ai besoin d'en connaître plus sur toi ! Es-tu prêt(e) ?"
+      "text": "Bonjour, je me présente ''My Dietetic Challenge'' ! Mon objectif à partir d'aujourd'hui est de t'aider dans ton parcours de perte de poids en la rendant plus attrayante ! Mais avant de nous lancer dans cette FOLLE aventure, j'ai besoin d'en connaître plus sur toi ! Es-tu prêt(e) ?"
     }
   },
   {
@@ -172,7 +172,7 @@
     "pk": 16,
     "fields": {
       "robot_question_type": "2",
-      "text": "Actuellement, tu éprouves le besoin de ...(plusieurs réponses sont possibles) :"
+      "text": "Actuellement, tu éprouves le besoin de ...(plusieurs réponses possibles) :"
     }
   },
   {
@@ -189,16 +189,6 @@
     "fields": {
       "robot_question_type": "3",
       "text": "Félicitation ! Tu as atteint ton premier objectif ! Souhaites-tu renouveller un nouvel objectif ?"
-    }
-  },
-
-
-  {
-    "model": "dietetic.RobotAdvices",
-    "pk": 1,
-    "fields": {
-      "robot_advice_type": "",
-      "text": ""
     }
   },
 
@@ -470,16 +460,104 @@
       "text": "non, c'était juste pour passer de bonnes vacances"
     }
   },
+  {
+    "model": "dietetic.UserAnswer",
+    "pk": 39,
+    "fields": {
+      "text": "je prévois d'y mettre en place"
+    }
+  },
 
 
   {
     "model": "dietetic.DiscussionSpace",
     "pk": 1,
     "fields": {
-      "user_answer": "",
-      "robot_question": "",
-      "robot_advices": "",
-      "robot_answer": ""
+      "robot_question": "1",
+      "user_answer": "1",
+      "robot_answer": "Alors c'est parti ! Voici mes questions …",
+      "robot_advices": "1"
+    }
+  },
+  {
+    "model": "dietetic.DiscussionSpace",
+    "pk": 2,
+    "fields": {
+      "robot_question": "1",
+      "user_answer": "2",
+      "robot_answer": "Dommage… une autre fois peut-être !",
+      "robot_advices": ""
+    }
+  },
+  {
+    "model": "dietetic.DiscussionSpace",
+    "pk": 3,
+    "fields": {
+      "robot_question": "1",
+      "user_answer": "3",
+      "robot_answer": "Très bien ! Je reste à ta disposition et me tiens prêt lorsque ta motivation sera au plus haut.",
+      "robot_advices": ""
+    }
+  },
+  {
+    "model": "dietetic.DiscussionSpace",
+    "pk": 4,
+    "fields": {
+      "robot_question": "2",
+      "user_answer": "1",
+      "robot_answer": "",
+      "robot_advices": ""
+    }
+  },
+  {
+    "model": "dietetic.DiscussionSpace",
+    "pk": 5,
+    "fields": {
+      "robot_question": "2",
+      "user_answer": "2",
+      "robot_answer": "Très bien, je prends note de cette information. Pour t'aider, tu trouveras un onglet dans le menu pour t'orienter dans la mise en place de ton programme alimentaire.",
+      "robot_advices": ""
+    }
+  },
+  {
+    "model": "dietetic.DiscussionSpace",
+    "pk": 6,
+    "fields": {
+      "robot_question": "2",
+      "user_answer": "31",
+      "robot_answer": "Très bien, je prends note de cette information. Pour t'aider, tu trouveras un onglet dans le menu pour t'orienter dans la mise en place de ton programme alimentaire.",
+      "robot_advices": ""
+    }
+  },
+  {
+    "model": "dietetic.DiscussionSpace",
+    "pk": 7,
+    "fields": {
+      "robot_question": "3",
+      "user_answer": "1",
+      "robot_answer": "Certains problèmes de santé ou traitements peuvent influer sur le poids… c'est bon à savoir. Si les résultats ne sont pas au rendez-vous, il peut être bon de faire un point avec ton médecin…",
+      "robot_advices": ""
+    }
+  },
+  {
+    "model": "dietetic.DiscussionSpace",
+    "pk": 8,
+    "fields": {
+      "robot_question": "3",
+      "user_answer": "2",
+      "robot_answer": "",
+      "robot_advices": ""
+    }
+  },
+
+
+
+  {
+    "model": "dietetic.RobotAdvices",
+    "pk": 1,
+    "fields": {
+      "robot_advice_type": "3",
+      "text": "J'analyse : La deuxième semaine est une semaine particulière … Et oui, je constate régulièrement que la perte de poids est rarement au rendez-vous, alors que la première semaine sera sans doute la plus importante du suivi. Ne te décourages pas ! Elle repartira de plus belle sur la troisième semaine et les suivantes... L'analyse de ton poids est importante durant le suivi puisqu'elle va te permettre de relativiser certaines semaines où tes résultats ne sont pas ou peu visibles. Voici donc mon conseil  :  1- Equipes-toi d'un carnet de suivi  2- Notes les conseils et challenges que je te propose chaque semaine  3- Inscrits tes résultats et ajoutes-y quelques commentaires en face. J'entends par ''commentaires'', toutes informations susceptibles de perturber ta perte de poids (alimentation riche, traitement antiinflammatoire ou autres, maladie, constipation, grosse perte de poids la semaine précédente, fatigue,  ...). Comment voir si tu as une bonne perte de poids ? Tu trouveras dans l'onglet ''Résultats'' une analyse de ton suivi."
     }
   }
 ]
