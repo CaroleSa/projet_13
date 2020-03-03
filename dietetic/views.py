@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from django.contrib.auth import get_user_model, logout
+import datetime
 
 
 def index(request):
@@ -18,6 +19,7 @@ def dietetic_space(request):
     context = {}
 
     if request.method == 'POST':
+        # si c'est sa première inscription sinon texte différent pour nouvel objectif
         list_robot_text = ["Nous allons tout d'abord définir ton objectif.", "Quelle taille fais-tu ?",
                            "Quel est ton poids actuel ?",
                            "Quel est ton poids de croisière (poids le plus longtemps maintenu sans effort) ?",
@@ -28,9 +30,9 @@ def dietetic_space(request):
         goal_weight = 50
         height = 1.60
 
-        actual_imc = actual_weight/(height*height)
-        goal_imc = goal_weight/(height*height)
-        cruising_imc = cruising_weight/(height*height)
+        actual_imc = round(actual_weight/(height*height), 1)
+        goal_imc = round(goal_weight/(height*height), 1)
+        cruising_imc = round(cruising_weight/(height*height), 1)
 
         if actual_imc < 18.5:
             text = "Ton poids actuel est déjà bien bas... je te déconseille de perdre plus de poids."
@@ -65,6 +67,37 @@ def dietetic_space(request):
 
 def my_results(request):
     context = {}
+
+    starting_date = [2020, 5, 20]
+    starting_weight = 60
+    last_date = [2020, 7, 20]
+    last_weight = 55
+    starting_week = datetime.datetime(starting_date[0], starting_date[1], starting_date[2]).isocalendar()[1]
+    last_week = datetime.datetime(last_date[0], last_date[1], last_date[2]).isocalendar()[1]
+    number_week = last_week - starting_week
+    lost_weight = starting_weight - last_weight
+    average_weight_loss = round(lost_weight/number_week, 1)
+    last_2_weighings = "ok"
+    last_weighings = "ok"
+    if average_weight_loss <= 0.3:
+        text = "Petite moyenne de perte de poids"
+    if average_weight_loss >= 0.4 <= 0.5:
+        text = "Moyenne de perte de poids moyenne"
+    if average_weight_loss >= 0.6 <= 0.8:
+        text = "Bonne moyenne de perte de poids"
+    if average_weight_loss >= 0.9:
+        text = "Très bonne moyenne de perte de poids"
+
+    if last_2_weighings == "ok":
+        text = "Dernières pertes parfaites !"
+    else:
+        if last_weighings == "ok":
+            text = "Dernières pertes moyennes !"
+        else:
+            text = "Dernières pertes mauvaises !"
+
+
+
     return render(request, 'dietetic/my_results.html', context)
 
 

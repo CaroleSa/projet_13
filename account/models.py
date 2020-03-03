@@ -89,6 +89,7 @@ class HistoryUser(models.Model):
 class ProfileUser(models.Model):
     user = models.OneToOneField(IdentityUser, on_delete=models.CASCADE)
     starting_weight = models.DecimalField(max_digits=4, decimal_places=1, null=True)
+    actual_goal_weight = models.DecimalField(max_digits=4, decimal_places=1, null=True)
     final_weight = models.DecimalField(max_digits=4, decimal_places=1, null=True)
 
     def __str__(self):
