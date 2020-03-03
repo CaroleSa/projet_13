@@ -60,6 +60,13 @@
   },
   {
     "model": "dietetic.RobotAdviceType",
+    "pk": 7,
+    "fields": {
+      "type": "p7"
+    }
+  },
+  {
+    "model": "dietetic.RobotAdviceType",
     "pk": 9,
     "fields": {
       "type": "p9"
@@ -352,7 +359,7 @@
     "model": "dietetic.UserAnswer",
     "pk": 18,
     "fields": {
-      "text": "oui, pippourtant je dore 7h minimum par nuit"
+      "text": "oui, et pourtant je dore 7h minimum par nuit"
     }
   },
   {
@@ -734,7 +741,76 @@
       "robot_advices": ""
     }
   },
-
+  {
+    "model": "dietetic.DiscussionSpace",
+    "pk": 24,
+    "fields": {
+      "robot_question": "8",
+      "user_answer": "11",
+      "robot_answer": "",
+      "robot_advices": "10"
+    }
+  },
+  {
+    "model": "dietetic.DiscussionSpace",
+    "pk": 25,
+    "fields": {
+      "robot_question": "8",
+      "user_answer": "39",
+      "robot_answer": "Très bonne décision !  Ça te sera d'une grande aide !",
+      "robot_advices": "11"
+    }
+  },
+  {
+    "model": "dietetic.DiscussionSpace",
+    "pk": 26,
+    "fields": {
+      "robot_question": "8",
+      "user_answer": "12",
+      "robot_answer": "Ça c'est génial ! Ça te sera très utile !",
+      "robot_advices": "12"
+    }
+  },
+  {
+    "model": "dietetic.DiscussionSpace",
+    "pk": 27,
+    "fields": {
+      "robot_question": "8",
+      "user_answer": "13",
+      "robot_answer": "",
+      "robot_advices": "13"
+    }
+  },
+  {
+    "model": "dietetic.DiscussionSpace",
+    "pk": 28,
+    "fields": {
+      "robot_question": "8",
+      "user_answer": "14",
+      "robot_answer": "",
+      "robot_advices": "14"
+    }
+  },
+  {
+    "model": "dietetic.DiscussionSpace",
+    "pk": 29,
+    "fields": {
+      "robot_question": "8",
+      "user_answer": "15",
+      "robot_answer": "",
+      "robot_advices": "15"
+    }
+  },
+  {
+    "model": "dietetic.DiscussionSpace",
+    "pk": 30,
+    "fields": {
+      "robot_question": "8",
+      "user_answer": "16",
+      "robot_answer": "",
+      "robot_advices": "16"
+    }
+  },
 
 
   {
@@ -807,6 +883,74 @@
     "fields": {
       "robot_advice_type": "8",
       "text": "Rééquilibrage après sortie restaurant : Manger au restaurant n'est pas incompatible avec la perte de poids. Ton challenge pour ta prochaine sortie restaurant sera de gérer tes choix sur place et de rééquilibrer tes apports sur les repas suivants. 1- Tout d'abord, il peut être bien de manger un yaourt ou boire un grand verre d'eau avant d'arriver au restaurant afin d'éviter que ta commande soit guidées par ton estomac  2- ensuite, choisir un poisson blanc, une viande blanche avec un accompagnement de légumes semble le plus approprié.  3- un fromage blanc ou une salade de fruits en dessert également. 4- de l'eau et une boisson chaude sans sucre ajouté en guise de boissons et le tour est joué ! Que le menu soit imposé ou non, il est impératif de prendre le temps de manger et de t'arrêter lorsque tu n'as plus faim. Si jamais ton repas te semble trop riche, tu peux rééquilibrer tes apports en supprimant la matière grasse et les féculents sur les deux repas qui suivront."
+      }
+  },
+  {
+    "model": "dietetic.RobotAdvices",
+    "pk": 10,
+    "fields": {
+      "robot_advice_type": "7",
+      "text": "Plus on est de fous, plus on rit :  Tu m'as indiqué dans ton questionnaire ne pas aimer faire une activité physique. Je te propose donc un challenge spécialement pour toi cette semaine ! Découvrir ses bons cotés !  Tu as le choix de l'activité (marche, piscine, badmington, volley, ...), seulement, tu dois être accompagné(e) : un(e) ami(e), un(e) voisin(e), un(e) cousin(e), ... Profiter d'un moment à plusieurs c'est plus sympa non ? Allé hop, c'est parti pour une nouvelle semaine !"
+      }
+  },
+  {
+    "model": "dietetic.RobotAdvices",
+    "pk": 11,
+    "fields": {
+      "robot_advice_type": "7",
+      "text": "Mise en place :  Tu m'as indiqué dans ton questionnaire que tu souhaitais mettre en place une activité physique. Je te propose donc cette semaine 2 challenges, au choix !  1- J'imagine, ou peut-être pas, qu'il t'arrive de te prélasser le soir devant un bon film ! Si c'est le cas, je te propose de profiter de ce temps pour faire un peu d'exercices... une durée de 10-15 min chaque soir est suffisante : exercices de gym, stepper, vélo elliptique, ... Il n'y a rien de tel pour sculpter ton corps et  déstresser de la journée !   2- Si tu es plutôt du matin, je te propose de te coucher 10-15 minutes plus tôt pour consacrer ce temps le lendemain dans une activité physique : on en profite également pour faire quelques étirrements ! Tu veras que cela te fera le plus grand bien ! Il est important de savoir qu'une activité quotidienne donnera bien plus de résultats que quelques fois dans la semaine. De plus, plus tu augmenteras ta masse musculaire, plus ton corps brulera de graisses. Si tu es amené à continuer ce challenge sur la durée, je te conseille de t'équiper d'un mètre de couture pour prendre tes mensurations (ventre, hanches et cuisse). La masse musculaire pèse sur la balance et peut perturber tes résultats. Le jour de ta pesée, si ta balance ne donne rien mais que les cm sont en baisse, tu pouras considérer que c'est une bonne semaine ! Attention, tes mensurations au niveau du ventre peuvent augmenter si tu es balonné(e) ou constipé(e). Allé, c'est parti pour ce challenge !"
+      }
+  },
+  {
+    "model": "dietetic.RobotAdvices",
+    "pk": 12,
+    "fields": {
+      "robot_advice_type": "7",
+      "text": "Activité physique et masse musculaire : Tu m'as indiqué dans ton questionnaire que tu faisait régulièrement une activité physique. Dans ton cas, il faut bien prendre en compte que ta masse musculaire peut être ammenée à augmenter et par conséquent à influencer les résultats de ta balance... A partir de cette semaine, je te conseille de t'équiper d'un mètre de couture afin de prendre tes mensurations une fois par semaine (ventre, hanches et cuisse). Le jour de ta pesée, si ta balance ne donne rien mais que les cm sont en baisse, tu pouras considérer que c'est une bonne semaine ! Attention, tes mensurations au niveau du ventre peuvent augmenter si tu es balonné(e) ou constipé(e). Bonne semaine !"
+      }
+  },
+  {
+    "model": "dietetic.RobotAdvices",
+    "pk": 13,
+    "fields": {
+      "robot_advice_type": "7",
+      "text": "Courir après le temps :  Tu m'as indiqué dans ton questionnaire que tu souhaitais mettre en place une activité physique mais que tu ne trouvais pas le temps. Je te propose donc cette semaine 2 challenges, au choix !  1- J'imagine, ou peut-être pas, que tu arrives à trouver le temps de te prélasser le soir devant un bon film ! Si c'est le cas, je te propose de profiter de ce temps pour faire un peu d'exercices... une durée de 10-15 min chaque soir est suffisante : exercices de gym, stepper, vélo elliptique, ... Il n'y a rien de tel pour sculpter ton corps et  déstresser de la journée !   2- Si tu es plutôt du matin, je te propose de te coucher 10-15 minutes plus tôt pour consacrer ce temps le lendemain dans une activité physique : on en profite également pour faire quelques étirrements ! Tu veras que cela te fera le plus grand bien ! Il est important de savoir qu'une activité quotidienne donnera bien plus de résultats que quelques fois dans la semaine. De plus, plus tu augmenteras ta masse musculaire, plus ton corps brulera de graisses. Si tu es amené à continuer ce challenge sur la durée, je te conseille de t'équiper d'un mètre de couture pour prendre tes mensurations (ventre, hanches et cuisse). La masse musculaire pèse sur la balance et peut perturber tes résultats. Le jour de ta pesée, si ta balance ne donne rien mais que les cm sont en baisse, tu pouras considérer que c'est une bonne semaine ! Attention, tes mensurations au niveau du ventre peuvent augmenter si tu es balonné(e) ou constipé(e). Allé, c'est parti pour ce challenge !"
+      }
+  },
+  {
+    "model": "dietetic.RobotAdvices",
+    "pk": 14,
+    "fields": {
+      "robot_advice_type": "7",
+      "text": "Courir après le temps :  Tu m'as indiqué dans ton questionnaire que tu n'avais pas encore pris le temps de réfléchir à la mise en place d'une activité physique. Je te propose de te simplifier la tâche, j'ai pris le temps d'y réfléchir pour toi ! Voici donc 2 challenges pour cette semaine, au choix !  1- J'imagine, ou peut-être pas, que tu arrives à trouver le temps de te prélasser le soir devant un bon film ! Si c'est le cas, je te propose de profiter de ce temps pour faire un peu d'exercices... une durée de 10-15 min chaque soir est suffisante : exercices de gym, stepper, vélo elliptique, ... Il n'y a rien de tel pour sculpter ton corps et  déstresser de la journée !   2- Si tu es plutôt du matin, je te propose de te coucher 10-15 minutes plus tôt pour consacrer ce temps le lendemain dans une activité physique : on en profite également pour faire quelques étirrements ! Tu veras que cela te fera le plus grand bien ! Il est important de savoir qu'une activité quotidienne donnera bien plus de résultats que quelques fois dans la semaine. De plus, plus tu augmenteras ta masse musculaire, plus ton corps brulera de graisses. Si tu es amené à continuer ce challenge sur la durée, je te conseille de t'équiper d'un mètre de couture pour prendre tes mensurations (ventre, hanches et cuisse). La masse musculaire pèse sur la balance et peut perturber tes résultats. Le jour de ta pesée, si ta balance ne donne rien mais que les cm sont en baisse, tu pouras considérer que c'est une bonne semaine ! Attention, tes mensurations au niveau du ventre peuvent augmenter si tu es balonné(e) ou constipé(e). Allé, c'est parti pour ce challenge !"
+      }
+  },
+  {
+    "model": "dietetic.RobotAdvices",
+    "pk": 15,
+    "fields": {
+      "robot_advice_type": "7",
+      "text": "Régularité et résultats :  Tu m'as indiqué dans ton questionnaire que tu effectuais une activité physique quelques jours dans la semaine.  J'ai constaté que les personnes ayant qu'une activité quotidienne obtenaient de bien meilleurs résultats que celles qui pratiquaient une activité quelques fois dans la semaine. Voici donc ton challenge !  A chaque trajet de voiture, je te propose de te garer volontairement plus loin afin d'augmenter ton activité quotidienne. Idem pour les transports en commun. Allé, c'est parti pour ce challenge !"
+      }
+  },
+  {
+    "model": "dietetic.RobotAdvices",
+    "pk": 16,
+    "fields": {
+      "robot_advice_type": "7",
+      "text": "Activité physique et résultats :  Tu m'as indiqué dans ton questionnaire que tu pratiquais occasionnellement une activité physique.  J'ai constaté que les personnes ayant qu'une activité quotidienne obtenaient de bien meilleurs résultats que celles qui pratiquaient une activité de temps en temps. Je te propose donc cette semaine 2 challenges, au choix !  1- J'imagine, ou peut-être pas, qu'il t'arrive de te prélasser le soir devant un bon film ! Si c'est le cas, je te propose de profiter de ce temps pour faire un peu d'exercices... une durée de 10-15 min chaque soir est suffisante : exercices de gym, stepper, vélo elliptique, ... Il n'y a rien de tel pour sculpter ton corps et  déstresser de la journée !   2- Si tu es plutôt du matin, je te propose de te coucher 10-15 minutes plus tôt pour consacrer ce temps le lendemain dans une activité physique : on en profite également pour faire quelques étirrements ! Tu veras que cela te fera le plus grand bien ! Il est important de savoir que plus tu augmenteras ta masse musculaire, plus ton corps brulera de graisses. Si tu es amené à continuer ce challenge sur la durée, je te conseille de t'équiper d'un mètre de couture pour prendre tes mensurations (ventre, hanches et cuisse). La masse musculaire pèse sur la balance et peut perturber tes résultats. Le jour de ta pesée, si ta balance ne donne rien mais que les cm sont en baisse, tu pouras considérer que c'est une bonne semaine ! Attention, tes mensurations au niveau du ventre peuvent augmenter si tu es balonné(e) ou constipé(e). Allé, c'est parti pour ce challenge !"
+      }
+  },
+
+
+
+
+  {
+    "model": "dietetic.RobotAdvices",
+    "pk": 12,
+    "fields": {
+      "robot_advice_type": "7",
+      "text": ""
       }
   }
 ]
