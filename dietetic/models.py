@@ -33,7 +33,7 @@ class RobotQuestion(models.Model):
 class RobotAdvices(models.Model):
     robot_advice_type = models.ForeignKey(RobotAdviceType, on_delete=models.CASCADE)
     advices_to_user = models.ManyToManyField(settings.AUTH_USER_MODEL)
-    text = models.CharField(max_length=700, unique=True)
+    text = models.CharField(max_length=1700, unique=True)
 
     def __str__(self):
         return self.text
@@ -48,9 +48,9 @@ class UserAnswer(models.Model):
 
 
 class DiscussionSpace(models.Model):
-    user_answer = models.ForeignKey(UserAnswer, on_delete=models.CASCADE)
+    user_answer = models.ForeignKey(UserAnswer, on_delete=models.CASCADE, null=True)
     robot_question = models.ForeignKey(RobotQuestion, on_delete=models.CASCADE)
-    robot_advices = models.ForeignKey(RobotAdvices, on_delete=models.CASCADE)
+    robot_advices = models.ForeignKey(RobotAdvices, on_delete=models.CASCADE, null=True)
     robot_answer = models.CharField(max_length=700, null=True)
 
     def __str__(self):
