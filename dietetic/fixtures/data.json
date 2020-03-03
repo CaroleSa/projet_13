@@ -32,9 +32,30 @@
   },
   {
     "model": "dietetic.RobotAdviceType",
+    "pk": 4,
+    "fields": {
+      "type": "p4"
+    }
+  },
+  {
+    "model": "dietetic.RobotAdviceType",
+    "pk": 5,
+    "fields": {
+      "type": "p5"
+    }
+  },
+  {
+    "model": "dietetic.RobotAdviceType",
     "pk": 6,
     "fields": {
       "type": "p6"
+    }
+  },
+  {
+    "model": "dietetic.RobotAdviceType",
+    "pk": 8,
+    "fields": {
+      "type": "p8"
     }
   },
   {
@@ -643,6 +664,76 @@
       "robot_advices": ""
     }
   },
+  {
+    "model": "dietetic.DiscussionSpace",
+    "pk": 17,
+    "fields": {
+      "robot_question": "6",
+      "user_answer": "32",
+      "robot_answer": "",
+      "robot_advices": "5"
+    }
+  },
+  {
+    "model": "dietetic.DiscussionSpace",
+    "pk": 18,
+    "fields": {
+      "robot_question": "6",
+      "user_answer": "33",
+      "robot_answer": "",
+      "robot_advices": "5"
+    }
+  },
+  {
+    "model": "dietetic.DiscussionSpace",
+    "pk": 19,
+    "fields": {
+      "robot_question": "6",
+      "user_answer": "34",
+      "robot_answer": "",
+      "robot_advices": ""
+    }
+  },
+  {
+    "model": "dietetic.DiscussionSpace",
+    "pk": 20,
+    "fields": {
+      "robot_question": "6",
+      "user_answer": "10",
+      "robot_answer": "",
+      "robot_advices": ""
+    }
+  },
+  {
+    "model": "dietetic.DiscussionSpace",
+    "pk": 21,
+    "fields": {
+      "robot_question": "7",
+      "user_answer": "8",
+      "robot_answer": "",
+      "robot_advices": "8"
+    }
+  },
+  {
+    "model": "dietetic.DiscussionSpace",
+    "pk": 22,
+    "fields": {
+      "robot_question": "7",
+      "user_answer": "9",
+      "robot_answer": "",
+      "robot_advices": "9"
+    }
+  },
+  {
+    "model": "dietetic.DiscussionSpace",
+    "pk": 23,
+    "fields": {
+      "robot_question": "7",
+      "user_answer": "10",
+      "robot_answer": "",
+      "robot_advices": ""
+    }
+  },
 
 
 
@@ -686,11 +777,36 @@
       "text": "Le sucre ... faux ami : Le sucre apporte un moment de plaisir mais il n'est pas indispensable à l'organisme. Il ne va pas te rendre service : stocké facilement sous forme de gras, il va limiter voir stopper ta perte de poids. Voici donc ton challenge de la semaine : boire toutes tes boissons chaudes sans sucre ! Je conçois que cela n'est peut-être pas évident pour toi... mais c'est le but d'un challenge que de te pousser à dépasser tes limites .  Ce dernier dure 1 semaine, nous sommes donc d'accord pour dire que c'est largement faisable ! Alors c'est parti ! Atteignons cet objectif !"
     }
   },
-    {
+  {
     "model": "dietetic.RobotAdvices",
     "pk": 6,
     "fields": {
       "robot_advice_type": "9",
       "text": "Le sucre ... faux ami : Voici mon conseil de la semaine. Le sucre apporte un moment de plaisir mais il n'est pas indispensable à l'organisme. Il ne va pas te rendre service : stocké facilement sous forme de gras, il va limiter voir stopper ta perte de poids. Et d'autant plus s'il est consommé en dehors d'un repas ! Cela vaut pour le sucre pure mais aussi pour les sodas, les gâteaux, ... Les produits sucrés sont donc fortement déconseillés si tu veux perdre du poids. Ou alors, occasionnelement et au cours d'un repas. Le sucre appelant au sucre, il est parfois plus simple de ne pas en manger du tout. C'est selon la sensibilité de chacun."
+      }
   },
+  {
+    "model": "dietetic.RobotAdvices",
+    "pk": 7,
+    "fields": {
+      "robot_advice_type": "5",
+      "text": "Alcool et sucre : Les boissons alcoolisées et sucrées ont un apport en calorie et en sucre souvent important. Pour exemple, une canette de soda contient l'équivalent de 7 sucres ! Etant donné que le surplus de sucre dans le sang est directement stocké en graisses… tu comprendras qu'il peut être difficile d'associer perte de poids et ce type de boissons au quotidien. Ton challenge de la semaine sera donc de remplacer l'alcool et les boissons sucrées par un verre d'eau jusqu'à la prochaine pesée. Objectif, battre ton reccord de perte de poids ! Allé hop ! C'est parti !!!!"
+      }
+  },
+  {
+    "model": "dietetic.RobotAdvices",
+    "pk": 8,
+    "fields": {
+      "robot_advice_type": "4",
+      "text": "Restaurant, faire les bons choix : Manger tous les jours au restaurant n'est pas incompatible avec la perte de poids. Ton challenge cette semaine sera de faire les bons choix. 1- Tout d'abord, il peut être bien de boire un grand verre d'eau avant d'arriver au restaurant afin d'éviter que ta commande soit guidées par ton estomac  2- ensuite, je te conseille de choisir un menu plat-fromage blanc ou plat-salade de fuit  3-Pour finir, le choix du plat est primorial... choisir un poisson blanc, une viande blanche avec un accompagnement de légumes semble le plus approprié.  4- De l'eau et une boisson chaude sans sucre ajouté en guise de boissons et le tour est joué ! Si jamais ton repas te semble gras, tu peux rééquilibrer tes apports en supprimant la matière grasse de ton repas du soir. Ces conseils sont de bonnes habitudes à mettre en place au quotidien ! Je te propose de les suivre cette semaine ! C'est parti !"
+      }
+  },
+  {
+    "model": "dietetic.RobotAdvices",
+    "pk": 9,
+    "fields": {
+      "robot_advice_type": "8",
+      "text": "Rééquilibrage après sortie restaurant : Manger au restaurant n'est pas incompatible avec la perte de poids. Ton challenge pour ta prochaine sortie restaurant sera de gérer tes choix sur place et de rééquilibrer tes apports sur les repas suivants. 1- Tout d'abord, il peut être bien de manger un yaourt ou boire un grand verre d'eau avant d'arriver au restaurant afin d'éviter que ta commande soit guidées par ton estomac  2- ensuite, choisir un poisson blanc, une viande blanche avec un accompagnement de légumes semble le plus approprié.  3- un fromage blanc ou une salade de fruits en dessert également. 4- de l'eau et une boisson chaude sans sucre ajouté en guise de boissons et le tour est joué ! Que le menu soit imposé ou non, il est impératif de prendre le temps de manger et de t'arrêter lorsque tu n'as plus faim. Si jamais ton repas te semble trop riche, tu peux rééquilibrer tes apports en supprimant la matière grasse et les féculents sur les deux repas qui suivront."
+      }
+  }
 ]
