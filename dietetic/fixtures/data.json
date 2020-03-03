@@ -22,7 +22,13 @@
   },
 
 
-
+  {
+    "model": "dietetic.RobotAdviceType",
+    "pk": 2,
+    "fields": {
+      "type": "p2"
+    }
+  },
   {
     "model": "dietetic.RobotAdviceType",
     "pk": 3,
@@ -79,13 +85,6 @@
       "type": "p10"
     }
   },
-  {
-    "model": "dietetic.RobotAdviceType",
-    "pk": 1,
-    "fields": {
-      "type": "recette"
-    }
-  },
 
 
 
@@ -93,7 +92,7 @@
     "model": "dietetic.RobotQuestion",
     "pk": 1,
     "fields": {
-      "robot_question_type": "1",
+      "robot_question_type": 1,
       "text": "Bonjour, je me présente ''My Dietetic Challenge'' ! Mon objectif à partir d'aujourd'hui est de t'aider dans ton parcours de perte de poids en la rendant plus attrayante ! Mais avant de nous lancer dans cette FOLLE aventure, j'ai besoin d'en connaître plus sur toi ! Es-tu prêt(e) ?"
     }
   },
@@ -101,7 +100,7 @@
     "model": "dietetic.RobotQuestion",
     "pk": 2,
     "fields": {
-      "robot_question_type": "1",
+      "robot_question_type": 1,
       "text": "D'après toi, as-tu des connaissances en diététique suffisantes pour t'aider à perdre du poids ?"
     }
   },
@@ -109,7 +108,7 @@
     "model": "dietetic.RobotQuestion",
     "pk": 3,
     "fields": {
-      "robot_question_type": "1",
+      "robot_question_type": 1,
       "text": "As-tu des problèmes de santé ou des traitements particuliers ?"
     }
   },
@@ -117,7 +116,7 @@
     "model": "dietetic.RobotQuestion",
     "pk": 4,
     "fields": {
-      "robot_question_type": "1",
+      "robot_question_type": 1,
       "text": "Penses-tu à boire assez d'eau dans la journée ? On comptera les boissons chaudes également."
     }
   },
@@ -125,7 +124,7 @@
     "model": "dietetic.RobotQuestion",
     "pk": 5,
     "fields": {
-      "robot_question_type": "1",
+      "robot_question_type": 1,
       "text": "Mets-tu du sucre dans tes boissons chaudes ?"
     }
   },
@@ -133,7 +132,7 @@
     "model": "dietetic.RobotQuestion",
     "pk": 6,
     "fields": {
-      "robot_question_type": "1",
+      "robot_question_type": 1,
       "text": "Pour toi, les boissons sucrées et alcoolisées c'est ..."
     }
   },
@@ -141,7 +140,7 @@
     "model": "dietetic.RobotQuestion",
     "pk": 7,
     "fields": {
-      "robot_question_type": "1",
+      "robot_question_type": 1,
       "text": "Manges-tu souvent au restaurant ?"
     }
   },
@@ -149,7 +148,7 @@
     "model": "dietetic.RobotQuestion",
     "pk": 8,
     "fields": {
-      "robot_question_type": "1",
+      "robot_question_type": 1,
       "text": "Fais-tu une activité physique ?"
     }
   },
@@ -157,7 +156,7 @@
     "model": "dietetic.RobotQuestion",
     "pk": 9,
     "fields": {
-      "robot_question_type": "1",
+      "robot_question_type": 1,
       "text": "Te sens-tu souvent fatigué(e) ?"
     }
   },
@@ -165,7 +164,7 @@
     "model": "dietetic.RobotQuestion",
     "pk": 10,
     "fields": {
-      "robot_question_type": "1",
+      "robot_question_type": 1,
       "text": "Les légumes sont ils présents dans ton assiette midi et soir ? Attention ! Les pommes de terre, lentilles et autres légumes secs ne font pas parti de cette catégorie."
     }
   },
@@ -173,7 +172,7 @@
     "model": "dietetic.RobotQuestion",
     "pk": 11,
     "fields": {
-      "robot_question_type": "1",
+      "robot_question_type": 1,
       "text": "Manges-tu des féculents à tous les repas ? On comptera dans cette catégorie le pain, les pâtes, le riz, les légumes secs, ..."
     }
   },
@@ -181,7 +180,7 @@
     "model": "dietetic.RobotQuestion",
     "pk": 12,
     "fields": {
-      "robot_question_type": "1",
+      "robot_question_type": 1,
       "text": "As-tu faim dans la journée ?"
     }
   },
@@ -189,7 +188,7 @@
     "model": "dietetic.RobotQuestion",
     "pk": 13,
     "fields": {
-      "robot_question_type": "1",
+      "robot_question_type": 1,
       "text": "Grignotes-tu après les repas ?"
     }
   },
@@ -197,7 +196,7 @@
     "model": "dietetic.RobotQuestion",
     "pk": 14,
     "fields": {
-      "robot_question_type": "1",
+      "robot_question_type": 1,
       "text": "As-tu parfois des envies d'aliments sucrés ?"
     }
   },
@@ -205,7 +204,7 @@
     "model": "dietetic.RobotQuestion",
     "pk": 15,
     "fields": {
-      "robot_question_type": "1",
+      "robot_question_type": 1,
       "text": "Ca y est ! Nous sommes arrivé au bout du questionnaire. J'ai bien pris note de tes réponses. Voilà comment va se passer la suite… Ton parcours débute dès aujourd'hui. Pour cela, il te faudra te peser 1 fois par semaine, pas plus ! Chaque jour de pesée, tu me retrouve ici pour m'informer de tes résultats. De mon coté, je te prépare un nouveau challenge ou un conseil à appliquer rigoureusement chaque semaine ! Alors c'est parti ! Pour débuter ta semaine, il te faut juste cliquer sur la carte à coté... à la semaine prochaine !!!"
     }
   },
@@ -213,7 +212,7 @@
     "model": "dietetic.RobotQuestion",
     "pk": 16,
     "fields": {
-      "robot_question_type": "2",
+      "robot_question_type": 2,
       "text": "Actuellement, tu éprouves le besoin de ...(plusieurs réponses possibles) :"
     }
   },
@@ -221,7 +220,7 @@
     "model": "dietetic.RobotQuestion",
     "pk": 17,
     "fields": {
-      "robot_question_type": "3",
+      "robot_question_type": 2,
       "text": "Félicitation ! Tu as atteint ton objectif ! Il faut fêter tout ça !!! Bon par contre... j'imagine que tu tiens à rester sur ce poids maintenant ?"
     }
   },
@@ -229,7 +228,7 @@
     "model": "dietetic.RobotQuestion",
     "pk": 18,
     "fields": {
-      "robot_question_type": "3",
+      "robot_question_type": 3,
       "text": "Félicitation ! Tu as atteint ton premier objectif ! Souhaites-tu renouveller un nouvel objectif ?"
     }
   },
@@ -515,300 +514,300 @@
     "model": "dietetic.DiscussionSpace",
     "pk": 1,
     "fields": {
-      "robot_question": "1",
-      "user_answer": "1",
+      "robot_question": 1,
+      "user_answer": 1,
       "robot_answer": "Alors c'est parti ! Voici mes questions …",
-      "robot_advices": "1"
+      "robot_advices": 1
     }
   },
   {
     "model": "dietetic.DiscussionSpace",
     "pk": 2,
     "fields": {
-      "robot_question": "1",
-      "user_answer": "2",
+      "robot_question": 1,
+      "user_answer": 2,
       "robot_answer": "Dommage… une autre fois peut-être !",
-      "robot_advices": ""
+      "robot_advices": null
     }
   },
   {
     "model": "dietetic.DiscussionSpace",
     "pk": 3,
     "fields": {
-      "robot_question": "1",
-      "user_answer": "3",
+      "robot_question": 1,
+      "user_answer": 3,
       "robot_answer": "Très bien ! Je reste à ta disposition et me tiens prêt lorsque ta motivation sera au plus haut.",
-      "robot_advices": ""
+      "robot_advices": null
     }
   },
   {
     "model": "dietetic.DiscussionSpace",
     "pk": 4,
     "fields": {
-      "robot_question": "2",
-      "user_answer": "1",
-      "robot_answer": "",
-      "robot_advices": ""
+      "robot_question": 2,
+      "user_answer": 1,
+      "robot_answer": null,
+      "robot_advices": null
     }
   },
   {
     "model": "dietetic.DiscussionSpace",
     "pk": 5,
     "fields": {
-      "robot_question": "2",
-      "user_answer": "2",
+      "robot_question": 2,
+      "user_answer": 2,
       "robot_answer": "Très bien, je prends note de cette information. Pour t'aider, tu trouveras un onglet dans le menu pour t'orienter dans la mise en place de ton programme alimentaire.",
-      "robot_advices": ""
+      "robot_advices": null
     }
   },
   {
     "model": "dietetic.DiscussionSpace",
     "pk": 6,
     "fields": {
-      "robot_question": "2",
-      "user_answer": "31",
+      "robot_question": 2,
+      "user_answer": 31,
       "robot_answer": "Très bien, je prends note de cette information. Pour t'aider, tu trouveras un onglet dans le menu pour t'orienter dans la mise en place de ton programme alimentaire.",
-      "robot_advices": ""
+      "robot_advices": null
     }
   },
   {
     "model": "dietetic.DiscussionSpace",
     "pk": 7,
     "fields": {
-      "robot_question": "3",
-      "user_answer": "1",
+      "robot_question": 3,
+      "user_answer": 1,
       "robot_answer": "Certains problèmes de santé ou traitements peuvent influer sur le poids… c'est bon à savoir. Si les résultats ne sont pas au rendez-vous, il peut être bon de faire un point avec ton médecin…",
-      "robot_advices": ""
+      "robot_advices": null
     }
   },
   {
     "model": "dietetic.DiscussionSpace",
     "pk": 8,
     "fields": {
-      "robot_question": "3",
-      "user_answer": "2",
-      "robot_answer": "",
-      "robot_advices": ""
+      "robot_question": 3,
+      "user_answer": 2,
+      "robot_answer": null,
+      "robot_advices": null
     }
   },
   {
     "model": "dietetic.DiscussionSpace",
     "pk": 9,
     "fields": {
-      "robot_question": "4",
-      "user_answer": "4",
-      "robot_answer": "",
-      "robot_advices": "2"
+      "robot_question": 4,
+      "user_answer": 4,
+      "robot_answer": null,
+      "robot_advices": 2
     }
   },
   {
     "model": "dietetic.DiscussionSpace",
     "pk": 10,
     "fields": {
-      "robot_question": "4",
-      "user_answer": "5",
-      "robot_answer": "",
-      "robot_advices": "3"
+      "robot_question": 4,
+      "user_answer": 5,
+      "robot_answer": null,
+      "robot_advices": 3
     }
   },
   {
     "model": "dietetic.DiscussionSpace",
     "pk": 11,
     "fields": {
-      "robot_question": "4",
-      "user_answer": "6",
-      "robot_answer": "",
-      "robot_advices": "4"
+      "robot_question": 4,
+      "user_answer": 6,
+      "robot_answer": null,
+      "robot_advices": 4
     }
   },
   {
     "model": "dietetic.DiscussionSpace",
     "pk": 12,
     "fields": {
-      "robot_question": "4",
-      "user_answer": "7",
+      "robot_question": 4,
+      "user_answer": 7,
       "robot_answer": "C'est parfait !",
-      "robot_advices": ""
+      "robot_advices": null
     }
   },
   {
     "model": "dietetic.DiscussionSpace",
     "pk": 13,
     "fields": {
-      "robot_question": "5",
-      "user_answer": "8",
-      "robot_answer": "",
-      "robot_advices": "5"
+      "robot_question": 5,
+      "user_answer": 8,
+      "robot_answer": null,
+      "robot_advices": 5
     }
   },
   {
     "model": "dietetic.DiscussionSpace",
     "pk": 14,
     "fields": {
-      "robot_question": "5",
-      "user_answer": "35",
-      "robot_answer": "",
-      "robot_advices": "6"
+      "robot_question": 5,
+      "user_answer": 35,
+      "robot_answer": null,
+      "robot_advices": 6
     }
   },
   {
     "model": "dietetic.DiscussionSpace",
     "pk": 15,
     "fields": {
-      "robot_question": "5",
-      "user_answer": "10",
-      "robot_answer": "",
-      "robot_advices": ""
+      "robot_question": 5,
+      "user_answer": 10,
+      "robot_answer": null,
+      "robot_advices": null
     }
   },
   {
     "model": "dietetic.DiscussionSpace",
     "pk": 16,
     "fields": {
-      "robot_question": "5",
-      "user_answer": "36",
-      "robot_answer": "",
-      "robot_advices": ""
+      "robot_question": 5,
+      "user_answer": 36,
+      "robot_answer": null,
+      "robot_advices": null
     }
   },
   {
     "model": "dietetic.DiscussionSpace",
     "pk": 17,
     "fields": {
-      "robot_question": "6",
-      "user_answer": "32",
-      "robot_answer": "",
-      "robot_advices": "5"
+      "robot_question": 6,
+      "user_answer": 32,
+      "robot_answer": null,
+      "robot_advices": 5
     }
   },
   {
     "model": "dietetic.DiscussionSpace",
     "pk": 18,
     "fields": {
-      "robot_question": "6",
-      "user_answer": "33",
-      "robot_answer": "",
-      "robot_advices": "5"
+      "robot_question": 6,
+      "user_answer": 33,
+      "robot_answer": null,
+      "robot_advices": 5
     }
   },
   {
     "model": "dietetic.DiscussionSpace",
     "pk": 19,
     "fields": {
-      "robot_question": "6",
-      "user_answer": "34",
-      "robot_answer": "",
-      "robot_advices": ""
+      "robot_question": 6,
+      "user_answer": 34,
+      "robot_answer": null,
+      "robot_advices": null
     }
   },
   {
     "model": "dietetic.DiscussionSpace",
     "pk": 20,
     "fields": {
-      "robot_question": "6",
-      "user_answer": "10",
-      "robot_answer": "",
-      "robot_advices": ""
+      "robot_question": 6,
+      "user_answer": 10,
+      "robot_answer": null,
+      "robot_advices": null
     }
   },
   {
     "model": "dietetic.DiscussionSpace",
     "pk": 21,
     "fields": {
-      "robot_question": "7",
-      "user_answer": "8",
-      "robot_answer": "",
-      "robot_advices": "8"
+      "robot_question": 7,
+      "user_answer": 8,
+      "robot_answer": null,
+      "robot_advices": 8
     }
   },
   {
     "model": "dietetic.DiscussionSpace",
     "pk": 22,
     "fields": {
-      "robot_question": "7",
-      "user_answer": "9",
-      "robot_answer": "",
-      "robot_advices": "9"
+      "robot_question": 7,
+      "user_answer": 9,
+      "robot_answer": null,
+      "robot_advices": 9
     }
   },
   {
     "model": "dietetic.DiscussionSpace",
     "pk": 23,
     "fields": {
-      "robot_question": "7",
-      "user_answer": "10",
-      "robot_answer": "",
-      "robot_advices": ""
+      "robot_question": 7,
+      "user_answer": 10,
+      "robot_answer": null,
+      "robot_advices": null
     }
   },
   {
     "model": "dietetic.DiscussionSpace",
     "pk": 24,
     "fields": {
-      "robot_question": "8",
-      "user_answer": "11",
-      "robot_answer": "",
-      "robot_advices": "10"
+      "robot_question": 8,
+      "user_answer": 11,
+      "robot_answer": null,
+      "robot_advices": 10
     }
   },
   {
     "model": "dietetic.DiscussionSpace",
     "pk": 25,
     "fields": {
-      "robot_question": "8",
-      "user_answer": "39",
+      "robot_question": 8,
+      "user_answer": 39,
       "robot_answer": "Très bonne décision !  Ça te sera d'une grande aide !",
-      "robot_advices": "11"
+      "robot_advices": 11
     }
   },
   {
     "model": "dietetic.DiscussionSpace",
     "pk": 26,
     "fields": {
-      "robot_question": "8",
-      "user_answer": "12",
+      "robot_question": 8,
+      "user_answer": 12,
       "robot_answer": "Ça c'est génial ! Ça te sera très utile !",
-      "robot_advices": "12"
+      "robot_advices": 12
     }
   },
   {
     "model": "dietetic.DiscussionSpace",
     "pk": 27,
     "fields": {
-      "robot_question": "8",
-      "user_answer": "13",
-      "robot_answer": "",
-      "robot_advices": "13"
+      "robot_question": 8,
+      "user_answer": 13,
+      "robot_answer": null,
+      "robot_advices": 13
     }
   },
   {
     "model": "dietetic.DiscussionSpace",
     "pk": 28,
     "fields": {
-      "robot_question": "8",
-      "user_answer": "14",
-      "robot_answer": "",
-      "robot_advices": "14"
+      "robot_question": 8,
+      "user_answer": 14,
+      "robot_answer": null,
+      "robot_advices": 14
     }
   },
   {
     "model": "dietetic.DiscussionSpace",
     "pk": 29,
     "fields": {
-      "robot_question": "8",
-      "user_answer": "15",
-      "robot_answer": "",
-      "robot_advices": "15"
+      "robot_question": 8,
+      "user_answer": 15,
+      "robot_answer": null,
+      "robot_advices": 15
     }
   },
   {
     "model": "dietetic.DiscussionSpace",
     "pk": 30,
     "fields": {
-      "robot_question": "8",
-      "user_answer": "16",
-      "robot_answer": "",
-      "robot_advices": "16"
+      "robot_question": 8,
+      "user_answer": 16,
+      "robot_answer": null,
+      "robot_advices": 16
     }
   },
 
@@ -817,7 +816,7 @@
     "model": "dietetic.RobotAdvices",
     "pk": 1,
     "fields": {
-      "robot_advice_type": "3",
+      "robot_advice_type": 3,
       "text": "J'analyse : La deuxième semaine est une semaine particulière … Et oui, je constate régulièrement que la perte de poids est rarement au rendez-vous, alors que la première semaine sera sans doute la plus importante du suivi. Ne te décourages pas ! Elle repartira de plus belle sur la troisième semaine et les suivantes... L'analyse de ton poids est importante durant le suivi puisqu'elle va te permettre de relativiser certaines semaines où tes résultats ne sont pas ou peu visibles. Voici donc mon conseil  :  1- Equipes-toi d'un carnet de suivi  2- Notes les conseils et challenges que je te propose chaque semaine  3- Inscrits tes résultats et ajoutes-y quelques commentaires en face. J'entends par ''commentaires'', toutes informations susceptibles de perturber ta perte de poids (alimentation riche, traitement antiinflammatoire ou autres, maladie, constipation, grosse perte de poids la semaine précédente, fatigue,  ...). Comment voir si tu as une bonne perte de poids ? Tu trouveras dans l'onglet ''Résultats'' une analyse de ton suivi."
     }
   },
@@ -825,7 +824,7 @@
     "model": "dietetic.RobotAdvices",
     "pk": 2,
     "fields": {
-      "robot_advice_type": "10",
+      "robot_advice_type": 10,
       "text": "J'apprends à l'aimer : L'eau ne semble pas être ton meilleur ami ! Et pourtant, si tu savais !!! Boire va permettre de réveiller tes capacités mentales et physiques, d'hydrater ta peau et c'est un allié perte de poids indéniable. Grâce à l'eau tu vas être au top de ta forme ! Alors c'est parti, je te propose un challenge cette semaine : boire plus et avec plaisir ! Achètes-toi une boisson plaisir (sans sucre). Tu peux choisir :  1- une infusion (tu en trouveras bien une à ton goût !)  2- si tu n'aimes pas l'infusion sans sucre... celle qui contient de la réglisse sera peut être ton amie  3 - du thé ou du café (seulement le matin) et décaféiné l'après-midi avec un petit carré de chocolat noir c'est possible  4- de l'eau pure avec du jus de citron  5- une infusion froide, ... Mmmh, j'ai bien l'impression que cela t'inspire ! Je te propose de boire une grande boisson à chaque repas et à 16h. L'objectif de ce challenge est de constater le changement, tant bien au niveau du bien-être, que du poids. Allé ! C'est parti !"
     }
   },
@@ -833,7 +832,7 @@
     "model": "dietetic.RobotAdvices",
     "pk": 3,
     "fields": {
-      "robot_advice_type": "10",
+      "robot_advice_type": 10,
       "text": "La soif vient en buvant : Comme le dit l'expression \"la faim vient en mangeant…\" sais-tu que la soif vient en buvant ? Pour ton challenge de la semaine, je te propose de tester la véracité de cette information !  Comment ? En modifiant tes habitudes. Chaque jour doit être composé : d'un grand verre d'eau au réveil et entre les repas et d'une boisson chaude sans sucre en fin de repas. Fais une croix dans ton carnet à chaque fois que tu as soif dans la journée.  Bon, tu vas me dire, c'est bien de boire mais je n'en vois pas l'interêt !  Détrompes-toi !!! Boire va permettre de réveiller tes capacités mentales et physiques, d'hydrater ta peau et c'est un allié perte de poids indéniable, ... ! Bon... allé c'est parti ! Tous à vos bouteilles !"
     }
   },
@@ -841,7 +840,7 @@
     "model": "dietetic.RobotAdvices",
     "pk": 4,
     "fields": {
-      "robot_advice_type": "10",
+      "robot_advice_type": 10,
       "text": "Je pense à boire : L'eau semble être un ami oublié de ton quotidien ! Et pourtant, si tu savais !!! Boire va permettre de réveiller tes capacités mentales et physiques, d'hydrater ta peau et c'est un allié perte de poids indéniable, … grâce à l'eau tu vas être au top de ta forme ! Alors c'est parti, je te propose un challenge hydratation cette semaine : sortir ta bouteille d'eau du placard pour lui rendre visite régulièrement... ! Voici ce que je te propose : boire 1 grand verre d'eau dès le réveil, puis 3 à 4 gorgées d'eau après chaque passage aux toilettes ! L'objectif de ce challenge est de constater le changement, tant bien au niveau du bien-être, que du poids. Allé ! Hop ! C'est parti !"
     }
   },
@@ -849,7 +848,7 @@
     "model": "dietetic.RobotAdvices",
     "pk": 5,
     "fields": {
-      "robot_advice_type": "6",
+      "robot_advice_type": 6,
       "text": "Le sucre ... faux ami : Le sucre apporte un moment de plaisir mais il n'est pas indispensable à l'organisme. Il ne va pas te rendre service : stocké facilement sous forme de gras, il va limiter voir stopper ta perte de poids. Voici donc ton challenge de la semaine : boire toutes tes boissons chaudes sans sucre ! Je conçois que cela n'est peut-être pas évident pour toi... mais c'est le but d'un challenge que de te pousser à dépasser tes limites .  Ce dernier dure 1 semaine, nous sommes donc d'accord pour dire que c'est largement faisable ! Alors c'est parti ! Atteignons cet objectif !"
     }
   },
@@ -857,7 +856,7 @@
     "model": "dietetic.RobotAdvices",
     "pk": 6,
     "fields": {
-      "robot_advice_type": "9",
+      "robot_advice_type": 9,
       "text": "Le sucre ... faux ami : Voici mon conseil de la semaine. Le sucre apporte un moment de plaisir mais il n'est pas indispensable à l'organisme. Il ne va pas te rendre service : stocké facilement sous forme de gras, il va limiter voir stopper ta perte de poids. Et d'autant plus s'il est consommé en dehors d'un repas ! Cela vaut pour le sucre pure mais aussi pour les sodas, les gâteaux, ... Les produits sucrés sont donc fortement déconseillés si tu veux perdre du poids. Ou alors, occasionnelement et au cours d'un repas. Le sucre appelant au sucre, il est parfois plus simple de ne pas en manger du tout. C'est selon la sensibilité de chacun."
       }
   },
@@ -865,7 +864,7 @@
     "model": "dietetic.RobotAdvices",
     "pk": 7,
     "fields": {
-      "robot_advice_type": "5",
+      "robot_advice_type": 5,
       "text": "Alcool et sucre : Les boissons alcoolisées et sucrées ont un apport en calorie et en sucre souvent important. Pour exemple, une canette de soda contient l'équivalent de 7 sucres ! Etant donné que le surplus de sucre dans le sang est directement stocké en graisses… tu comprendras qu'il peut être difficile d'associer perte de poids et ce type de boissons au quotidien. Ton challenge de la semaine sera donc de remplacer l'alcool et les boissons sucrées par un verre d'eau jusqu'à la prochaine pesée. Objectif, battre ton reccord de perte de poids ! Allé hop ! C'est parti !!!!"
       }
   },
@@ -873,7 +872,7 @@
     "model": "dietetic.RobotAdvices",
     "pk": 8,
     "fields": {
-      "robot_advice_type": "4",
+      "robot_advice_type": 4,
       "text": "Restaurant, faire les bons choix : Manger tous les jours au restaurant n'est pas incompatible avec la perte de poids. Ton challenge cette semaine sera de faire les bons choix. 1- Tout d'abord, il peut être bien de boire un grand verre d'eau avant d'arriver au restaurant afin d'éviter que ta commande soit guidées par ton estomac  2- ensuite, je te conseille de choisir un menu plat-fromage blanc ou plat-salade de fuit  3-Pour finir, le choix du plat est primorial... choisir un poisson blanc, une viande blanche avec un accompagnement de légumes semble le plus approprié.  4- De l'eau et une boisson chaude sans sucre ajouté en guise de boissons et le tour est joué ! Si jamais ton repas te semble gras, tu peux rééquilibrer tes apports en supprimant la matière grasse de ton repas du soir. Ces conseils sont de bonnes habitudes à mettre en place au quotidien ! Je te propose de les suivre cette semaine ! C'est parti !"
       }
   },
@@ -881,7 +880,7 @@
     "model": "dietetic.RobotAdvices",
     "pk": 9,
     "fields": {
-      "robot_advice_type": "8",
+      "robot_advice_type": 8,
       "text": "Rééquilibrage après sortie restaurant : Manger au restaurant n'est pas incompatible avec la perte de poids. Ton challenge pour ta prochaine sortie restaurant sera de gérer tes choix sur place et de rééquilibrer tes apports sur les repas suivants. 1- Tout d'abord, il peut être bien de manger un yaourt ou boire un grand verre d'eau avant d'arriver au restaurant afin d'éviter que ta commande soit guidées par ton estomac  2- ensuite, choisir un poisson blanc, une viande blanche avec un accompagnement de légumes semble le plus approprié.  3- un fromage blanc ou une salade de fruits en dessert également. 4- de l'eau et une boisson chaude sans sucre ajouté en guise de boissons et le tour est joué ! Que le menu soit imposé ou non, il est impératif de prendre le temps de manger et de t'arrêter lorsque tu n'as plus faim. Si jamais ton repas te semble trop riche, tu peux rééquilibrer tes apports en supprimant la matière grasse et les féculents sur les deux repas qui suivront."
       }
   },
@@ -889,7 +888,7 @@
     "model": "dietetic.RobotAdvices",
     "pk": 10,
     "fields": {
-      "robot_advice_type": "7",
+      "robot_advice_type": 7,
       "text": "Plus on est de fous, plus on rit :  Tu m'as indiqué dans ton questionnaire ne pas aimer faire une activité physique. Je te propose donc un challenge spécialement pour toi cette semaine ! Découvrir ses bons cotés !  Tu as le choix de l'activité (marche, piscine, badmington, volley, ...), seulement, tu dois être accompagné(e) : un(e) ami(e), un(e) voisin(e), un(e) cousin(e), ... Profiter d'un moment à plusieurs c'est plus sympa non ? Allé hop, c'est parti pour une nouvelle semaine !"
       }
   },
@@ -897,7 +896,7 @@
     "model": "dietetic.RobotAdvices",
     "pk": 11,
     "fields": {
-      "robot_advice_type": "7",
+      "robot_advice_type": 7,
       "text": "Mise en place :  Tu m'as indiqué dans ton questionnaire que tu souhaitais mettre en place une activité physique. Je te propose donc cette semaine 2 challenges, au choix !  1- J'imagine, ou peut-être pas, qu'il t'arrive de te prélasser le soir devant un bon film ! Si c'est le cas, je te propose de profiter de ce temps pour faire un peu d'exercices... une durée de 10-15 min chaque soir est suffisante : exercices de gym, stepper, vélo elliptique, ... Il n'y a rien de tel pour sculpter ton corps et  déstresser de la journée !   2- Si tu es plutôt du matin, je te propose de te coucher 10-15 minutes plus tôt pour consacrer ce temps le lendemain dans une activité physique : on en profite également pour faire quelques étirrements ! Tu veras que cela te fera le plus grand bien ! Il est important de savoir qu'une activité quotidienne donnera bien plus de résultats que quelques fois dans la semaine. De plus, plus tu augmenteras ta masse musculaire, plus ton corps brulera de graisses. Si tu es amené à continuer ce challenge sur la durée, je te conseille de t'équiper d'un mètre de couture pour prendre tes mensurations (ventre, hanches et cuisse). La masse musculaire pèse sur la balance et peut perturber tes résultats. Le jour de ta pesée, si ta balance ne donne rien mais que les cm sont en baisse, tu pouras considérer que c'est une bonne semaine ! Attention, tes mensurations au niveau du ventre peuvent augmenter si tu es balonné(e) ou constipé(e). Allé, c'est parti pour ce challenge !"
       }
   },
@@ -905,7 +904,7 @@
     "model": "dietetic.RobotAdvices",
     "pk": 12,
     "fields": {
-      "robot_advice_type": "7",
+      "robot_advice_type": 2,
       "text": "Activité physique et masse musculaire : Tu m'as indiqué dans ton questionnaire que tu faisait régulièrement une activité physique. Dans ton cas, il faut bien prendre en compte que ta masse musculaire peut être ammenée à augmenter et par conséquent à influencer les résultats de ta balance... A partir de cette semaine, je te conseille de t'équiper d'un mètre de couture afin de prendre tes mensurations une fois par semaine (ventre, hanches et cuisse). Le jour de ta pesée, si ta balance ne donne rien mais que les cm sont en baisse, tu pouras considérer que c'est une bonne semaine ! Attention, tes mensurations au niveau du ventre peuvent augmenter si tu es balonné(e) ou constipé(e). Bonne semaine !"
       }
   },
@@ -913,7 +912,7 @@
     "model": "dietetic.RobotAdvices",
     "pk": 13,
     "fields": {
-      "robot_advice_type": "7",
+      "robot_advice_type": 7,
       "text": "Courir après le temps :  Tu m'as indiqué dans ton questionnaire que tu souhaitais mettre en place une activité physique mais que tu ne trouvais pas le temps. Je te propose donc cette semaine 2 challenges, au choix !  1- J'imagine, ou peut-être pas, que tu arrives à trouver le temps de te prélasser le soir devant un bon film ! Si c'est le cas, je te propose de profiter de ce temps pour faire un peu d'exercices... une durée de 10-15 min chaque soir est suffisante : exercices de gym, stepper, vélo elliptique, ... Il n'y a rien de tel pour sculpter ton corps et  déstresser de la journée !   2- Si tu es plutôt du matin, je te propose de te coucher 10-15 minutes plus tôt pour consacrer ce temps le lendemain dans une activité physique : on en profite également pour faire quelques étirrements ! Tu veras que cela te fera le plus grand bien ! Il est important de savoir qu'une activité quotidienne donnera bien plus de résultats que quelques fois dans la semaine. De plus, plus tu augmenteras ta masse musculaire, plus ton corps brulera de graisses. Si tu es amené à continuer ce challenge sur la durée, je te conseille de t'équiper d'un mètre de couture pour prendre tes mensurations (ventre, hanches et cuisse). La masse musculaire pèse sur la balance et peut perturber tes résultats. Le jour de ta pesée, si ta balance ne donne rien mais que les cm sont en baisse, tu pouras considérer que c'est une bonne semaine ! Attention, tes mensurations au niveau du ventre peuvent augmenter si tu es balonné(e) ou constipé(e). Allé, c'est parti pour ce challenge !"
       }
   },
@@ -921,7 +920,7 @@
     "model": "dietetic.RobotAdvices",
     "pk": 14,
     "fields": {
-      "robot_advice_type": "7",
+      "robot_advice_type": 7,
       "text": "Courir après le temps :  Tu m'as indiqué dans ton questionnaire que tu n'avais pas encore pris le temps de réfléchir à la mise en place d'une activité physique. Je te propose de te simplifier la tâche, j'ai pris le temps d'y réfléchir pour toi ! Voici donc 2 challenges pour cette semaine, au choix !  1- J'imagine, ou peut-être pas, que tu arrives à trouver le temps de te prélasser le soir devant un bon film ! Si c'est le cas, je te propose de profiter de ce temps pour faire un peu d'exercices... une durée de 10-15 min chaque soir est suffisante : exercices de gym, stepper, vélo elliptique, ... Il n'y a rien de tel pour sculpter ton corps et  déstresser de la journée !   2- Si tu es plutôt du matin, je te propose de te coucher 10-15 minutes plus tôt pour consacrer ce temps le lendemain dans une activité physique : on en profite également pour faire quelques étirrements ! Tu veras que cela te fera le plus grand bien ! Il est important de savoir qu'une activité quotidienne donnera bien plus de résultats que quelques fois dans la semaine. De plus, plus tu augmenteras ta masse musculaire, plus ton corps brulera de graisses. Si tu es amené à continuer ce challenge sur la durée, je te conseille de t'équiper d'un mètre de couture pour prendre tes mensurations (ventre, hanches et cuisse). La masse musculaire pèse sur la balance et peut perturber tes résultats. Le jour de ta pesée, si ta balance ne donne rien mais que les cm sont en baisse, tu pouras considérer que c'est une bonne semaine ! Attention, tes mensurations au niveau du ventre peuvent augmenter si tu es balonné(e) ou constipé(e). Allé, c'est parti pour ce challenge !"
       }
   },
@@ -929,7 +928,7 @@
     "model": "dietetic.RobotAdvices",
     "pk": 15,
     "fields": {
-      "robot_advice_type": "7",
+      "robot_advice_type": 7,
       "text": "Régularité et résultats :  Tu m'as indiqué dans ton questionnaire que tu effectuais une activité physique quelques jours dans la semaine.  J'ai constaté que les personnes ayant qu'une activité quotidienne obtenaient de bien meilleurs résultats que celles qui pratiquaient une activité quelques fois dans la semaine. Voici donc ton challenge !  A chaque trajet de voiture, je te propose de te garer volontairement plus loin afin d'augmenter ton activité quotidienne. Idem pour les transports en commun. Allé, c'est parti pour ce challenge !"
       }
   },
@@ -937,20 +936,9 @@
     "model": "dietetic.RobotAdvices",
     "pk": 16,
     "fields": {
-      "robot_advice_type": "7",
+      "robot_advice_type": 7,
       "text": "Activité physique et résultats :  Tu m'as indiqué dans ton questionnaire que tu pratiquais occasionnellement une activité physique.  J'ai constaté que les personnes ayant qu'une activité quotidienne obtenaient de bien meilleurs résultats que celles qui pratiquaient une activité de temps en temps. Je te propose donc cette semaine 2 challenges, au choix !  1- J'imagine, ou peut-être pas, qu'il t'arrive de te prélasser le soir devant un bon film ! Si c'est le cas, je te propose de profiter de ce temps pour faire un peu d'exercices... une durée de 10-15 min chaque soir est suffisante : exercices de gym, stepper, vélo elliptique, ... Il n'y a rien de tel pour sculpter ton corps et  déstresser de la journée !   2- Si tu es plutôt du matin, je te propose de te coucher 10-15 minutes plus tôt pour consacrer ce temps le lendemain dans une activité physique : on en profite également pour faire quelques étirrements ! Tu veras que cela te fera le plus grand bien ! Il est important de savoir que plus tu augmenteras ta masse musculaire, plus ton corps brulera de graisses. Si tu es amené à continuer ce challenge sur la durée, je te conseille de t'équiper d'un mètre de couture pour prendre tes mensurations (ventre, hanches et cuisse). La masse musculaire pèse sur la balance et peut perturber tes résultats. Le jour de ta pesée, si ta balance ne donne rien mais que les cm sont en baisse, tu pouras considérer que c'est une bonne semaine ! Attention, tes mensurations au niveau du ventre peuvent augmenter si tu es balonné(e) ou constipé(e). Allé, c'est parti pour ce challenge !"
       }
-  },
-
-
-
-
-  {
-    "model": "dietetic.RobotAdvices",
-    "pk": 12,
-    "fields": {
-      "robot_advice_type": "7",
-      "text": ""
-      }
   }
+
 ]
