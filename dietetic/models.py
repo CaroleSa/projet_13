@@ -32,7 +32,6 @@ class RobotQuestion(models.Model):
 
 class RobotAdvices(models.Model):
     robot_advice_type = models.ForeignKey(RobotAdviceType, on_delete=models.CASCADE)
-    advices_to_user = models.ManyToManyField(settings.AUTH_USER_MODEL)
     text = models.CharField(max_length=1700, unique=True)
 
     def __str__(self):

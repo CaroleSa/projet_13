@@ -1,14 +1,17 @@
 from django.shortcuts import render
 from django.contrib.auth import get_user_model, logout
 import datetime
+from .models import RobotAdvices, DiscussionSpace, RobotQuestion
+from django.db.models import Avg, Count
 
 
 def index(request):
     context = {}
+    # PREVOIR CHARGEMENT DES DONNEES DE LINSTANTANE AUTOMATIQUE ICI
+
     # USER'S DISCONNECTION AND DISPLAY THE INDEX PAGE
     # if the user clicks on the button "me déconnecter"
     logout_user = request.POST.get('logout', 'False')
-
     if logout_user == 'True':
         logout(request)
 
@@ -17,6 +20,28 @@ def index(request):
 
 def dietetic_space(request):
     context = {}
+
+    # PROBLEME ERREUR QUERY
+    user = get_user_model()
+    user = user.objects.get(id=request.user.id)
+    advices = RobotAdvices.objects.get(id=1)
+    #user.advices_to_user.add(advices)
+    #print("advices", user.advices_to_user.all())
+
+    # PREVOIR METTRE ID AUTOINCREMENT POUR ORDRE DES QUESTIONS
+    data = DiscussionSpace.objects.values_list("robot_question").order_by('id').annotate(count=Count('robot_question'))
+    list_data = data
+    id_list = []
+    for elt in list_data:
+        id_list.append(elt[0])
+        robot_question = RobotQuestion.objects.values_list("text").get(id=elt)
+        list(set(id_list))
+        # liste des id des questions à poser
+        print(robot_question)
+
+    #id_last_discussion = DiscussionSpace.objects.values_list("id").last()[0]
+    #id_list = list(range(1, id_last_discussion + 1))
+
 
     if request.method == 'POST':
         # si c'est sa première inscription sinon texte différent pour nouvel objectif

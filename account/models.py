@@ -9,6 +9,7 @@ from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
 from django.contrib.auth.validators import UnicodeUsernameValidator
 from django.utils.timezone import now
 from datetime import date
+from dietetic.models import RobotAdvices
 
 
 class UserManager(BaseUserManager):
@@ -43,6 +44,7 @@ class IdentityUser(AbstractBaseUser):
     email = models.EmailField(max_length=254, unique=True, verbose_name='email address')
     password = models.CharField(max_length=128, verbose_name='password')
     last_login = models.DateTimeField(blank=True, null=True, verbose_name='last login')
+    advices_to_user = models.ManyToManyField(RobotAdvices)
 
     USERNAME_FIELD = 'email'
     EMAIL_FIELD = 'email'
