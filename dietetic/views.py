@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.contrib.auth import get_user_model, logout
 import datetime
-from .models import RobotAdvices, DiscussionSpace, RobotQuestion
+from .models import RobotAdvices, DiscussionSpace, RobotQuestion, RobotQuestionType
 from django.db.models import Avg, Count
 
 
@@ -27,7 +27,6 @@ def dietetic_space(request):
     user.advices_to_user.add(advices)
     print("advices", user.advices_to_user.all())"""
 
-    # PREVOIR METTRE ID AUTOINCREMENT POUR discussion space et empecher insertion meme id
     # get all robot question id in the list_data by order discussion_space id
     data = DiscussionSpace.objects.values_list("robot_question").order_by("id")
     list_data = []
@@ -35,26 +34,45 @@ def dietetic_space(request):
         list_data.append(elt[0])
     list_data = list(set(list_data))
 
+    # get and display robot questions
+    for id in list_data:
+        try:
+            question = RobotQuestion.objects.get(id=id)
+            type = question.robot_question_type.type
+            # get and display robot presentation text
+            if type == "presentation":
+                robot_presentation = RobotQuestion.objects.values_list("text").get(id=id)[0]
+                context["question"] = robot_presentation
+
+        # get and display robot presentation text
+        except:
+            pass
+
+
+
+        # get user answer to the robot question
+        # answers_id = DiscussionSpace.objects.values_list("user_answer").get(robot_question=id)
+
+
     # get id neighbor robot question
-    id_question_post = 1
+    id_question_post = ""
+    # ET QUE LUTILISATEUR NA PAS REPONDU A TOUTES LES QUESTIONS
     if id_question_post:
         index_old_id = list_data.index(id_question_post)
         index_neighbor_id = index_old_id + 1
         id_neighbor_question = list_data[index_neighbor_id]
 
         # get robot question text to display
-        if id_neighbor_question <= max(list_data):
+        robot_question = RobotQuestion.objects.get(id=id_neighbor_question)
+        type = robot_question.robot_question_type.type
+        if id_neighbor_question <= max(list_data) and type == "start":
             # get robot questions text
             robot_question = RobotQuestion.objects.values_list("text").get(id=id_neighbor_question)[0]
             print(robot_question)
-
-    else:
-        robot_question = RobotQuestion.objects.values_list("text").get(id=min(list_data))[0]
-        print(max(list_data), robot_question)
+        else:
+            text = "plus de questions, le suivi commance"
 
 
-    #id_last_discussion = DiscussionSpace.objects.values_list("id").last()[0]
-    #id_list = list(range(1, id_last_discussion + 1))
 
 
     if request.method == 'POST':
