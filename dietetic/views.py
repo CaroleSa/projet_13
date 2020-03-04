@@ -29,10 +29,11 @@ def dietetic_space(request):
 
     # PREVOIR METTRE ID AUTOINCREMENT POUR discussion space et empecher insertion meme id
     # get all robot question id in the list_data by order discussion_space id
-    data = DiscussionSpace.objects.values_list("robot_question").order_by("robot_question").annotate(count=Count('robot_question'))
+    data = DiscussionSpace.objects.values_list("robot_question").order_by("id")
     list_data = []
     for elt in data:
         list_data.append(elt[0])
+    list_data = list(set(list_data))
 
     # get id neighbor robot question
     id_question_post = 1
