@@ -7,7 +7,6 @@ from django.db.models import Avg, Count
 
 def index(request):
     context = {}
-    # PREVOIR CHARGEMENT DES DONNEES DE LINSTANTANE AUTOMATIQUE ICI
 
     # USER'S DISCONNECTION AND DISPLAY THE INDEX PAGE
     # if the user clicks on the button "me déconnecter"
@@ -24,20 +23,34 @@ def dietetic_space(request):
     # PROBLEME ERREUR QUERY
     user = get_user_model()
     user = user.objects.get(id=request.user.id)
-    advices = RobotAdvices.objects.get(id=1)
-    #user.advices_to_user.add(advices)
-    #print("advices", user.advices_to_user.all())
+    """advices = RobotAdvices.objects.get(id=1)
+    user.advices_to_user.add(advices)
+    print("advices", user.advices_to_user.all())"""
 
-    # PREVOIR METTRE ID AUTOINCREMENT POUR ORDRE DES QUESTIONS
-    data = DiscussionSpace.objects.values_list("robot_question").order_by('id').annotate(count=Count('robot_question'))
-    list_data = data
-    id_list = []
-    for elt in list_data:
-        id_list.append(elt[0])
-        robot_question = RobotQuestion.objects.values_list("text").get(id=elt)
-        list(set(id_list))
-        # liste des id des questions à poser
-        print(robot_question)
+    # PREVOIR METTRE ID AUTOINCREMENT POUR discussion space et empecher insertion meme id
+    # get all robot question id in the list_data by order discussion_space id
+    data = DiscussionSpace.objects.values_list("robot_question").order_by("robot_question").annotate(count=Count('robot_question'))
+    list_data = []
+    for elt in data:
+        list_data.append(elt[0])
+
+    # get id neighbor robot question
+    id_question_post = 1
+    if id_question_post:
+        index_old_id = list_data.index(id_question_post)
+        index_neighbor_id = index_old_id + 1
+        id_neighbor_question = list_data[index_neighbor_id]
+
+        # get robot question text to display
+        if id_neighbor_question <= max(list_data):
+            # get robot questions text
+            robot_question = RobotQuestion.objects.values_list("text").get(id=id_neighbor_question)[0]
+            print(robot_question)
+
+    else:
+        robot_question = RobotQuestion.objects.values_list("text").get(id=min(list_data))[0]
+        print(max(list_data), robot_question)
+
 
     #id_last_discussion = DiscussionSpace.objects.values_list("id").last()[0]
     #id_list = list(range(1, id_last_discussion + 1))

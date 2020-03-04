@@ -7,7 +7,7 @@
 # imports
 from unittest import TestCase
 from django.contrib.auth import get_user_model
-from account.models import ResultsUser, ProfileUser, HistoryUser, StatusUser
+from account.models import ResultsUser, ProfileUser, HistoryUser, StatusUser, IdentityUser
 from datetime import date
 import re
 
@@ -22,7 +22,7 @@ class TestsModels(TestCase):
         self.user = get_user_model()
 
         # delete all data in database
-        models_list = [self.user]
+        models_list = [IdentityUser]
         for table in models_list:
             table.objects.all().delete()
 
