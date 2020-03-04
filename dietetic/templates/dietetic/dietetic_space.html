@@ -4,7 +4,10 @@
 {% block informations %}
 <div class="row">
     <div id="discussion_space" class="col-lg-offset-2 col-lg-4">
-        Je parle ici
+        <a>{{question}}</a></br></br>
+        {% for answer in answers %}
+            <a>{{answer}}</a></br>
+        {% endfor %}
     </div>
     <div id="card" class="col-lg-offset-2 col-lg-2">
         <div id="dietetic_text"> Mon challenge ici </div>

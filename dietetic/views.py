@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.contrib.auth import get_user_model, logout
 import datetime
-from .models import RobotAdvices, DiscussionSpace, RobotQuestion, RobotQuestionType
+from .models import RobotAdvices, DiscussionSpace, RobotQuestion, RobotQuestionType, UserAnswer
 from django.db.models import Avg, Count
 
 
@@ -32,26 +32,38 @@ def dietetic_space(request):
     list_data = []
     for elt in data:
         list_data.append(elt[0])
-    list_data = list(set(list_data))
+    new_list = []
+    for i in list_data:
+        if i not in new_list:
+            new_list.append(i)
+    list_data = new_list
 
+    # MAJOUTER IF UTILISATEUR NA PAS FAIT SON QUESTIONNAIRE
     # get and display robot questions
     for id in list_data:
         try:
+            # get all question type
             question = RobotQuestion.objects.get(id=id)
             type = question.robot_question_type.type
-            # get and display robot presentation text
+
+            # get and display robot presentation text and user's answers
             if type == "presentation":
                 robot_presentation = RobotQuestion.objects.values_list("text").get(id=id)[0]
+                answers_id = DiscussionSpace.objects.values_list("user_answer").filter(robot_question=id)
+                answers_text_list = []
+                for id in answers_id:
+                    answers_text_list.append(UserAnswer.objects.values_list("text").get(id=id[0])[0])
                 context["question"] = robot_presentation
+                context["answers"] = answers_text_list
+
 
         # get and display robot presentation text
-        except:
+        except RobotQuestion.DoesNotExist:
             pass
 
 
 
-        # get user answer to the robot question
-        # answers_id = DiscussionSpace.objects.values_list("user_answer").get(robot_question=id)
+
 
 
     # get id neighbor robot question
