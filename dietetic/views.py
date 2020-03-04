@@ -15,6 +15,10 @@ def index(request):
     if logout_user == 'True':
         logout(request)
 
+
+    # si l'utilisateur à comme conseil le manque de connaissance alimentaire,
+    # affiche l'onglet programme
+
     return render(request, 'dietetic/index.html', context)
 
 
@@ -50,6 +54,12 @@ def dietetic_space(request):
                 else:
                     old_question_id = RobotQuestion.objects.values_list("id").get(text=old_robot_question)[0]
                     index_old_id = list_data.index(old_question_id)
+
+                    user_answer = request.POST.get('answer')
+                    user_answer_id = UserAnswer.objects.values_list("id").get(text=user_answer)
+                    robot_answer = DiscussionSpace.objects.values_list("robot_answer").\
+                        filter(robot_question=old_question_id).get(user_answer=user_answer_id)[0]
+                    context["robot_answer"] = robot_answer
                     try:
                         id_next_question = list_data[index_old_id + 1]
                     except IndexError:
@@ -58,13 +68,13 @@ def dietetic_space(request):
                         user.save()
                         return render(request, 'dietetic/dietetic_space.html', context)
 
-                robot_presentation = RobotQuestion.objects.values_list("text").get(id=id_next_question)[0]
+                robot_question = RobotQuestion.objects.values_list("text").get(id=id_next_question)[0]
                 answers_id = DiscussionSpace.objects.values_list("user_answer").filter(robot_question=id_next_question)
                 answers_text_list = []
                 for id in answers_id:
                     answers_text_list.append(UserAnswer.objects.values_list("text").get(id=id[0])[0])
-                # AFFICHER COMMENTAIRE ROBOT EGALEMENT
-                context["question"] = robot_presentation
+
+                context["question"] = robot_question
                 context["answers"] = answers_text_list
 
     # si questions finies ... mettre true à la valeur question de démarrage faite
@@ -81,6 +91,7 @@ def dietetic_space(request):
     #               recharger avec challenges au pif ou defaults
 
     # récupère la réponse pour stocker le conseil correspondant
+    # si conseil deja ajouté, ne pas le dupliquer et ne pas afficher d'erreur
     user_answer = request.POST.get('answer')
 
 

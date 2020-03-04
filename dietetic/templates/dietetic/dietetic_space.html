@@ -4,14 +4,17 @@
 {% block informations %}
 <div class="row">
     <div id="discussion_space" class="col-lg-offset-2 col-lg-4">
+        {% if robot_answer %}
+            <a>{{robot_answer}}</a></br></br>
+        {% endif %}
         {% if question %}
-            <a>{{question}}</a></br></br>
+            <a class="bold">{{question}}</a></br></br>
             <form action="{% url 'dietetic:dietetic_space' %}" method="post">{% csrf_token %}
                 <input type="hidden" name="question" value="{{ question }}" />
                 {% for answer in answers %}
-                    <a><input class="col-lg-offset-1" type="radio" name="answer" value="{{answer}}" required/>&nbsp;&nbsp;&nbsp;{{answer}}</a></br></br>
+                    <a><input type="radio" name="answer" value="{{answer}}" required/>&nbsp;&nbsp;&nbsp;{{answer}}</a></br></br>
                 {% endfor %}
-                </br><input class="col-lg-offset-1" type="submit" value="Valider"/>
+                </br><input type="submit" value="Valider"/></br></br>
             </form>
         {% endif %}
     </div>

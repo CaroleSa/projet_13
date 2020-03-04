@@ -58,8 +58,11 @@ def create_account(request):
         # create an other error message
         else:
             try:
-                user.objects.get(email=email)
+                user = user.objects.get(email=email)
                 context["error_message"] = "Ce compte existe déjà."
+                is_active = StatusUser.objects.values_list("is_active").get(user=user.id)[0]
+                if is_active is False:
+                    context["error_message"] = "Ce compte a été supprimé et n'est pas réutilisable."
             except user.DoesNotExist:
                 context["error_message"] = "Formulaire non valide."
 
