@@ -83,6 +83,7 @@ class StatusUser(models.Model):
 class HistoryUser(models.Model):
     user = models.OneToOneField(IdentityUser, on_delete=models.CASCADE)
     date_joined = models.DateTimeField(default=now, verbose_name='date joined')
+    start_questionnaire_completed = models.BooleanField(default=False)
 
     def __str__(self):
         return self.date_joined

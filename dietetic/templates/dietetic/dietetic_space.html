@@ -4,10 +4,16 @@
 {% block informations %}
 <div class="row">
     <div id="discussion_space" class="col-lg-offset-2 col-lg-4">
-        <a>{{question}}</a></br></br>
-        {% for answer in answers %}
-            <a>{{answer}}</a></br>
-        {% endfor %}
+        {% if question %}
+            <a>{{question}}</a></br></br>
+            <form action="{% url 'dietetic:dietetic_space' %}" method="post">{% csrf_token %}
+                <input type="hidden" name="question" value="{{ question }}" />
+                {% for answer in answers %}
+                    <a><input class="col-lg-offset-1" type="radio" name="answer" value="{{answer}}" required/>&nbsp;&nbsp;&nbsp;{{answer}}</a></br></br>
+                {% endfor %}
+                </br><input class="col-lg-offset-1" type="submit" value="Valider"/>
+            </form>
+        {% endif %}
     </div>
     <div id="card" class="col-lg-offset-2 col-lg-2">
         <div id="dietetic_text"> Mon challenge ici </div>

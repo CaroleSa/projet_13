@@ -2,6 +2,7 @@ from django.shortcuts import render
 from django.contrib.auth import get_user_model, logout
 import datetime
 from .models import RobotAdvices, DiscussionSpace, RobotQuestion, RobotQuestionType, UserAnswer
+from account.models import HistoryUser
 from django.db.models import Avg, Count
 
 
@@ -20,13 +21,6 @@ def index(request):
 def dietetic_space(request):
     context = {}
 
-    # PROBLEME ERREUR QUERY
-    user = get_user_model()
-    user = user.objects.get(id=request.user.id)
-    """advices = RobotAdvices.objects.get(id=1)
-    user.advices_to_user.add(advices)
-    print("advices", user.advices_to_user.all())"""
-
     # get all robot question id in the list_data by order discussion_space id
     data = DiscussionSpace.objects.values_list("robot_question").order_by("id")
     list_data = []
@@ -38,51 +32,62 @@ def dietetic_space(request):
             new_list.append(i)
     list_data = new_list
 
-    # MAJOUTER IF UTILISATEUR NA PAS FAIT SON QUESTIONNAIRE
-    # get and display robot questions
-    for id in list_data:
-        try:
-            # get all question type
+    # if the user have not answered the first questions
+    start_questionnaire_completed = HistoryUser.objects.values_list("start_questionnaire_completed")\
+        .get(user=request.user.id)
+    if start_questionnaire_completed[0] is False:
+
+        # get and display robot questions
+        for id in list_data:
+
+            # get the robot questions start and user's answers
             question = RobotQuestion.objects.get(id=id)
             type = question.robot_question_type.type
+            if type == "start":
+                old_robot_question = request.POST.get('question', False)
+                if old_robot_question is False:
+                    id_next_question = min(list_data)
+                else:
+                    old_question_id = RobotQuestion.objects.values_list("id").get(text=old_robot_question)[0]
+                    index_old_id = list_data.index(old_question_id)
+                    try:
+                        id_next_question = list_data[index_old_id + 1]
+                    except IndexError:
+                        user = HistoryUser.objects.get(user=request.user.id)
+                        user.start_questionnaire_completed = True
+                        user.save()
+                        return render(request, 'dietetic/dietetic_space.html', context)
 
-            # get and display robot presentation text and user's answers
-            if type == "presentation":
-                robot_presentation = RobotQuestion.objects.values_list("text").get(id=id)[0]
-                answers_id = DiscussionSpace.objects.values_list("user_answer").filter(robot_question=id)
+                robot_presentation = RobotQuestion.objects.values_list("text").get(id=id_next_question)[0]
+                answers_id = DiscussionSpace.objects.values_list("user_answer").filter(robot_question=id_next_question)
                 answers_text_list = []
                 for id in answers_id:
                     answers_text_list.append(UserAnswer.objects.values_list("text").get(id=id[0])[0])
+                # AFFICHER COMMENTAIRE ROBOT EGALEMENT
                 context["question"] = robot_presentation
                 context["answers"] = answers_text_list
 
+    # si questions finies ... mettre true à la valeur question de démarrage faite
+    # sinon
+    #       si utilisateur vient sur le site moins d'une semaine apres ses resultats :
+    #       affiche texte doit attentdre telle date pour venir
+    #       sinon :
+    #           affiche texte question poids de la semaine
+    #           si utilisateur a encore des challenges
+    #               afficher nouveau challenge
+    #           sinon (s'il n'a plus de challenges)
+    #               affiche questionnaire pour recharger nouveau challenge
+    #               si toujours pas de challenges:
+    #               recharger avec challenges au pif ou defaults
 
-        # get and display robot presentation text
-        except RobotQuestion.DoesNotExist:
-            pass
+    # récupère la réponse pour stocker le conseil correspondant
+    user_answer = request.POST.get('answer')
 
 
 
 
 
 
-    # get id neighbor robot question
-    id_question_post = ""
-    # ET QUE LUTILISATEUR NA PAS REPONDU A TOUTES LES QUESTIONS
-    if id_question_post:
-        index_old_id = list_data.index(id_question_post)
-        index_neighbor_id = index_old_id + 1
-        id_neighbor_question = list_data[index_neighbor_id]
-
-        # get robot question text to display
-        robot_question = RobotQuestion.objects.get(id=id_neighbor_question)
-        type = robot_question.robot_question_type.type
-        if id_neighbor_question <= max(list_data) and type == "start":
-            # get robot questions text
-            robot_question = RobotQuestion.objects.values_list("text").get(id=id_neighbor_question)[0]
-            print(robot_question)
-        else:
-            text = "plus de questions, le suivi commance"
 
 
 
