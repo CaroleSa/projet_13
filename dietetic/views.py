@@ -25,7 +25,7 @@ def index(request):
 def dietetic_space(request):
     context = {}
 
-    # get all robot question id in the list_data by order discussion_space id
+    # create a list : robot questions by order discussion_space id
     data = DiscussionSpace.objects.values_list("robot_question").order_by("id")
     list_data = []
     for elt in data:
@@ -37,45 +37,59 @@ def dietetic_space(request):
     list_data = new_list
 
     # if the user have not answered the first questions
+    # create a list : robot questions start id
     start_questionnaire_completed = HistoryUser.objects.values_list("start_questionnaire_completed")\
         .get(user=request.user.id)
     if start_questionnaire_completed[0] is False:
-
-        # get and display robot questions
+        new_list = []
         for id in list_data:
-
-            # get the robot questions start and user's answers
             question = RobotQuestion.objects.get(id=id)
             type = question.robot_question_type.type
             if type == "start":
-                old_robot_question = request.POST.get('question', False)
-                if old_robot_question is False:
-                    id_next_question = min(list_data)
-                else:
-                    old_question_id = RobotQuestion.objects.values_list("id").get(text=old_robot_question)[0]
-                    index_old_id = list_data.index(old_question_id)
+                new_list.append(id)
+        list_data = new_list
 
-                    user_answer = request.POST.get('answer')
-                    user_answer_id = UserAnswer.objects.values_list("id").get(text=user_answer)
-                    robot_answer = DiscussionSpace.objects.values_list("robot_answer").\
-                        filter(robot_question=old_question_id).get(user_answer=user_answer_id)[0]
-                    context["robot_answer"] = robot_answer
-                    try:
-                        id_next_question = list_data[index_old_id + 1]
-                    except IndexError:
-                        user = HistoryUser.objects.get(user=request.user.id)
-                        user.start_questionnaire_completed = True
-                        user.save()
-                        return render(request, 'dietetic/dietetic_space.html', context)
+    # get and display robot question, user answer and robot answer
+    old_robot_question = request.POST.get('question', False)
+    if old_robot_question is False:
+        id_next_question = min(list_data)
+    else:
+        old_question_id = RobotQuestion.objects.values_list("id").get(text=old_robot_question)[0]
+        index_old_id = list_data.index(old_question_id)
 
-                robot_question = RobotQuestion.objects.values_list("text").get(id=id_next_question)[0]
-                answers_id = DiscussionSpace.objects.values_list("user_answer").filter(robot_question=id_next_question)
-                answers_text_list = []
-                for id in answers_id:
-                    answers_text_list.append(UserAnswer.objects.values_list("text").get(id=id[0])[0])
+        # get the robot answer
+        user_answer = request.POST.get('answer')
+        user_answer_id = UserAnswer.objects.values_list("id").get(text=user_answer)
+        robot_answer = DiscussionSpace.objects.values_list("robot_answer").\
+            filter(robot_question=old_question_id).get(user_answer=user_answer_id)[0]
+        context["robot_answer"] = robot_answer
 
-                context["question"] = robot_question
-                context["answers"] = answers_text_list
+        # if the user's answer causes the end of the discussion
+        # id discussion space concerned : 2 and 3
+        id_old_discussion = DiscussionSpace.objects.values_list("id"). \
+            filter(robot_question=old_question_id).get(user_answer=user_answer_id)[0]
+        if id_old_discussion == 2 or id_old_discussion == 3:
+            return render(request, 'dietetic/dietetic_space.html', context)
+
+        # get id of the next question
+        try:
+            id_next_question = list_data[index_old_id + 1]
+
+        # if there are no more questions
+        except IndexError:
+            user = HistoryUser.objects.get(user=request.user.id)
+            user.start_questionnaire_completed = True
+            user.save()
+            return render(request, 'dietetic/dietetic_space.html', context)
+
+    # get the robot question and the user's answers
+    robot_question = RobotQuestion.objects.values_list("text").get(id=id_next_question)[0]
+    answers_id = DiscussionSpace.objects.values_list("user_answer").filter(robot_question=id_next_question)
+    answers_text_list = []
+    for id in answers_id:
+        answers_text_list.append(UserAnswer.objects.values_list("text").get(id=id[0])[0])
+    context["question"] = robot_question
+    context["answers"] = answers_text_list
 
     # si questions finies ... mettre true à la valeur question de démarrage faite
     # sinon
