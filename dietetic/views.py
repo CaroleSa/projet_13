@@ -68,7 +68,7 @@ def dietetic_space(request):
         # id discussion space concerned : 2 and 3
         id_old_discussion = DiscussionSpace.objects.values_list("id"). \
             filter(robot_question=old_question_id).get(user_answer=user_answer_id)[0]
-        if id_old_discussion == 2 or id_old_discussion == 3:
+        if id_old_discussion == 2 or id_old_discussion == 3 or id_old_discussion == 45:
             return render(request, 'dietetic/dietetic_space.html', context)
 
         # get id of the next question
@@ -84,12 +84,17 @@ def dietetic_space(request):
 
     # get the robot question and the user's answers
     robot_question = RobotQuestion.objects.values_list("text").get(id=id_next_question)[0]
-    answers_id = DiscussionSpace.objects.values_list("user_answer").filter(robot_question=id_next_question)
-    answers_text_list = []
-    for id in answers_id:
-        answers_text_list.append(UserAnswer.objects.values_list("text").get(id=id[0])[0])
     context["question"] = robot_question
-    context["answers"] = answers_text_list
+
+    answers_id = DiscussionSpace.objects.values_list("user_answer").filter(robot_question=id_next_question)
+    print(answers_id[0])
+    if answers_id[0][0] is not None:
+        answers_text_list = []
+        for id in answers_id:
+            answers_text_list.append(UserAnswer.objects.values_list("text").get(id=id[0])[0])
+        context["answers"] = answers_text_list
+
+
 
     # si questions finies ... mettre true à la valeur question de démarrage faite
     # sinon

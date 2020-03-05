@@ -1,0 +1,24 @@
+language: python
+python:
+  - "3.7"
+
+env :
+  - DJANGO_SETTINGS_MODULE='purbeurre.settings.travis'
+
+addons:
+  postgresql: "9.4"
+services:
+  - postgresql
+
+before_script:
+  - pip install -r requirements.txt
+  - psql -c 'create database travis_ci_test;' -U postgres
+script:
+  - python manage.py migrate
+  - python manage.py loaddata data.json
+  - python manage.py test
+
+branches:
+  only:
+    - master
+
