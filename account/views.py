@@ -13,7 +13,7 @@ from django.contrib.auth import update_session_auth_hash
 from .models import HistoryUser, IdentityUser, StatusUser
 import calendar
 import locale
-locale.setlocale(locale.LC_ALL, 'fr_FR')
+locale.setlocale(locale.LC_ALL, 'fr_FR.UTF-8')
 'fr_FR'
 
 
