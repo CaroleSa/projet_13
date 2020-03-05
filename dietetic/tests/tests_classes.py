@@ -14,7 +14,7 @@ class TestsReturnWeightAdvicesGoal(TestCase):
     def setUp(self):
         self.new_weight_advice_goal = WeightAdviceGoal()
 
-    def test_return_impossible_goal(self):
+    def test_return_goal_impossible_goal(self):
         actual_weight = 40
         cruising_weight = 38
         goal_weight = 38
@@ -23,7 +23,7 @@ class TestsReturnWeightAdvicesGoal(TestCase):
                                                                       goal_weight, height)[0]
         self.assertEqual(goal, "impossible")
 
-    def test_return_impossible_advice(self):
+    def test_return_advice_impossible_goal(self):
         actual_weight = 40
         cruising_weight = 38
         goal_weight = 38
@@ -34,7 +34,7 @@ class TestsReturnWeightAdvicesGoal(TestCase):
                "de perdre plus de poids."
         self.assertEqual(advice, text)
 
-    def test_return_max_goal(self):
+    def test_return_goal_min_weight(self):
         actual_weight = 60
         cruising_weight = 55
         goal_weight = 38
@@ -46,7 +46,7 @@ class TestsReturnWeightAdvicesGoal(TestCase):
 
         self.assertEqual(return_goal, goal)
 
-    def test_return_max_advice(self):
+    def test_return_advice_min_weight(self):
         actual_weight = 60
         cruising_weight = 55
         goal_weight = 38
@@ -59,7 +59,7 @@ class TestsReturnWeightAdvicesGoal(TestCase):
 
         self.assertEqual(advice, text)
 
-    def test_under_cruising_weight_goal(self):
+    def test_return_goal_under_cruising_weight(self):
         actual_weight = 60
         cruising_weight = 55
         goal_weight = 50
@@ -70,7 +70,7 @@ class TestsReturnWeightAdvicesGoal(TestCase):
 
         self.assertEqual(return_goal, user_goal)
 
-    def test_under_cruising_weight_advice(self):
+    def test_return_advice_under_cruising_weight(self):
         actual_weight = 60
         cruising_weight = 55
         goal_weight = 50
@@ -81,5 +81,80 @@ class TestsReturnWeightAdvicesGoal(TestCase):
                "c'est se qu'on appelle le poids de croisière. Il semble que ton objectif " \
                "aille en dessous de ce poids. Il est donc" \
                "possible que tu n'arrives pas à le maintenir sur la durée."
+
+        self.assertEqual(advice, text)
+
+    def test_return_goal_goal_under_6_kg(self):
+        actual_weight = 70
+        cruising_weight = 55
+        goal_weight = 66
+        height = 1.60
+        return_goal = self.new_weight_advice_goal.return_weight_advices_goal(actual_weight, cruising_weight,
+                                                                             goal_weight, height)[0]
+        user_goal = actual_weight - goal_weight
+
+        self.assertEqual(return_goal, user_goal)
+
+    def test_return_advice_goal_under_6_kg(self):
+        actual_weight = 70
+        cruising_weight = 55
+        goal_weight = 66
+        height = 1.60
+        advice = self.new_weight_advice_goal.return_weight_advices_goal(actual_weight, cruising_weight,
+                                                                        goal_weight, height)[1]
+        user_goal = actual_weight - goal_weight
+        text = "Alors c'est parti ! Partons sur un objectif de - " \
+               + str(user_goal) + " kg. Passons maintenant à la suite du questionnaire."
+
+        self.assertEqual(advice, text)
+
+    def test_return_goal_goal_above_6_kg_second_goal_under_3_kg(self):
+        actual_weight = 70
+        cruising_weight = 55
+        goal_weight = 63
+        height = 1.60
+        return_goal = self.new_weight_advice_goal.return_weight_advices_goal(actual_weight, cruising_weight,
+                                                                             goal_weight, height)[0]
+        user_goal = actual_weight - goal_weight
+        actual_goal = user_goal / 2
+
+        self.assertEqual(return_goal, actual_goal)
+
+    def test_return_advice_goal_above_6_kg_second_goal_under_3_kg(self):
+        actual_weight = 70
+        cruising_weight = 55
+        goal_weight = 63
+        height = 1.60
+        advice = self.new_weight_advice_goal.return_weight_advices_goal(actual_weight, cruising_weight,
+                                                                        goal_weight, height)[1]
+        user_goal = actual_weight - goal_weight
+        actual_goal = user_goal / 2
+        text = "Ton premier objectif serra donc de perdre "+str(actual_goal)+\
+               " kg. C'est parti ! Passons maintenant à la suite du questionnaire."
+        text = "Prévoir un objectif rapidement atteignable est une bonne chose pour rester motiver." \
+                "Je te propose donc de prévoir un premier objectif puis un second, ..." + text + ""
+
+        self.assertEqual(advice, text)
+
+    def test_return_goal_goal_above_6_kg_second_goal_above_3_kg(self):
+        actual_weight = 70
+        cruising_weight = 55
+        goal_weight = 60
+        height = 1.60
+        return_goal = self.new_weight_advice_goal.return_weight_advices_goal(actual_weight, cruising_weight,
+                                                                             goal_weight, height)[0]
+        self.assertEqual(return_goal, 5)
+
+    def test_return_advice_goal_above_6_kg_second_goal_above_3_kg(self):
+        actual_weight = 70
+        cruising_weight = 55
+        goal_weight = 60
+        height = 1.60
+        advice = self.new_weight_advice_goal.return_weight_advices_goal(actual_weight, cruising_weight,
+                                                                        goal_weight, height)[1]
+        text = "Ton premier objectif serra donc de perdre 5 kg. C'est parti ! " \
+               "Passons maintenant à la suite du questionnaire."
+        text = "Prévoir un objectif rapidement atteignable est une bonne chose pour rester motiver." \
+                "Je te propose donc de prévoir un premier objectif puis un second, ..." + text + ""
 
         self.assertEqual(advice, text)

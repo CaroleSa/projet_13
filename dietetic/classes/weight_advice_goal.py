@@ -53,7 +53,7 @@ class WeightAdviceGoal:
                 goal = 5
 
             advice = "Prévoir un objectif rapidement atteignable est une bonne chose pour rester motiver." \
-                    "Je te propose donc de prévoir un premier objectif puis un second, ..."+advice+""
+                     "Je te propose donc de prévoir un premier objectif puis un second, ..."+advice+""
             return goal, advice
 
         else:
