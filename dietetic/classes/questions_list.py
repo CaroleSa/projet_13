@@ -4,7 +4,7 @@
 """ QuestionsList class """
 
 # Imports
-from ..models import DiscussionSpace
+from dietetic.models import DiscussionSpace
 
 
 class QuestionsList:
