@@ -30,7 +30,7 @@ def index(request):
 def dietetic_space(request):
     context = {}
 
-    # if the user have not answered the first questions
+    # if the user have not answered the start questions
     # create a list : robot questions start id
     start_questionnaire_completed = HistoryUser.objects.values_list("start_questionnaire_completed")\
         .get(user=request.user.id)

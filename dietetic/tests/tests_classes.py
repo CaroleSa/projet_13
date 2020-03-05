@@ -5,9 +5,9 @@
 
 # imports
 from unittest import TestCase
-from ..classes.weight_advice_goal import WeightAdviceGoal
-from ..classes.questions_list import QuestionsList
-from ..models import DiscussionSpace
+from dietetic.classes.weight_advice_goal import WeightAdviceGoal
+from dietetic.classes.questions_list import QuestionsList
+from dietetic.models import DiscussionSpace
 
 
 class TestsReturnWeightAdvicesGoal(TestCase):
