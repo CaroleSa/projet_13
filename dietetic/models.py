@@ -52,5 +52,8 @@ class DiscussionSpace(models.Model):
     robot_advices = models.ForeignKey(RobotAdvices, on_delete=models.CASCADE, null=True)
     robot_answer = models.CharField(max_length=700, null=True)
 
+    class Meta:
+        unique_together = (("user_answer", "robot_question"),)
+
     def __str__(self):
         return self.robot_answer
