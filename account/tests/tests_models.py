@@ -7,6 +7,7 @@
 # imports
 from unittest import TestCase
 from django.contrib.auth import get_user_model
+from django.db.utils import IntegrityError
 from account.models import ResultsUser, ProfileUser, HistoryUser, StatusUser, IdentityUser
 from datetime import date
 import re
@@ -21,11 +22,6 @@ class TestsModels(TestCase):
         # get custom user model
         self.user = get_user_model()
 
-        # delete all data in database
-        models_list = [IdentityUser]
-        for table in models_list:
-            table.objects.all().delete()
-
         # data for test_add_user method
         self.username1 = 'pseudo1'
         self.email1 = 'pseudo1@tests.com'
@@ -37,14 +33,21 @@ class TestsModels(TestCase):
         self.email2 = 'pseudo2@tests.com'
         self.password2 = 'password2'
         self.id_user2 = 2
-        self.user.objects.create_user(id=self.id_user2, username=self.username2, email=self.email2,
-                                      password=self.password2)
+        try:
+            self.user.objects.create_user(id=self.id_user2, username=self.username2, email=self.email2,
+                                          password=self.password2)
+        except IntegrityError:
+            pass
+
         self.user_created = self.user.objects.get(id=self.id_user2)
 
     def test_add_user(self):
         """ Test create user account """
-        user_created = self.user.objects.create_user(id=self.id_user1, username=self.username1, email=self.email1,
-                                                     password=self.password1)
+        try:
+            user_created = self.user.objects.create_user(id=self.id_user1, username=self.username1, email=self.email1,
+                                                         password=self.password1)
+        except IntegrityError:
+            pass
         self.assertIn(self.username1, str(user_created))
 
     def test_get_user_created(self):
@@ -77,7 +80,11 @@ class TestsModels(TestCase):
         """ Test create user profile and get data """
         starting_weight = 100
         final_weight = 80
-        ProfileUser.objects.create(user=self.user_created, starting_weight=starting_weight, final_weight=final_weight)
+        try:
+            ProfileUser.objects.create(user=self.user_created, starting_weight=starting_weight,
+                                       final_weight=final_weight)
+        except IntegrityError:
+            pass
         data = ProfileUser.objects.values_list('starting_weight')
         get_weight_user = data.get(user=self.user_created)
         self.assertEqual(get_weight_user[0], starting_weight)
@@ -86,8 +93,10 @@ class TestsModels(TestCase):
         """ Test create user results and get results """
         weight = 55.0
         date = "2020-5-20"
-        ResultsUser.objects.create(user=self.user_created, weighing_date=date, weight=weight)
-
+        try:
+            ResultsUser.objects.create(user=self.user_created, weighing_date=date, weight=weight)
+        except IntegrityError:
+            pass
         data = ResultsUser.objects.values_list('weight').filter(weighing_date=date)
         get_weight_user = data.get(user=self.user_created)
         self.assertEqual(get_weight_user[0], weight)
@@ -100,7 +109,10 @@ class TestsModels(TestCase):
 
     def test_add_get_history_user(self):
         """ Test add and get user's history data """
-        HistoryUser.objects.create(user=self.user_created)
+        try:
+            HistoryUser.objects.create(user=self.user_created)
+        except IntegrityError:
+            pass
         data = HistoryUser.objects.values_list("date_joined")
         date_data = data.get(user=self.user_created)
         date_create_account_list = re.findall('\d+', str(date_data))[0:3]
