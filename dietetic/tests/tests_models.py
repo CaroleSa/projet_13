@@ -35,7 +35,7 @@ class TestsModels(TestCase):
         self.robot_question_type = RobotQuestionType.objects.first()
         self.robot_question = RobotQuestion.objects.first()
         self.robot_advice_type = RobotAdviceType.objects.first()
-        self.user_answer = UserAnswer.objects.first()
+        self.user_answer = UserAnswer.objects.last()
         self.robot_advices = RobotAdvices.objects.first()
 
     def test_add_get_robot_question(self):
