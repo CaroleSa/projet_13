@@ -810,6 +810,156 @@
       "robot_advices": 16
     }
   },
+  {
+    "model": "dietetic.DiscussionSpace",
+    "pk": 31,
+    "fields": {
+      "robot_question": 9,
+      "user_answer": 17,
+      "robot_answer": null,
+      "robot_advices": 17
+    }
+  },
+  {
+    "model": "dietetic.DiscussionSpace",
+    "pk": 32,
+    "fields": {
+      "robot_question": 9,
+      "user_answer": 18,
+      "robot_answer": null,
+      "robot_advices": 18
+    }
+  },
+  {
+    "model": "dietetic.DiscussionSpace",
+    "pk": 33,
+    "fields": {
+      "robot_question": 9,
+      "user_answer": 19,
+      "robot_answer": null,
+      "robot_advices": null
+    }
+  },
+  {
+    "model": "dietetic.DiscussionSpace",
+    "pk": 34,
+    "fields": {
+      "robot_question": 10,
+      "user_answer": 1,
+      "robot_answer": null,
+      "robot_advices": null
+    }
+  },
+  {
+    "model": "dietetic.DiscussionSpace",
+    "pk": 35,
+    "fields": {
+      "robot_question": 10,
+      "user_answer": 2,
+      "robot_answer": "Les légumes sont des alliés indispensables pour la perte de poids ! Penses-y pour débuter ton programme alimentaire ! Nous en reparlerons ...",
+      "robot_advices": 19
+    }
+  },
+  {
+    "model": "dietetic.DiscussionSpace",
+    "pk": 36,
+    "fields": {
+      "robot_question": 11,
+      "user_answer": 1,
+      "robot_answer": null,
+      "robot_advices": 20
+    }
+  },
+  {
+    "model": "dietetic.DiscussionSpace",
+    "pk": 37,
+    "fields": {
+      "robot_question": 11,
+      "user_answer": 2,
+      "robot_answer": null,
+      "robot_advices": null
+    }
+  },
+  {
+    "model": "dietetic.DiscussionSpace",
+    "pk": 38,
+    "fields": {
+      "robot_question": 12,
+      "user_answer": 20,
+      "robot_answer": null,
+      "robot_advices": 21
+    }
+  },
+  {
+    "model": "dietetic.DiscussionSpace",
+    "pk": 39,
+    "fields": {
+      "robot_question": 12,
+      "user_answer": 21,
+      "robot_answer": null,
+      "robot_advices": 22
+    }
+  },
+  {
+    "model": "dietetic.DiscussionSpace",
+    "pk": 40,
+    "fields": {
+      "robot_question": 12,
+      "user_answer": 22,
+      "robot_answer": null,
+      "robot_advices": null
+    }
+  },
+  {
+    "model": "dietetic.DiscussionSpace",
+    "pk": 41,
+    "fields": {
+      "robot_question": 14,
+      "user_answer": 1,
+      "robot_answer": "Oh ! J'imagine que c'est dure d'y résister ! Et pourtant ! Il existe bien des astuces pour t'y aider ! Je prends note de cette difficulté…",
+      "robot_advices": 23
+    }
+  },
+  {
+    "model": "dietetic.DiscussionSpace",
+    "pk": 42,
+    "fields": {
+      "robot_question": 14,
+      "user_answer": 2,
+      "robot_answer": null,
+      "robot_advices": null
+    }
+  },
+  {
+    "model": "dietetic.DiscussionSpace",
+    "pk": 43,
+    "fields": {
+      "robot_question": 13,
+      "user_answer": 2,
+      "robot_answer": null,
+      "robot_advices": null
+    }
+  },
+  {
+    "model": "dietetic.DiscussionSpace",
+    "pk": 44,
+    "fields": {
+      "robot_question": 13,
+      "user_answer": 1,
+      "robot_answer": null,
+      "robot_advices": 24
+    }
+  },
+  {
+    "model": "dietetic.DiscussionSpace",
+    "pk": 45,
+    "fields": {
+      "robot_question": 15,
+      "user_answer": null,
+      "robot_answer": null,
+      "robot_advices": null
+    }
+  },
 
 
   {
@@ -939,6 +1089,69 @@
       "robot_advice_type": 7,
       "text": "Activité physique et résultats :  Tu m'as indiqué dans ton questionnaire que tu pratiquais occasionnellement une activité physique.  J'ai constaté que les personnes ayant qu'une activité quotidienne obtenaient de bien meilleurs résultats que celles qui pratiquaient une activité de temps en temps. Je te propose donc cette semaine 2 challenges, au choix !  1- J'imagine, ou peut-être pas, qu'il t'arrive de te prélasser le soir devant un bon film ! Si c'est le cas, je te propose de profiter de ce temps pour faire un peu d'exercices... une durée de 10-15 min chaque soir est suffisante : exercices de gym, stepper, vélo elliptique, ... Il n'y a rien de tel pour sculpter ton corps et  déstresser de la journée !   2- Si tu es plutôt du matin, je te propose de te coucher 10-15 minutes plus tôt pour consacrer ce temps le lendemain dans une activité physique : on en profite également pour faire quelques étirrements ! Tu veras que cela te fera le plus grand bien ! Il est important de savoir que plus tu augmenteras ta masse musculaire, plus ton corps brulera de graisses. Si tu es amené à continuer ce challenge sur la durée, je te conseille de t'équiper d'un mètre de couture pour prendre tes mensurations (ventre, hanches et cuisse). La masse musculaire pèse sur la balance et peut perturber tes résultats. Le jour de ta pesée, si ta balance ne donne rien mais que les cm sont en baisse, tu pouras considérer que c'est une bonne semaine ! Attention, tes mensurations au niveau du ventre peuvent augmenter si tu es balonné(e) ou constipé(e). Allé, c'est parti pour ce challenge !"
       }
+  },
+  {
+    "model": "dietetic.RobotAdvices",
+    "pk": 17,
+    "fields": {
+      "robot_advice_type": 10,
+      "text": "Mal manger ou bien dormir : Le manque de sommeil va jouer sur l'appétit, la satiété et va influer sur tes émossions. Autant te dire, que ça risque grandement de perturber tes choix alimentaires et ta motivation par la même occasion ! Cette semaine, je te propose justement de ressentir la différence.  1 - Tout d'abord, je te propose d'inscrire une note (/10) aux critères suivants sur ton carnet, tu referas la même chose en fin de semaine pour observer l'évolution : fatigue en journée, fatigue le matin, fringales entre les repas, stress, gros appétit. 2- Ensuite, on va mettre en place un programme DODO !!! Il te faudra dormir 7 à 8 h par nuit. Si tu as la possibilité, tu peux faire une sièste de 10 à 15 min la journée. Allé hop ! C'est parti ! Tous à vos oreillers !"
+      }
+  },
+  {
+    "model": "dietetic.RobotAdvices",
+    "pk": 18,
+    "fields": {
+      "robot_advice_type": 10,
+      "text": "Fatigue et carences :  La fatigue peut avoir bien des causes… un sommeil non-réparateur, un manque d'exposition au soleil, un problème de santé et aussi des carences alimentaires. Il peut être utile d'en profiter pour améliorer la qualité de ton alimentation afin de t'aider sur ce point. C'est donc le sujet du challenge de cette semaine ! Voici 3 points à respecter à la lettre :  1- La vitamine C : prévoir 1 fruit crû ou une crudité à chaque repas  2- La vitamine D : consommer 1 poisson gras dans la semaine (saumon, sardines, maquereau ou hareng)  3- Le magnésium : prévoir un carré de chocolat noir à la fin du repas de midi ou 3 à 4 fruits secs (amandes, noix, noisettes, ...) pas plus car ces derniers sont gras ! A titre indicatif, le manque de fer peut également engendrer une fatigue, ... Allé, c'est parti pour une nouvelle semaine !"
+      }
+  },
+  {
+    "model": "dietetic.RobotAdvices",
+    "pk": 19,
+    "fields": {
+      "robot_advice_type": 4,
+      "text": "Mes légumes, mes amis ! : Les légumes sont pleins de vitamines, minéraux, riches en eau et en plus ils sont très peu caloriques. Avec un projet de perte de poids sans ou avec peu de légumes tu risques d'obtenir des résultats très limités. Alors pourquoi ne pas les adopter plus régulièrement dans la journée ? Alors voilà ton challenge de la semaine ! Plus de légumes midi et soir, moins de féculents ! Afin de varier et d'organiser ta semaine, je te propose de noter sur ton carnet le nom de 6 légumes que tu apprécis et de les associer à un type de plat. Exemple : carottes - poêlées. Voici quelques idées de type de plat : poêlée, gratin, salade, soupe, velouté, purée, flan, farci, ... C'est bon ? Alors tu es prêt(e) pour cette nouvelle semaine ! Go !"
+      }
+  },
+  {
+    "model": "dietetic.RobotAdvices",
+    "pk": 20,
+    "fields": {
+      "robot_advice_type": 4,
+      "text": "Des féculents, oui, mais pas trop ! : Les féculents sont riches en glucides et donc en énergie. Avec un projet de perte de poids et un apport en féculent non-adapté à ton activité quotidienne tu risques d'obtenir des résultats très limités. Alors je te propose un challenge cette semaine ! On divise l'assiette en 3 ! 1/2 légumes, 1/4 de féculents ou 1 tranche de pain et 1/4 de viande, poisson ou oeufs. Si tu as une activité professionnelle statique et que tu fais peu ou pas d'activité physique en dehors, on peut diminuer voir supprimer les féculents de ton assiette. Allé hop ! C'est parti !"
+      }
+  },
+  {
+    "model": "dietetic.RobotAdvices",
+    "pk": 21,
+    "fields": {
+      "robot_advice_type": 6,
+      "text": "Une faim de loup ! : Tu m'as indiqué dans ton questionnaire avoir régulièrement faim entre les repas. Il est important pour cela d'avoir une assiette équilibrée. C'est donc le but de ce prochain challenge. Il va donc falloir se concentrer sur 3 points :  1- les légumes doivent représenter la moitié de ton assiette  2- tu peux complèter avec des féculents mais tu dois t'arrêter de manger lorsque tu n'as plus faim  3- mettre en place un collation au goûter : un fruit et un produit laitier sans sucre. Allé hop ! C'est parti pour une nouvelle semaine !"
+      }
+  },
+  {
+    "model": "dietetic.RobotAdvices",
+    "pk": 22,
+    "fields": {
+      "robot_advice_type": 6,
+      "text": "Une faim de loup ! : Tu m'as indiqué dans ton questionnaire avoir régulièrement faim entre les repas. Il est important pour cela d'avoir une assiette équilibrée. C'est donc le but de ce prochain challenge. Il va donc falloir se concentrer sur 3 points :  1- les légumes doivent représenter la moitié de ton assiette  2- tu peux complèter avec des féculents mais tu dois t'arrêter de manger lorsque tu n'as plus faim  3- mettre en place un collation au goûter : un fruit et un produit laitier sans sucre. Allé hop ! C'est parti !"
+      }
+  },
+  {
+    "model": "dietetic.RobotAdvices",
+    "pk": 23,
+    "fields": {
+      "robot_advice_type": 5,
+      "text": "Envies de sucre ? : Tu m'as indiqué dans ton questionnaire avoir régulièrement envi de manger des produits sucrés. On est d'accord que produits sucrés et perte de poids ça fait deux ! Enfin … tout dépend lesquels, la quantité et le moment de consommation. Alors voilà un challenge plaisir pour cette semaine !  On se fait plaisir avec un carré de chocolat à la fin du repas de midi et on prend le temps de le déguster. Allé hop ! C'est parti pour une nouvelle semaine !"
+      }
+  },
+  {
+    "model": "dietetic.RobotAdvices",
+    "pk": 24,
+    "fields": {
+      "robot_advice_type": 10,
+      "text": "Repas sans faim … : Tu m'as indiqué dans ton questionnaire grignoter régulièrement après les repas. C'est donc le sujet de ton challenge de la semaine. Tu dois suivre les 2 règles suivantes : 1- Finir le repas par une note non-sucrée (un fruit puis un yaourt sans sucre)  2- Te brosser les dents à la fin du repas puis boire un grand verre d'eau. Tu veras du changement rapidement ! Allé hop, tous à vos brosses à dents !"
+      }
   }
-
 ]
