@@ -1,9 +1,15 @@
+#! /usr/bin/env python3
+# coding: UTF-8
+
+""" views of the dietetic app """
+
+# Imports
 from django.shortcuts import render
 from django.contrib.auth import get_user_model, logout
 import datetime
 from .models import RobotAdvices, DiscussionSpace, RobotQuestion, RobotQuestionType, UserAnswer
 from account.models import HistoryUser
-from django.db.models import Avg, Count
+from .classes.questions_list import QuestionsList
 
 
 def index(request):
@@ -24,18 +30,9 @@ def index(request):
 
 def dietetic_space(request):
     context = {}
-
-    # create a list : robot questions by order discussion_space id
-    data = DiscussionSpace.objects.values_list("robot_question").order_by("id")
-    list_data = []
-    for elt in data:
-        list_data.append(elt[0])
-    new_list = []
-    for i in list_data:
-        if i not in new_list:
-            new_list.append(i)
-    list_data = new_list
-
+    new_questions_list = QuestionsList()
+    list_data = new_questions_list.create_questions_id_list()
+    print(list_data)
     # if the user have not answered the first questions
     # create a list : robot questions start id
     start_questionnaire_completed = HistoryUser.objects.values_list("start_questionnaire_completed")\
