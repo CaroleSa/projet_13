@@ -96,12 +96,13 @@ class TestsModels(TestCase):
     def test_add_get_discussion_space(self):
         """ Test add discussion space and get values """
         answer = "Réponse du robot test"
+
         try:
             DiscussionSpace.objects.create(robot_answer=answer, robot_question=self.robot_question,
                                            user_answer=self.user_answer, robot_advices=self.robot_advices)
         except IntegrityError:
             pass
-        data = DiscussionSpace.objects.values_list("robot_answer").get(robot_advices=self.robot_advices)
+        data = DiscussionSpace.objects.values_list("robot_answer").get(robot_question=self.robot_question)
         self.assertEqual(data[0], answer)
 
     #def test_add_advices_to_user(self):
