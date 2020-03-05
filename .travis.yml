@@ -3,7 +3,7 @@ python:
   - "3.7"
 
 env :
-  - DJANGO_SETTINGS_MODULE='purbeurre.settings.travis'
+  - DJANGO_SETTINGS_MODULE='dietetic_project.settings.travis'
 
 addons:
   postgresql: "9.4"
