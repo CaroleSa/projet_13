@@ -1,7 +1,7 @@
 #! /usr/bin/env python3
 # coding: UTF-8
 
-""" views of the dietetic app """
+""" QuestionsList class """
 
 # Imports
 from ..models import DiscussionSpace

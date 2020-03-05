@@ -21,7 +21,6 @@ def index(request):
     if logout_user == 'True':
         logout(request)
 
-
     # si l'utilisateur à comme conseil le manque de connaissance alimentaire,
     # affiche l'onglet programme
 
@@ -30,14 +29,14 @@ def index(request):
 
 def dietetic_space(request):
     context = {}
-    new_questions_list = QuestionsList()
-    list_data = new_questions_list.create_questions_id_list()
-    print(list_data)
+
     # if the user have not answered the first questions
     # create a list : robot questions start id
     start_questionnaire_completed = HistoryUser.objects.values_list("start_questionnaire_completed")\
         .get(user=request.user.id)
     if start_questionnaire_completed[0] is False:
+        new_questions_list = QuestionsList()
+        list_data = new_questions_list.create_questions_id_list()
         new_list = []
         for id in list_data:
             question = RobotQuestion.objects.get(id=id)
@@ -74,6 +73,12 @@ def dietetic_space(request):
 
         # if there are no more questions
         except IndexError:
+
+            list_robot_question = ["Nous allons maintenant définir ton objectif. Quelle taille fais-tu ?",
+                                   "Quel est ton poids actuel ?",
+                                   "Quel est ton poids de croisière (poids le plus longtemps maintenu sans effort) ?",
+                                   "Quel est ton poids d'objectif ?"]
+            # ici fonction poids
             user = HistoryUser.objects.get(user=request.user.id)
             user.start_questionnaire_completed = True
             user.save()
@@ -113,55 +118,7 @@ def dietetic_space(request):
 
     # si c'est sa première inscription sinon texte différent pour nouvel objectif
 
-    id_old_robot_question = 1
-    """list_robot_question = ["Nous allons tout d'abord définir ton objectif.", "Quelle taille fais-tu ?",
-                           "Quel est ton poids actuel ?",
-                           "Quel est ton poids de croisière (poids le plus longtemps maintenu sans effort) ?",
-                           "Quel est ton poids d'objectif ?"]
 
-    id_next_question = 1
-    question_text = list_robot_question[id_next_question]
-    context["question_weight"] = question_text
-
-
-    if request.method == 'POST':
-        actual_weight = request.POST.get('actual_weight')
-        cruising_weight = request.POST.get('cruising_weight')
-        goal_weight = request.POST.get('goal_weight')
-        height = request.POST.get('height')
-
-        actual_imc = round(actual_weight/(height*height), 1)
-        goal_imc = round(goal_weight/(height*height), 1)
-        cruising_imc = round(cruising_weight/(height*height), 1)
-
-        if actual_imc < 18.5:
-            context["answer"] = "Ton poids actuel est déjà bien bas... je te déconseille " \
-                                "de perdre plus de poids."
-        if goal_imc < 18.5:
-            height_min = 18.5*(height * height)
-            context["answer"] = "Ton objectif semble trop bas, je te conseille de ne pas " \
-                                "aller au dessous de"+str(height_min)+" kg."
-        else:
-            if cruising_imc < 24 and goal_weight < cruising_weight:
-                context["answer"] = "Chaque personne a un poids d'équilibre sur lequel il peut rester longtemps, " \
-                                    "c'est se qu'on appelle le poids de croisière. Il semble que ton objectif " \
-                                    "aille en dessous de ce poids. Il est donc fortement" \
-                                    "possible que tu n'arrives pas à le maintenir sur la durée."
-
-        total_goal = actual_weight - goal_weight
-        if total_goal > 5:
-            context["answer"] = "Prévoir un objectif rapidement atteignable est une bonne chose pour rester motiver." \
-                                "Je te propose donc de prévoir un premier objectif puis un second, ..."
-            second_goal = total_goal-5
-            context["answer"] = "Ton premier objectif serra donc de perdre 5 kg. C'est parti ! " \
-                                "Passons maintenant à la suite du questionnaire."
-            if second_goal <= 3:
-                actual_goal = total_goal/2
-                context["answer"] = "Ton premier objectif serra donc de perdre "+str(actual_goal)+\
-                                    " kg. C'est parti ! Passons maintenant à la suite du questionnaire."
-        else:
-            context["answer"] = "Alors c'est parti ! Partons sur un objectif de " \
-                                + str(goal_weight) + " kg. Passons maintenant à la suite du questionnaire."""""
 
     return render(request, 'dietetic/dietetic_space.html', context)
 
