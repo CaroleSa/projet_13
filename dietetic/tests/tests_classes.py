@@ -6,10 +6,12 @@
 # imports
 from unittest import TestCase
 from ..classes.weight_advice_goal import WeightAdviceGoal
+from ..classes.questions_list import QuestionsList
+from ..models import DiscussionSpace
 
 
 class TestsReturnWeightAdvicesGoal(TestCase):
-    """ TestsClasses class """
+    """ TestsReturnWeightAdvicesGoal class """
 
     def setUp(self):
         self.new_weight_advice_goal = WeightAdviceGoal()
@@ -158,3 +160,24 @@ class TestsReturnWeightAdvicesGoal(TestCase):
                 "Je te propose donc de prévoir un premier objectif puis un second, ..." + text + ""
 
         self.assertEqual(advice, text)
+
+
+class TestsReturnQuestionsList(TestCase):
+    """ TestsReturnQuestionsList class """
+
+    def setUp(self):
+        self.new_questions_list = QuestionsList()
+
+    def test_return_questions_list(self):
+        data = DiscussionSpace.objects.values_list("robot_question").order_by("id")
+        list_data = []
+        for elt in data:
+            list_data.append(elt[0])
+        new_list = []
+        for i in list_data:
+            if i not in new_list:
+                new_list.append(i)
+
+        return_list = self.new_questions_list.create_questions_id_list()
+
+        self.assertEqual(new_list, return_list)
