@@ -4,7 +4,7 @@
 """ QuestionsList class """
 
 # Imports
-from dietetic.models import DiscussionSpace
+from dietetic.models import DiscussionSpace, RobotQuestion
 
 
 class QuestionsList:
@@ -17,9 +17,16 @@ class QuestionsList:
         list_data = []
         for elt in data:
             list_data.append(elt[0])
-        new_list = []
+        id_question_list = []
         for i in list_data:
-            if i not in new_list:
-                new_list.append(i)
+            if i not in id_question_list:
+                id_question_list.append(i)
 
-        return new_list
+        id_question_by_type_list = []
+        for id in id_question_list:
+            question = RobotQuestion.objects.get(id=id)
+            type = question.robot_question_type.type
+            if type == "start":
+                id_question_by_type_list.append(id)
+
+        return id_question_by_type_list

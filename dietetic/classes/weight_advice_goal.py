@@ -26,7 +26,7 @@ class WeightAdviceGoal:
         if goal_imc < 18.5:
             height_min = 18.5*(height * height)
             advice = "Ton objectif semble trop bas, je te conseille de ne pas " \
-                     "aller au dessous de"+str(height_min)+" kg."
+                     "aller en dessous de"+str(height_min)+" kg. Ça sera ton objectif !"
             goal = actual_weight - height_min
             return goal, advice
 
@@ -43,8 +43,8 @@ class WeightAdviceGoal:
 
             if second_goal <= 3:
                 actual_goal = user_goal/2
-                advice = "Ton premier objectif serra donc de perdre "+str(actual_goal)+\
-                        " kg. C'est parti ! Passons maintenant à la suite du questionnaire."
+                advice = "Ton premier objectif serra donc de perdre "+str(actual_goal)+" kg. " \
+                         "C'est parti ! Passons maintenant à la suite du questionnaire."
                 goal = actual_goal
 
             else:

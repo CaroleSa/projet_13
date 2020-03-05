@@ -17,6 +17,14 @@
                 </br><input type="submit" value="Valider"/></br></br>
             </form>
         {% endif %}
+        {% if dict_questions %}
+            <form action="{% url 'dietetic:dietetic_space' %}" method="post">{% csrf_token %}
+                {% for question_type, question in dict_questions.items %}
+                    <a class="bold">{{question}}</a></br><input type="text" name="{{question_type}}" required/></br></br>
+                {% endfor %}
+                </br><input type="submit" value="Valider"/>
+            </form>
+        {% endif %}
     </div>
     <div id="card" class="col-lg-offset-2 col-lg-2">
         <div id="dietetic_text"> Mon challenge ici </div>

@@ -5,9 +5,10 @@
 
 
 # Imports
-from django.forms import ModelForm, TextInput, EmailInput, ValidationError
+from django.forms import ModelForm, TextInput, EmailInput, NumberInput, ValidationError
 from django.contrib.auth import get_user_model
 from django.contrib.auth import authenticate
+from account.models import ProfileUser
 
 
 class LoginForm(ModelForm):
@@ -41,5 +42,3 @@ class CreateAccountForm(ModelForm):
             'password': TextInput(attrs={'class': 'form-control', 'type': 'password',
                                          'maxlength': '8', 'minlength': "8"})
         }
-
-

@@ -10,7 +10,7 @@ import datetime
 from .models import RobotAdvices, DiscussionSpace, RobotQuestion, RobotQuestionType, UserAnswer
 from account.models import HistoryUser
 from .classes.questions_list import QuestionsList
-
+from .classes.weight_advice_goal import WeightAdviceGoal
 
 def index(request):
     context = {}
@@ -37,13 +37,6 @@ def dietetic_space(request):
     if start_questionnaire_completed[0] is False:
         new_questions_list = QuestionsList()
         list_data = new_questions_list.create_questions_id_list()
-        new_list = []
-        for id in list_data:
-            question = RobotQuestion.objects.get(id=id)
-            type = question.robot_question_type.type
-            if type == "start":
-                new_list.append(id)
-        list_data = new_list
 
     # get and display robot question, user answer and robot answer
     old_robot_question = request.POST.get('question', False)
@@ -52,6 +45,24 @@ def dietetic_space(request):
     else:
         old_question_id = RobotQuestion.objects.values_list("id").get(text=old_robot_question)[0]
         index_old_id = list_data.index(old_question_id)
+
+        # get user's answer : goal weight
+        height = request.POST.get('height', False)
+        print(height, "ICIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII")
+        actual_weight = request.POST.get('actual_weight', False)
+        cruising_weight = request.POST.get('cruising_weight', False)
+        weight_goal = request.POST.get('weight_goal', False)
+        if height is not False:
+            new_weight_advice_goal = WeightAdviceGoal()
+            goal = new_weight_advice_goal.return_weight_advices_goal(actual_weight, cruising_weight,
+                                                                     weight_goal, height)[0]
+            advice = new_weight_advice_goal.return_weight_advices_goal(actual_weight, cruising_weight,
+                                                                       weight_goal, height)[1]
+            context["robot_answer"] = advice
+            if goal != "impossible":
+                # ajoute au context la derniere phrase du robot (start-end) à la suite de robot answer
+                # puis on valide tru pour question faites
+                return render(request, 'dietetic/dietetic_space.html', context)
 
         # get the robot answer
         user_answer = request.POST.get('answer')
@@ -65,23 +76,27 @@ def dietetic_space(request):
         id_old_discussion = DiscussionSpace.objects.values_list("id"). \
             filter(robot_question=old_question_id).get(user_answer=user_answer_id)[0]
         if id_old_discussion == 2 or id_old_discussion == 3 or id_old_discussion == 45:
+            print("arret des questions suite à certaines questions")
             return render(request, 'dietetic/dietetic_space.html', context)
 
         # get id of the next question
         try:
             id_next_question = list_data[index_old_id + 1]
-
+            print("il existe encore des questions")
         # if there are no more questions
         except IndexError:
+            print("il n'existe plus de questions, passons au poids")
+            dict_questions = {"height": "Nous allons maintenant définir ton objectif. Quelle taille fais-tu ?",
+                              "actual_weight": "Quel est ton poids actuel ?",
+                              "cruising_weight": "Quel est ton poids de croisière (poids le plus longtemps "
+                                                 "maintenu sans effort) ?",
+                              "weight_goal": "Quel est ton poids d'objectif ?"}
+            context["dict_questions"] = dict_questions
 
-            list_robot_question = ["Nous allons maintenant définir ton objectif. Quelle taille fais-tu ?",
-                                   "Quel est ton poids actuel ?",
-                                   "Quel est ton poids de croisière (poids le plus longtemps maintenu sans effort) ?",
-                                   "Quel est ton poids d'objectif ?"]
-            # ici fonction poids
-            user = HistoryUser.objects.get(user=request.user.id)
+
+            """user = HistoryUser.objects.get(user=request.user.id)
             user.start_questionnaire_completed = True
-            user.save()
+            user.save()"""
             return render(request, 'dietetic/dietetic_space.html', context)
 
     # get the robot question and the user's answers
@@ -89,7 +104,6 @@ def dietetic_space(request):
     context["question"] = robot_question
 
     answers_id = DiscussionSpace.objects.values_list("user_answer").filter(robot_question=id_next_question)
-    print(answers_id[0])
     if answers_id[0][0] is not None:
         answers_text_list = []
         for id in answers_id:

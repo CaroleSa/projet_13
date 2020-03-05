@@ -7,7 +7,7 @@
 from unittest import TestCase
 from dietetic.classes.weight_advice_goal import WeightAdviceGoal
 from dietetic.classes.questions_list import QuestionsList
-from dietetic.models import DiscussionSpace
+from dietetic.models import DiscussionSpace, RobotQuestion
 
 
 class TestsReturnWeightAdvicesGoal(TestCase):
@@ -57,7 +57,7 @@ class TestsReturnWeightAdvicesGoal(TestCase):
                                                                              goal_weight, height)[1]
         height_min = 18.5 * (height * height)
         text = "Ton objectif semble trop bas, je te conseille de ne pas " \
-               "aller au dessous de"+str(height_min)+" kg."
+               "aller en dessous de"+str(height_min)+" kg. Ça sera ton objectif !"
 
         self.assertEqual(advice, text)
 
@@ -173,11 +173,18 @@ class TestsReturnQuestionsList(TestCase):
         list_data = []
         for elt in data:
             list_data.append(elt[0])
-        new_list = []
+        id_question_list = []
         for i in list_data:
-            if i not in new_list:
-                new_list.append(i)
+            if i not in id_question_list:
+                id_question_list.append(i)
+
+        id_question_by_type_list = []
+        for id in id_question_list:
+            question = RobotQuestion.objects.get(id=id)
+            type = question.robot_question_type.type
+            if type == "start":
+                id_question_by_type_list.append(id)
 
         return_list = self.new_questions_list.create_questions_id_list()
 
-        self.assertEqual(new_list, return_list)
+        self.assertEqual(id_question_by_type_list, return_list)
