@@ -32,11 +32,11 @@ class TestsModels(TestCase):
             pass
 
         # get data
-        self.robot_question_type = RobotQuestionType.objects.get(id=1)
-        self.robot_question = RobotQuestion.objects.get(id=1)
-        self.robot_advice_type = RobotAdviceType.objects.get(id=1)
-        self.user_answer = UserAnswer.objects.get(id=1)
-        self.robot_advices = RobotAdvices.objects.get(id=1)
+        self.robot_question_type = RobotQuestionType.objects.first()
+        self.robot_question = RobotQuestion.objects.first()
+        self.robot_advice_type = RobotAdviceType.objects.first()
+        self.user_answer = UserAnswer.objects.first()
+        self.robot_advices = RobotAdvices.objects.first()
 
     def test_add_get_robot_question(self):
         """ Test create robot question and get values """

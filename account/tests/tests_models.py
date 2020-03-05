@@ -113,8 +113,7 @@ class TestsModels(TestCase):
             HistoryUser.objects.create(user=self.user_created)
         except IntegrityError:
             pass
-        data = HistoryUser.objects.values_list("date_joined")
-        date_data = data.get(user=self.user_created)
+        date_data = HistoryUser.objects.values_list("date_joined").get(user=self.user_created)
         date_create_account_list = re.findall('\d+', str(date_data))[0:3]
         today = date.today()
         today_list = [str(today.year), str(today.month), str(today.day)]
