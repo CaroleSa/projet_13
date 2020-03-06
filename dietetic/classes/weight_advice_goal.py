@@ -8,8 +8,17 @@
 
 class WeightAdviceGoal:
 
-    def return_weight_advices_goal(self, actual_weight, cruising_weight, goal_weight, height):
+    def __init__(self):
+        self.first_advice = ""
+        self.final_weight = 0
+
+    def return_weight_advices_goal(self, dict_data):
         """ get user's answer, return weight advice and goal """
+
+        height = float(dict_data.get("height"))
+        actual_weight = float(dict_data.get("actual_weight"))
+        cruising_weight = float(dict_data.get("cruising_weight"))
+        goal_weight = float(dict_data.get("weight_goal"))
 
         actual_imc = round(actual_weight/(height*height), 1)
         goal_imc = round(goal_weight/(height*height), 1)
@@ -21,22 +30,23 @@ class WeightAdviceGoal:
             advice = "Ton poids actuel est déjà bien bas... je te déconseille " \
                      "de perdre plus de poids."
             goal = "impossible"
-            return goal, advice
+            self.final_weight = False
+
+            return goal, advice, self.final_weight
 
         if goal_imc < 18.5:
             height_min = 18.5*(height * height)
-            advice = "Ton objectif semble trop bas, je te conseille de ne pas " \
-                     "aller en dessous de"+str(height_min)+" kg. Ça sera ton objectif !"
-            goal = actual_weight - height_min
-            return goal, advice
+            self.first_advice = "Ton objectif semble trop bas, je te conseille de ne pas " \
+                                "aller en dessous de"+str(height_min)+" kg."
+            user_goal = actual_weight - height_min
+            self.final_weight = height_min
 
-        if cruising_imc < 23 and goal_weight < cruising_weight:
-            advice = "Chaque personne a un poids d'équilibre sur lequel il peut rester longtemps, " \
-                     "c'est se qu'on appelle le poids de croisière. Il semble que ton objectif " \
-                     "aille en dessous de ce poids. Il est donc" \
-                     "possible que tu n'arrives pas à le maintenir sur la durée."
-            goal = user_goal
-            return goal, advice
+        else:
+            if cruising_imc < 23 and goal_weight < cruising_weight:
+                self.first_advice = "Chaque personne a un poids d'équilibre sur lequel il peut rester longtemps, " \
+                        "c'est se qu'on appelle le poids de croisière. Il semble que ton objectif " \
+                        "aille en dessous de ce poids. Il est donc" \
+                        "possible que tu n'arrives pas à le maintenir sur la durée."
 
         if user_goal > 6:
             second_goal = user_goal-6
@@ -52,12 +62,17 @@ class WeightAdviceGoal:
                         "Passons maintenant à la suite du questionnaire."
                 goal = 5
 
-            advice = "Prévoir un objectif rapidement atteignable est une bonne chose pour rester motiver." \
-                     "Je te propose donc de prévoir un premier objectif puis un second, ..."+advice+""
-            return goal, advice
+            if self.first_advice:
+                advice = ""+self.first_advice+"Prévoir un objectif rapidement atteignable est une bonne chose pour rester motiver." \
+                         "Je te propose donc de prévoir un premier objectif puis un second, ..."+advice+" "
+
+            else:
+                advice = "Prévoir un objectif rapidement atteignable est une bonne chose pour rester motiver." \
+                         "Je te propose donc de prévoir un premier objectif puis un second, ..." + advice + " "
 
         else:
             advice = "Alors c'est parti ! Partons sur un objectif de - " \
-                    + str(user_goal) + " kg. Passons maintenant à la suite du questionnaire."
+                    + str(user_goal) + " kg. "
             goal = user_goal
-            return goal, advice
+
+        return goal, advice, goal_weight

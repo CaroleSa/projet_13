@@ -20,7 +20,11 @@
         {% if dict_questions %}
             <form action="{% url 'dietetic:dietetic_space' %}" method="post">{% csrf_token %}
                 {% for question_type, question in dict_questions.items %}
-                    <a class="bold">{{question}}</a></br><input type="text" name="{{question_type}}" required/></br></br>
+                    {% if question_type == "height" %}
+                        <a class="bold">{{question}}</a></br><input type="number" step="0.01" min="1.50" max="2.30" name="{{question_type}}" required/></br></br>
+                    {% else %}
+                        <a class="bold">{{question}}</a></br><input type="number" step="0.1" min="35" max="200" name="{{question_type}}" required/></br></br>
+                    {% endif %}
                 {% endfor %}
                 </br><input type="submit" value="Valider"/>
             </form>
