@@ -33,21 +33,14 @@ class TestsModels(TestCase):
         self.email2 = 'pseudo2@tests.com'
         self.password2 = 'password2'
         self.id_user2 = 2
-        try:
-            self.user.objects.create_user(id=self.id_user2, username=self.username2, email=self.email2,
+        self.user.objects.create_user(id=self.id_user2, username=self.username2, email=self.email2,
                                           password=self.password2)
-        except IntegrityError:
-            pass
-
         self.user_created = self.user.objects.get(id=self.id_user2)
 
     def test_add_user(self):
         """ Test create user account """
-        try:
-            user_created = self.user.objects.create_user(id=self.id_user1, username=self.username1, email=self.email1,
-                                                         password=self.password1)
-        except IntegrityError:
-            pass
+        user_created = self.user.objects.create_user(id=self.id_user1, username=self.username1, email=self.email1,
+                                                     password=self.password1)
         self.assertIn(self.username1, str(user_created))
 
     def test_get_user_created(self):
@@ -80,11 +73,8 @@ class TestsModels(TestCase):
         """ Test create user profile and get data """
         starting_weight = 100
         final_weight = 80
-        try:
-            ProfileUser.objects.create(user=self.user_created, starting_weight=starting_weight,
-                                       final_weight=final_weight)
-        except IntegrityError:
-            pass
+        ProfileUser.objects.create(user=self.user_created, starting_weight=starting_weight,
+                                   final_weight=final_weight)
         data = ProfileUser.objects.values_list('starting_weight')
         get_weight_user = data.get(user=self.user_created)
         self.assertEqual(get_weight_user[0], starting_weight)
@@ -93,10 +83,8 @@ class TestsModels(TestCase):
         """ Test create user results and get results """
         weight = 55.0
         date = "2020-5-20"
-        try:
-            ResultsUser.objects.create(user=self.user_created, weighing_date=date, weight=weight)
-        except IntegrityError:
-            pass
+        ResultsUser.objects.create(user=self.user_created, weighing_date=date, weight=weight)
+
         data = ResultsUser.objects.values_list('weight').filter(weighing_date=date)
         get_weight_user = data.get(user=self.user_created)
         self.assertEqual(get_weight_user[0], weight)
@@ -109,12 +97,12 @@ class TestsModels(TestCase):
 
     def test_add_get_history_user(self):
         """ Test add and get user's history data """
-        try:
-            HistoryUser.objects.create(user=self.user_created)
-        except IntegrityError:
-            pass
+        HistoryUser.objects.create(user=self.user_created, start_questionnaire_completed=True)
         date_data = HistoryUser.objects.values_list("date_joined").get(user=self.user_created)
         date_create_account_list = re.findall('\d+', str(date_data))[0:3]
         today = date.today()
         today_list = [str(today.year), str(today.month), str(today.day)]
         self.assertEqual(date_create_account_list, today_list)
+
+        questionnaire = HistoryUser.objects.values_list("start_questionnaire_completed").get(user=self.user_created)
+        self.assertTrue(questionnaire)

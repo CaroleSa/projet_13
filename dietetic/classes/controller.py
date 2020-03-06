@@ -4,9 +4,7 @@
 """ Controller class """
 
 # Imports
-from django.shortcuts import render
-from django.contrib.auth import get_user_model, logout
-import datetime
+from django.contrib.auth import get_user_model
 from dietetic.models import RobotAdvices, DiscussionSpace, RobotQuestion, RobotQuestionType, UserAnswer
 from account.models import HistoryUser, ProfileUser, ResultsUser, IdentityUser
 from dietetic.classes.questions_list import QuestionsList

@@ -7,11 +7,8 @@
 from django.shortcuts import render
 from django.contrib.auth import get_user_model, logout
 import datetime
-from .models import RobotAdvices, DiscussionSpace, RobotQuestion, RobotQuestionType, UserAnswer
-from account.models import HistoryUser
-from .classes.questions_list import QuestionsList
-from .classes.weight_advice_goal import WeightAdviceGoal
 from .classes.controller import Controller
+
 
 def index(request):
     context = {}
@@ -46,6 +43,7 @@ def dietetic_space(request):
                                                             data_weight_user, user_answer)
 
     return render(request, 'dietetic/dietetic_space.html', context)
+
 
 def my_results(request):
     context = {}
