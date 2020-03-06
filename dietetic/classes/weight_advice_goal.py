@@ -39,7 +39,7 @@ class WeightAdviceGoal:
             self.first_advice = "Ton objectif semble trop bas, je te conseille de ne pas " \
                                 "aller en dessous de"+str(height_min)+" kg."
             user_goal = actual_weight - height_min
-            self.final_weight = height_min
+            self.final_weight = round(height_min, 1)
 
         else:
             if cruising_imc < 23 and goal_weight < cruising_weight:
@@ -47,6 +47,7 @@ class WeightAdviceGoal:
                         "c'est se qu'on appelle le poids de croisière. Il semble que ton objectif " \
                         "aille en dessous de ce poids. Il est donc" \
                         "possible que tu n'arrives pas à le maintenir sur la durée."
+                self.final_weight = goal_weight
 
         if user_goal > 6:
             second_goal = user_goal-6
@@ -74,5 +75,6 @@ class WeightAdviceGoal:
             advice = "Alors c'est parti ! Partons sur un objectif de - " \
                     + str(user_goal) + " kg. "
             goal = user_goal
+            self.final_weight = goal_weight
 
-        return goal, advice, goal_weight
+        return goal, advice, self.final_weight
