@@ -4,7 +4,7 @@
 """ TestsClasses class """
 
 # imports
-from unittest import TestCase
+from django.test import TestCase
 from dietetic.classes.weight_advice_goal import WeightAdviceGoal
 from dietetic.classes.questions_list import QuestionsList
 from dietetic.models import DiscussionSpace, RobotQuestion

@@ -5,7 +5,7 @@
 
 
 # imports
-from unittest import TestCase
+from django.test import TestCase
 from django.contrib.auth import get_user_model
 from dietetic.models import RobotQuestion, RobotQuestionType, RobotAdviceType, \
     UserAnswer, RobotAdvices, DiscussionSpace
