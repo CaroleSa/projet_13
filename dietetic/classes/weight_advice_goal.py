@@ -15,14 +15,14 @@ class WeightAdviceGoal:
     def return_weight_advices_goal(self, dict_data):
         """ get user's answer, return weight advice and goal """
 
-        height = float(dict_data.get("height"))
-        actual_weight = float(dict_data.get("actual_weight"))
-        cruising_weight = float(dict_data.get("cruising_weight"))
-        goal_weight = float(dict_data.get("weight_goal"))
+        height = round(float(dict_data.get("height")), 2)
+        actual_weight = round(float(dict_data.get("actual_weight")), 1)
+        cruising_weight = round(float(dict_data.get("cruising_weight")), 1)
+        goal_weight = round(float(dict_data.get("weight_goal")), 1)
 
-        actual_imc = round(actual_weight/(height*height), 1)
-        goal_imc = round(goal_weight/(height*height), 1)
-        cruising_imc = round(cruising_weight/(height*height), 1)
+        actual_imc = actual_weight/(height*height)
+        goal_imc = goal_weight/(height*height)
+        cruising_imc = cruising_weight/(height*height)
 
         user_goal = actual_weight - goal_weight
 
@@ -35,11 +35,11 @@ class WeightAdviceGoal:
             return goal, advice, self.final_weight
 
         if goal_imc < 18.5:
-            height_min = 18.5*(height * height)
+            height_min = round(18.5*(height * height), 1)
             self.first_advice = "Ton objectif semble trop bas, je te conseille de ne pas " \
-                                "aller en dessous de"+str(height_min)+" kg."
+                                "aller en dessous de "+str(height_min)+" kg."
             user_goal = actual_weight - height_min
-            self.final_weight = round(height_min, 1)
+            self.final_weight = height_min
 
         else:
             if cruising_imc < 23 and goal_weight < cruising_weight:
@@ -64,12 +64,12 @@ class WeightAdviceGoal:
                 goal = 5
 
             if self.first_advice:
-                advice = ""+self.first_advice+"Prévoir un objectif rapidement atteignable est une bonne chose pour rester motiver." \
-                         "Je te propose donc de prévoir un premier objectif puis un second, ..."+advice+" "
+                advice = ""+self.first_advice+" Prévoir un objectif rapidement atteignable est une bonne chose pour rester motiver." \
+                         " Je te propose donc de prévoir un premier objectif puis un second, ... "+advice+" "
 
             else:
                 advice = "Prévoir un objectif rapidement atteignable est une bonne chose pour rester motiver." \
-                         "Je te propose donc de prévoir un premier objectif puis un second, ..." + advice + " "
+                         " Je te propose donc de prévoir un premier objectif puis un second, ... " + advice + " "
 
         else:
             advice = "Alors c'est parti ! Partons sur un objectif de - " \
