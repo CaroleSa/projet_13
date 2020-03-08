@@ -54,13 +54,11 @@ class WeightAdviceGoal:
 
             if second_goal <= 3:
                 actual_goal = user_goal/2
-                advice = "Ton premier objectif serra donc de perdre "+str(actual_goal)+" kg. " \
-                         "C'est parti ! Passons maintenant à la suite du questionnaire."
+                advice = "Ton premier objectif serra donc de perdre "+str(actual_goal)+" kg."
                 goal = actual_goal
 
             else:
-                advice = "Ton premier objectif serra donc de perdre 5 kg. C'est parti ! " \
-                        "Passons maintenant à la suite du questionnaire."
+                advice = "Ton premier objectif serra donc de perdre 5 kg. C'est parti !"
                 goal = 5
 
             if self.first_advice:
@@ -69,7 +67,7 @@ class WeightAdviceGoal:
 
             else:
                 advice = "Prévoir un objectif rapidement atteignable est une bonne chose pour rester motiver." \
-                         " Je te propose donc de prévoir un premier objectif puis un second, ... " + advice + " "
+                         " Je te propose donc de prévoir un premier objectif puis un second, ... " + advice + ""
 
         else:
             advice = "Alors c'est parti ! Partons sur un objectif de - " \

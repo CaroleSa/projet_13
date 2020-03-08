@@ -101,7 +101,7 @@ class ProfileUser(models.Model):
 
 class ResultsUser(models.Model):
     user = models.ForeignKey(IdentityUser, on_delete=models.CASCADE)
-    weighing_date = models.DateField(default=date.today, null=True, unique=True)
+    weighing_date = models.DateField(default=date.today, null=True)
     weight = models.DecimalField(max_digits=4, decimal_places=1, null=True)
 
     def __str__(self):
