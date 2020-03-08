@@ -9,6 +9,8 @@ from django.test import TestCase
 from django.contrib.auth import get_user_model
 from dietetic.models import RobotQuestion, RobotQuestionType, RobotAdviceType, \
     UserAnswer, RobotAdvices, DiscussionSpace
+from django.db import connection
+from account.models import IdentityUser
 from django.db.utils import IntegrityError
 
 
@@ -85,12 +87,17 @@ class TestsModels(TestCase):
 
         self.assertEqual(data[0], answer)
 
-    def test_add_advices_to_user(self):
-        """### DON'T WORKS !!!
-        username2 = 'pseudo2'
-        email2 = 'pseudo2@tesgdfgts.com'
-        password2 = 'password2'
-        user = get_user_model()
-        user = user.objects.create_user(username=username2, email=email2, password=password2)
-        advices = RobotAdvices.objects.get(id=3)
-        user.advices_to_user.add(advices)"""
+    def test_add_get_advices_to_user(self):
+        cursor = connection.cursor()
+        try:
+            cursor.execute("INSERT INTO account_identityuser_advices_to_user (identityuser_id, robotadvices_id) "
+                           "VALUES (1, 1)")
+        except IntegrityError:
+            pass
+
+        user = IdentityUser.objects.get(id=1)
+        advice_to_user = user.advices_to_user.values_list("text").get(identityuser=1)
+
+        advice = RobotAdvices.objects.values_list("text").get(id=1)
+
+        self.assertEqual(advice_to_user[0], advice[0])
