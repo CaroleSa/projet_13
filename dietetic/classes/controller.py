@@ -31,15 +31,16 @@ class Controller:
 
         # SI L4UTILISATEUR A ATEINT SON POIDS D4OBJECTIF... final ou pas
 
-        """user = IdentityUser.objects.get(id=id_user)
+        user = IdentityUser.objects.get(id=id_user)
         advice_to_user = user.advices_to_user.all()
         if start_questionnaire_completed[0] is True:
             if advice_to_user:
-                # affiche texte à partir de dans 1 semaine jusqu'à réponse user et challenge jusqu'à nouveau poids rentré
-                return context
-            if not advice_to_user:
+                self.return_advice_week_user(id_user)
+                #return context
+            """if not advice_to_user:
                 # recharger en conseils
-                return context"""
+                return context
+                self.return_questions_week_weight()"""
 
     def return_start_discussion(self, id_user, old_robot_question, data_weight_user, user_answer):
         """
@@ -58,14 +59,13 @@ class Controller:
 
         # if the questionnaire has yet started
         else:
-            user_answer_id = UserAnswer.objects.values_list("id").get(text=user_answer)
-            old_question_id = RobotQuestion.objects.values_list("id").get(text=old_robot_question)[0]
-
-            # SAVE ADVICES TO USER
-            self.save_advices_to_user(user_answer_id, old_question_id, id_user)
-
-            # GET ID LAST QUESTION OF THE LIST_DATA
             try:
+                # SAVE ADVICES TO USER
+                old_question_id = RobotQuestion.objects.values_list("id").get(text=old_robot_question)[0]
+                user_answer_id = UserAnswer.objects.values_list("id").get(text=user_answer)
+                self.save_advices_to_user(user_answer_id, old_question_id, id_user)
+
+                # GET ID LAST QUESTION OF THE LIST_DATA
                 index_old_id = list_data.index(old_question_id)
 
             # ID LAST QUESTION DON'T EXISTS > DEFINED GOAL WEIGHT
@@ -133,7 +133,7 @@ class Controller:
                     user = get_user_model()
                     id = user.objects.get(id=id_user)
                     ProfileUser.objects.values_list("starting_weight").get(user=id)[0]
-                    text = "Votre premier objectif de poids a déjà été défini à - " + str(goal) + " kg."
+                    text = "Ton premier objectif de poids a déjà été défini à - " + str(goal) + " kg."
                     context["robot_answer"] = text
 
                 except ProfileUser.DoesNotExist:
@@ -179,3 +179,17 @@ class Controller:
             # add a new advice to user
             self.cursor.execute("INSERT INTO account_identityuser_advices_to_user (identityuser_id, robotadvices_id) "
                                 "VALUES ({}, {})".format(id_user, id_advice))
+
+    def return_advice_week_user(self, id_user):
+        # on affiche en premanance le dernier challenge de la liste (trié par type)
+        # get new user's advice
+        user = IdentityUser.objects.get(id=id_user)
+        new_advices_user_text = user.advices_to_user.values_list("text").order_by("robot_advice_type").first()[0]
+
+        context = new_advices_user_text
+        print(new_advices_user_text)
+
+        return context
+        # quand date de poids rentrée est égale à celle d'aujourd'hui
+        # on supprime l'ancien challenge
+

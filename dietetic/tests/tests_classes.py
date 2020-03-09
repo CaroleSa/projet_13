@@ -130,7 +130,7 @@ class TestsReturnWeightAdvicesGoal(TestCase):
         height_min = round(18.5*(height * height), 1)
         first_advice = "Ton objectif semble trop bas, je te conseille de ne pas " \
                             "aller en dessous de " + str(height_min) + " kg."
-        advice = "Ton premier objectif serra donc de perdre 5 kg. C'est parti !"
+        advice = "Ton premier objectif serra donc de perdre 5 kg. C'est parti ! "
         text = "" + first_advice + " Prévoir un objectif rapidement atteignable est " \
                                    "une bonne chose pour rester motiver. Je te propose " \
                                    "donc de prévoir un premier objectif puis un second, " \
