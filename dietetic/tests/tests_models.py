@@ -11,7 +11,6 @@ from dietetic.models import RobotQuestion, RobotQuestionType, RobotAdviceType, \
     UserAnswer, RobotAdvices, DiscussionSpace
 from django.db import connection
 from account.models import IdentityUser
-from django.db.utils import IntegrityError
 
 
 class TestsModels(TestCase):
@@ -23,11 +22,12 @@ class TestsModels(TestCase):
 
     def setUp(self):
         # create user account
+        self.id_user = 1
         username2 = 'pseudo2'
         email2 = 'pseudo2@tests.com'
         password2 = 'password2'
         user = get_user_model()
-        user.objects.create_user(username=username2, email=email2, password=password2)
+        user.objects.create_user(id=1, username=username2, email=email2, password=password2)
         self.user_created = user.objects.get(username=username2)
 
         # get data
@@ -36,6 +36,11 @@ class TestsModels(TestCase):
         self.robot_advice_type = RobotAdviceType.objects.first()
         self.user_answer = UserAnswer.objects.last()
         self.robot_advices = RobotAdvices.objects.first()
+
+        # create robot advice
+        advice = "Conseil test2"
+        self.advice_id = RobotAdvices.objects.values_list("id").last()[0] + 1
+        RobotAdvices.objects.create(id=self.advice_id, text=advice, robot_advice_type=self.robot_advice_type)
 
     def test_add_get_robot_question(self):
         """ Test create robot question and get values """
@@ -72,7 +77,8 @@ class TestsModels(TestCase):
     def test_add_get_robot_advices(self):
         """ Test add robot advices and get values """
         advice = "Conseil test"
-        RobotAdvices.objects.create(text=advice, robot_advice_type=self.robot_advice_type)
+        advice_id = RobotAdvices.objects.values_list("id").last()[0] + 1
+        RobotAdvices.objects.create(id=advice_id, text=advice, robot_advice_type=self.robot_advice_type)
         id = RobotAdvices.objects.values_list("id").get(text=advice)[0]
         data = RobotAdvices.objects.values_list("text").get(id=id)
         self.assertEqual(data[0], advice)
@@ -89,15 +95,8 @@ class TestsModels(TestCase):
 
     def test_add_get_advices_to_user(self):
         cursor = connection.cursor()
-        try:
-            cursor.execute("INSERT INTO account_identityuser_advices_to_user (identityuser_id, robotadvices_id) "
-                           "VALUES (1, 1)")
-        except IntegrityError:
-            pass
-
-        user = IdentityUser.objects.get(id=1)
-        advice_to_user = user.advices_to_user.values_list("text").get(identityuser=1)
-
-        advice = RobotAdvices.objects.values_list("text").get(id=1)
-
+        cursor.execute("INSERT INTO account_identityuser_advices_to_user (identityuser_id, robotadvices_id) "
+                       "VALUES ({}, {})".format(self.id_user, self.advice_id))
+        advice_to_user = self.user_created.advices_to_user.values_list("text")[0]
+        advice = RobotAdvices.objects.values_list("text").get(identityuser=self.id_user)
         self.assertEqual(advice_to_user[0], advice[0])

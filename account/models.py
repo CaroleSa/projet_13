@@ -106,3 +106,6 @@ class ResultsUser(models.Model):
 
     def __str__(self):
         return self.weighing_date, self.weight
+
+    class Meta:
+        unique_together = (("user", "weighing_date"),)
