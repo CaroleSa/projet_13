@@ -185,11 +185,11 @@ class Controller:
         # get new user's advice
         user = IdentityUser.objects.get(id=id_user)
         new_advices_user_text = user.advices_to_user.values_list("text").order_by("robot_advice_type").first()[0]
-
-        context = new_advices_user_text
+        context = {"challenge": new_advices_user_text}
         print(new_advices_user_text)
-
-        return context
         # quand date de poids rentrée est égale à celle d'aujourd'hui
         # on supprime l'ancien challenge
+
+        return context
+
 
