@@ -35,8 +35,11 @@ class Controller:
         advice_to_user = user.advices_to_user.all()
         if start_questionnaire_completed[0] is True:
             if advice_to_user:
-                self.return_advice_week_user(id_user)
-                #return context
+                activate_advice = self.return_weekly_questions_weight()[0]
+                first_week = self.return_weekly_questions_weight()[1]
+                if activate_advice is True:
+                    context = self.return_weekly_advice(id_user, first_week)
+                    return context
             """if not advice_to_user:
                 # recharger en conseils
                 return context
@@ -180,16 +183,21 @@ class Controller:
             self.cursor.execute("INSERT INTO account_identityuser_advices_to_user (identityuser_id, robotadvices_id) "
                                 "VALUES ({}, {})".format(id_user, id_advice))
 
-    def return_advice_week_user(self, id_user):
-        # on affiche en premanance le dernier challenge de la liste (trié par type)
-        # get new user's advice
+    def return_weekly_advice(self, id_user, first_week):
+        """ return the next weekly advice """
         user = IdentityUser.objects.get(id=id_user)
+
+        if first_week is False:
+            # delete last user's advice
+            last_advice = user.advices_to_user.values_list("id").order_by("robot_advice_type").first()
+            user.advices_to_user.remove(last_advice)
+
+        # get new user's advice
         new_advices_user_text = user.advices_to_user.values_list("text").order_by("robot_advice_type").first()[0]
         context = {"challenge": new_advices_user_text}
-        print(new_advices_user_text)
-        # quand date de poids rentrée est égale à celle d'aujourd'hui
-        # on supprime l'ancien challenge
 
         return context
 
+    def return_weekly_questions_weight(self):
+    """ return the weekly questions and save user's answer"""
 
