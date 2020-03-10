@@ -39,8 +39,10 @@
             </form>
         {% endif %}
     </div>
+    {% if advice %}
     <div id="card" class="col-lg-offset-2 col-lg-2">
-        <div id="dietetic_text">{{advice}}</div>
+        <p id="dietetic_text">{{advice}}</p>
     </div>
+    {% endif %}
 </div>
 {% endblock %}

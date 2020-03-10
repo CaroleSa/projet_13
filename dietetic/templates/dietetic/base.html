@@ -53,8 +53,10 @@
                         <a id="home" class="btn col-lg-offset-4 col-lg-1" href="{% url 'index' %}"><i class="fas fa-home"></i></br>Accueil</a>
                         <a id="user" class="btn col-lg-1" href="{% url 'account:my_account' %}"><i class="fas fa-user"></i></br>Compte</a>
                         <a id="clipboard" class="btn col-lg-1" href="{% url 'dietetic:dietetic_space' %}"><i class="fas fa-clipboard"></i></br>Suivi</a>
+                        {% if start_questionnaire_completed == True %}
                         <a id="poll" class="btn col-lg-1" href="{% url 'dietetic:my_results' %}"><i class="fas fa-poll"></i></br>Résultats</a>
                         <a id="program" class="btn col-lg-1" href="{% url 'dietetic:program' %}"><i class="fas fa-utensils"></i></br>Programme</a>
+                        {% endif %}
                         {% endif %}
                     </div>
                 </div>

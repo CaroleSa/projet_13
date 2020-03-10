@@ -47,6 +47,7 @@ def create_account(request):
 
         # create user's account and login user
         if form.is_valid() is True:
+            logout(request)
             user = user.objects.create_user(username=pseudo, email=email, password=password)
             HistoryUser.objects.create(user=user)
             StatusUser.objects.create(user=user)

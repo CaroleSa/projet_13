@@ -8,6 +8,7 @@ from django.shortcuts import render
 from django.contrib.auth import get_user_model, logout
 import datetime
 from .classes.controller import Controller
+from account.models import HistoryUser, ProfileUser, ResultsUser, IdentityUser
 
 
 def index(request):
@@ -18,9 +19,6 @@ def index(request):
     logout_user = request.POST.get('logout', 'False')
     if logout_user == 'True':
         logout(request)
-
-    # si l'utilisateur à comme conseil le manque de connaissance alimentaire,
-    # affiche l'onglet programme
 
     return render(request, 'dietetic/index.html', context)
 
@@ -48,11 +46,24 @@ def dietetic_space(request):
 
 
 def my_results(request):
-    context = {}
+    # get data
+    user = get_user_model()
+    id = user.objects.get(id=request.user.id)
 
-    starting_date = [2020, 5, 20]
-    starting_weight = 60
-    last_date = [2020, 7, 20]
+    starting_date = ResultsUser.objects.values_list("weighing_date").filter(user=id).first()[0]
+    starting_weight = ResultsUser.objects.values_list("weight").filter(user=id).first()[0]
+    last_weight = ResultsUser.objects.values_list("weight").filter(user=id).last()[0]
+    lost_weight = starting_weight - last_weight
+    goal = ProfileUser.objects.values_list("actual_goal_weight").get(user=id)[0]
+    percentage_goal = round((lost_weight * 100) / goal, 0)
+
+    context = {"starting_date": starting_date, "starting_weight": starting_weight, "goal": goal,
+               "percentage_goal": percentage_goal}
+
+
+
+
+    """last_date = [2020, 7, 20]
     last_weight = 55
     starting_week = datetime.datetime(starting_date[0], starting_date[1], starting_date[2]).isocalendar()[1]
     last_week = datetime.datetime(last_date[0], last_date[1], last_date[2]).isocalendar()[1]
@@ -76,7 +87,7 @@ def my_results(request):
         if last_weighings == "ok":
             text = "Dernières pertes moyennes !"
         else:
-            text = "Dernières pertes mauvaises !"
+            text = "Dernières pertes mauvaises !"""""
 
 
 
@@ -85,4 +96,5 @@ def my_results(request):
 
 def program(request):
     context = {}
+
     return render(request, 'dietetic/program.html', context)

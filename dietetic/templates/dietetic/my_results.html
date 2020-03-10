@@ -6,11 +6,11 @@
     <div class="col-lg-offset-1 col-lg-10" id="my_results">
         <div class="row">
             <div id="text_my_results" class="col-lg-4">
-                <p>Date de démarrage :</p></br>
-                <p>Poids de départ :</p>
-                <p>Perte objectif :</p>
-                <p>Pourcentage objectif atteint :</p>
-                <p>Ici graphique pourcentage atteint</p>
+                <p>Suivi démarré le <strong>{{ starting_date }}</strong></p></br>
+                <p>Poids de départ : {{ starting_weight }} kg</p></br>
+                <p>L'objectif à atteindre est de - {{ goal }} kg</p>
+                <p>et tu as atteint {{ percentage_goal }} % de cet objectif.</p></br>
+                <p>Moyenne de perte de poids sur les 3 dernières semaines :</p>
             </div>
             <div id="graphic_my_results" class="col-lg-offset-1 col-lg-7">
                 ici mon graphique

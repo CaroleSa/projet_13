@@ -225,7 +225,7 @@ class Controller:
         present_date = present.date()
 
         # after the first week after the weighing last
-        if present_date >= one_week_after_weighing :
+        if present_date >= one_week_after_weighing:
             # if the user gave his weight : save weight
             if weekly_weight is not False:
                 robot_text = "J'ai bien pris note de ton poids, tu trouveras un récapitulatif dans l'onglet résultats."
@@ -241,6 +241,7 @@ class Controller:
             month = calendar.month_name[present_date.month]
             date = "" + calendar.day_name[present_date.weekday()] + " " + str(present_date.day) \
                    + " " + month + ""
-            robot_text = "Rendez-vous à partir du {} pour faire le point sur tes résultats.".format(date)
+            robot_text = "Retrouvons nous ici {} pour faire le point sur tes résultats " \
+                         "et voir ton nouveau challenge !".format(date)
 
         return robot_text
