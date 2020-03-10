@@ -30,49 +30,28 @@ class WeightAdviceGoal:
             advice = "Ton poids actuel est déjà bien bas... je te déconseille " \
                      "de perdre plus de poids."
             goal = "impossible"
-            self.final_weight = False
+            final_weight = False
 
-            return goal, advice, self.final_weight
+            return goal, advice, final_weight
 
         if goal_imc < 18.5:
             height_min = round(18.5*(height * height), 1)
-            self.first_advice = "Ton objectif semble trop bas, je te conseille de ne pas " \
-                                "aller en dessous de "+str(height_min)+" kg."
-            user_goal = actual_weight - height_min
-            self.final_weight = height_min
+            advice = "Ton objectif semble trop bas, je te conseille de ne pas " \
+                     "aller en dessous de "+str(height_min)+" kg."
+            goal = actual_weight - height_min
+            final_weight = height_min
+
+            return goal, advice, final_weight
 
         else:
             if cruising_imc < 23 and goal_weight < cruising_weight:
-                self.first_advice = "Chaque personne a un poids d'équilibre sur lequel il peut rester longtemps, " \
-                        "c'est se qu'on appelle le poids de croisière. Il semble que ton objectif " \
-                        "aille en dessous de ce poids. Il est donc" \
-                        "possible que tu n'arrives pas à le maintenir sur la durée."
-                self.final_weight = goal_weight
-
-        if user_goal > 6:
-            second_goal = user_goal-6
-
-            if second_goal <= 3:
-                actual_goal = user_goal/2
-                advice = "Ton premier objectif serra donc de perdre "+str(actual_goal)+" kg."
-                goal = actual_goal
-
+                advice = "Chaque personne a un poids d'équilibre sur lequel il peut rester longtemps, " \
+                         "c'est se qu'on appelle le poids de croisière. Il semble que ton objectif " \
+                         "aille en dessous de ce poids. Je tiens donc à te préciser qu'il est" \
+                         "possible que tu n'arrives pas à le maintenir sur la durée." \
+                         "Je note tout de même cet objectif."
             else:
-                advice = "Ton premier objectif serra donc de perdre 5 kg. C'est parti ! "
-                goal = 5
+                advice = "Alors c'est parti ! Partons sur un objectif " \
+                         "de - " + str(user_goal) + " kg. "
 
-            if self.first_advice:
-                advice = ""+self.first_advice+" Prévoir un objectif rapidement atteignable est une bonne chose pour rester motiver." \
-                         " Je te propose donc de prévoir un premier objectif puis un second, ... "+advice+" "
-
-            else:
-                advice = "Prévoir un objectif rapidement atteignable est une bonne chose pour rester motiver." \
-                         " Je te propose donc de prévoir un premier objectif puis un second, ... " + advice + " "
-
-        else:
-            advice = "Alors c'est parti ! Partons sur un objectif de - " \
-                    + str(user_goal) + " kg. "
-            goal = user_goal
-            self.final_weight = goal_weight
-
-        return goal, advice, self.final_weight
+            return user_goal, advice, goal_weight

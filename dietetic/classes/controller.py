@@ -157,6 +157,7 @@ class Controller:
                     context["robot_answer"] = text
 
                 except ProfileUser.DoesNotExist:
+
                     ProfileUser.objects.create(user=id, starting_weight=actual_weight,
                                                actual_goal_weight=goal, final_weight=final_weight)
                     ResultsUser.objects.create(user=id, weight=actual_weight)
@@ -220,7 +221,7 @@ class Controller:
 
         # get date data
         last_weighing_date = ResultsUser.objects.values_list("weighing_date").filter(user=id_user).last()[0]
-        one_week_after_weighing = last_weighing_date + timedelta(days=1)
+        one_week_after_weighing = last_weighing_date + timedelta(days=7)
         present = datetime.now()
         present_date = present.date()
 
@@ -238,8 +239,8 @@ class Controller:
 
         # if it's the week after the weighing last : create robot text
         else:
-            month = calendar.month_name[present_date.month]
-            date = "" + calendar.day_name[present_date.weekday()] + " " + str(present_date.day) \
+            month = calendar.month_name[one_week_after_weighing.month]
+            date = "" + calendar.day_name[one_week_after_weighing.weekday()] + " " + str(one_week_after_weighing.day) \
                    + " " + month + ""
             robot_text = "Retrouvons nous ici {} pour faire le point sur tes résultats " \
                          "et voir ton nouveau challenge !".format(date)

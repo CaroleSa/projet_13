@@ -53,11 +53,18 @@ def my_results(request):
     starting_date = ResultsUser.objects.values_list("weighing_date").filter(user=id).first()[0]
     starting_weight = ResultsUser.objects.values_list("weight").filter(user=id).first()[0]
     last_weight = ResultsUser.objects.values_list("weight").filter(user=id).last()[0]
-    lost_weight = starting_weight - last_weight
-    goal = ProfileUser.objects.values_list("actual_goal_weight").get(user=id)[0]
-    percentage_goal = round((lost_weight * 100) / goal, 0)
+    final_weight_goal = ProfileUser.objects.values_list("final_weight").get(user=id)[0]
+    total_lost_weight = starting_weight - last_weight
+    total_weight_to_lose = starting_weight - final_weight_goal
+    print(starting_weight, final_weight_goal, total_weight_to_lose)
+    percentage_goal = round((total_lost_weight * 100) / total_weight_to_lose, 0)
 
-    context = {"starting_date": starting_date, "starting_weight": starting_weight, "goal": goal,
+    starting_weight = ProfileUser.objects.values_list("starting_weight").get(user=id)[0]
+    final_weight = ProfileUser.objects.values_list("final_weight").get(user=id)[0]
+    total_weight_to_lose = starting_weight - final_weight
+
+
+    context = {"starting_date": starting_date, "starting_weight": starting_weight, "total_goal": total_weight_to_lose,
                "percentage_goal": percentage_goal}
 
 
