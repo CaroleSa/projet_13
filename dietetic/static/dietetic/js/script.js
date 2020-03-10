@@ -3,7 +3,9 @@
 var $dietetic_text = $('#dietetic_text');
 $dietetic_text.css('visibility', "hidden");
 var $card = $('#card');
+$card.css('overflow', 'hidden');
 $card.on('click', function() {
+$card.css('overflow', 'auto');
 $dietetic_text.css('visibility', "");
 $card.css('background-image', "url('../../static/dietetic/img/back_face.jpg')");
 });

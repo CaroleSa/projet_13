@@ -220,18 +220,23 @@ class Controller:
 
         # get date data
         last_weighing_date = ResultsUser.objects.values_list("weighing_date").filter(user=id_user).last()[0]
-        one_week_after_weighing = last_weighing_date + timedelta(days=7)
+        one_week_after_weighing = last_weighing_date + timedelta(days=1)
         present = datetime.now()
         present_date = present.date()
 
-        # from one week after the weighing last
+        # after the first week after the weighing last
         if present_date >= one_week_after_weighing :
+            # if the user gave his weight : save weight
             if weekly_weight is not False:
                 robot_text = "J'ai bien pris note de ton poids, tu trouveras un récapitulatif dans l'onglet résultats."
-                # récupère et enregistre le poids
-                self.new_week == True
+                id = IdentityUser.objects.get(id=id_user)
+                ResultsUser.objects.create(user=id, weight=weekly_weight)
+                self.new_week = True
+            # else, create robot question
             else:
                 robot_text = "Bonjour ! J'éspère que ta semaine s'est bien passée ? Que donne ta pesée ce matin ?"
+
+        # if it's the week after the weighing last : create robot text
         else:
             month = calendar.month_name[present_date.month]
             date = "" + calendar.day_name[present_date.weekday()] + " " + str(present_date.day) \
