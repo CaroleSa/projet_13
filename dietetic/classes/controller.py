@@ -10,6 +10,11 @@ from account.models import HistoryUser, ProfileUser, ResultsUser, IdentityUser
 from dietetic.classes.questions_list import QuestionsList
 from dietetic.classes.weight_advice_goal import WeightAdviceGoal
 from django.db import connection
+from datetime import datetime, timedelta
+import calendar
+import locale
+locale.setlocale(locale.LC_ALL, 'fr_FR.UTF-8')
+'fr_FR'
 
 
 class Controller:
@@ -18,32 +23,44 @@ class Controller:
         self.new_questions_list = QuestionsList()
         self.new_weight_advice_goal = WeightAdviceGoal()
         self.cursor = connection.cursor()
+        self.new_week = False
+        self.end_questions_start = False
 
-    def controller_dietetic_space_view(self, id_user, old_robot_question, data_weight_user, user_answer):
+    def controller_dietetic_space_view(self, id_user, old_robot_question, data_weight_user, user_answer, weekly_weight):
+        """ controller of the discussion space view """
+        context = {}
+        # get start_questionnaire_completed in HistoryUser model
+        start_questionnaire_completed = HistoryUser.objects.values_list("start_questionnaire_completed") \
+            .get(user=id_user)[0]
 
         # if the user have not answered the start questions
-        # create a list : robot questions start id
-        start_questionnaire_completed = HistoryUser.objects.values_list("start_questionnaire_completed") \
-            .get(user=id_user)
-        if start_questionnaire_completed[0] is False:
+        if start_questionnaire_completed is False:
+
+            # return start discussion text
             context = self.return_start_discussion(id_user, old_robot_question, data_weight_user, user_answer)
-            return context
 
-        # SI L4UTILISATEUR A ATEINT SON POIDS D4OBJECTIF... final ou pas
+        # if the user have answered the start questions
+        if start_questionnaire_completed is True or self.end_questions_start is True:
 
-        user = IdentityUser.objects.get(id=id_user)
-        advice_to_user = user.advices_to_user.all()
-        if start_questionnaire_completed[0] is True:
+            # si le poids d'objectif total n'est pas atteint
+            context["robot_comment"] = self.return_weekly_questions_weight(weekly_weight, id_user)
+
+            # if the user have the advices
+            user = IdentityUser.objects.get(id=id_user)
+            advice_to_user = user.advices_to_user.all()
             if advice_to_user:
-                activate_advice = self.return_weekly_questions_weight()[0]
-                first_week = self.return_weekly_questions_weight()[1]
-                if activate_advice is True:
-                    context = self.return_weekly_advice(id_user, first_week)
-                    return context
-            """if not advice_to_user:
-                # recharger en conseils
-                return context
-                self.return_questions_week_weight()"""
+                context["advice"] = self.return_weekly_advice(id_user)
+
+            # if the user haven't the advices
+            else:
+                pass
+                #recharger en conseils
+                #return context
+                #self.return_questions_week_weight()
+
+        return context
+
+
 
     def return_start_discussion(self, id_user, old_robot_question, data_weight_user, user_answer):
         """
@@ -149,6 +166,7 @@ class Controller:
                 user = HistoryUser.objects.get(user=id_user)
                 user.start_questionnaire_completed = True
                 user.save()
+                self.end_questions_start = True
 
             # if user's goal weight is not validate
             else:
@@ -183,21 +201,41 @@ class Controller:
             self.cursor.execute("INSERT INTO account_identityuser_advices_to_user (identityuser_id, robotadvices_id) "
                                 "VALUES ({}, {})".format(id_user, id_advice))
 
-    def return_weekly_advice(self, id_user, first_week):
+    def return_weekly_advice(self, id_user):
         """ return the next weekly advice """
         user = IdentityUser.objects.get(id=id_user)
 
-        if first_week is False:
+        # if it's a new week
+        if self.new_week is True:
             # delete last user's advice
             last_advice = user.advices_to_user.values_list("id").order_by("robot_advice_type").first()
             user.advices_to_user.remove(last_advice)
 
         # get new user's advice
         new_advices_user_text = user.advices_to_user.values_list("text").order_by("robot_advice_type").first()[0]
-        context = {"challenge": new_advices_user_text}
 
-        return context
+        return new_advices_user_text
 
-    def return_weekly_questions_weight(self):
-    """ return the weekly questions and save user's answer"""
+    def return_weekly_questions_weight(self, weekly_weight, id_user):
 
+        # get date data
+        last_weighing_date = ResultsUser.objects.values_list("weighing_date").filter(user=id_user).last()[0]
+        one_week_after_weighing = last_weighing_date + timedelta(days=7)
+        present = datetime.now()
+        present_date = present.date()
+
+        # from one week after the weighing last
+        if present_date >= one_week_after_weighing :
+            if weekly_weight is not False:
+                robot_text = "J'ai bien pris note de ton poids, tu trouveras un récapitulatif dans l'onglet résultats."
+                # récupère et enregistre le poids
+                self.new_week == True
+            else:
+                robot_text = "Bonjour ! J'éspère que ta semaine s'est bien passée ? Que donne ta pesée ce matin ?"
+        else:
+            month = calendar.month_name[present_date.month]
+            date = "" + calendar.day_name[present_date.weekday()] + " " + str(present_date.day) \
+                   + " " + month + ""
+            robot_text = "Rendez-vous à partir du {} pour faire le point sur tes résultats.".format(date)
+
+        return robot_text

@@ -29,6 +29,7 @@ def dietetic_space(request):
     # get data
     id_user = request.user.id
     old_robot_question = request.POST.get('question', False)
+    weekly_weight = request.POST.get('weekly_weight', False)
     height = request.POST.get('height', False)
     actual_weight = request.POST.get('actual_weight', False)
     cruising_weight = request.POST.get('cruising_weight', False)
@@ -40,8 +41,9 @@ def dietetic_space(request):
     # call controller_dietetic_space_view method and get context dict
     new_controller = Controller()
     context = new_controller.controller_dietetic_space_view(id_user, old_robot_question,
-                                                            data_weight_user, user_answer)
-
+                                                            data_weight_user, user_answer,
+                                                            weekly_weight)
+    print(context)
     return render(request, 'dietetic/dietetic_space.html', context)
 
 

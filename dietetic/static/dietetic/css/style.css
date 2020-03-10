@@ -164,7 +164,7 @@ h2{
 #card{
     padding : 3vh;
     margin-top : 7vh;
-    margin-bottom : 2vh;
+    height : 45vh;
     border-bottom: 2px black outset;
     border-right: 2px black outset;
     border-radius: 10px 10px 10px 10px;
@@ -173,6 +173,7 @@ h2{
     background-repeat : no-repeat ;
     background-size: 45vh;
     background-position : top;
+    overflow:auto;
 }
 #discussion_space, #text_my_results, #graphic_my_results, #my_account, #my_program{
     background-color : rgb(255, 255, 255);

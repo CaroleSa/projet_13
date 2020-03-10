@@ -7,6 +7,9 @@
         {% if robot_answer %}
             <a>{{robot_answer}}</a></br></br>
         {% endif %}
+        {% if robot_comment %}
+            <a>{{robot_comment}}</a></br></br>
+        {% endif %}
         {% if question %}
             <a class="bold">{{question}}</a></br></br>
             <form action="{% url 'dietetic:dietetic_space' %}" method="post">{% csrf_token %}
@@ -29,9 +32,15 @@
                 </br><input type="submit" value="Valider"/>
             </form>
         {% endif %}
+        {% if robot_weekly_weight %}
+            <form action="{% url 'dietetic:dietetic_space' %}" method="post">{% csrf_token %}
+                <a class="bold">{{robot_weekly_weight}}</a></br><input type="number" step="0.1" min="35" max="200" name="{{robot_weekly_weight}}" required/></br></br>
+                </br><input type="submit" value="Valider"/>
+            </form>
+        {% endif %}
     </div>
     <div id="card" class="col-lg-offset-2 col-lg-2">
-        <div id="dietetic_text">{{challenge}}</div>
+        <div id="dietetic_text">{{advice}}</div>
     </div>
 </div>
 {% endblock %}

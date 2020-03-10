@@ -7,7 +7,15 @@
 from django.test import TestCase
 from dietetic.classes.weight_advice_goal import WeightAdviceGoal
 from dietetic.classes.questions_list import QuestionsList
+from dietetic.classes.controller import Controller
 from dietetic.models import DiscussionSpace, RobotQuestion
+from account.models import ProfileUser, ResultsUser, IdentityUser
+from django.contrib.auth import get_user_model
+from datetime import datetime, timedelta
+import calendar
+import locale
+locale.setlocale(locale.LC_ALL, 'fr_FR.UTF-8')
+'fr_FR'
 
 
 class TestsReturnWeightAdvicesGoal(TestCase):
@@ -205,6 +213,10 @@ class TestsReturnQuestionsList(TestCase):
         self.new_questions_list = QuestionsList()
 
     def test_return_questions_list(self):
+        """
+        test the return of the method :
+        list that contains the id questions
+        """
         data = DiscussionSpace.objects.values_list("robot_question").order_by("id")
         list_data = []
         for elt in data:
@@ -224,3 +236,26 @@ class TestsReturnQuestionsList(TestCase):
         return_list = self.new_questions_list.create_questions_id_list()
 
         self.assertEqual(id_question_by_type_list, return_list)
+
+
+class TestsController(TestCase):
+    """ TestsController class """
+
+    def setUp(self):
+        self.new_controller = Controller()
+
+        # create user account, and add user's data
+        self.id_user = 200
+        username2 = 'pseudo2'
+        email2 = 'pseudo2@tests.com'
+        password2 = 'password2'
+        IdentityUser.objects.create_user(id=self.id_user, username=username2, email=email2, password=password2)
+        id = IdentityUser.objects.get(id=self.id_user)
+        ProfileUser.objects.create(user=id, starting_weight=60,
+                                   actual_goal_weight=5, final_weight=50)
+        ResultsUser.objects.create(user=id, weight=60)
+
+
+
+    def test(self):
+        pass
