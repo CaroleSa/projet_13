@@ -9,6 +9,7 @@ from django.contrib.auth import get_user_model, logout
 import datetime
 from .classes.controller import Controller
 from account.models import HistoryUser, ProfileUser, ResultsUser, IdentityUser
+from chartit import DataPool, Chart
 
 
 def index(request):
@@ -49,54 +50,63 @@ def my_results(request):
     # get data
     user = get_user_model()
     id = user.objects.get(id=request.user.id)
-
+    final_weight = ProfileUser.objects.values_list("final_weight").get(user=id)[0]
     starting_date = ResultsUser.objects.values_list("weighing_date").filter(user=id).first()[0]
+    last_date = ResultsUser.objects.values_list("weighing_date").filter(user=id).last()[0]
     starting_weight = ResultsUser.objects.values_list("weight").filter(user=id).first()[0]
     last_weight = ResultsUser.objects.values_list("weight").filter(user=id).last()[0]
-    final_weight_goal = ProfileUser.objects.values_list("final_weight").get(user=id)[0]
-    total_lost_weight = starting_weight - last_weight
-    total_weight_to_lose = starting_weight - final_weight_goal
-    print(starting_weight, final_weight_goal, total_weight_to_lose)
-    percentage_goal = round((total_lost_weight * 100) / total_weight_to_lose, 0)
 
-    starting_weight = ProfileUser.objects.values_list("starting_weight").get(user=id)[0]
-    final_weight = ProfileUser.objects.values_list("final_weight").get(user=id)[0]
-    total_weight_to_lose = starting_weight - final_weight
+    # calculates the percentage of lost weight
+    total_lost_weight = float(starting_weight - last_weight)
+    total_goal = float(starting_weight - final_weight)
+    lost_percentage = int((total_lost_weight * 100) / total_goal)
 
+    # calculates the average weight loss
+    delta = last_date - starting_date
+    number_of_weeks = delta.days/7
+    try:
+        average_lost_weight = total_lost_weight/number_of_weeks
+    except ZeroDivisionError:
+        average_lost_weight = 0
 
-    context = {"starting_date": starting_date, "starting_weight": starting_weight, "total_goal": total_weight_to_lose,
-               "percentage_goal": percentage_goal}
+    display_info = False
+    if starting_date != last_date:
+        display_info = True
 
+    # Step 1: Create a DataPool with the data we want to retrieve.
+    results_data = \
+        DataPool(
+            series=
+            [{'options': {
+                'source': ResultsUser.objects.all()},
+                'terms': [
+                    'weighing_date',
+                    'weight'
+                ]}
+            ])
 
+    # Step 2: Create the Chart object
+    graphic = Chart(
+        datasource=results_data,
+        series_options=
+        [{'options': {
+            'type': 'line',
+            'stacking': False},
+            'terms': {
+                'month': [
+                    'boston_temp',
+                    'houston_temp']
+            }}],
+        chart_options=
+        {'title': {
+            'text': 'Weather Data of Boston and Houston'},
+            'xAxis': {
+                'title': {
+                    'text': 'Month number'}}})
 
-
-    """last_date = [2020, 7, 20]
-    last_weight = 55
-    starting_week = datetime.datetime(starting_date[0], starting_date[1], starting_date[2]).isocalendar()[1]
-    last_week = datetime.datetime(last_date[0], last_date[1], last_date[2]).isocalendar()[1]
-    number_week = last_week - starting_week
-    lost_weight = starting_weight - last_weight
-    average_weight_loss = round(lost_weight/number_week, 1)
-    last_2_weighings = "ok"
-    last_weighings = "ok"
-    if average_weight_loss <= 0.3:
-        text = "Petite moyenne de perte de poids"
-    if average_weight_loss >= 0.4 <= 0.5:
-        text = "Moyenne de perte de poids moyenne"
-    if average_weight_loss >= 0.6 <= 0.8:
-        text = "Bonne moyenne de perte de poids"
-    if average_weight_loss >= 0.9:
-        text = "Très bonne moyenne de perte de poids"
-
-    if last_2_weighings == "ok":
-        text = "Dernières pertes parfaites !"
-    else:
-        if last_weighings == "ok":
-            text = "Dernières pertes moyennes !"
-        else:
-            text = "Dernières pertes mauvaises !"""""
-
-
+    context = {"starting_date": starting_date, "starting_weight": starting_weight, "total_goal": total_goal,
+               "lost_percentage": lost_percentage, "average_lost_weight": average_lost_weight,
+               "display_info": display_info}
 
     return render(request, 'dietetic/my_results.html', context)
 
