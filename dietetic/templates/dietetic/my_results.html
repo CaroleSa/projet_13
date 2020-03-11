@@ -8,15 +8,14 @@
             <div id="text_my_results" class="col-lg-4">
                 <p>Suivi démarré le <strong>{{ starting_date }}</strong></br>Poids de départ : {{ starting_weight }} kg</p></br>
                 <p>Ton objectif est de <font class="bold" color="red">- {{ total_goal }} kg</font> : </br>tu as atteint <font class="bold" color="green">{{ lost_percentage }} %</font> de cet objectif.</p></br>
-                <p class="bold">Note de mes résultats:</p>
+                <p class="bold">Mes résultats:</p>
                 {% if display_info == True %}
                     <p>En moyenne, tu perds <font class="bold" color="blue">{{ average_lost_weight }} kg</font> par semaine.</p>
                 {% else %}
                 <p>Pas de résultats pour le moment.</p>
                 {% endif %}
             </div>
-            <div id="graphic_my_results" class="col-lg-offset-1 col-lg-7">
-                ici mon graphique
+            <div id="graphic_my_results" class="col-lg-offset-1 col-lg-7" >
             </div>
         </div>
     </div>

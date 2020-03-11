@@ -49,3 +49,34 @@ $key.on('click', function() {
     $input.css('visibility', "");
     $confirm_message.hide();
 });
+
+
+//     graphic
+
+$.ajax({
+        url: '/dietetic/my_results/',
+        data: {
+          "get_data": "True"
+        },
+        success: function (data) {
+          alert(data);
+        }
+      });
+
+google.charts.load('current', {'packages':['corechart']});
+google.charts.setOnLoadCallback(drawChart);
+
+function drawChart() {
+
+    var data = google.visualization.arrayToDataTable(ARRAY);
+
+    var options = {
+        title: 'Perte de poids',
+        curveType: 'function',
+        legend: 'none'
+    };
+
+    var chart = new google.visualization.LineChart(document.getElementById('graphic_my_results'));
+
+    chart.draw(data, options);
+}

@@ -4,12 +4,12 @@
 """ views of the dietetic app """
 
 # Imports
-from django.shortcuts import render
+from django.shortcuts import render, HttpResponse
 from django.contrib.auth import get_user_model, logout
+from django.http import JsonResponse
 import datetime
 from .classes.controller import Controller
 from account.models import HistoryUser, ProfileUser, ResultsUser, IdentityUser
-from chartit import DataPool, Chart
 
 
 def index(request):
@@ -56,6 +56,20 @@ def my_results(request):
     starting_weight = ResultsUser.objects.values_list("weight").filter(user=id).first()[0]
     last_weight = ResultsUser.objects.values_list("weight").filter(user=id).last()[0]
 
+    # test
+    results_weight_data = ResultsUser.objects.values_list("weight").filter(user=id)
+    results_date_data = ResultsUser.objects.values_list("weighing_date").filter(user=id)
+    list_data = [['Date', 'Poids']]
+    for date, weight in zip(results_date_data, results_weight_data):
+        list_date_weight = [date[0], weight[0]]
+        list_data.append(list_date_weight)
+
+    # test
+    get_data = request.GET.get("get_data", "False")
+    if get_data == "True":
+        data = list_data
+        return JsonResponse(data, safe=False)
+
     # calculates the percentage of lost weight
     total_lost_weight = float(starting_weight - last_weight)
     total_goal = float(starting_weight - final_weight)
@@ -73,40 +87,9 @@ def my_results(request):
     if starting_date != last_date:
         display_info = True
 
-    # Step 1: Create a DataPool with the data we want to retrieve.
-    results_data = \
-        DataPool(
-            series=
-            [{'options': {
-                'source': ResultsUser.objects.all()},
-                'terms': [
-                    'weighing_date',
-                    'weight'
-                ]}
-            ])
-
-    # Step 2: Create the Chart object
-    graphic = Chart(
-        datasource=results_data,
-        series_options=
-        [{'options': {
-            'type': 'line',
-            'stacking': False},
-            'terms': {
-                'month': [
-                    'boston_temp',
-                    'houston_temp']
-            }}],
-        chart_options=
-        {'title': {
-            'text': 'Weather Data of Boston and Houston'},
-            'xAxis': {
-                'title': {
-                    'text': 'Month number'}}})
-
     context = {"starting_date": starting_date, "starting_weight": starting_weight, "total_goal": total_goal,
                "lost_percentage": lost_percentage, "average_lost_weight": average_lost_weight,
-               "display_info": display_info}
+               "display_info": display_info, "list_data": list_data}
 
     return render(request, 'dietetic/my_results.html', context)
 
