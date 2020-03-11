@@ -35,10 +35,9 @@ class TestsReturnWeightAdvicesGoal(TestCase):
 
         actual_weight = data_weight_user["actual_weight"]
         weight_goal = data_weight_user["weight_goal"]
-        user_goal = actual_weight - weight_goal
-        actual_goal = user_goal / 2
+        goal = actual_weight - weight_goal
 
-        self.assertEqual(return_goal, actual_goal)
+        self.assertEqual(return_goal, goal)
 
     def test_return_advice_under_cruising_weight(self):
         """
@@ -49,19 +48,13 @@ class TestsReturnWeightAdvicesGoal(TestCase):
                             "cruising_weight": 55, "weight_goal": 51}
         return_advice = self.new_weight_advice_goal.return_weight_advices_goal(data_weight_user)[1]
 
-        actual_weight = data_weight_user["actual_weight"]
-        weight_goal = data_weight_user["weight_goal"]
-        user_goal = actual_weight - weight_goal
-        actual_goal = user_goal / 2
-        first_advice = "Chaque personne a un poids d'équilibre sur lequel il peut rester longtemps, " \
-                       "c'est se qu'on appelle le poids de croisière. Il semble que ton objectif " \
-                       "aille en dessous de ce poids. Il est donc" \
-                       "possible que tu n'arrives pas à le maintenir sur la durée."
-        advice = "Ton premier objectif serra donc de perdre "+str(actual_goal)+" kg."
-        text = ""+first_advice+" Prévoir un objectif rapidement atteignable est une bonne chose pour rester motiver. " \
-               "Je te propose donc de prévoir un premier objectif puis un second, ... " + advice + " "
+        advice = "Chaque personne a un poids d'équilibre sur lequel il peut rester longtemps, " \
+                 "c'est se qu'on appelle le poids de croisière. Il semble que ton objectif " \
+                 "aille en dessous de ce poids. Je tiens donc à te préciser qu'il est" \
+                 "possible que tu n'arrives pas à le maintenir sur la durée." \
+                 "Je note tout de même cet objectif."
 
-        self.assertEqual(return_advice, text)
+        self.assertEqual(return_advice, advice)
 
     def test_return_goal_weight_under_cruising_weight(self):
         """
@@ -123,7 +116,12 @@ class TestsReturnWeightAdvicesGoal(TestCase):
                             "cruising_weight": 45, "weight_goal": 40}
         return_goal = self.new_weight_advice_goal.return_weight_advices_goal(data_weight_user)[0]
 
-        self.assertEqual(return_goal, 5)
+        height = data_weight_user["height"]
+        actual_weight = data_weight_user["actual_weight"]
+        height_min = round(18.5*(height * height), 1)
+        goal = actual_weight - height_min
+
+        self.assertEqual(return_goal, goal)
 
     def test_return_advice_goal_weight_is_too_low(self):
         """
@@ -136,15 +134,11 @@ class TestsReturnWeightAdvicesGoal(TestCase):
 
         height = data_weight_user["height"]
         height_min = round(18.5*(height * height), 1)
-        first_advice = "Ton objectif semble trop bas, je te conseille de ne pas " \
-                            "aller en dessous de " + str(height_min) + " kg."
-        advice = "Ton premier objectif serra donc de perdre 5 kg. C'est parti ! "
-        text = "" + first_advice + " Prévoir un objectif rapidement atteignable est " \
-                                   "une bonne chose pour rester motiver. Je te propose " \
-                                   "donc de prévoir un premier objectif puis un second, " \
-                                   "... " + advice + " "
+        advice = "Ton objectif semble trop bas, je te conseille de ne pas " \
+                 "aller en dessous de "+str(height_min)+" kg. " \
+                 "C'est donc l'objectif que nous allons fixer !"
 
-        self.assertEqual(return_advice, text)
+        self.assertEqual(return_advice, advice)
 
     def test_return_goal_weight_goal_weight_is_too_low(self):
         """
@@ -155,15 +149,14 @@ class TestsReturnWeightAdvicesGoal(TestCase):
                             "cruising_weight": 45, "weight_goal": 40}
         return_goal = self.new_weight_advice_goal.return_weight_advices_goal(data_weight_user)[2]
         height = data_weight_user["height"]
-        height_min = 18.5 * (height * height)
-        height_min = round(height_min, 1)
+        height_min = round(18.5 * (height * height), 1)
 
         self.assertEqual(return_goal, height_min)
 
-    def test_return_goal_goal_weight_under_6_kg(self):
+    def test_return_goal_goal_weight_ok(self):
         """
-        test goal returned if the user's goal weight
-        is under to 6 kg
+        test goal returned if the user's
+        goal weight is validate
         """
         data_weight_user = {"height": 1.60, "actual_weight": 60,
                             "cruising_weight": 55, "weight_goal": 55}
@@ -175,10 +168,10 @@ class TestsReturnWeightAdvicesGoal(TestCase):
 
         self.assertEqual(return_goal, goal)
 
-    def test_return_advice_goal_weight_under_6_kg(self):
+    def test_return_advice_goal_weight_ok(self):
         """
-        test advice returned if the user's goal weight
-        is under to 6 kg
+        test advice returned if the user's
+        goal weight is validate
         """
         data_weight_user = {"height": 1.60, "actual_weight": 60,
                             "cruising_weight": 55, "weight_goal": 55}
@@ -192,10 +185,10 @@ class TestsReturnWeightAdvicesGoal(TestCase):
 
         self.assertEqual(return_advice, advice)
 
-    def test_return_goal_weight_goal_weight_under_6_kg(self):
+    def test_return_goal_weight_goal_weight_ok(self):
         """
-        test goal weight returned if the user's goal weight
-        is under to 6 kg
+        test goal weight returned if the user's
+        goal weight is validate
         """
         data_weight_user = {"height": 1.60, "actual_weight": 60,
                             "cruising_weight": 55, "weight_goal": 55}

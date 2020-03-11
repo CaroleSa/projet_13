@@ -37,7 +37,8 @@ class WeightAdviceGoal:
         if goal_imc < 18.5:
             height_min = round(18.5*(height * height), 1)
             advice = "Ton objectif semble trop bas, je te conseille de ne pas " \
-                     "aller en dessous de "+str(height_min)+" kg."
+                     "aller en dessous de "+str(height_min)+" kg. " \
+                     "C'est donc l'objectif que nous allons fixer !"
             goal = actual_weight - height_min
             final_weight = height_min
 
