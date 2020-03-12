@@ -55,6 +55,7 @@ def my_results(request):
     starting_date = ResultsUser.objects.values_list("weighing_date").filter(user=id).first()[0]
     last_date = ResultsUser.objects.values_list("weighing_date").filter(user=id).last()[0]
     starting_weight = ResultsUser.objects.values_list("weight").filter(user=id).first()[0]
+    last_weight = ResultsUser.objects.values_list("weight").filter(user=id).last()[0]
     total_goal = float(starting_weight - final_weight)
 
     # get return Calculation class
@@ -62,6 +63,7 @@ def my_results(request):
     list_data = new_calculation.create_results_data_list(id)
     lost_percentage = new_calculation.percentage_lost_weight(id)
     average_lost_weight = new_calculation.average_weight_loss(id)
+    lost_weight = round(starting_weight - last_weight, 1)
 
     get_data = request.GET.get("get_data", "False")
     if get_data == "True":
@@ -73,7 +75,7 @@ def my_results(request):
 
     context = {"starting_date": starting_date, "starting_weight": starting_weight, "total_goal": total_goal,
                "lost_percentage": lost_percentage, "average_lost_weight": average_lost_weight,
-               "display_info": display_info, "final_weight": final_weight}
+               "display_info": display_info, "final_weight": final_weight, "lost_weight": lost_weight}
 
     return render(request, 'dietetic/my_results.html', context)
 

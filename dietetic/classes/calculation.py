@@ -4,9 +4,7 @@
 """ Calculation class """
 
 # Imports
-from dietetic.models import DiscussionSpace, RobotQuestion
 from account.models import ResultsUser, ProfileUser
-from django.contrib.auth import get_user_model
 
 
 class Calculation:
@@ -49,4 +47,3 @@ class Calculation:
             average_lost_weight = 0
 
         return average_lost_weight
-

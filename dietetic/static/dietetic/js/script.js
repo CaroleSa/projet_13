@@ -65,6 +65,7 @@ function drawChart() {
         },
         success: function (data) {
            var data = google.visualization.arrayToDataTable(data);
+
            var options = {
              title: 'Perte de poids',
              curveType: 'function',
