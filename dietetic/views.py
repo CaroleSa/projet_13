@@ -57,18 +57,17 @@ def my_results(request):
     last_weight = ResultsUser.objects.values_list("weight").filter(user=id).last()[0]
 
     # test
-    results_weight_data = ResultsUser.objects.values_list("weight").filter(user=id)
-    results_date_data = ResultsUser.objects.values_list("weighing_date").filter(user=id)
+    results_weight_data = ResultsUser.objects.values_list("weight").filter(user=id).order_by("weighing_date")
+    results_date_data = ResultsUser.objects.values_list("weighing_date").filter(user=id).order_by("weighing_date")
     list_data = [['Date', 'Poids']]
     for date, weight in zip(results_date_data, results_weight_data):
-        list_date_weight = [date[0], weight[0]]
+        list_date_weight = [date[0], float(weight[0])]
         list_data.append(list_date_weight)
-
+    print(list_data)
     # test
     get_data = request.GET.get("get_data", "False")
     if get_data == "True":
-        data = list_data
-        return JsonResponse(data, safe=False)
+        return JsonResponse(list_data, safe=False)
 
     # calculates the percentage of lost weight
     total_lost_weight = float(starting_weight - last_weight)
@@ -89,7 +88,7 @@ def my_results(request):
 
     context = {"starting_date": starting_date, "starting_weight": starting_weight, "total_goal": total_goal,
                "lost_percentage": lost_percentage, "average_lost_weight": average_lost_weight,
-               "display_info": display_info, "list_data": list_data}
+               "display_info": display_info}
 
     return render(request, 'dietetic/my_results.html', context)
 
