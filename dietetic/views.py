@@ -9,6 +9,7 @@ from django.contrib.auth import get_user_model, logout
 from django.http import JsonResponse
 import datetime
 from .classes.controller import Controller
+from .classes.calculation import Calculation
 from account.models import HistoryUser, ProfileUser, ResultsUser, IdentityUser
 
 
@@ -54,33 +55,17 @@ def my_results(request):
     starting_date = ResultsUser.objects.values_list("weighing_date").filter(user=id).first()[0]
     last_date = ResultsUser.objects.values_list("weighing_date").filter(user=id).last()[0]
     starting_weight = ResultsUser.objects.values_list("weight").filter(user=id).first()[0]
-    last_weight = ResultsUser.objects.values_list("weight").filter(user=id).last()[0]
+    total_goal = float(starting_weight - final_weight)
 
-    # test
-    results_weight_data = ResultsUser.objects.values_list("weight").filter(user=id).order_by("weighing_date")
-    results_date_data = ResultsUser.objects.values_list("weighing_date").filter(user=id).order_by("weighing_date")
-    list_data = [['Date', 'Poids']]
-    for date, weight in zip(results_date_data, results_weight_data):
-        list_date_weight = [date[0], float(weight[0])]
-        list_data.append(list_date_weight)
-    print(list_data)
-    # test
+    # get return Calculation class
+    new_calculation = Calculation()
+    list_data = new_calculation.create_results_data_list(id)
+    lost_percentage = new_calculation.percentage_lost_weight(id)
+    average_lost_weight = new_calculation.average_weight_loss(id)
+
     get_data = request.GET.get("get_data", "False")
     if get_data == "True":
         return JsonResponse(list_data, safe=False)
-
-    # calculates the percentage of lost weight
-    total_lost_weight = float(starting_weight - last_weight)
-    total_goal = float(starting_weight - final_weight)
-    lost_percentage = int((total_lost_weight * 100) / total_goal)
-
-    # calculates the average weight loss
-    delta = last_date - starting_date
-    number_of_weeks = delta.days/7
-    try:
-        average_lost_weight = total_lost_weight/number_of_weeks
-    except ZeroDivisionError:
-        average_lost_weight = 0
 
     display_info = False
     if starting_date != last_date:
@@ -88,7 +73,7 @@ def my_results(request):
 
     context = {"starting_date": starting_date, "starting_weight": starting_weight, "total_goal": total_goal,
                "lost_percentage": lost_percentage, "average_lost_weight": average_lost_weight,
-               "display_info": display_info}
+               "display_info": display_info, "final_weight": final_weight}
 
     return render(request, 'dietetic/my_results.html', context)
 
