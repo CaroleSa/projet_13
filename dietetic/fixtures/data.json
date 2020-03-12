@@ -31,6 +31,13 @@
 
   {
     "model": "dietetic.RobotAdviceType",
+    "pk": 1,
+    "fields": {
+      "type": "default"
+    }
+  },
+  {
+    "model": "dietetic.RobotAdviceType",
     "pk": 2,
     "fields": {
       "type": "p2"
@@ -1159,6 +1166,46 @@
     "fields": {
       "robot_advice_type": 10,
       "text": "Repas sans faim … : Tu m'as indiqué dans ton questionnaire grignoter régulièrement après les repas. C'est donc le sujet de ton challenge de la semaine. Tu dois suivre les 2 règles suivantes : 1- Finir le repas par une note non-sucrée (un fruit puis un yaourt sans sucre)  2- Te brosser les dents à la fin du repas puis boire un grand verre d'eau. Tu veras du changement rapidement ! Allé hop, tous à vos brosses à dents !"
+      }
+  },
+  {
+    "model": "dietetic.RobotAdvices",
+    "pk": 25,
+    "fields": {
+      "robot_advice_type": 1,
+      "text": "Peur de l'inconnu ? : Dans chaque frigo, on y retrouve régulièrement les mêmes aliments... Il est vrai que l'on prend vite des habitudes et cela nous empêche de découvrir de nouveaux goûts. Dommage, non ? Pour remédier à cela, voici ton nouveau challenge ! Tu devras cuisiner un aliment qui t'es encore inconnu, tu en trouveras bien un, j'en suis sûr ! A la semaine prochaine !"
+      }
+  },
+  {
+    "model": "dietetic.RobotAdvices",
+    "pk": 26,
+    "fields": {
+      "robot_advice_type": 1,
+      "text": "Illusion d'optique : On est souvent trompé par la taille des assiettes lorsque l'on se sert. J'imagine que tu t'es déjà rendu compte de cela au restaurant par exemple ? Les assiettes sont souvent très grandes et, par conséquent, on a tendance à plus manger. Alors voilà ton challenge cette semaine : choisir une assiette plus petite que celle que tu utilises au quotidien. Cela permettra de réduire tes repas ! Tous à vos assiettes ! Bonne semaine !"
+      }
+  },
+  {
+    "model": "dietetic.RobotAdvices",
+    "pk": 27,
+    "fields": {
+      "robot_advice_type": 1,
+      "text": "Bouger bouger bouger : Un titre qui en dit long ! Voici donc ton challenge cette semaine ! On bouge en prenant les escaliers au lieu de l'ascenceur, on s'arrête un arrêt de métro avant, on se gare plus loin ! C'est ton corps qui va te remercier ! Et c'est parti pour une nouvelle semaine !"
+      }
+  },
+  {
+    "model": "dietetic.RobotAdvices",
+    "pk": 28,
+    "fields": {
+      "robot_advice_type": 1,
+      "text": "Mise à jour : Le poids descend et j'imagine que ton dressing n'a pas bougé ! Pour se motiver, quoi de mieux que de faire un tri des vêtements : on enlève les vêtements trop grands et on se fait plaisir avec l'achat d'un nouveau vêtement même si le poids d'objectif n'est pas encore atteint. Et oui ! Rien de tel pour se motiver à continuer quand on se sent beau/belle !!! Allé ! C'est parti !"
+      }
+  },
+  {
+    "model": "dietetic.RobotAdvices",
+    "pk": 29,
+    "fields": {
+      "robot_advice_type": 1,
+      "text": "Mauvais souvenir : Et oui, tout le monde a le mauvais souvenir, enfant, d'avoir mangé un aliment que l'on aimait pas... Et bien cette semaine, nous allons remédier à ça ! Tu vas donc devoir acheter, préparer, cuisiner et déguster un de ces aliments cette semaine. Il serait dommage de rester sur une mauvaise impression, n'est-ce pas ? Allé, c'est parti ! Rien ne doit nous arrêter !"
       }
   }
 ]
