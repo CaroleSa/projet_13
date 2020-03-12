@@ -7,12 +7,10 @@
 from django.test import TestCase
 from dietetic.classes.weight_advice_goal import WeightAdviceGoal
 from dietetic.classes.questions_list import QuestionsList
+from dietetic.classes.calculation import Calculation
 from dietetic.classes.controller import Controller
 from dietetic.models import DiscussionSpace, RobotQuestion
 from account.models import ProfileUser, ResultsUser, IdentityUser
-from django.contrib.auth import get_user_model
-from datetime import datetime, timedelta
-import calendar
 import locale
 locale.setlocale(locale.LC_ALL, 'fr_FR.UTF-8')
 'fr_FR'
@@ -23,6 +21,7 @@ class TestsReturnWeightAdvicesGoal(TestCase):
 
     def setUp(self):
         self.new_weight_advice_goal = WeightAdviceGoal()
+        self.new_calculation = Calculation()
 
     def test_return_goal_under_cruising_weight(self):
         """
@@ -134,6 +133,7 @@ class TestsReturnWeightAdvicesGoal(TestCase):
 
         height = data_weight_user["height"]
         height_min = round(18.5*(height * height), 1)
+        height_min = self.new_calculation.delete_o(height_min)
         advice = "Ton objectif semble trop bas, je te conseille de ne pas " \
                  "aller en dessous de "+str(height_min)+" kg. " \
                  "C'est donc l'objectif que nous allons fixer !"
@@ -179,7 +179,7 @@ class TestsReturnWeightAdvicesGoal(TestCase):
 
         actual_weight = data_weight_user["actual_weight"]
         weight_goal = data_weight_user["weight_goal"]
-        user_goal = float(actual_weight - weight_goal)
+        user_goal = self.new_calculation.delete_o(float(actual_weight - weight_goal))
         advice = "Alors c'est parti ! Partons sur un objectif de - " \
                  + str(user_goal) + " kg. "
 
