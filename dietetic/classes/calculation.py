@@ -10,12 +10,15 @@ from account.models import ResultsUser, ProfileUser
 class Calculation:
 
     def create_results_data_list(self, id):
+        starting_date = ResultsUser.objects.values_list("weighing_date").filter(user=id).first()[0]
         results_weight_data = ResultsUser.objects.values_list("weight").filter(user=id).order_by("weighing_date")
         results_date_data = ResultsUser.objects.values_list("weighing_date").filter(user=id).order_by("weighing_date")
 
-        list_data = [['Date', 'Poids']]
+        list_data = [['Semaine', 'Poids']]
         for date, weight in zip(results_date_data, results_weight_data):
-            list_date_weight = [date[0], float(weight[0])]
+            delta = date[0] - starting_date
+            number_of_weeks = round(delta.days / 7, 0)
+            list_date_weight = [number_of_weeks, float(weight[0])]
             list_data.append(list_date_weight)
 
         return list_data

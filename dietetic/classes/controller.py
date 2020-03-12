@@ -242,7 +242,7 @@ class Controller:
             month = calendar.month_name[one_week_after_weighing.month]
             date = "" + calendar.day_name[one_week_after_weighing.weekday()] + " " + str(one_week_after_weighing.day) \
                    + " " + month + ""
-            robot_text = "Retrouvons nous ici {} pour faire le point sur tes résultats " \
+            robot_text = "Retrouvons nous ici {} pour faire le point sur tes prochains résultats " \
                          "et voir ton nouveau challenge !".format(date)
 
         return robot_text

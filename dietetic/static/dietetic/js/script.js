@@ -69,7 +69,14 @@ function drawChart() {
            var options = {
              title: 'Perte de poids',
              curveType: 'function',
-             legend: 'none'
+             legend: 'none',
+             pointsVisible: true,
+             hAxis: {
+                  title: 'Semaines'
+               },
+             vAxis: {
+                  title: 'Poids'
+               },
             };
 
         var chart = new google.visualization.LineChart(document.getElementById('graphic_my_results'));
