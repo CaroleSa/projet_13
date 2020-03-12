@@ -4,11 +4,13 @@
 """ WeightAdviceGoal class """
 
 # Imports
+from .classes.calculation import Calculation
 
 
 class WeightAdviceGoal:
 
     def __init__(self):
+        self.new_calculation = Calculation()
         self.first_advice = ""
         self.final_weight = 0
 
@@ -24,7 +26,7 @@ class WeightAdviceGoal:
         goal_imc = goal_weight/(height*height)
         cruising_imc = cruising_weight/(height*height)
 
-        user_goal = actual_weight - goal_weight
+        user_goal = self.new_calculation.delete_o(actual_weight - goal_weight)
 
         if actual_imc < 18.5:
             advice = "Ton poids actuel est déjà bien bas... je te déconseille " \
@@ -36,6 +38,7 @@ class WeightAdviceGoal:
 
         if goal_imc < 18.5:
             height_min = round(18.5*(height * height), 1)
+            height_min = self.new_calculation.delete_o(height_min)
             advice = "Ton objectif semble trop bas, je te conseille de ne pas " \
                      "aller en dessous de "+str(height_min)+" kg. " \
                      "C'est donc l'objectif que nous allons fixer !"
