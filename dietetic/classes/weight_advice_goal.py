@@ -4,7 +4,7 @@
 """ WeightAdviceGoal class """
 
 # Imports
-from .classes.calculation import Calculation
+from dietetic.classes.calculation import Calculation
 
 
 class WeightAdviceGoal:

@@ -5,7 +5,7 @@
 
 # Imports
 from django.contrib.auth import get_user_model
-from dietetic.models import RobotAdvices, DiscussionSpace, RobotQuestion, RobotQuestionType, UserAnswer
+from dietetic.models import RobotAdvices, DiscussionSpace, RobotQuestion, RobotQuestionType, UserAnswer, RobotAdviceType
 from account.models import HistoryUser, ProfileUser, ResultsUser, IdentityUser
 from dietetic.classes.questions_list import QuestionsList
 from dietetic.classes.weight_advice_goal import WeightAdviceGoal
@@ -28,10 +28,12 @@ class Controller:
 
     def controller_dietetic_space_view(self, id_user, old_robot_question, data_weight_user, user_answer, weekly_weight):
         """ controller of the discussion space view """
-        context = {}
-        # get start_questionnaire_completed in HistoryUser model
+        # get data
         start_questionnaire_completed = HistoryUser.objects.values_list("start_questionnaire_completed") \
             .get(user=id_user)[0]
+        user = IdentityUser.objects.get(id=id_user)
+        advice_to_user = user.advices_to_user.all()
+        context = {}
 
         # if the user have not answered the start questions
         if start_questionnaire_completed is False:
@@ -42,25 +44,27 @@ class Controller:
         # if the user have answered the start questions
         if start_questionnaire_completed is True or self.end_questions_start is True:
 
-            # si le poids d'objectif total n'est pas atteint
-            context["robot_comment"] = self.return_weekly_questions_weight(weekly_weight, id_user)
+            last_weight = ResultsUser.objects.values_list("weight").filter(user=id_user).last()[0]
+            final_weight = ProfileUser.objects.values_list("final_weight").get(user=id_user)[0]
 
-            # if the user have the advices
-            user = IdentityUser.objects.get(id=id_user)
-            advice_to_user = user.advices_to_user.all()
-            if advice_to_user:
-                context["advice"] = self.return_weekly_advice(id_user)
+            # if the user has not reached his weight goal
+            if last_weight > final_weight:
+                context["robot_comment"] = self.return_weekly_questions_save_weight(weekly_weight, id_user)
 
-            # if the user haven't the advices
-            else:
-                pass
-                #recharger en conseils
-                #return context
-                #self.return_questions_week_weight()
+                # if the user have advices
+                if advice_to_user:
+                    context["advice"] = self.return_weekly_advice(id_user)
+
+                # if the user haven't advices
+                else:
+                    self.add_advices_to_user(id_user)
+                    context["advice"] = self.return_weekly_advice(id_user)
+
+            # if the user has reached his weight goal
+            if last_weight <= final_weight:
+                context["robot_comment"] = self.return_text_congratulations_restart_program(id_user)
 
         return context
-
-
 
     def return_start_discussion(self, id_user, old_robot_question, data_weight_user, user_answer):
         """
@@ -217,7 +221,7 @@ class Controller:
 
         return new_advices_user_text
 
-    def return_weekly_questions_weight(self, weekly_weight, id_user):
+    def return_weekly_questions_save_weight(self, weekly_weight, id_user):
 
         # get date data
         last_weighing_date = ResultsUser.objects.values_list("weighing_date").filter(user=id_user).last()[0]
@@ -246,3 +250,28 @@ class Controller:
                          "et voir ton nouveau challenge !".format(date)
 
         return robot_text
+
+    def add_advices_to_user(self, id_user):
+        """ add new robot advices to user """
+        advice_type_id = RobotAdviceType.objects.values_list("id").get(type="default")
+        advices_id = RobotAdvices.objects.values_list("id").filter(robot_advice_type=advice_type_id)
+
+        for id in advices_id:
+            # add a new advice to user
+            self.cursor.execute("INSERT INTO account_identityuser_advices_to_user (identityuser_id, robotadvices_id) "
+                                "VALUES ({}, {})".format(id_user, id))
+
+    def return_text_congratulations_restart_program(self, id_user):
+        """ create congratulation text """
+        user = get_user_model()
+        pseudo = user.objects.values_list("username").get(id=id_user)[0]
+        text = "Félicitation {} ! Tu as atteints ton objectif !".format(pseudo)
+
+        # restart the program and delete user's data
+        user = HistoryUser.objects.get(user=id_user)
+        user.start_questionnaire_completed = True
+        user.save()
+        ProfileUser.objects.delete()
+        ResultsUser.objects.delete()
+
+        return text
