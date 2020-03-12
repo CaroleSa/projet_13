@@ -73,9 +73,11 @@ def my_results(request):
     if starting_date != last_date:
         display_info = True
 
-    context = {"starting_date": starting_date, "starting_weight": starting_weight, "total_goal": total_goal,
+    context = {"starting_date": starting_date, "starting_weight": new_calculation.delete_o(starting_weight),
+               "total_goal": new_calculation.delete_o(total_goal),
                "lost_percentage": lost_percentage, "average_lost_weight": average_lost_weight,
-               "display_info": display_info, "final_weight": final_weight, "lost_weight": lost_weight}
+               "display_info": display_info, "final_weight": new_calculation.delete_o(final_weight),
+               "lost_weight": new_calculation.delete_o(lost_weight)}
 
     return render(request, 'dietetic/my_results.html', context)
 

@@ -50,3 +50,12 @@ class Calculation:
             average_lost_weight = 0
 
         return average_lost_weight
+
+    def delete_o(self, float_number):
+        int_number = int(float_number)
+
+        if int_number == float_number:
+            return int_number
+        else:
+            return float_number
+

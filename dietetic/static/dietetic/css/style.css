@@ -183,6 +183,9 @@ h2{
     border-bottom: 2px black outset;
     border-right: 2px black outset;
 }
+#text_my_results{
+    padding: 5vh;
+}
 #discussion_space{
     overflow:auto;
     padding: 7vh;
