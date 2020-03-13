@@ -1,5 +1,5 @@
-<div class="tab_y tab col-lg-6">&nbsp;Me connecter&nbsp;</div>
-<a href="{% url 'account:create_account' %}" ><div class="tab_n tab col-lg-6">&nbsp;Créer mon compte&nbsp;</div></a>
+<div id="login" class="tab_y tab col-lg-6">&nbsp;Me connecter&nbsp;</div>
+<a href="{% url 'account:create_account' %}" ><div id="create_account" class="tab_n tab col-lg-6">&nbsp;Créer mon compte&nbsp;</div></a>
 <div class="contents col-lg-12">
     {% if authenticated == "False" %}
     <form class="col-lg-offset-2 col-lg-8" action="{% url 'account:login' %}" method="post">{% csrf_token %}
@@ -13,9 +13,9 @@
     {% else %}
     {% if login_message %}
     {% if confirm_message %}
-    <br><a class="col-lg-12">{{confirm_message}}</a>
+    <br><a id="confirm_message" class="col-lg-12">{{confirm_message}}</a>
     {% endif %}
-    <br><a class="col-lg-12">{{login_message}}</a><br>
+    <br><a id="login_message" class="col-lg-12">{{login_message}}</a><br>
     {% endif %}
     <br><form action="{% url 'index' %}" method="post">{% csrf_token %}
         <input type="hidden" name="logout" value="True" />

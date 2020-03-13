@@ -1,5 +1,5 @@
-<a href="{% url 'account:login' %}" ><div class="tab_n tab col-lg-6">&nbsp;Me connecter&nbsp;</div></a>
-<div class="tab_y tab col-lg-6">&nbsp;Créer mon compte&nbsp;</div>
+<a href="{% url 'account:login' %}" ><div id="login" class="tab_n tab col-lg-6">&nbsp;Me connecter&nbsp;</div></a>
+<div id="create_account" class="tab_y tab col-lg-6">&nbsp;Créer mon compte&nbsp;</div>
 <div class="contents col-lg-12">
     <form class="col-lg-offset-2 col-lg-8" action="{% url 'account:create_account' %}" method="post">{% csrf_token %}
         <br><p>Pseudo</p>
@@ -9,6 +9,6 @@
         <p>Mot de passe<em class="grey">&nbsp;(min 8 caractères)</em></p>
         <label for="{{ form_create_account.password.id_for_label }}">{{ form_create_account.password }}
         <br><p class="red bold center col-lg-12">{{error_message}}</p>
-        <input class="col-lg-offset-2 col-lg-8" type="submit" value="Valider"><br>
+        <input class="col-lg-offset-2 col-lg-8" id="submitButton" type="submit" value="Valider"><br>
     </form>
 </div>

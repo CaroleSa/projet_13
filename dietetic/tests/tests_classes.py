@@ -51,7 +51,7 @@ class TestsReturnWeightAdvicesGoal(TestCase):
                  "c'est se qu'on appelle le poids de croisière. Il semble que ton objectif " \
                  "aille en dessous de ce poids. Je tiens donc à te préciser qu'il est" \
                  "possible que tu n'arrives pas à le maintenir sur la durée." \
-                 "Je note tout de même cet objectif."
+                 "Je note tout de même cet objectif. "
 
         self.assertEqual(return_advice, advice)
 
@@ -91,7 +91,7 @@ class TestsReturnWeightAdvicesGoal(TestCase):
         advice = self.new_weight_advice_goal.return_weight_advices_goal(data_weight_user)[1]
 
         text = "Ton poids actuel est déjà bien bas... je te déconseille " \
-               "de perdre plus de poids."
+               "de perdre plus de poids. "
 
         self.assertEqual(advice, text)
 
@@ -136,7 +136,7 @@ class TestsReturnWeightAdvicesGoal(TestCase):
         height_min = self.new_calculation.delete_o(height_min)
         advice = "Ton objectif semble trop bas, je te conseille de ne pas " \
                  "aller en dessous de "+str(height_min)+" kg. " \
-                 "C'est donc l'objectif que nous allons fixer !"
+                 "C'est donc l'objectif que nous allons fixer ! "
 
         self.assertEqual(return_advice, advice)
 
