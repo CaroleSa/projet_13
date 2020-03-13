@@ -16,12 +16,12 @@ before_script:
 script:
   - python manage.py migrate
   - python manage.py loaddata data.json
-  - python manage.py test
   - wget https://github.com/mozilla/geckodriver/releases/download/v0.26.0/geckodriver-v0.26.0-linux64.tar.gz
   - mkdir geckodriver
   - tar -xzf geckodriver-v0.26.0-linux64.tar.gz -C geckodriver
   - export PATH=$PATH:$PWD/geckodriver
   - export MOZ_HEADLESS=1
+  - python manage.py test
 
 branches:
   only:
