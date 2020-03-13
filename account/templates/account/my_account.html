@@ -6,31 +6,29 @@
     <div id="my_account" class="col-lg-offset-1 col-lg-10">
         <div class="row">
         <div id="text_my_account" class="col-lg-offset-1 col-lg-3">
-            <h2>Mon compte</h2></br>
+            <h2 id="account_title">Mon compte</h2></br>
             <p>Inscrit depuis le {{date_create_account}}</p><hr />
-            <p class="bold">Pseudo : <font color="green">{{pseudo}}</font></p><hr />
-            <p class="bold">Adresse e-mail : <font color="blue">{{email}}</font></p><hr /></br>
+            <p class="bold" id="pseudo_account">Pseudo : <font color="green">{{pseudo}}</font></p><hr />
+            <p class="bold" id="mail_account">Adresse e-mail : <font color="blue">{{email}}</font></p><hr /></br>
         </div>
         <div class="col-lg-offset-1 col-lg-3">
-            <p><i class="fas fa-key"></i>&nbsp;&nbsp;&nbsp;Modifier mon mot de passe</p>
+            <p><i id="key" class="fas fa-key"></i>&nbsp;&nbsp;&nbsp;Modifier mon mot de passe</p>
             {% if confirm_message %}
                 <p id="confirm"><font color="green">{{confirm_message}}</font></p>
             {% endif %}
             <form id="form_password" action="{% url 'account:my_account' %}" method="post">{% csrf_token %}
-                <p>mot de passe actuel <font class="error" color="red">{{error_actual_password}}</font></p>
+                <p>mot de passe actuel <font class="error" id="error_actual" color="red">{{error_actual_password}}</font></p>
                 <label for="{{ form_login.password.id_for_label }}">{{ form_login.password }}</br>
-                <p>nouveau mot de passe <font class="error" color="red">{{error_new_password}}</font></p>
-                <input class='form-control' type="password" minlength="8" name="new_password"></br>
+                <p>nouveau mot de passe <font class="error" id="error_new" color="red">{{error_new_password}}</font></p>
+                <input id="new_password" class='form-control' type="password" minlength="8" name="new_password"></br>
                 <input id="submit_password" class='form-control col-lg-offset-2 col-lg-8' type="submit" value="valider">
             </form>
             </div>
             <div class="col-lg-offset-1 col-lg-3">
             <form id="delete_account" action="{% url 'account:my_account' %}" method="post">{% csrf_token %}
                 <input type="hidden" name="delete_account" value="True" />
-                <input type="submit" class="fas fa-user-times" value="&#xf235;">&nbsp;&nbsp;&nbsp;Supprimer mon compte
+                <input id="delete_user" type="submit" class="fas fa-user-times" value="&#xf235;">&nbsp;&nbsp;&nbsp;Supprimer mon compte
             </form>
-
-
         </div>
         </div>
     </div>
