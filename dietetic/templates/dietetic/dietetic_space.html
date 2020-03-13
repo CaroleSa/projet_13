@@ -5,37 +5,42 @@
 <div class="row">
     <div id="discussion_space" class="col-lg-offset-2 col-lg-4">
         {% if robot_answer %}
-            <a>{{robot_answer}}</a></br></br>
+            <p>{{robot_answer}}</p>
         {% endif %}
         {% if robot_comment %}
-            <a>{{robot_comment}}</a></br></br>
+            <p>{{robot_comment}}</p>
         {% endif %}
         {% if question %}
-            <a class="bold">{{question}}</a></br></br>
+            <p class="bold">{{question}}</p>
             <form action="{% url 'dietetic:dietetic_space' %}" method="post">{% csrf_token %}
                 <input type="hidden" name="question" value="{{ question }}" />
                 {% for answer in answers %}
                     <a><input type="radio" name="answer" value="{{answer}}" required/>&nbsp;&nbsp;&nbsp;{{answer}}</a></br></br>
                 {% endfor %}
-                </br><input type="submit" value="Valider"/></br></br>
+                <input type="submit" value="Valider"/></br></br>
             </form>
         {% endif %}
         {% if dict_questions %}
-            <form action="{% url 'dietetic:dietetic_space' %}" method="post">{% csrf_token %}
+            <form class="center" action="{% url 'dietetic:dietetic_space' %}" method="post">{% csrf_token %}
+                {% if error_message %}
+                    <p class="bold red">{{error_message}}</p>
+                {% else %}
+                    <p class="bold">{{goal_weight_text}}</p>
+                {% endif %}
                 {% for question_type, question in dict_questions.items %}
                     {% if question_type == "height" %}
-                        <a class="bold">{{question}}</a></br><input type="number" step="0.01" min="1.50" max="2.30" name="{{question_type}}" required/></br></br>
+                        <a>{{question}}</a></br><input class="input_number col-lg-3" type="number" step="0.01" min="1.50" max="2.30" name="{{question_type}}" required/></br></br>
                     {% else %}
-                        <a class="bold">{{question}}</a></br><input type="number" step="0.1" min="35" max="200" name="{{question_type}}" required/></br></br>
+                        <a>{{question}}</a></br><input class="input_number col-lg-3" type="number" step="0.1" min="35" max="200" name="{{question_type}}" required/></br></br>
                     {% endif %}
                 {% endfor %}
-                </br><input type="submit" value="Valider"/>
+                </br><input class="col-lg-3" type="submit" value="Valider"/></br></br>
             </form>
         {% endif %}
         {% if robot_weekly_weight %}
-            <form action="{% url 'dietetic:dietetic_space' %}" method="post">{% csrf_token %}
-                <a class="bold">{{robot_weekly_weight}}</a></br><input type="number" step="0.1" min="35" max="200" name="{{robot_weekly_weight}}" required/></br></br>
-                </br><input type="submit" value="Valider"/>
+            <form class="center" action="{% url 'dietetic:dietetic_space' %}" method="post">{% csrf_token %}
+                <a>{{robot_weekly_weight}}</a></br><input class="input_number col-lg-3" type="number" step="0.1" min="35" max="200" name="{{robot_weekly_weight}}" required/></br></br>
+                </br><input class="col-lg-3" type="submit" value="Valider"/></br></br>
             </form>
         {% endif %}
     </div>

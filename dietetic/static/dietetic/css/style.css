@@ -186,6 +186,10 @@ h2{
 #text_my_results{
     padding: 5vh;
 }
+.input_number{
+    padding: 0vh;
+    background-color: white;
+}
 #discussion_space{
     overflow:auto;
     padding: 7vh;

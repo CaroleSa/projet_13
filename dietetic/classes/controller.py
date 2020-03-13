@@ -25,6 +25,12 @@ class Controller:
         self.cursor = connection.cursor()
         self.new_week = False
         self.end_questions_start = False
+        self.dict_questions = {"height": "Quelle taille fais-tu ? (au format x,xx)",
+                               "actual_weight": "Quel est ton poids actuel ?",
+                               "cruising_weight": "Quel est ton poids de croisière (poids le plus longtemps "
+                                                  "maintenu sans effort) ?",
+                               "weight_goal": "Quel est ton poids d'objectif ?"}
+        self.goal_text = "Nous allons maintenant définir ton objectif."
 
     def controller_dietetic_space_view(self, id_user, old_robot_question, data_weight_user, user_answer, weekly_weight):
         """ controller of the discussion space view """
@@ -115,13 +121,8 @@ class Controller:
 
             # if the questionnaire is finished
             except IndexError:
-                dict_questions = {"height": "Quelle taille fais-tu ?",
-                                  "actual_weight": "Quel est ton poids actuel ?",
-                                  "cruising_weight": "Quel est ton poids de croisière (poids le plus longtemps "
-                                                     "maintenu sans effort) ?",
-                                  "weight_goal": "Quel est ton poids d'objectif ?"}
-                context["robot_answer"] = "Nous allons maintenant définir ton objectif."
-                context["dict_questions"] = dict_questions
+                context["goal_weight_text"] = self.goal_text
+                context["dict_questions"] = self.dict_questions
                 return context
 
         # get the robot question and the user's answers
@@ -138,44 +139,55 @@ class Controller:
     def return_goal_weight_text_save_weight(self, data_dict, id_user):
 
         # get robot advice to user : defined this weight goal
-        context = {}
         actual_weight = data_dict.get("actual_weight")
         if actual_weight is not False:
-            goal = self.new_weight_advice_goal.return_weight_advices_goal(data_dict)[0]
-            advice = self.new_weight_advice_goal.return_weight_advices_goal(data_dict)[1]
-            final_weight = self.new_weight_advice_goal.return_weight_advices_goal(data_dict)[2]
 
-            # if user's goal weight is validate
-            if goal != "impossible":
-                # create goal weight text and end discussion text
-                id_type = RobotQuestionType.objects.values_list("id").get(type="end start")[0]
-                start_text_end = RobotQuestion.objects.values_list("text").get(robot_question_type=id_type)[0]
-                text = advice + start_text_end
+            data_validate = self.parser_weight(data_dict)[0]
+            context = self.parser_weight(data_dict)[1]
 
-                # save user's data weight
-                try:
+            if context:
+                context["goal_weight_text"] = self.goal_text
+                context["dict_questions"] = self.dict_questions
+                return context
+
+            if data_validate is True:
+
+                goal = self.new_weight_advice_goal.return_weight_advices_goal(data_dict)[0]
+                advice = self.new_weight_advice_goal.return_weight_advices_goal(data_dict)[1]
+                final_weight = self.new_weight_advice_goal.return_weight_advices_goal(data_dict)[2]
+
+                # if user's goal weight is validate
+                if goal != "impossible":
+                    # create goal weight text and end discussion text
+                    id_type = RobotQuestionType.objects.values_list("id").get(type="end start")[0]
+                    start_text_end = RobotQuestion.objects.values_list("text").get(robot_question_type=id_type)[0]
+                    text = advice + start_text_end
+
+                    # save user's data weight
                     user = get_user_model()
-                    id = user.objects.get(id=id_user)
-                    ProfileUser.objects.values_list("starting_weight").get(user=id)[0]
-                    text = "Ton premier objectif de poids a déjà été défini à - " + str(goal) + " kg."
-                    context["robot_answer"] = text
+                    context = {}
+                    try:
+                        id = user.objects.get(id=id_user)
+                        ProfileUser.objects.values_list("starting_weight").get(user=id)[0]
+                        text = "Ton premier objectif de poids a déjà été défini à - " + str(goal) + " kg."
+                        context["robot_answer"] = text
 
-                except ProfileUser.DoesNotExist:
-
-                    ProfileUser.objects.create(user=id, starting_weight=actual_weight,
+                    except ProfileUser.DoesNotExist:
+                        id = user.objects.get(id=id_user)
+                        ProfileUser.objects.create(user=id, starting_weight=actual_weight,
                                                actual_goal_weight=goal, final_weight=final_weight)
-                    ResultsUser.objects.create(user=id, weight=actual_weight)
-                    context["robot_answer"] = text
+                        ResultsUser.objects.create(user=id, weight=actual_weight)
+                        context["robot_answer"] = text
 
-                # means that the user have answered at all questions start
-                user = HistoryUser.objects.get(user=id_user)
-                user.start_questionnaire_completed = True
-                user.save()
-                self.end_questions_start = True
+                    # means that the user have answered at all questions start
+                    user = HistoryUser.objects.get(user=id_user)
+                    user.start_questionnaire_completed = True
+                    user.save()
+                    self.end_questions_start = True
 
-            # if user's goal weight is not validate
-            else:
-                context["robot_answer"] = advice
+                # if user's goal weight is not validate
+                else:
+                    context["robot_answer"] = advice
 
             return context
 
@@ -269,9 +281,27 @@ class Controller:
 
         # restart the program and delete user's data
         user = HistoryUser.objects.get(user=id_user)
-        user.start_questionnaire_completed = True
+        user.start_questionnaire_completed = False
         user.save()
-        ProfileUser.objects.delete()
-        ResultsUser.objects.delete()
+        ProfileUser.objects.all().delete()
+        ResultsUser.objects.all().delete()
 
         return text
+
+    def parser_weight(self, data_dict):
+        # get user's data
+        context = {}
+        actual_weight = data_dict.get("actual_weight")
+        goal_weight = data_dict.get("weight_goal")
+
+        if float(goal_weight) >= float(actual_weight):
+            text = "Ton objectif doit être inférieur à ton poids actuel."
+            context = {"error_message": text}
+            validate = False
+
+        else:
+            validate = True
+
+        return validate, context
+
+
