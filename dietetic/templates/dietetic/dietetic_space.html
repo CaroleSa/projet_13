@@ -11,7 +11,7 @@
             <p>{{robot_comment}}</p>
         {% endif %}
         {% if question %}
-            <p class="bold">{{question}}</p>
+            <p id="robot_question" class="bold">{{question}}</p>
             <form action="{% url 'dietetic:dietetic_space' %}" method="post">{% csrf_token %}
                 <input type="hidden" name="question" value="{{ question }}" />
                 {% for answer in answers %}
@@ -25,11 +25,11 @@
                 {% if error_message %}
                     <p class="bold red">{{error_message}}</p>
                 {% else %}
-                    <p class="bold">{{goal_weight_text}}</p>
+                    <p id="goal_weight_text" class="bold">{{goal_weight_text}}</p>
                 {% endif %}
                 {% for question_type, question in dict_questions.items %}
                     {% if question_type == "height" %}
-                        <a>{{question}}</a></br><input class="input_number col-lg-3" type="number" step="0.01" min="1.50" max="2.30" name="{{question_type}}" required/></br></br>
+                        <a id="question_height">{{question}}</a></br><input class="input_number col-lg-3" type="number" step="0.01" min="1.50" max="2.30" name="{{question_type}}" required/></br></br>
                     {% else %}
                         <a>{{question}}</a></br><input class="input_number col-lg-3" type="number" step="0.1" min="35" max="200" name="{{question_type}}" required/></br></br>
                     {% endif %}

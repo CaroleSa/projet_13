@@ -4,6 +4,7 @@
 """ TestsFunctionals class """
 
 # imports
+import random
 import time
 from account.models import HistoryUser, ProfileUser, ResultsUser, IdentityUser, StatusUser
 from dietetic.models import DiscussionSpace, RobotQuestionType, RobotQuestion, UserAnswer
@@ -21,6 +22,7 @@ class TestsFunctionals(StaticLiveServerTestCase):
 
     def setUp(self):
         self.browser = webdriver.Firefox()
+        self.question = ""
 
         # CREATE NEW USER
         self.user = get_user_model()
@@ -80,12 +82,10 @@ class TestsFunctionals(StaticLiveServerTestCase):
 
     def test_questionnaire_answer_two_or_three(self):
         """
-        test the user choices
+        test if the user choices
         the second and third answer
         to the first robot question
         """
-        self.browser.get(self.live_server_url + "/account/login/")
-
         # login user
         self.login_user()
 
@@ -103,15 +103,37 @@ class TestsFunctionals(StaticLiveServerTestCase):
             robot_answer = self.browser.find_element_by_id("robot_answer").text
             self.assertEqual(robot_answer, robot_answer_text)
 
+    def test_questionnaire(self):
+        """
+        test if the user choices
+        the first answer
+        to the first robot question
+        """
+        # login user
+        self.login_user()
 
+        # access dietetic space page
+        self.browser.find_element_by_id("clipboard").click()
 
+        # test if the user clicks on the first answer
+        answer_text = UserAnswer.objects.values_list("text").get(id=1)[0]
+        self.browser.find_element_by_id(answer_text).click()
+        self.browser.find_element_by_id("validate_button").click()
 
-        """self.browser.find_element_by_id("j'hésite").click()
+        # the user choices the random answer
+        while 1:
+            try:
+                self.question = self.browser.find_element_by_id("robot_question").text
+                id_robot_question = RobotQuestion.objects.values_list("id").get(text=self.question)
+                number_answers = DiscussionSpace.objects.values_list("user_answer").filter(robot_question=id_robot_question).order_by("id").count()
+                number = random.randint(0, number_answers - 1)
+                user_answer_id = DiscussionSpace.objects.values_list("user_answer").filter(robot_question=id_robot_question)[number][0]
+                user_answer_text = UserAnswer.objects.values_list("text").get(id=user_answer_id)[0]
+                self.browser.find_element_by_id(user_answer_text).click()
+                self.browser.find_element_by_id("validate_button").click()
+            except common.exceptions.NoSuchElementException:
+                break
 
-        id_question_list = self.create_questions_id_list()
-        for id_question in id_question_list:
-            user_answer_list = DiscussionSpace.objects.values_list("user_answer").filter(robot_question=id_question)
-            print(user_answer_list)"""
 
         """"# access my results page
         self.browser.find_element_by_id("poll").click()
