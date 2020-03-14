@@ -14,7 +14,7 @@ from selenium import webdriver, common
 
 class TestsFunctionals(StaticLiveServerTestCase):
     """ class TestsFunctionals :
-    test the use user's account """
+    test the use of the user's account """
 
     def setUp(self):
         self.browser = webdriver.Firefox()
