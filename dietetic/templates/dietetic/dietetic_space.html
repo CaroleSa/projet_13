@@ -29,12 +29,12 @@
                 {% endif %}
                 {% for question_type, question in dict_questions.items %}
                     {% if question_type == "height" %}
-                        <a id="question_height">{{question}}</a></br><input class="input_number col-lg-3" type="number" step="0.01" min="1.50" max="2.30" name="{{question_type}}" required/></br></br>
+                        <a id="question_height">{{question}}</a></br><input class="input_number col-lg-3" type="number" step="0.01" min="1.50" max="2.30" id="{{question_type}}" name="{{question_type}}" required/></br></br>
                     {% else %}
-                        <a>{{question}}</a></br><input class="input_number col-lg-3" type="number" step="0.1" min="35" max="200" name="{{question_type}}" required/></br></br>
+                        <a id="question_{{question_type}}">{{question}}</a></br><input class="input_number col-lg-3" type="number" step="0.1" min="35" max="200" id="{{question_type}}" name="{{question_type}}" required/></br></br>
                     {% endif %}
                 {% endfor %}
-                </br><input class="col-lg-3" type="submit" value="Valider"/></br></br>
+                </br><input id="validate_goal" class="col-lg-3" type="submit" value="Valider"/></br></br>
             </form>
         {% endif %}
         {% if robot_weekly_weight %}

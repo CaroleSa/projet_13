@@ -120,20 +120,43 @@ class TestsFunctionals(StaticLiveServerTestCase):
         self.browser.find_element_by_id(answer_text).click()
         self.browser.find_element_by_id("validate_button").click()
 
-        # the user choices the random answer
+        # after, the user choices the random answer
         while 1:
             try:
                 self.question = self.browser.find_element_by_id("robot_question").text
                 id_robot_question = RobotQuestion.objects.values_list("id").get(text=self.question)
-                number_answers = DiscussionSpace.objects.values_list("user_answer").filter(robot_question=id_robot_question).order_by("id").count()
+                number_answers = DiscussionSpace.objects.values_list("user_answer").filter(
+                    robot_question=id_robot_question).order_by("id").count()
                 number = random.randint(0, number_answers - 1)
-                user_answer_id = DiscussionSpace.objects.values_list("user_answer").filter(robot_question=id_robot_question)[number][0]
+                user_answer_id = \
+                DiscussionSpace.objects.values_list("user_answer").filter(robot_question=id_robot_question)[number][0]
                 user_answer_text = UserAnswer.objects.values_list("text").get(id=user_answer_id)[0]
                 self.browser.find_element_by_id(user_answer_text).click()
                 self.browser.find_element_by_id("validate_button").click()
             except common.exceptions.NoSuchElementException:
                 break
 
+        # check the next questions value
+        question = self.browser.find_element_by_id("goal_weight_text").text
+        self.assertEqual(question, "Nous allons maintenant définir ton objectif.")
+
+        question = self.browser.find_element_by_id("question_height").text
+        self.assertEqual(question, "Quelle taille fais-tu ? (au format x,xx)")
+
+        question = self.browser.find_element_by_id("question_actual_weight").text
+        self.assertEqual(question, "Quel est ton poids actuel ?")
+
+        question = self.browser.find_element_by_id("question_cruising_weight").text
+        self.assertEqual(question, "Quel est ton poids de croisière (poids le plus longtemps maintenu sans effort) ?")
+
+        question = self.browser.find_element_by_id("question_weight_goal").text
+        self.assertEqual(question, "Quel est ton poids d'objectif ?")
+
+        # user writes this goal weight, ...
+        dict_data = {"height": "1,60", "actual_weight": "60", "cruising_weight": "50", "weight_goal": "50"}
+        for key, value in dict_data.items():
+            self.browser.find_element_by_id(key).send_keys(value)
+        self.browser.find_element_by_id("validate_goal").click()
 
         """"# access my results page
         self.browser.find_element_by_id("poll").click()
