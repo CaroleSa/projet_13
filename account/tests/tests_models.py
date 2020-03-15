@@ -12,7 +12,6 @@ from account.models import ResultsUser, ProfileUser, HistoryUser, StatusUser, Id
 from datetime import date
 import re
 
-
 class TestsModels(TestCase):
     """ TestsModels class :
     test_add_user method
@@ -34,8 +33,11 @@ class TestsModels(TestCase):
         self.password2 = 'password2'
         self.id_user2 = 2
         self.user.objects.create_user(id=self.id_user2, username=self.username2, email=self.email2,
-                                          password=self.password2)
+                                      password=self.password2)
         self.user_created = self.user.objects.get(id=self.id_user2)
+        HistoryUser.objects.create(user=self.user_created)
+        StatusUser.objects.create(user=self.user_created)
+
 
     def test_add_user(self):
         """ Test create user account """
@@ -97,7 +99,6 @@ class TestsModels(TestCase):
 
     def test_add_get_history_user(self):
         """ Test add and get user's history data """
-        HistoryUser.objects.create(user=self.user_created, start_questionnaire_completed=True)
         date_data = HistoryUser.objects.values_list("date_joined").get(user=self.user_created)
         date_create_account_list = re.findall('\d+', str(date_data))[0:3]
         today = date.today()
