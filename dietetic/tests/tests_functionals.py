@@ -10,8 +10,14 @@ from account.models import HistoryUser, ProfileUser, ResultsUser, IdentityUser, 
 from dietetic.models import DiscussionSpace, RobotQuestionType, RobotQuestion, UserAnswer
 from django.contrib.staticfiles.testing import StaticLiveServerTestCase
 from django.contrib.auth import get_user_model, authenticate
+from dietetic.classes.weight_advice_goal import WeightAdviceGoal
 from django.test import Client
 from selenium import webdriver, common
+from datetime import datetime, timedelta
+import calendar
+import locale
+locale.setlocale(locale.LC_ALL, 'fr_FR.UTF-8')
+'fr_FR'
 
 
 class TestsFunctionals(StaticLiveServerTestCase):
@@ -22,6 +28,7 @@ class TestsFunctionals(StaticLiveServerTestCase):
 
     def setUp(self):
         self.browser = webdriver.Firefox()
+        self.new_weight_advice_goal = WeightAdviceGoal()
         self.question = ""
 
         # CREATE NEW USER
@@ -137,26 +144,41 @@ class TestsFunctionals(StaticLiveServerTestCase):
                 break
 
         # check the next questions value
-        question = self.browser.find_element_by_id("goal_weight_text").text
-        self.assertEqual(question, "Nous allons maintenant définir ton objectif.")
-
-        question = self.browser.find_element_by_id("question_height").text
-        self.assertEqual(question, "Quelle taille fais-tu ? (au format x,xx)")
-
-        question = self.browser.find_element_by_id("question_actual_weight").text
-        self.assertEqual(question, "Quel est ton poids actuel ?")
-
-        question = self.browser.find_element_by_id("question_cruising_weight").text
-        self.assertEqual(question, "Quel est ton poids de croisière (poids le plus longtemps maintenu sans effort) ?")
-
-        question = self.browser.find_element_by_id("question_weight_goal").text
-        self.assertEqual(question, "Quel est ton poids d'objectif ?")
+        id_elt_question_text_dict = {"goal_weight_text": "Nous allons maintenant définir ton objectif.",
+                                     "question_height": "Quelle taille fais-tu ? (au format x,xx)",
+                                     "question_actual_weight": "Quel est ton poids actuel ?",
+                                     "question_cruising_weight": "Quel est ton poids de croisière "
+                                                                 "(poids le plus longtemps maintenu sans effort) ?",
+                                     "question_weight_goal": "Quel est ton poids d'objectif ?"}
+        for id_elt, question_text in id_elt_question_text_dict.items():
+            question = self.browser.find_element_by_id(id_elt).text
+            self.assertEqual(question, question_text)
 
         # user writes this goal weight, ...
         dict_data = {"height": "1,60", "actual_weight": "60", "cruising_weight": "50", "weight_goal": "50"}
         for key, value in dict_data.items():
             self.browser.find_element_by_id(key).send_keys(value)
         self.browser.find_element_by_id("validate_goal").click()
+
+        # check the robot answer
+        dict_data["height"] = 1.60
+        advice = self.new_weight_advice_goal.return_weight_advices_goal(dict_data)[1]
+        id_type = RobotQuestionType.objects.values_list("id").get(type="end start")[0]
+        start_text_end = RobotQuestion.objects.values_list("text").get(robot_question_type=id_type)[0]
+        text = advice + start_text_end
+
+        robot_answer = self.browser.find_element_by_id("robot_answer").text
+        self.assertEqual(text, robot_answer)
+
+        """last_weighing_date = ResultsUser.objects.values_list("weighing_date").filter(user=id_user).last()[0]
+        one_week_after_weighing = last_weighing_date + timedelta(days=7)
+        present = datetime.now()
+        present_date = present.date()
+        month = calendar.month_name[one_week_after_weighing.month]
+        date = "" + calendar.day_name[one_week_after_weighing.weekday()] + " " + str(one_week_after_weighing.day) \
+               + " " + month + ""
+        robot_text = "Retrouvons nous ici {} pour faire le point sur tes prochains résultats " \
+                     "et voir ton nouveau challenge !".format(date)"""
 
         """"# access my results page
         self.browser.find_element_by_id("poll").click()
