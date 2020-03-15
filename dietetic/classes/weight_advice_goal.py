@@ -16,8 +16,8 @@ class WeightAdviceGoal:
 
     def return_weight_advices_goal(self, dict_data):
         """ get user's answer, return weight advice and goal """
-        height = dict_data.get("height").replace(",", ".")
-        height = float(height)
+        height = dict_data.get("height")
+        height = float(height.replace(",", "."))
         actual_weight = round(float(dict_data.get("actual_weight")), 1)
         cruising_weight = round(float(dict_data.get("cruising_weight")), 1)
         goal_weight = round(float(dict_data.get("weight_goal")), 1)

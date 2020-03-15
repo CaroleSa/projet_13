@@ -38,7 +38,7 @@ class Controller:
         start_questionnaire_completed = HistoryUser.objects.values_list("start_questionnaire_completed") \
             .get(user=id_user)[0]
         user = IdentityUser.objects.get(id=id_user)
-        advice_to_user = user.advices_to_user.all()
+        advice_to_user = user.advices_to_user.all().count()
         context = {}
 
         # if the user have not answered the start questions
@@ -55,16 +55,16 @@ class Controller:
 
             # if the user has not reached his weight goal
             if last_weight > final_weight:
-                context["robot_comment"] = self.return_weekly_questions_save_weight(weekly_weight, id_user)
-
-                # if the user have advices
-                if advice_to_user:
-                    context["advice"] = self.return_weekly_advice(id_user)
-
-                # if the user haven't advices
+                if context != {}:
+                    context_2 = self.return_weekly_questions_save_weight(weekly_weight, id_user)
+                    context.update(context_2)
                 else:
+                    context = self.return_weekly_questions_save_weight(weekly_weight, id_user)
+
+                # get next advice
+                if advice_to_user == 1:
                     self.add_advices_to_user(id_user)
-                    context["advice"] = self.return_weekly_advice(id_user)
+                context["advice"] = self.return_weekly_advice(id_user)
 
             # if the user has reached his weight goal
             if last_weight <= final_weight:
@@ -175,7 +175,7 @@ class Controller:
                     except ProfileUser.DoesNotExist:
                         id = user.objects.get(id=id_user)
                         ProfileUser.objects.create(user=id, starting_weight=actual_weight,
-                                               actual_goal_weight=goal, final_weight=final_weight)
+                                                   actual_goal_weight=goal, final_weight=final_weight)
                         ResultsUser.objects.create(user=id, weight=actual_weight)
                         context["robot_answer"] = text
 
@@ -236,6 +236,7 @@ class Controller:
     def return_weekly_questions_save_weight(self, weekly_weight, id_user):
 
         # get date data
+        context ={}
         last_weighing_date = ResultsUser.objects.values_list("weighing_date").filter(user=id_user).last()[0]
         one_week_after_weighing = last_weighing_date + timedelta(days=7)
         present = datetime.now()
@@ -245,23 +246,26 @@ class Controller:
         if present_date >= one_week_after_weighing:
             # if the user gave his weight : save weight
             if weekly_weight is not False:
-                robot_text = "J'ai bien pris note de ton poids, tu trouveras un récapitulatif dans l'onglet résultats."
+                context["robot_comment"] = "J'ai bien pris note de ton poids, " \
+                                           "tu trouveras un récapitulatif dans l'onglet résultats."
                 id = IdentityUser.objects.get(id=id_user)
                 ResultsUser.objects.create(user=id, weight=weekly_weight)
                 self.new_week = True
             # else, create robot question
             else:
-                robot_text = "Bonjour ! J'éspère que ta semaine s'est bien passée ? Que donne ta pesée ce matin ?"
+                context["robot_comment"] = "Bonjour ! J'éspère que ta semaine s'est bien passée ? " \
+                                           "Que donne ta pesée ce matin ?"
+                context["robot_weekly_weight"] = True
 
         # if it's the week after the weighing last : create robot text
         else:
             month = calendar.month_name[one_week_after_weighing.month]
             date = "" + calendar.day_name[one_week_after_weighing.weekday()] + " " + str(one_week_after_weighing.day) \
                    + " " + month + ""
-            robot_text = "Retrouvons nous ici {} pour faire le point sur tes prochains résultats " \
-                         "et voir ton nouveau challenge !".format(date)
+            context["robot_comment"] = "Retrouvons nous ici {} pour faire le point sur tes prochains résultats " \
+                                       "et voir ton nouveau challenge !".format(date)
 
-        return robot_text
+        return context
 
     def add_advices_to_user(self, id_user):
         """ add new robot advices to user """
@@ -271,7 +275,7 @@ class Controller:
         for id in advices_id:
             # add a new advice to user
             self.cursor.execute("INSERT INTO account_identityuser_advices_to_user (identityuser_id, robotadvices_id) "
-                                "VALUES ({}, {})".format(id_user, id))
+                                "VALUES ({}, {})".format(id_user, id[0]))
 
     def return_text_congratulations_restart_program(self, id_user):
         """ create congratulation text """

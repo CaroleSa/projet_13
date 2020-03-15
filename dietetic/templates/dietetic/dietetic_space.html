@@ -39,8 +39,8 @@
         {% endif %}
         {% if robot_weekly_weight %}
             <form class="center" action="{% url 'dietetic:dietetic_space' %}" method="post">{% csrf_token %}
-                <a>{{robot_weekly_weight}}</a></br><input class="input_number col-lg-3" type="number" step="0.1" min="35" max="200" name="{{robot_weekly_weight}}" required/></br></br>
-                </br><input class="col-lg-3" type="submit" value="Valider"/></br></br>
+                <input id="weekly_weight" class="input_number col-lg-3" type="number" step="0.1" min="35" max="200" name="weekly_weight" required/></br></br>
+                </br><input id="validate_weekly_weight" class="col-lg-3" type="submit" value="Valider"/></br></br>
             </form>
         {% endif %}
     </div>

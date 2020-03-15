@@ -28,12 +28,12 @@ class TestsReturnWeightAdvicesGoal(TestCase):
         test goal returned if the user's weight goal
         is under to this cruising weight
         """
-        data_weight_user = {"height": 1.60, "actual_weight": 60,
-                            "cruising_weight": 55, "weight_goal": 51}
+        data_weight_user = {"height": "1,60", "actual_weight": "60",
+                            "cruising_weight": "55", "weight_goal": "51"}
         return_goal = self.new_weight_advice_goal.return_weight_advices_goal(data_weight_user)[0]
 
-        actual_weight = data_weight_user["actual_weight"]
-        weight_goal = data_weight_user["weight_goal"]
+        actual_weight = round(float(data_weight_user["actual_weight"]), 1)
+        weight_goal = round(float(data_weight_user["weight_goal"]), 1)
         goal = actual_weight - weight_goal
 
         self.assertEqual(return_goal, goal)
@@ -43,8 +43,8 @@ class TestsReturnWeightAdvicesGoal(TestCase):
         test advice returned if the user's weight goal
          is under to this cruising weight
         """
-        data_weight_user = {"height": 1.60, "actual_weight": 60,
-                            "cruising_weight": 55, "weight_goal": 51}
+        data_weight_user = {"height": "1,60", "actual_weight": "60",
+                            "cruising_weight": "55", "weight_goal": "51"}
         return_advice = self.new_weight_advice_goal.return_weight_advices_goal(data_weight_user)[1]
 
         advice = "Chaque personne a un poids d'équilibre sur lequel il peut rester longtemps, " \
@@ -60,11 +60,11 @@ class TestsReturnWeightAdvicesGoal(TestCase):
         test weight goal returned if the user's weight goal
         is under to this cruising weight
         """
-        data_weight_user = {"height": 1.60, "actual_weight": 60,
-                            "cruising_weight": 55, "weight_goal": 51}
+        data_weight_user = {"height": "1,60", "actual_weight": "60",
+                            "cruising_weight": "55", "weight_goal": "51"}
         return_goal = self.new_weight_advice_goal.return_weight_advices_goal(data_weight_user)[2]
 
-        weight_goal = data_weight_user["weight_goal"]
+        weight_goal = round(float(data_weight_user["weight_goal"]), 1)
 
         self.assertEqual(return_goal, weight_goal)
 
@@ -73,8 +73,8 @@ class TestsReturnWeightAdvicesGoal(TestCase):
         test goal returned if the user's actual weight
         is too low
         """
-        data_weight_user = {"height": 1.60, "actual_weight": 45,
-                            "cruising_weight": 45, "weight_goal": 40}
+        data_weight_user = {"height": "1,60", "actual_weight": "45",
+                            "cruising_weight": "45", "weight_goal": "40"}
         return_goal = self.new_weight_advice_goal.return_weight_advices_goal(data_weight_user)[0]
 
         user_goal = "impossible"
@@ -86,8 +86,8 @@ class TestsReturnWeightAdvicesGoal(TestCase):
         test advice returned if the user's actual weight
         is too low
         """
-        data_weight_user = {"height": 1.60, "actual_weight": 45,
-                            "cruising_weight": 45, "weight_goal": 40}
+        data_weight_user = {"height": "1,60", "actual_weight": "45",
+                            "cruising_weight": "45", "weight_goal": "40"}
         advice = self.new_weight_advice_goal.return_weight_advices_goal(data_weight_user)[1]
 
         text = "Ton poids actuel est déjà bien bas... je te déconseille " \
@@ -100,8 +100,8 @@ class TestsReturnWeightAdvicesGoal(TestCase):
         test goal weight returned if the user's actual weight
         is too low
         """
-        data_weight_user = {"height": 1.60, "actual_weight": 45,
-                            "cruising_weight": 45, "weight_goal": 40}
+        data_weight_user = {"height": "1,60", "actual_weight": "45",
+                            "cruising_weight": "45", "weight_goal": "40"}
         goal_weight = self.new_weight_advice_goal.return_weight_advices_goal(data_weight_user)[2]
 
         self.assertEqual(goal_weight, False)
@@ -111,12 +111,13 @@ class TestsReturnWeightAdvicesGoal(TestCase):
         test goal returned if the user's goal weight
         is too low
         """
-        data_weight_user = {"height": 1.60, "actual_weight": 60,
-                            "cruising_weight": 45, "weight_goal": 40}
+        data_weight_user = {"height": "1,60", "actual_weight": "60",
+                            "cruising_weight": "45", "weight_goal": "40"}
         return_goal = self.new_weight_advice_goal.return_weight_advices_goal(data_weight_user)[0]
 
         height = data_weight_user["height"]
-        actual_weight = data_weight_user["actual_weight"]
+        height = float(height.replace(",", "."))
+        actual_weight = round(float(data_weight_user["actual_weight"]), 1)
         height_min = round(18.5*(height * height), 1)
         goal = actual_weight - height_min
 
@@ -127,11 +128,12 @@ class TestsReturnWeightAdvicesGoal(TestCase):
         test advice returned if the user's goal weight
         is too low
         """
-        data_weight_user = {"height": 1.60, "actual_weight": 60,
-                            "cruising_weight": 45, "weight_goal": 40}
+        data_weight_user = {"height": "1,60", "actual_weight": "60",
+                            "cruising_weight": "45", "weight_goal": "40"}
         return_advice = self.new_weight_advice_goal.return_weight_advices_goal(data_weight_user)[1]
 
         height = data_weight_user["height"]
+        height = float(height.replace(",", "."))
         height_min = round(18.5*(height * height), 1)
         height_min = self.new_calculation.delete_o(height_min)
         advice = "Ton objectif semble trop bas, je te conseille de ne pas " \
@@ -145,10 +147,11 @@ class TestsReturnWeightAdvicesGoal(TestCase):
         test goal weight returned if the user's goal weight
         is too low
         """
-        data_weight_user = {"height": 1.60, "actual_weight": 60,
-                            "cruising_weight": 45, "weight_goal": 40}
+        data_weight_user = {"height": "1,60", "actual_weight": "60",
+                            "cruising_weight": "45", "weight_goal": "40"}
         return_goal = self.new_weight_advice_goal.return_weight_advices_goal(data_weight_user)[2]
         height = data_weight_user["height"]
+        height = float(height.replace(",", "."))
         height_min = round(18.5 * (height * height), 1)
 
         self.assertEqual(return_goal, height_min)
@@ -158,12 +161,12 @@ class TestsReturnWeightAdvicesGoal(TestCase):
         test goal returned if the user's
         goal weight is validate
         """
-        data_weight_user = {"height": 1.60, "actual_weight": 60,
-                            "cruising_weight": 55, "weight_goal": 55}
+        data_weight_user = {"height": "1,60", "actual_weight": "60",
+                            "cruising_weight": "55", "weight_goal": "55"}
         return_goal = self.new_weight_advice_goal.return_weight_advices_goal(data_weight_user)[0]
 
-        actual_weight = data_weight_user["actual_weight"]
-        weight_goal = data_weight_user["weight_goal"]
+        actual_weight = round(float(data_weight_user["actual_weight"]), 1)
+        weight_goal = round(float(data_weight_user["weight_goal"]), 1)
         goal = actual_weight - weight_goal
 
         self.assertEqual(return_goal, goal)
@@ -173,12 +176,12 @@ class TestsReturnWeightAdvicesGoal(TestCase):
         test advice returned if the user's
         goal weight is validate
         """
-        data_weight_user = {"height": 1.60, "actual_weight": 60,
-                            "cruising_weight": 55, "weight_goal": 55}
+        data_weight_user = {"height": "1,60", "actual_weight": "60",
+                            "cruising_weight": "55", "weight_goal": "55"}
         return_advice = self.new_weight_advice_goal.return_weight_advices_goal(data_weight_user)[1]
 
-        actual_weight = data_weight_user["actual_weight"]
-        weight_goal = data_weight_user["weight_goal"]
+        actual_weight = round(float(data_weight_user["actual_weight"]), 1)
+        weight_goal = round(float(data_weight_user["weight_goal"]), 1)
         user_goal = self.new_calculation.delete_o(float(actual_weight - weight_goal))
         advice = "Alors c'est parti ! Partons sur un objectif de - " \
                  + str(user_goal) + " kg. "
@@ -190,11 +193,11 @@ class TestsReturnWeightAdvicesGoal(TestCase):
         test goal weight returned if the user's
         goal weight is validate
         """
-        data_weight_user = {"height": 1.60, "actual_weight": 60,
-                            "cruising_weight": 55, "weight_goal": 55}
+        data_weight_user = {"height": "1,60", "actual_weight": "60",
+                            "cruising_weight": "55", "weight_goal": "55"}
         return_goal = self.new_weight_advice_goal.return_weight_advices_goal(data_weight_user)[2]
 
-        weight_goal = data_weight_user["weight_goal"]
+        weight_goal = round(float(data_weight_user["weight_goal"]), 1)
 
         self.assertEqual(return_goal, weight_goal)
 
