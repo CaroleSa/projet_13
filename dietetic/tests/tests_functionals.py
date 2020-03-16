@@ -101,6 +101,28 @@ class TestsFunctionals(StaticLiveServerTestCase):
         self.cursor.execute("INSERT INTO account_identityuser_advices_to_user (identityuser_id, robotadvices_id) "
                             "VALUES ({}, {})".format(id_user, 1))
 
+        # CREATE A USER
+        # who has been following the program for 2 weeks
+        self.dict_data_user_two_weeks = {"id_email": "carole5@test.fr", "id_password": "00000000"}
+        id_user = 5
+        self.user_create_two_weeks = self.user.objects.create_user(id=id_user, username=self.pseudo,
+                                                                           email=self.dict_data_user_two_weeks.get(
+                                                                               'id_email'),
+                                                                           password=self.dict_data_user_two_weeks.get(
+                                                                               'id_password'))
+        HistoryUser.objects.create(user=self.user_create_two_weeks)
+        StatusUser.objects.create(user=self.user_create_two_weeks)
+        ProfileUser.objects.create(user=self.user_create_two_weeks, starting_weight=100,
+                                   actual_goal_weight=50, final_weight=50)
+        one_week_before = date.today() - timedelta(days=7)
+        ResultsUser.objects.create(user=self.user_create_two_weeks, weighing_date=one_week_before, weight=100)
+        ResultsUser.objects.create(user=self.user_create_two_weeks, weighing_date=date.today(), weight=95)
+        user = HistoryUser.objects.get(user=self.user_create_two_weeks)
+        user.start_questionnaire_completed = True
+        user.save()
+        self.cursor.execute("INSERT INTO account_identityuser_advices_to_user (identityuser_id, robotadvices_id) "
+                            "VALUES ({}, {})".format(id_user, 1))
+
     def tearDown(self):
         self.browser.quit()
 
@@ -347,6 +369,58 @@ class TestsFunctionals(StaticLiveServerTestCase):
             results = True
         self.assertFalse(results)
 
+    def test_access_my_result_page_next_weeks(self):
+        """
+        test the access in the result page
+        check the elements display
+        during the next weeks
+        """
+        # login user
+        self.login_user(self.dict_data_user_two_weeks)
+
+        # access dietetic space page
+        self.browser.find_element_by_id("poll").click()
+
+        # check graphic is display
+        try:
+            self.browser.find_element_by_id("graphic_my_results")
+            graphic = True
+        except common.exceptions.NoSuchElementException:
+            graphic = False
+        self.assertTrue(graphic)
+
+        # check values data display
+        text_display = self.browser.find_element_by_id("starting_date").text
+        starting_date = ResultsUser.objects.values_list("weighing_date").filter(user=self.user_create_two_weeks).first()[0]
+        month = calendar.month_name[starting_date.month]
+        date = "" + str(starting_date.day) + " " + month + " " + str(starting_date.year) + ""
+        text = "Suivi démarré le {}".format(date)
+        self.assertEqual(text, text_display)
+
+        text_display = self.browser.find_element_by_id("starting_goal_weight").text
+        starting_weight = ProfileUser.objects.values_list("starting_weight").get(user=self.start_user_created)[0]
+        final_weight = ProfileUser.objects.values_list("final_weight").get(user=self.start_user_created)[0]
+        text = "Poids de départ : {} kg\nPoids d'objectif : {} kg".format(self.delete_o(starting_weight),
+                                                                          self.delete_o(final_weight))
+        self.assertEqual(text, text_display)
+
+        text_display = self.browser.find_element_by_id("goal_weight").text
+        goal_weight = ProfileUser.objects.values_list("actual_goal_weight").get(user=self.start_user_created)[0]
+        text = "Ton objectif est de - {} kg".format(self.delete_o(goal_weight))
+        self.assertEqual(text, text_display)
+
+        time.sleep(5)
+
+        """try:
+            text_display = self.browser.find_element_by_id("results_display")
+            text = "Pas de résultats pour le moment.\nSuis l'évolution de ton " \
+                   "poids sur un graphique dès la semaine prochaine."
+            self.assertEqual(text, text_display)
+            results = False
+        except common.exceptions.NoSuchElementException:
+            results = True
+        self.assertTrue(results)"""
+
     def test_access_program_page(self):
         """
         test the access in the program page
@@ -397,7 +471,7 @@ class TestsFunctionals(StaticLiveServerTestCase):
         new_challenge = self.browser.find_element_by_id("dietetic_text").text
         self.assertNotEqual(new_challenge, old_challenge)
 
-    def test_access_discussion_space_without_challenge(self):
+    def test_access_discussion_space_week_end_without_challenge(self):
         """
         test if the user clicks
         to the discussion space
