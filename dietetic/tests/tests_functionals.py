@@ -289,10 +289,19 @@ class TestsFunctionals(StaticLiveServerTestCase):
             display_card = False
         self.assertTrue(display_card)
 
-    def test_access_my_result_page(self):
+    def delete_o(self, float_number):
+        int_number = int(float_number)
+
+        if int_number == float_number:
+            return int_number
+        else:
+            return float_number
+
+    def test_access_my_result_page_first_week(self):
         """
         test the access in the result page
         check the elements display
+        during the first week
         """
         # login user
         self.login_user(self.dict_data_start_user)
@@ -310,12 +319,33 @@ class TestsFunctionals(StaticLiveServerTestCase):
         self.assertFalse(graphic)
         
         # check values data display
-        text = self.browser.find_element_by_id("starting_date").text
+        text_display = self.browser.find_element_by_id("starting_date").text
         starting_date = ResultsUser.objects.values_list("weighing_date").filter(user=self.start_user_created).first()[0]
         month = calendar.month_name[starting_date.month]
         date = "" + str(starting_date.day) + " " + month + " " + str(starting_date.year) + ""
-        date_text = "Suivi démarré le {}".format(date)
-        self.assertEqual(text, date_text)
+        text = "Suivi démarré le {}".format(date)
+        self.assertEqual(text, text_display)
+
+        text_display = self.browser.find_element_by_id("starting_goal_weight").text
+        starting_weight = ProfileUser.objects.values_list("starting_weight").get(user=self.start_user_created)[0]
+        final_weight = ProfileUser.objects.values_list("final_weight").get(user=self.start_user_created)[0]
+        text = "Poids de départ : {} kg\nPoids d'objectif : {} kg".format(self.delete_o(starting_weight), self.delete_o(final_weight))
+        self.assertEqual(text, text_display)
+
+        text_display = self.browser.find_element_by_id("goal_weight").text
+        goal_weight = ProfileUser.objects.values_list("actual_goal_weight").get(user=self.start_user_created)[0]
+        text = "Ton objectif est de - {} kg".format(self.delete_o(goal_weight))
+        self.assertEqual(text, text_display)
+
+        try:
+            text_display = self.browser.find_element_by_id("no_results").text
+            text = "Pas de résultats pour le moment.\nSuis l'évolution de ton " \
+                   "poids sur un graphique dès la semaine prochaine."
+            self.assertEqual(text, text_display)
+            results = False
+        except common.exceptions.NoSuchElementException:
+            results = True
+        self.assertFalse(results)
 
     def test_access_program_page(self):
         """
