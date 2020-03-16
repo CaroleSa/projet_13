@@ -123,6 +123,28 @@ class TestsFunctionals(StaticLiveServerTestCase):
         self.cursor.execute("INSERT INTO account_identityuser_advices_to_user (identityuser_id, robotadvices_id) "
                             "VALUES ({}, {})".format(id_user, 1))
 
+        # CREATE A USER
+        # who reached his weight goal
+        self.dict_data_user_goal_ok = {"id_email": "carole6@test.fr", "id_password": "00000000"}
+        id_user = 6
+        self.user_create_goal_ok = self.user.objects.create_user(id=id_user, username=self.pseudo,
+                                                                   email=self.dict_data_user_goal_ok.get(
+                                                                       'id_email'),
+                                                                   password=self.dict_data_user_goal_ok.get(
+                                                                       'id_password'))
+        HistoryUser.objects.create(user=self.user_create_goal_ok)
+        StatusUser.objects.create(user=self.user_create_goal_ok)
+        ProfileUser.objects.create(user=self.user_create_goal_ok, starting_weight=100,
+                                   actual_goal_weight=5, final_weight=95)
+        one_week_before = date.today() - timedelta(days=7)
+        ResultsUser.objects.create(user=self.user_create_goal_ok, weighing_date=one_week_before, weight=100)
+        user = HistoryUser.objects.get(user=self.user_create_goal_ok)
+        user.start_questionnaire_completed = True
+        user.save()
+        ResultsUser.objects.create(user=self.user_create_goal_ok, weighing_date=date.today(), weight=95)
+        self.cursor.execute("INSERT INTO account_identityuser_advices_to_user (identityuser_id, robotadvices_id) "
+                            "VALUES ({}, {})".format(id_user, 1))
+
     def tearDown(self):
         self.browser.quit()
 
@@ -344,14 +366,15 @@ class TestsFunctionals(StaticLiveServerTestCase):
         text_display = self.browser.find_element_by_id("starting_date").text
         starting_date = ResultsUser.objects.values_list("weighing_date").filter(user=self.start_user_created).first()[0]
         month = calendar.month_name[starting_date.month]
-        date = "" + str(starting_date.day) + " " + month + " " + str(starting_date.year) + ""
-        text = "Suivi démarré le {}".format(date)
+        starting_date = "" + str(starting_date.day) + " " + month + " " + str(starting_date.year) + ""
+        text = "Suivi démarré le {}".format(starting_date)
         self.assertEqual(text, text_display)
 
         text_display = self.browser.find_element_by_id("starting_goal_weight").text
         starting_weight = ProfileUser.objects.values_list("starting_weight").get(user=self.start_user_created)[0]
         final_weight = ProfileUser.objects.values_list("final_weight").get(user=self.start_user_created)[0]
-        text = "Poids de départ : {} kg\nPoids d'objectif : {} kg".format(self.delete_o(starting_weight), self.delete_o(final_weight))
+        text = "Poids de départ : {} kg\nPoids d'objectif : {} kg".format(self.delete_o(starting_weight),
+                                                                          self.delete_o(final_weight))
         self.assertEqual(text, text_display)
 
         text_display = self.browser.find_element_by_id("goal_weight").text
@@ -359,15 +382,10 @@ class TestsFunctionals(StaticLiveServerTestCase):
         text = "Ton objectif est de - {} kg".format(self.delete_o(goal_weight))
         self.assertEqual(text, text_display)
 
-        try:
-            text_display = self.browser.find_element_by_id("no_results").text
-            text = "Pas de résultats pour le moment.\nSuis l'évolution de ton " \
-                   "poids sur un graphique dès la semaine prochaine."
-            self.assertEqual(text, text_display)
-            results = False
-        except common.exceptions.NoSuchElementException:
-            results = True
-        self.assertFalse(results)
+        text_display = self.browser.find_element_by_id("no_results").text
+        text = "Pas de résultats pour le moment.\nSuis l'évolution de ton " \
+               "poids sur un graphique dès la semaine prochaine."
+        self.assertEqual(text, text_display)
 
     def test_access_my_result_page_next_weeks(self):
         """
@@ -393,33 +411,61 @@ class TestsFunctionals(StaticLiveServerTestCase):
         text_display = self.browser.find_element_by_id("starting_date").text
         starting_date = ResultsUser.objects.values_list("weighing_date").filter(user=self.user_create_two_weeks).first()[0]
         month = calendar.month_name[starting_date.month]
-        date = "" + str(starting_date.day) + " " + month + " " + str(starting_date.year) + ""
+        date = "" + str(starting_date.day) + " " + month + " " \
+               + str(starting_date.year) + ""
         text = "Suivi démarré le {}".format(date)
         self.assertEqual(text, text_display)
 
         text_display = self.browser.find_element_by_id("starting_goal_weight").text
-        starting_weight = ProfileUser.objects.values_list("starting_weight").get(user=self.start_user_created)[0]
-        final_weight = ProfileUser.objects.values_list("final_weight").get(user=self.start_user_created)[0]
+        starting_weight = ProfileUser.objects.values_list("starting_weight").get(user=self.user_create_two_weeks)[0]
+        final_weight = ProfileUser.objects.values_list("final_weight").get(user=self.user_create_two_weeks)[0]
         text = "Poids de départ : {} kg\nPoids d'objectif : {} kg".format(self.delete_o(starting_weight),
                                                                           self.delete_o(final_weight))
         self.assertEqual(text, text_display)
 
         text_display = self.browser.find_element_by_id("goal_weight").text
-        goal_weight = ProfileUser.objects.values_list("actual_goal_weight").get(user=self.start_user_created)[0]
+        goal_weight = ProfileUser.objects.values_list("actual_goal_weight").get(user=self.user_create_two_weeks)[0]
         text = "Ton objectif est de - {} kg".format(self.delete_o(goal_weight))
         self.assertEqual(text, text_display)
 
-        time.sleep(5)
+        percentage = self.percentage_lost_weight(self.user_create_two_weeks)
+        average = self.average_weight_loss(self.user_create_two_weeks)
+        last_weight = ResultsUser.objects.values_list("weight").filter(user=self.user_create_two_weeks).last()[0]
+        starting_weight = ResultsUser.objects.values_list("weight").filter(user=self.user_create_two_weeks).first()[0]
+        total_goal = float(starting_weight - last_weight)
+        text_display = self.browser.find_element_by_id("results_display").text
+        text = "Tu as perdu {} kg :\ncela correspond à {} % de ton objectif." \
+               "\nTa perte moyenne est de {} kg par semaine.".format(self.delete_o(total_goal), percentage, self.delete_o(average))
+        self.assertEqual(text, text_display)
 
-        """try:
-            text_display = self.browser.find_element_by_id("results_display")
-            text = "Pas de résultats pour le moment.\nSuis l'évolution de ton " \
-                   "poids sur un graphique dès la semaine prochaine."
-            self.assertEqual(text, text_display)
-            results = False
-        except common.exceptions.NoSuchElementException:
-            results = True
-        self.assertTrue(results)"""
+
+    def percentage_lost_weight(self, id):
+        starting_weight = ResultsUser.objects.values_list("weight").filter(user=id).first()[0]
+        last_weight = ResultsUser.objects.values_list("weight").filter(user=id).last()[0]
+        final_weight = ProfileUser.objects.values_list("final_weight").get(user=id)[0]
+
+        total_lost_weight = float(starting_weight - last_weight)
+        total_goal = float(starting_weight - final_weight)
+        lost_percentage = round(int((total_lost_weight * 100) / total_goal), 0)
+
+        return lost_percentage
+
+    def average_weight_loss(self, id):
+        # calculates the average weight loss
+        starting_date = ResultsUser.objects.values_list("weighing_date").filter(user=id).first()[0]
+        last_date = ResultsUser.objects.values_list("weighing_date").filter(user=id).last()[0]
+        starting_weight = ResultsUser.objects.values_list("weight").filter(user=id).first()[0]
+        last_weight = ResultsUser.objects.values_list("weight").filter(user=id).last()[0]
+
+        total_lost_weight = float(starting_weight - last_weight)
+        delta = last_date - starting_date
+        number_of_weeks = delta.days / 7
+        try:
+            average_lost_weight = round(total_lost_weight / number_of_weeks, 1)
+        except ZeroDivisionError:
+            average_lost_weight = 0
+
+        return average_lost_weight
 
     def test_access_program_page(self):
         """
@@ -497,6 +543,39 @@ class TestsFunctionals(StaticLiveServerTestCase):
         new_challenge = self.browser.find_element_by_id("dietetic_text").text
         self.assertNotEqual(new_challenge, old_challenge)
 
+    def test_access_discussion_space_goal_achieved(self):
+        """
+        test if the user clicks
+        to the discussion space
+        while the week-end and
+        write this weight goal
+        """
+        # login user
+        self.login_user(self.dict_data_user_a_week_ago)
 
+        # access dietetic space page
+        self.browser.find_element_by_id("clipboard").click()
 
+        # check the element display
+        question = self.browser.find_element_by_id("robot_comment").text
+        self.assertEqual(question, "Bonjour ! J'éspère que ta semaine s'est bien passée ? Que donne ta pesée ce matin ?")
 
+        # check user writes this weekly weight
+        self.browser.find_element_by_id("weekly_weight").send_keys("50")
+        self.browser.find_element_by_id("validate_weekly_weight").click()
+
+        # check the element display
+        message = self.browser.find_element_by_id("robot_comment").text
+        self.assertEqual(message, 'Félicitation pseudo ! Tu as atteints ton objectif !')
+
+        # check the button nav and card is display or not
+        dict_nav = {"poll": self.assertFalse, "program": self.assertFalse,
+                    "home": self.assertTrue, "user": self.assertTrue,
+                    "clipboard": self.assertTrue, "card": self.assertFalse}
+        for nav, method in dict_nav.items():
+            try:
+                self.browser.find_element_by_id(nav)
+                nav_display = True
+            except common.exceptions.NoSuchElementException:
+                nav_display = False
+            method(nav_display)

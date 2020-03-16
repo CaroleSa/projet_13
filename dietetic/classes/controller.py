@@ -25,6 +25,7 @@ class Controller:
         self.cursor = connection.cursor()
         self.new_week = False
         self.end_questions_start = False
+        self.end = False
         self.dict_questions = {"height": "Quelle taille fais-tu ? (au format x,xx)",
                                "actual_weight": "Quel est ton poids actuel ?",
                                "cruising_weight": "Quel est ton poids de croisière (poids le plus longtemps "
@@ -50,25 +51,17 @@ class Controller:
         # if the user have answered the start questions
         if start_questionnaire_completed is True or self.end_questions_start is True:
 
-            last_weight = ResultsUser.objects.values_list("weight").filter(user=id_user).last()[0]
-            final_weight = ProfileUser.objects.values_list("final_weight").get(user=id_user)[0]
+            if context != {}:
+                context_2 = self.return_weekly_questions_save_weight(weekly_weight, id_user)
+                context.update(context_2)
+            else:
+                context = self.return_weekly_questions_save_weight(weekly_weight, id_user)
 
-            # if the user has not reached his weight goal
-            if last_weight > final_weight:
-                if context != {}:
-                    context_2 = self.return_weekly_questions_save_weight(weekly_weight, id_user)
-                    context.update(context_2)
-                else:
-                    context = self.return_weekly_questions_save_weight(weekly_weight, id_user)
-
-                # get next advice
+            # get next advice
+            if self.end is False:
                 if advice_to_user == 1:
                     self.add_advices_to_user(id_user)
                 context["advice"] = self.return_weekly_advice(id_user)
-
-            # if the user has reached his weight goal
-            if last_weight <= final_weight:
-                context["robot_comment"] = self.return_text_congratulations_restart_program(id_user)
 
         return context
 
@@ -246,11 +239,20 @@ class Controller:
         if present_date >= one_week_after_weighing:
             # if the user gave his weight : save weight
             if weekly_weight is not False:
-                context["robot_comment"] = "J'ai bien pris note de ton poids, " \
+
+                # if the user has reached his weight goal
+                final_weight = ProfileUser.objects.values_list("final_weight").get(user=id_user)[0]
+                if float(weekly_weight) <= final_weight:
+                    context["robot_comment"] = self.return_text_congratulations_restart_program(id_user)
+                    self.end = True
+
+                else:
+                    context["robot_comment"] = "J'ai bien pris note de ton poids, " \
                                            "tu trouveras un récapitulatif dans l'onglet résultats."
-                id = IdentityUser.objects.get(id=id_user)
-                ResultsUser.objects.create(user=id, weight=weekly_weight)
-                self.new_week = True
+                    id = IdentityUser.objects.get(id=id_user)
+                    ResultsUser.objects.create(user=id, weight=weekly_weight)
+                    self.new_week = True
+
             # else, create robot question
             else:
                 context["robot_comment"] = "Bonjour ! J'éspère que ta semaine s'est bien passée ? " \

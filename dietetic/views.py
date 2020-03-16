@@ -75,7 +75,7 @@ def my_results(request):
 
     context = {"starting_date": starting_date, "starting_weight": new_calculation.delete_o(starting_weight),
                "total_goal": new_calculation.delete_o(total_goal),
-               "lost_percentage": lost_percentage, "average_lost_weight": average_lost_weight,
+               "lost_percentage": lost_percentage, "average_lost_weight": new_calculation.delete_o(average_lost_weight),
                "display_info": display_info, "final_weight": new_calculation.delete_o(final_weight),
                "lost_weight": new_calculation.delete_o(lost_weight)}
 
