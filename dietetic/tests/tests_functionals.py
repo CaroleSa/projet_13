@@ -1,24 +1,26 @@
 #! /usr/bin/env python3
 # coding: UTF-8
 
-""" TestsFunctionals class """
+""" TestsFunctionals class - dietetic app """
 
 # imports
 import random
-import time
-from account.models import HistoryUser, ProfileUser, ResultsUser, IdentityUser, StatusUser
-from dietetic.models import DiscussionSpace, RobotQuestionType, RobotQuestion, UserAnswer
-from django.contrib.staticfiles.testing import StaticLiveServerTestCase
-from django.contrib.auth import get_user_model, authenticate
-from dietetic.classes.weight_advice_goal import WeightAdviceGoal
-from django.test import Client
-from django.db import connection
-from selenium import webdriver, common
 from datetime import date, timedelta
 import calendar
 import locale
 locale.setlocale(locale.LC_ALL, 'fr_FR.UTF-8')
 'fr_FR'
+from account.models import HistoryUser, ProfileUser, ResultsUser, IdentityUser, StatusUser
+from dietetic.models import DiscussionSpace, RobotQuestionType, RobotQuestion, UserAnswer
+from dietetic.classes.weight_advice_goal import WeightAdviceGoal
+from dietetic.classes.calculation import Calculation
+from django.contrib.staticfiles.testing import StaticLiveServerTestCase
+from django.contrib.auth import get_user_model
+from django.db.utils import IntegrityError
+from django.db import connection
+from selenium import webdriver, common
+from psycopg2.errors import UniqueViolation
+
 
 
 class TestsFunctionals(StaticLiveServerTestCase):
@@ -28,125 +30,149 @@ class TestsFunctionals(StaticLiveServerTestCase):
     fixtures = ['data.json']
 
     def setUp(self):
+        self.user = get_user_model()
         self.browser = webdriver.Firefox()
         self.cursor = connection.cursor()
         self.new_weight_advice_goal = WeightAdviceGoal()
+        self.new_calculation = Calculation()
         self.question = ""
-
-        # CREATE A NEW USER
-        self.user = get_user_model()
-        self.pseudo = "pseudo"
-        id_user = 1
-        self.dict_data_new_user = {"id_email": "carole1@test.fr", "id_password": "00000000"}
-        self.new_user_created = self.user.objects.create_user(id=id_user, username=self.pseudo,
-                                                              email=self.dict_data_new_user.get('id_email'),
-                                                              password=self.dict_data_new_user.get('id_password'))
-        HistoryUser.objects.create(user=self.new_user_created)
-        StatusUser.objects.create(user=self.new_user_created)
-
-        # CREATE A USER THAT IS STARTING PROGRAM
-        self.dict_data_start_user = {"id_email": "carole2@test.fr", "id_password": "00000000"}
-        id_user = 2
-        self.start_user_created = self.user.objects.create_user(id=id_user, username=self.pseudo,
-                                                                email=self.dict_data_start_user.get('id_email'),
-                                                                password=self.dict_data_start_user.get('id_password'))
-        HistoryUser.objects.create(user=self.start_user_created)
-        StatusUser.objects.create(user=self.start_user_created)
-        ProfileUser.objects.create(user=self.start_user_created, starting_weight=100,
-                                   actual_goal_weight=50, final_weight=50)
-        ResultsUser.objects.create(user=self.start_user_created, weight=100)
-        user = HistoryUser.objects.get(user=self.start_user_created)
-        user.start_questionnaire_completed = True
-        user.save()
-        self.cursor.execute("INSERT INTO account_identityuser_advices_to_user (identityuser_id, robotadvices_id) "
-                            "VALUES ({}, {})".format(id_user, 1))
-
-        # CREATE A USER A WEEK AGO
-        self.dict_data_user_a_week_ago = {"id_email": "carole3@test.fr", "id_password": "00000000"}
-        id_user = 3
-        self.user_create_a_week_ago = self.user.objects.create_user(id=id_user, username=self.pseudo,
-                                                                   email=self.dict_data_user_a_week_ago.get('id_email'),
-                                                                   password=self.dict_data_user_a_week_ago.get('id_password'))
-        HistoryUser.objects.create(user=self.user_create_a_week_ago)
-        StatusUser.objects.create(user=self.user_create_a_week_ago)
-        ProfileUser.objects.create(user=self.user_create_a_week_ago, starting_weight=100,
-                                   actual_goal_weight=50, final_weight=50)
-        one_week_before = date.today() - timedelta(days=7)
-        ResultsUser.objects.create(user=self.user_create_a_week_ago, weighing_date=one_week_before, weight=100)
-        user = HistoryUser.objects.get(user=self.user_create_a_week_ago)
-        user.start_questionnaire_completed = True
-        user.save()
-        self.cursor.execute("INSERT INTO account_identityuser_advices_to_user (identityuser_id, robotadvices_id) "
-                            "VALUES ({}, {})".format(id_user, 1))
-        self.cursor.execute("INSERT INTO account_identityuser_advices_to_user (identityuser_id, robotadvices_id) "
-                            "VALUES ({}, {})".format(id_user, 4))
-
-        # CREATE A USER WITHOUT CHALLENGES
-        self.dict_data_user_without_challenge = {"id_email": "carole4@test.fr", "id_password": "00000000"}
-        id_user = 4
-        self.user_create_without_challenge = self.user.objects.create_user(id=id_user, username=self.pseudo,
-                                                                    email=self.dict_data_user_without_challenge.get(
-                                                                        'id_email'),
-                                                                    password=self.dict_data_user_without_challenge.get(
-                                                                        'id_password'))
-        HistoryUser.objects.create(user=self.user_create_without_challenge)
-        StatusUser.objects.create(user=self.user_create_without_challenge)
-        ProfileUser.objects.create(user=self.user_create_without_challenge, starting_weight=100,
-                                   actual_goal_weight=50, final_weight=50)
-        one_week_before = date.today() - timedelta(days=7)
-        ResultsUser.objects.create(user=self.user_create_without_challenge, weighing_date=one_week_before, weight=100)
-        user = HistoryUser.objects.get(user=self.user_create_without_challenge)
-        user.start_questionnaire_completed = True
-        user.save()
-        self.cursor.execute("INSERT INTO account_identityuser_advices_to_user (identityuser_id, robotadvices_id) "
-                            "VALUES ({}, {})".format(id_user, 1))
-
-        # CREATE A USER
-        # who has been following the program for 2 weeks
-        self.dict_data_user_two_weeks = {"id_email": "carole5@test.fr", "id_password": "00000000"}
-        id_user = 5
-        self.user_create_two_weeks = self.user.objects.create_user(id=id_user, username=self.pseudo,
-                                                                           email=self.dict_data_user_two_weeks.get(
-                                                                               'id_email'),
-                                                                           password=self.dict_data_user_two_weeks.get(
-                                                                               'id_password'))
-        HistoryUser.objects.create(user=self.user_create_two_weeks)
-        StatusUser.objects.create(user=self.user_create_two_weeks)
-        ProfileUser.objects.create(user=self.user_create_two_weeks, starting_weight=100,
-                                   actual_goal_weight=50, final_weight=50)
-        one_week_before = date.today() - timedelta(days=7)
-        ResultsUser.objects.create(user=self.user_create_two_weeks, weighing_date=one_week_before, weight=100)
-        ResultsUser.objects.create(user=self.user_create_two_weeks, weighing_date=date.today(), weight=95)
-        user = HistoryUser.objects.get(user=self.user_create_two_weeks)
-        user.start_questionnaire_completed = True
-        user.save()
-        self.cursor.execute("INSERT INTO account_identityuser_advices_to_user (identityuser_id, robotadvices_id) "
-                            "VALUES ({}, {})".format(id_user, 1))
-
-        # CREATE A USER
-        # who reached his weight goal
-        self.dict_data_user_goal_ok = {"id_email": "carole6@test.fr", "id_password": "00000000"}
-        id_user = 6
-        self.user_create_goal_ok = self.user.objects.create_user(id=id_user, username=self.pseudo,
-                                                                   email=self.dict_data_user_goal_ok.get(
-                                                                       'id_email'),
-                                                                   password=self.dict_data_user_goal_ok.get(
-                                                                       'id_password'))
-        HistoryUser.objects.create(user=self.user_create_goal_ok)
-        StatusUser.objects.create(user=self.user_create_goal_ok)
-        ProfileUser.objects.create(user=self.user_create_goal_ok, starting_weight=100,
-                                   actual_goal_weight=5, final_weight=95)
-        one_week_before = date.today() - timedelta(days=7)
-        ResultsUser.objects.create(user=self.user_create_goal_ok, weighing_date=one_week_before, weight=100)
-        user = HistoryUser.objects.get(user=self.user_create_goal_ok)
-        user.start_questionnaire_completed = True
-        user.save()
-        ResultsUser.objects.create(user=self.user_create_goal_ok, weighing_date=date.today(), weight=95)
-        self.cursor.execute("INSERT INTO account_identityuser_advices_to_user (identityuser_id, robotadvices_id) "
-                            "VALUES ({}, {})".format(id_user, 1))
 
     def tearDown(self):
         self.browser.quit()
+
+    def create_user_not_start_program(self):
+        """ create a new user """
+        dict_data_user = {"id_email": "carole1@test.fr", "id_password": "00000000"}
+        id_user = 1
+        try:
+            user_created = self.user.objects.create_user(id=id_user, username="pseudo",
+                                                         email=dict_data_user.get('id_email'),
+                                                         password=dict_data_user.get('id_password'))
+            HistoryUser.objects.create(user=user_created)
+            StatusUser.objects.create(user=user_created)
+        except (UniqueViolation, IntegrityError):
+            user_created = self.user.objects.get(id=id_user)
+
+        return user_created, dict_data_user
+
+    def create_user_starting_program(self):
+        """
+        create a user
+        who started program
+        """
+        dict_data_user = {"id_email": "carole2@test.fr", "id_password": "00000000"}
+        id_user = 2
+        try:
+            user_created = self.user.objects.create_user(id=id_user, username="pseudo",
+                                                         email=dict_data_user.get('id_email'),
+                                                         password=dict_data_user.get('id_password'))
+            HistoryUser.objects.create(user=user_created)
+            StatusUser.objects.create(user=user_created)
+            ProfileUser.objects.create(user=user_created, starting_weight=100,
+                                       actual_goal_weight=50, final_weight=50)
+            ResultsUser.objects.create(user=user_created, weight=100)
+            user = HistoryUser.objects.get(user=user_created)
+            user.start_questionnaire_completed = True
+            user.save()
+            self.cursor.execute("INSERT INTO account_identityuser_advices_to_user (identityuser_id, robotadvices_id) "
+                                "VALUES ({}, {})".format(id_user, 1))
+        except (UniqueViolation, IntegrityError):
+            user_created = self.user.objects.get(id=id_user)
+
+        return user_created, dict_data_user
+
+    def create_user_one_week_ago(self):
+        """
+            create a user
+            who has been following
+            the program for one week
+        """
+        dict_data_user = {"id_email": "carole3@test.fr", "id_password": "00000000"}
+        id_user = 3
+        try:
+            user_created = self.user.objects.create_user(id=id_user, username="pseudo",
+                                                         email=dict_data_user.get('id_email'),
+                                                         password=dict_data_user.get('id_password'))
+            HistoryUser.objects.create(user=user_created)
+            StatusUser.objects.create(user=user_created)
+            ProfileUser.objects.create(user=user_created, starting_weight=100,
+                                       actual_goal_weight=50, final_weight=50)
+            one_week_before = date.today() - timedelta(days=7)
+            ResultsUser.objects.create(user=user_created, weighing_date=one_week_before, weight=100)
+            user = HistoryUser.objects.get(user=user_created)
+            user.start_questionnaire_completed = True
+            user.save()
+            list_advice_id = [1, 4]
+            for id_advice in list_advice_id:
+                self.cursor.execute("INSERT INTO account_identityuser_advices_to_user "
+                                    "(identityuser_id, robotadvices_id) "
+                                    "VALUES ({}, {})".format(id_user, id_advice))
+        except (UniqueViolation, IntegrityError):
+            user_created = self.user.objects.get(id=id_user)
+
+        return user_created, dict_data_user
+
+    def create_user_without_challenge(self):
+        """
+            create a user
+            who has been following
+            the program but have
+            not challenges
+            in the challenge list
+        """
+        dict_data_user = {"id_email": "carole4@test.fr", "id_password": "00000000"}
+        id_user = 4
+        try:
+            user_created = self.user.objects.create_user(id=id_user, username="pseudo",
+                                                         email=dict_data_user.get('id_email'),
+                                                         password=dict_data_user.get('id_password'))
+            HistoryUser.objects.create(user=user_created)
+            StatusUser.objects.create(user=user_created)
+            ProfileUser.objects.create(user=user_created, starting_weight=100,
+                                       actual_goal_weight=50, final_weight=50)
+            one_week_before = date.today() - timedelta(days=7)
+            ResultsUser.objects.create(user=user_created, weighing_date=one_week_before, weight=100)
+            user = HistoryUser.objects.get(user=user_created)
+            user.start_questionnaire_completed = True
+            user.save()
+            self.cursor.execute("INSERT INTO account_identityuser_advices_to_user (identityuser_id, robotadvices_id) "
+                                "VALUES ({}, {})".format(id_user, 1))
+        except (UniqueViolation, IntegrityError):
+            user_created = self.user.objects.get(id=id_user)
+
+        return user_created, dict_data_user
+
+    def create_user_two_weeks_ago(self):
+        """
+        create a user
+        who has been following
+        the program for two weeks
+        """
+        dict_data_user = {"id_email": "carole5@test.fr", "id_password": "00000000"}
+        id_user = 5
+        try:
+            user_created = self.user.objects.create_user(id=id_user, username="pseudo",
+                                                         email=dict_data_user.get('id_email'),
+                                                         password=dict_data_user.get('id_password'))
+            HistoryUser.objects.create(user=user_created)
+            StatusUser.objects.create(user=user_created)
+            ProfileUser.objects.create(user=user_created, starting_weight=100,
+                                       actual_goal_weight=50, final_weight=50)
+            one_week_before = date.today() - timedelta(days=7)
+            ResultsUser.objects.create(user=user_created, weighing_date=one_week_before, weight=100)
+            ResultsUser.objects.create(user=user_created, weighing_date=date.today(), weight=95)
+            user = HistoryUser.objects.get(user=user_created)
+            user.start_questionnaire_completed = True
+            user.save()
+            list_advice_id = [1, 4]
+            for id_advice in list_advice_id:
+                self.cursor.execute("INSERT INTO account_identityuser_advices_to_user "
+                                    "(identityuser_id, robotadvices_id) "
+                                    "VALUES ({}, {})".format(id_user, id_advice))
+        except (UniqueViolation, IntegrityError):
+            user_created = self.user.objects.get(id=id_user)
+
+        return user_created, dict_data_user
 
     def login_user(self, dict_login):
         """ login user """
@@ -162,34 +188,15 @@ class TestsFunctionals(StaticLiveServerTestCase):
         test if the user clicks
         to the home nav
         """
+        # get user's data
+        user_data = self.create_user_not_start_program()[1]
+
         # login user
-        self.login_user(self.dict_data_new_user)
+        self.login_user(user_data)
 
         # test access home page
         self.browser.find_element_by_id("home").click()
         self.assertEqual(self.browser.current_url, self.live_server_url + "/")
-
-    def create_questions_id_list(self):
-        """ create a list : robot questions
-        by order discussion_space id """
-
-        data = DiscussionSpace.objects.values_list("robot_question").order_by("id")
-        list_data = []
-        for elt in data:
-            list_data.append(elt[0])
-        id_question_list = []
-        for i in list_data:
-            if i not in id_question_list:
-                id_question_list.append(i)
-
-        id_question_by_type_list = []
-        for id in id_question_list:
-            question = RobotQuestion.objects.get(id=id)
-            type = question.robot_question_type.type
-            if type == "start":
-                id_question_by_type_list.append(id)
-
-        return id_question_by_type_list
 
     def test_questionnaire_answer_two_or_three(self):
         """
@@ -197,8 +204,11 @@ class TestsFunctionals(StaticLiveServerTestCase):
         the second and third answer
         to the first robot question
         """
+        # get user's data
+        user_data = self.create_user_not_start_program()[1]
+
         # login user
-        self.login_user(self.dict_data_new_user)
+        self.login_user(user_data)
 
         # check robot answer if the user choices the answers 2 or 3
         dict_user_robot_answer = {2: "Dommage… une autre fois peut-être !",
@@ -220,8 +230,12 @@ class TestsFunctionals(StaticLiveServerTestCase):
         the first answer
         to the first robot question
         """
+        # get user's data
+        user_data = self.create_user_not_start_program()[1]
+        user_created = self.create_user_not_start_program()[0]
+
         # login user
-        self.login_user(self.dict_data_new_user)
+        self.login_user(user_data)
 
         # access dietetic space page
         self.browser.find_element_by_id("clipboard").click()
@@ -273,7 +287,7 @@ class TestsFunctionals(StaticLiveServerTestCase):
         robot_answer = self.browser.find_element_by_id("robot_answer").text
         self.assertEqual(text, robot_answer)
 
-        last_weighing_date = ResultsUser.objects.values_list("weighing_date").filter(user=self.new_user_created).last()[0]
+        last_weighing_date = ResultsUser.objects.values_list("weighing_date").filter(user=user_created).last()[0]
         one_week_after_weighing = last_weighing_date + timedelta(days=7)
         month = calendar.month_name[one_week_after_weighing.month]
         date = "" + calendar.day_name[one_week_after_weighing.weekday()] + " " + str(one_week_after_weighing.day) \
@@ -297,10 +311,14 @@ class TestsFunctionals(StaticLiveServerTestCase):
         """
         test if the user clicks
         to the discussion space
-        while this first week
+        during the first week
         """
+        # get user's data
+        user_data = self.create_user_starting_program()[1]
+        user_created = self.create_user_starting_program()[0]
+
         # login user
-        self.login_user(self.dict_data_start_user)
+        self.login_user(user_data)
 
         # access dietetic space page
         self.browser.find_element_by_id("clipboard").click()
@@ -313,7 +331,7 @@ class TestsFunctionals(StaticLiveServerTestCase):
             answer = False
         self.assertFalse(answer)
 
-        last_weighing_date = ResultsUser.objects.values_list("weighing_date").filter(user=self.start_user_created).last()[0]
+        last_weighing_date = ResultsUser.objects.values_list("weighing_date").filter(user=user_created).last()[0]
         one_week_after_weighing = last_weighing_date + timedelta(days=7)
         month = calendar.month_name[one_week_after_weighing.month]
         date = "" + calendar.day_name[one_week_after_weighing.weekday()] + " " + str(one_week_after_weighing.day) \
@@ -333,22 +351,18 @@ class TestsFunctionals(StaticLiveServerTestCase):
             display_card = False
         self.assertTrue(display_card)
 
-    def delete_o(self, float_number):
-        int_number = int(float_number)
-
-        if int_number == float_number:
-            return int_number
-        else:
-            return float_number
-
     def test_access_my_result_page_first_week(self):
         """
         test the access in the result page
         check the elements display
         during the first week
         """
+        # get user's data
+        user_data = self.create_user_starting_program()[1]
+        user_created = self.create_user_starting_program()[0]
+
         # login user
-        self.login_user(self.dict_data_start_user)
+        self.login_user(user_data)
 
         # access dietetic space page
         self.browser.find_element_by_id("poll").click()
@@ -364,22 +378,22 @@ class TestsFunctionals(StaticLiveServerTestCase):
         
         # check values data display
         text_display = self.browser.find_element_by_id("starting_date").text
-        starting_date = ResultsUser.objects.values_list("weighing_date").filter(user=self.start_user_created).first()[0]
+        starting_date = ResultsUser.objects.values_list("weighing_date").filter(user=user_created).first()[0]
         month = calendar.month_name[starting_date.month]
         starting_date = "" + str(starting_date.day) + " " + month + " " + str(starting_date.year) + ""
         text = "Suivi démarré le {}".format(starting_date)
         self.assertEqual(text, text_display)
 
         text_display = self.browser.find_element_by_id("starting_goal_weight").text
-        starting_weight = ProfileUser.objects.values_list("starting_weight").get(user=self.start_user_created)[0]
-        final_weight = ProfileUser.objects.values_list("final_weight").get(user=self.start_user_created)[0]
-        text = "Poids de départ : {} kg\nPoids d'objectif : {} kg".format(self.delete_o(starting_weight),
-                                                                          self.delete_o(final_weight))
+        starting_weight = ProfileUser.objects.values_list("starting_weight").get(user=user_created)[0]
+        final_weight = ProfileUser.objects.values_list("final_weight").get(user=user_created)[0]
+        text = "Poids de départ : {} kg\nPoids d'objectif : {} kg".format(self.new_calculation.delete_o(starting_weight),
+                                                                          self.new_calculation.delete_o(final_weight))
         self.assertEqual(text, text_display)
 
         text_display = self.browser.find_element_by_id("goal_weight").text
-        goal_weight = ProfileUser.objects.values_list("actual_goal_weight").get(user=self.start_user_created)[0]
-        text = "Ton objectif est de - {} kg".format(self.delete_o(goal_weight))
+        goal_weight = ProfileUser.objects.values_list("actual_goal_weight").get(user=user_created)[0]
+        text = "Ton objectif est de - {} kg".format(self.new_calculation.delete_o(goal_weight))
         self.assertEqual(text, text_display)
 
         text_display = self.browser.find_element_by_id("no_results").text
@@ -393,8 +407,12 @@ class TestsFunctionals(StaticLiveServerTestCase):
         check the elements display
         during the next weeks
         """
+        # get user's data
+        user_data = self.create_user_two_weeks_ago()[1]
+        user_created = self.create_user_two_weeks_ago()[0]
+
         # login user
-        self.login_user(self.dict_data_user_two_weeks)
+        self.login_user(user_data)
 
         # access dietetic space page
         self.browser.find_element_by_id("poll").click()
@@ -409,7 +427,7 @@ class TestsFunctionals(StaticLiveServerTestCase):
 
         # check values data display
         text_display = self.browser.find_element_by_id("starting_date").text
-        starting_date = ResultsUser.objects.values_list("weighing_date").filter(user=self.user_create_two_weeks).first()[0]
+        starting_date = ResultsUser.objects.values_list("weighing_date").filter(user=user_created).first()[0]
         month = calendar.month_name[starting_date.month]
         date = "" + str(starting_date.day) + " " + month + " " \
                + str(starting_date.year) + ""
@@ -417,63 +435,39 @@ class TestsFunctionals(StaticLiveServerTestCase):
         self.assertEqual(text, text_display)
 
         text_display = self.browser.find_element_by_id("starting_goal_weight").text
-        starting_weight = ProfileUser.objects.values_list("starting_weight").get(user=self.user_create_two_weeks)[0]
-        final_weight = ProfileUser.objects.values_list("final_weight").get(user=self.user_create_two_weeks)[0]
-        text = "Poids de départ : {} kg\nPoids d'objectif : {} kg".format(self.delete_o(starting_weight),
-                                                                          self.delete_o(final_weight))
+        starting_weight = ProfileUser.objects.values_list("starting_weight").get(user=user_created)[0]
+        final_weight = ProfileUser.objects.values_list("final_weight").get(user=user_created)[0]
+        text = "Poids de départ : {} kg\nPoids d'objectif : {} kg".format(self.new_calculation.delete_o(starting_weight),
+                                                                          self.new_calculation.delete_o(final_weight))
         self.assertEqual(text, text_display)
 
         text_display = self.browser.find_element_by_id("goal_weight").text
-        goal_weight = ProfileUser.objects.values_list("actual_goal_weight").get(user=self.user_create_two_weeks)[0]
-        text = "Ton objectif est de - {} kg".format(self.delete_o(goal_weight))
+        goal_weight = ProfileUser.objects.values_list("actual_goal_weight").get(user=user_created)[0]
+        text = "Ton objectif est de - {} kg".format(self.new_calculation.delete_o(goal_weight))
         self.assertEqual(text, text_display)
 
-        percentage = self.percentage_lost_weight(self.user_create_two_weeks)
-        average = self.average_weight_loss(self.user_create_two_weeks)
-        last_weight = ResultsUser.objects.values_list("weight").filter(user=self.user_create_two_weeks).last()[0]
-        starting_weight = ResultsUser.objects.values_list("weight").filter(user=self.user_create_two_weeks).first()[0]
+        percentage = self.new_calculation.percentage_lost_weight(user_created)
+        average = self.new_calculation.average_weight_loss(user_created)
+        last_weight = ResultsUser.objects.values_list("weight").filter(user=user_created).last()[0]
+        starting_weight = ResultsUser.objects.values_list("weight").filter(user=user_created).first()[0]
         total_goal = float(starting_weight - last_weight)
         text_display = self.browser.find_element_by_id("results_display").text
         text = "Tu as perdu {} kg :\ncela correspond à {} % de ton objectif." \
-               "\nTa perte moyenne est de {} kg par semaine.".format(self.delete_o(total_goal), percentage, self.delete_o(average))
+               "\nTa perte moyenne est de {} kg par semaine.".\
+            format(self.new_calculation.delete_o(total_goal),
+                   percentage, self.new_calculation.delete_o(average))
         self.assertEqual(text, text_display)
-
-
-    def percentage_lost_weight(self, id):
-        starting_weight = ResultsUser.objects.values_list("weight").filter(user=id).first()[0]
-        last_weight = ResultsUser.objects.values_list("weight").filter(user=id).last()[0]
-        final_weight = ProfileUser.objects.values_list("final_weight").get(user=id)[0]
-
-        total_lost_weight = float(starting_weight - last_weight)
-        total_goal = float(starting_weight - final_weight)
-        lost_percentage = round(int((total_lost_weight * 100) / total_goal), 0)
-
-        return lost_percentage
-
-    def average_weight_loss(self, id):
-        # calculates the average weight loss
-        starting_date = ResultsUser.objects.values_list("weighing_date").filter(user=id).first()[0]
-        last_date = ResultsUser.objects.values_list("weighing_date").filter(user=id).last()[0]
-        starting_weight = ResultsUser.objects.values_list("weight").filter(user=id).first()[0]
-        last_weight = ResultsUser.objects.values_list("weight").filter(user=id).last()[0]
-
-        total_lost_weight = float(starting_weight - last_weight)
-        delta = last_date - starting_date
-        number_of_weeks = delta.days / 7
-        try:
-            average_lost_weight = round(total_lost_weight / number_of_weeks, 1)
-        except ZeroDivisionError:
-            average_lost_weight = 0
-
-        return average_lost_weight
 
     def test_access_program_page(self):
         """
         test the access in the program page
         check the elements display
         """
+        # get user's data
+        user_data = self.create_user_starting_program()[1]
+
         # login user
-        self.login_user(self.dict_data_start_user)
+        self.login_user(user_data)
 
         # access dietetic space page
         self.browser.find_element_by_id("program").click()
@@ -487,10 +481,13 @@ class TestsFunctionals(StaticLiveServerTestCase):
         """
         test if the user clicks
         to the discussion space
-        while the week-end
+        during the week-end
         """
+        # get user's data
+        user_data = self.create_user_one_week_ago()[1]
+
         # login user
-        self.login_user(self.dict_data_user_a_week_ago)
+        self.login_user(user_data)
 
         # access dietetic space page
         self.browser.find_element_by_id("clipboard").click()
@@ -521,11 +518,14 @@ class TestsFunctionals(StaticLiveServerTestCase):
         """
         test if the user clicks
         to the discussion space
-        while the week-end and
+        during the week-end and
         if the user have not challenges
         """
+        # get user's data
+        user_data = self.create_user_without_challenge()[1]
+
         # login user
-        self.login_user(self.dict_data_user_without_challenge)
+        self.login_user(user_data)
 
         # access dietetic space page
         self.browser.find_element_by_id("clipboard").click()
@@ -547,18 +547,22 @@ class TestsFunctionals(StaticLiveServerTestCase):
         """
         test if the user clicks
         to the discussion space
-        while the week-end and
+        during the week-end and
         write this weight goal
         """
+        # get user's data
+        user_data = self.create_user_one_week_ago()[1]
+
         # login user
-        self.login_user(self.dict_data_user_a_week_ago)
+        self.login_user(user_data)
 
         # access dietetic space page
         self.browser.find_element_by_id("clipboard").click()
 
         # check the element display
         question = self.browser.find_element_by_id("robot_comment").text
-        self.assertEqual(question, "Bonjour ! J'éspère que ta semaine s'est bien passée ? Que donne ta pesée ce matin ?")
+        self.assertEqual(question, "Bonjour ! J'éspère que ta semaine s'est bien passée ? "
+                                   "Que donne ta pesée ce matin ?")
 
         # check user writes this weekly weight
         self.browser.find_element_by_id("weekly_weight").send_keys("50")
