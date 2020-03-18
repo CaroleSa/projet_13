@@ -304,7 +304,6 @@ class Controller:
             text = "Ton objectif doit être inférieur à ton poids actuel."
             context = {"error_message": text}
             validate = False
-
         else:
             validate = True
 

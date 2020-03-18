@@ -43,7 +43,7 @@ class TestDemo(StaticLiveServerTestCase):
         dict_data_user = {"id_email": "carole1@test.fr", "id_password": "00000000"}
         id_user = 1
         try:
-            user_created = self.user.objects.create_user(id=id_user, username="pseudo",
+            user_created = self.user.objects.create_user(id=id_user, username="Carole",
                                                          email=dict_data_user.get('id_email'),
                                                          password=dict_data_user.get('id_password'))
             HistoryUser.objects.create(user=user_created)
@@ -62,7 +62,7 @@ class TestDemo(StaticLiveServerTestCase):
         dict_data_user = {"id_email": "carole2@test.fr", "id_password": "00000000"}
         id_user = 2
         try:
-            user_created = self.user.objects.create_user(id=id_user, username="pseudo",
+            user_created = self.user.objects.create_user(id=id_user, username="Carole",
                                                          email=dict_data_user.get('id_email'),
                                                          password=dict_data_user.get('id_password'))
             HistoryUser.objects.create(user=user_created)
@@ -93,7 +93,7 @@ class TestDemo(StaticLiveServerTestCase):
         dict_data_user = {"id_email": "carole3@test.fr", "id_password": "00000000"}
         id_user = 3
         try:
-            user_created = self.user.objects.create_user(id=id_user, username="pseudo",
+            user_created = self.user.objects.create_user(id=id_user, username="Carole",
                                                          email=dict_data_user.get('id_email'),
                                                          password=dict_data_user.get('id_password'))
             HistoryUser.objects.create(user=user_created)
