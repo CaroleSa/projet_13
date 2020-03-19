@@ -4,13 +4,14 @@
 """ TestsClasses class """
 
 # imports
+from datetime import datetime, timedelta
 from django.test import TestCase
 from django.contrib.auth import get_user_model
 from dietetic.classes.weight_advice_goal import WeightAdviceGoal
 from dietetic.classes.questions_list import QuestionsList
 from dietetic.classes.calculation import Calculation
 from dietetic.classes.controller import Controller
-from dietetic.models import DiscussionSpace, RobotQuestion
+from dietetic.models import DiscussionSpace, RobotQuestion, RobotAdviceType, RobotAdvices
 from account.models import ProfileUser, ResultsUser, IdentityUser, StatusUser, HistoryUser
 from datetime import date, timedelta
 import calendar
@@ -356,6 +357,8 @@ class TestsCalculation(TestCase):
 class TestsController(TestCase):
     """ TestsController class """
 
+    fixtures = ['data.json']
+
     def setUp(self):
         self.new_controller = Controller()
         self.cursor = connection.cursor()
@@ -368,10 +371,12 @@ class TestsController(TestCase):
         self.user_created = self.user.objects.create_user(id=1, username=username2, email=email2, password=password2)
         HistoryUser.objects.create(user=self.user_created)
         StatusUser.objects.create(user=self.user_created)
-
         ProfileUser.objects.create(user=self.user_created, starting_weight=60,
                                    actual_goal_weight=5, final_weight=50)
-        ResultsUser.objects.create(user=self.user_created, weight=60)
+        present = datetime.now()
+        present_date = present.date()
+        weighing_date = present_date - timedelta(days=7)
+        ResultsUser.objects.create(user=self.user_created, weighing_date=weighing_date, weight=60)
         user = HistoryUser.objects.get(user=self.user_created)
         user.start_questionnaire_completed = True
         user.save()
@@ -396,26 +401,119 @@ class TestsController(TestCase):
     def test_return_text_congratulations_restart_program(self):
         pseudo = self.user_created.username
         text = "Félicitation {} ! Tu as atteints ton objectif !".format(pseudo)
-
-        data_profile = ProfileUser.objects.all().count()
-        data_results = ResultsUser.objects.all().count()
-
-        user = HistoryUser.objects.get(user=self.user_created)
-        before_method = user.start_questionnaire_completed
+        data_profile_before = ProfileUser.objects.all().count()
+        data_results_before = ResultsUser.objects.all().count()
+        before_method = HistoryUser.objects.values_list("start_questionnaire_completed").get(user=self.user_created)[0]
 
         return_text = self.new_controller.return_text_congratulations_restart_program(self.user_created.id)
 
-        after_method = user.start_questionnaire_completed
+        after_method = HistoryUser.objects.values_list("start_questionnaire_completed").get(user=self.user_created)[0]
+        data_profile_after = ProfileUser.objects.all().count()
+        data_results_after = ResultsUser.objects.all().count()
 
-        #self.assertFalse(after_method)
-        #self.assertNotEqual(before_method, after_method)
+        self.assertFalse(after_method)
+        self.assertNotEqual(before_method, after_method)
         self.assertEqual(type(return_text), str)
         self.assertEqual(return_text, text)
-        #self.assertEqual(data_profile, 0)
-        #self.assertEqual(data_results, 0)
+        self.assertEqual(data_profile_after, 0)
+        self.assertEqual(data_results_after, 0)
+        self.assertNotEqual(data_profile_before, data_profile_after)
+        self.assertNotEqual(data_results_before, data_results_after)
 
     def test_add_advices_to_user(self):
-        # check the advices number before method == 0
-        # return_text = self.new_controller.add_advices_to_user(self.id_user)
-        # check the advices number after method == 10 ???
-        pass
+        """
+        test that the method add
+        a new challenges to user
+        """
+        # count the number of challenges before a call to the method
+        user = IdentityUser.objects.get(id=self.user_created.id)
+        advice_to_user_before = user.advices_to_user.all().count()
+
+        # call method
+        self.new_controller.add_advices_to_user(self.user_created.id)
+
+        # count the number of challenges after a call to the method
+        advice_to_user_after = user.advices_to_user.all().count()
+
+        self.assertEqual(advice_to_user_before, 0)
+        self.assertNotEqual(advice_to_user_after, 0)
+        self.assertNotEqual(advice_to_user_after, advice_to_user_before)
+
+    def test_return_weekly_questions_save_weight(self):
+        """
+        test the returns of the method
+        and check that the weight is save
+        """
+        # TEST NEW WEIGHT DON'T EXISTS
+        # data
+        weekly_weight = False
+        # call method
+        context = self.new_controller.return_weekly_questions_save_weight(weekly_weight, self.user_created.id)
+
+        self.assertEqual(context["robot_comment"], "Bonjour ! J'éspère que ta semaine s'est bien passée ? "
+                                                   "Que donne ta pesée ce matin ?")
+        self.assertTrue(context["robot_weekly_weight"])
+
+        # TEST ADD THE NEW WEIGHT
+        # data
+        weekly_weight = 58
+        # call method, check text returns
+        context = self.new_controller.return_weekly_questions_save_weight(weekly_weight, self.user_created.id)
+        # check the last weight saved
+        last_weight = ResultsUser.objects.values_list("weight").filter(user=self.user_created).last()[0]
+
+        self.assertEqual(context["robot_comment"], "J'ai bien pris note de ton poids, "
+                                                   "tu trouveras un récapitulatif dans "
+                                                   "l'onglet résultats.")
+        self.assertEqual(last_weight, weekly_weight)
+
+        # TEST AFTER ADD THE NEW WEIGHT
+        # data
+        weekly_weight = False
+        # call method
+        context = self.new_controller.return_weekly_questions_save_weight(weekly_weight, self.user_created.id)
+        # check the returns
+        last_weighing_date = ResultsUser.objects.values_list("weighing_date").filter(user=self.user_created).last()[0]
+        one_week_after_weighing = last_weighing_date + timedelta(days=7)
+        month = calendar.month_name[one_week_after_weighing.month]
+        date = "" + calendar.day_name[one_week_after_weighing.weekday()] + " " + str(one_week_after_weighing.day) \
+               + " " + month + ""
+        self.assertEqual(context["robot_comment"], "Retrouvons nous ici {} pour faire le point sur "
+                                                   "tes prochains résultats et voir ton nouveau "
+                                                   "challenge !".format(date))
+
+    def test_return_weekly_advice(self):
+        """
+        test the return of the new advice
+        """
+        # add the advices to user
+        list_advice_id = [1, 4, 8]
+        for id_advice in list_advice_id:
+            self.cursor.execute("INSERT INTO account_identityuser_advices_to_user "
+                                "(identityuser_id, robotadvices_id) "
+                                "VALUES ({}, {})".format(self.user_created.id, id_advice))
+
+        # get user
+        user = IdentityUser.objects.get(id=self.user_created.id)
+
+        # check the advice returned if new_week == False :
+        # first challenge of the program
+        self.new_controller.new_week = False
+        new_advices_user_text_1 = user.advices_to_user.values_list("text").order_by("robot_advice_type").first()[0]
+        return_advice_1 = self.new_controller.return_weekly_advice(self.user_created.id)
+        id_advice_returned = RobotAdvices.objects.values_list("id").get(text=return_advice_1)[0]
+        advice_user_list = user.advices_to_user.values_list("id").order_by("robot_advice_type")
+        self.assertEqual(new_advices_user_text_1, return_advice_1)
+        self.assertEqual(len(advice_user_list), len(list_advice_id))
+        self.assertEqual(id_advice_returned, advice_user_list[0][0])
+
+        # check the advice returned if new_week == True :
+        # second, ... challenges of the program
+        self.new_controller.new_week = True
+        return_advice_2 = self.new_controller.return_weekly_advice(self.user_created.id)
+        id_advice_returned = RobotAdvices.objects.values_list("id").get(text=return_advice_2)[0]
+        advice_user_list = user.advices_to_user.values_list("id").order_by("robot_advice_type")
+        self.assertEqual(len(advice_user_list), len(list_advice_id) - 1)
+        self.assertEqual(id_advice_returned, advice_user_list[0][0])
+
+        self.assertNotEqual(return_advice_1, return_advice_2)
