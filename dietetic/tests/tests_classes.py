@@ -381,6 +381,14 @@ class TestsController(TestCase):
         user.start_questionnaire_completed = True
         user.save()
 
+    def add_advice_to_user_created(self, user_id):
+        list_advice_id = [1, 4, 8]
+        for id_advice in list_advice_id:
+            self.cursor.execute("INSERT INTO account_identityuser_advices_to_user "
+                                "(identityuser_id, robotadvices_id) "
+                                "VALUES ({}, {})".format(user_id, id_advice))
+        return list_advice_id
+
     def test_parser_weight(self):
         data_weight_user = {"height": 1.60, "actual_weight": 100,
                             "cruising_weight": 50, "weight_goal": 50}
@@ -487,11 +495,7 @@ class TestsController(TestCase):
         test the return of the new advice
         """
         # add the advices to user
-        list_advice_id = [1, 4, 8]
-        for id_advice in list_advice_id:
-            self.cursor.execute("INSERT INTO account_identityuser_advices_to_user "
-                                "(identityuser_id, robotadvices_id) "
-                                "VALUES ({}, {})".format(self.user_created.id, id_advice))
+        list_advice_id = self.add_advice_to_user_created(self.user_created.id)
 
         # get user
         user = IdentityUser.objects.get(id=self.user_created.id)
@@ -499,11 +503,12 @@ class TestsController(TestCase):
         # check the advice returned if new_week == False :
         # first challenge of the program
         self.new_controller.new_week = False
-        new_advices_user_text_1 = user.advices_to_user.values_list("text").order_by("robot_advice_type").first()[0]
         return_advice_1 = self.new_controller.return_weekly_advice(self.user_created.id)
+        new_advices_user_text_1 = user.advices_to_user.values_list("text").order_by("robot_advice_type").first()[0]
+        self.assertEqual(new_advices_user_text_1, return_advice_1)
+
         id_advice_returned = RobotAdvices.objects.values_list("id").get(text=return_advice_1)[0]
         advice_user_list = user.advices_to_user.values_list("id").order_by("robot_advice_type")
-        self.assertEqual(new_advices_user_text_1, return_advice_1)
         self.assertEqual(len(advice_user_list), len(list_advice_id))
         self.assertEqual(id_advice_returned, advice_user_list[0][0])
 
@@ -511,9 +516,68 @@ class TestsController(TestCase):
         # second, ... challenges of the program
         self.new_controller.new_week = True
         return_advice_2 = self.new_controller.return_weekly_advice(self.user_created.id)
+        new_advices_user_text_2 = user.advices_to_user.values_list("text").order_by("robot_advice_type").first()[0]
+        self.assertEqual(new_advices_user_text_2, return_advice_2)
+
         id_advice_returned = RobotAdvices.objects.values_list("id").get(text=return_advice_2)[0]
         advice_user_list = user.advices_to_user.values_list("id").order_by("robot_advice_type")
         self.assertEqual(len(advice_user_list), len(list_advice_id) - 1)
         self.assertEqual(id_advice_returned, advice_user_list[0][0])
 
-        self.assertNotEqual(return_advice_1, return_advice_2)
+    def test_save_advices_to_user_first_answer(self):
+        """
+        test that the method
+        add a new advice to user :
+        if the user has not answered
+        this question yet
+        """
+        # get the user's advices before of called the method
+        user = IdentityUser.objects.get(id=self.user_created.id)
+        advice_user_list_before = user.advices_to_user.values_list("id").order_by("robot_advice_type")
+        number_advices_before = len(advice_user_list_before)
+
+        # call method
+        user_answer_id = DiscussionSpace.objects.values_list("user_answer").filter(robot_advices__isnull=False).first()[0]
+        old_question_id = DiscussionSpace.objects.values_list("robot_question").filter(robot_advices__isnull=False).first()[0]
+        self.new_controller.save_advices_to_user(user_answer_id, old_question_id, self.user_created.id)
+
+        # get the user's advices after of called the method
+        advice_user_list_after = user.advices_to_user.values_list("id").order_by("robot_advice_type")
+        number_advices_after = len(advice_user_list_after)
+
+        self.assertNotEqual(advice_user_list_before, advice_user_list_after)
+        self.assertNotEqual(number_advices_before, number_advices_after)
+
+    def test_save_advices_to_user_other_answer(self):
+        """
+        test that the method
+        add a new advice to user
+        and that an other advice
+        is deleted :
+        if the user has answered
+        this question yet
+        """
+        # add une autre réponse de l'utilisateur  IN PROGRESS
+        # R2CUP7RE UN DISCUSSION SPACE qui contient 2 réponses avec un advice
+        # j'ajoute l'advice avec la reponse 1
+        DiscussionSpace.objects.values_list("robot_question")
+        robot_advice_id = DiscussionSpace.objects.values_list("robot_advices").get(robot_question=id_question).filter(robot_advices__isnull=False)
+        # puis je récupère la question -id et je recupere la réponse 2 pour les params
+        # get the user's advices before of called the method
+        user = IdentityUser.objects.get(id=self.user_created.id)
+        advice_user_list_before = user.advices_to_user.values_list("id").order_by("robot_advice_type")
+        number_advices_before = len(advice_user_list_before)
+
+        # call method
+        old_question_id = DiscussionSpace.objects.values_list("robot_question").filter(robot_advices__isnull=False).last()[0]
+        user_answer_id = DiscussionSpace.objects.values_list("user_answer").filter(robot_question=old_question_id).last()[0]
+
+        self.new_controller.save_advices_to_user(user_answer_id, old_question_id, self.user_created.id)
+
+        # get the user's advices after of called the method
+        advice_user_list_after = user.advices_to_user.values_list("id").order_by("robot_advice_type")
+        number_advices_after = len(advice_user_list_after)
+
+        self.assertNotEqual(advice_user_list_before, advice_user_list_after)
+        self.assertNotEqual(number_advices_before, number_advices_after)
+
