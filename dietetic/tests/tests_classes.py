@@ -371,8 +371,9 @@ class TestsController(TestCase):
         self.user_created = self.user.objects.create_user(id=1, username=username2, email=email2, password=password2)
         HistoryUser.objects.create(user=self.user_created)
         StatusUser.objects.create(user=self.user_created)
+        self.actual_goal = 10
         ProfileUser.objects.create(user=self.user_created, starting_weight=60,
-                                   actual_goal_weight=5, final_weight=50)
+                                   actual_goal_weight=self.actual_goal, final_weight=50)
         present = datetime.now()
         present_date = present.date()
         weighing_date = present_date - timedelta(days=7)
@@ -388,15 +389,15 @@ class TestsController(TestCase):
                                 "VALUES ({}, {})".format(user_id, id_advice))
 
     def test_parser_weight(self):
-        data_weight_user = {"height": 1.60, "actual_weight": 100,
-                            "cruising_weight": 50, "weight_goal": 50}
+        data_weight_user = {"height": "1,60", "actual_weight": "100",
+                            "cruising_weight": "50", "weight_goal": "50"}
         return_validate = self.new_controller.parser_weight(data_weight_user)[0]
         return_context = self.new_controller.parser_weight(data_weight_user)[1]
         self.assertTrue(return_validate)
         self.assertEqual(return_context, {})
 
-        data_weight_user = {"height": 1.60, "actual_weight": 50,
-                            "cruising_weight": 50, "weight_goal": 60}
+        data_weight_user = {"height": "1,60", "actual_weight": "50",
+                            "cruising_weight": "50", "weight_goal": "60"}
         return_validate = self.new_controller.parser_weight(data_weight_user)[0]
         return_context = self.new_controller.parser_weight(data_weight_user)[1]
         text = "Ton objectif doit être inférieur à ton poids actuel."
@@ -559,27 +560,80 @@ class TestsController(TestCase):
         # get the user
         user = IdentityUser.objects.get(id=self.user_created.id)
 
-        # test if the user answer to a question : add a new advice to user
+        # test if the user answer to a question :
+        # add a new advice to user
         data = DiscussionSpace.objects.values_list("robot_question")
         for id_question in data:
             user_answer_id = DiscussionSpace.objects.values_list("user_answer").filter(robot_question=id_question).filter(robot_advices__isnull=False)
             if len(user_answer_id) >= 2:
-                answer_id_list = user_answer_id
-                user_answer = answer_id_list[0][0]
-                advice_to_add = DiscussionSpace.objects.values_list("robot_advices").filter(user_answer=answer_id_list[1][0]).filter(robot_question=id_question)[0][0]
+                user_answer = user_answer_id[0][0]
+                advice_to_add = DiscussionSpace.objects.values_list("robot_advices").filter(user_answer=user_answer_id[1][0]).filter(robot_question=id_question)[0][0]
                 old_question_id = id_question
         list_advice_id = [advice_to_add]
         self.add_advice_to_user_created(self.user_created.id, list_advice_id)
 
-        advice_user_list_after = user.advices_to_user.values_list("id").order_by("robot_advice_type")
-        print(advice_user_list_after)
+        # get the user's advices before called the method
+        advice_user = user.advices_to_user.values_list("id").order_by("robot_advice_type")
+        number_advice_user = len(advice_user)
+        id_question_1 = DiscussionSpace.objects.values_list("robot_question").get(robot_advices=advice_user[0][0])
 
-        # if the user change this answer to this question
         # call method
+        # test if the user change this answer to this question
         self.new_controller.save_advices_to_user(user_answer, old_question_id, self.user_created.id)
 
-        # get the user's advices after of called the method
-        advice_user_list_after = user.advices_to_user.values_list("id").order_by("robot_advice_type")
-        print(advice_user_list_after)
+        # get the user's advices after called the method
+        advice_user_after = user.advices_to_user.values_list("id").order_by("robot_advice_type")
+        number_advice_user_after = len(advice_user_after)
+        id_question_2 = DiscussionSpace.objects.values_list("robot_question").get(robot_advices=advice_user_after[0][0])
+
+        self.assertEqual(id_question_1, id_question_2)
+        self.assertNotEqual(advice_user, advice_user_after)
+        self.assertEqual(number_advice_user, number_advice_user_after)
+
+    def test_return_goal_weight_text_if_incorrect_data(self):
+        """
+        check the context returned
+        if the user's data is incorrect
+        """
+        data_dict = {"height": "1,60", "actual_weight": "80",
+                     "cruising_weight": "50", "weight_goal": "90"}
+
+        context = self.new_controller.return_goal_weight_text_save_weight(data_dict, self.user_created.id)
+
+        self.assertEqual(len(context), 3)
+        self.assertTrue("dict_questions" in context)
+        self.assertTrue("goal_weight_text" in context)
+        self.assertTrue("error_message" in context)
+
+    def test_return_goal_weight_text_goal_defined(self):
+        """
+        check the context returned
+        if the goal weight is defined
+        """
+        data_dict = {"height": "1,60", "actual_weight": "80",
+                     "cruising_weight": "50", "weight_goal": "70"}
+
+        context = self.new_controller.return_goal_weight_text_save_weight(data_dict, self.user_created.id)
+
+        self.assertEqual(len(context), 1)
+        self.assertEqual(context["robot_answer"], "Ton premier objectif de poids a déjà été défini à - {} kg."
+                         .format(self.actual_goal))
+
+    def test_return_goal_weight_text_save_weight(self):
+        """
+        check the context returned
+        if the goal weight is not defined
+        """
+        # delete user's weight data
+        ProfileUser.objects.get(user=self.user_created).delete()
+        ResultsUser.objects.get(user=self.user_created).delete()
+
+        data_dict = {"height": "1,60", "actual_weight": "80",
+                     "cruising_weight": "50", "weight_goal": "70"}
+
+        context = self.new_controller.return_goal_weight_text_save_weight(data_dict, self.user_created.id)
+
+        self.assertEqual(len(context), 1)
+        self.assertEqual(context["robot_answer"][0:19], "Alors c'est parti !")
 
 
