@@ -381,13 +381,11 @@ class TestsController(TestCase):
         user.start_questionnaire_completed = True
         user.save()
 
-    def add_advice_to_user_created(self, user_id):
-        list_advice_id = [1, 4, 8]
+    def add_advice_to_user_created(self, user_id, list_advice_id):
         for id_advice in list_advice_id:
             self.cursor.execute("INSERT INTO account_identityuser_advices_to_user "
                                 "(identityuser_id, robotadvices_id) "
                                 "VALUES ({}, {})".format(user_id, id_advice))
-        return list_advice_id
 
     def test_parser_weight(self):
         data_weight_user = {"height": 1.60, "actual_weight": 100,
@@ -495,7 +493,8 @@ class TestsController(TestCase):
         test the return of the new advice
         """
         # add the advices to user
-        list_advice_id = self.add_advice_to_user_created(self.user_created.id)
+        list_advice_id = [1, 4, 8]
+        self.add_advice_to_user_created(self.user_created.id, list_advice_id)
 
         # get user
         user = IdentityUser.objects.get(id=self.user_created.id)
@@ -557,27 +556,30 @@ class TestsController(TestCase):
         if the user has answered
         this question yet
         """
-        # add une autre réponse de l'utilisateur  IN PROGRESS
-        # R2CUP7RE UN DISCUSSION SPACE qui contient 2 réponses avec un advice
-        # j'ajoute l'advice avec la reponse 1
-        DiscussionSpace.objects.values_list("robot_question")
-        robot_advice_id = DiscussionSpace.objects.values_list("robot_advices").get(robot_question=id_question).filter(robot_advices__isnull=False)
-        # puis je récupère la question -id et je recupere la réponse 2 pour les params
-        # get the user's advices before of called the method
+        # get the user
         user = IdentityUser.objects.get(id=self.user_created.id)
-        advice_user_list_before = user.advices_to_user.values_list("id").order_by("robot_advice_type")
-        number_advices_before = len(advice_user_list_before)
 
+        # test if the user answer to a question : add a new advice to user
+        data = DiscussionSpace.objects.values_list("robot_question")
+        for id_question in data:
+            user_answer_id = DiscussionSpace.objects.values_list("user_answer").filter(robot_question=id_question).filter(robot_advices__isnull=False)
+            if len(user_answer_id) >= 2:
+                answer_id_list = user_answer_id
+                user_answer = answer_id_list[0][0]
+                advice_to_add = DiscussionSpace.objects.values_list("robot_advices").filter(user_answer=answer_id_list[1][0]).filter(robot_question=id_question)[0][0]
+                old_question_id = id_question
+        list_advice_id = [advice_to_add]
+        self.add_advice_to_user_created(self.user_created.id, list_advice_id)
+
+        advice_user_list_after = user.advices_to_user.values_list("id").order_by("robot_advice_type")
+        print(advice_user_list_after)
+
+        # if the user change this answer to this question
         # call method
-        old_question_id = DiscussionSpace.objects.values_list("robot_question").filter(robot_advices__isnull=False).last()[0]
-        user_answer_id = DiscussionSpace.objects.values_list("user_answer").filter(robot_question=old_question_id).last()[0]
-
-        self.new_controller.save_advices_to_user(user_answer_id, old_question_id, self.user_created.id)
+        self.new_controller.save_advices_to_user(user_answer, old_question_id, self.user_created.id)
 
         # get the user's advices after of called the method
         advice_user_list_after = user.advices_to_user.values_list("id").order_by("robot_advice_type")
-        number_advices_after = len(advice_user_list_after)
+        print(advice_user_list_after)
 
-        self.assertNotEqual(advice_user_list_before, advice_user_list_after)
-        self.assertNotEqual(number_advices_before, number_advices_after)
 
