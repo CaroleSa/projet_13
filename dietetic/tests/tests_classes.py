@@ -11,7 +11,7 @@ from dietetic.classes.weight_advice_goal import WeightAdviceGoal
 from dietetic.classes.questions_list import QuestionsList
 from dietetic.classes.calculation import Calculation
 from dietetic.classes.controller import Controller
-from dietetic.models import DiscussionSpace, RobotQuestion, RobotAdviceType, RobotAdvices
+from dietetic.models import DiscussionSpace, RobotQuestion, RobotAdviceType, RobotAdvices, UserAnswer
 from account.models import ProfileUser, ResultsUser, IdentityUser, StatusUser, HistoryUser
 from datetime import date, timedelta
 import calendar
@@ -361,6 +361,7 @@ class TestsController(TestCase):
 
     def setUp(self):
         self.new_controller = Controller()
+        self.new_questions_list = QuestionsList()
         self.cursor = connection.cursor()
         self.user = get_user_model()
 
@@ -595,24 +596,34 @@ class TestsController(TestCase):
         check the context returned
         if the user's data is incorrect
         """
+        # data
         data_dict = {"height": "1,60", "actual_weight": "80",
                      "cruising_weight": "50", "weight_goal": "90"}
 
+        # call method
         context = self.new_controller.return_goal_weight_text_save_weight(data_dict, self.user_created.id)
 
+        dict_questions = {"height": "Quelle taille fais-tu ? (au format x,xx)",
+                          "actual_weight": "Quel est ton poids actuel ?",
+                          "cruising_weight": "Quel est ton poids de croisière (poids le plus longtemps "
+                                             "maintenu sans effort) ?",
+                          "weight_goal": "Quel est ton poids d'objectif ?"}
+
         self.assertEqual(len(context), 3)
-        self.assertTrue("dict_questions" in context)
-        self.assertTrue("goal_weight_text" in context)
-        self.assertTrue("error_message" in context)
+        self.assertEqual(context["dict_questions"], dict_questions)
+        self.assertTrue(context["goal_weight_text"], "Nous allons maintenant définir ton objectif.")
+        self.assertTrue(context["error_message"], "Ton objectif doit être inférieur à ton poids actuel.")
 
     def test_return_goal_weight_text_goal_defined(self):
         """
         check the context returned
         if the goal weight is defined
         """
+        # data
         data_dict = {"height": "1,60", "actual_weight": "80",
                      "cruising_weight": "50", "weight_goal": "70"}
 
+        # call method
         context = self.new_controller.return_goal_weight_text_save_weight(data_dict, self.user_created.id)
 
         self.assertEqual(len(context), 1)
@@ -628,12 +639,96 @@ class TestsController(TestCase):
         ProfileUser.objects.get(user=self.user_created).delete()
         ResultsUser.objects.get(user=self.user_created).delete()
 
+        # data
         data_dict = {"height": "1,60", "actual_weight": "80",
                      "cruising_weight": "50", "weight_goal": "70"}
 
+        # call method
         context = self.new_controller.return_goal_weight_text_save_weight(data_dict, self.user_created.id)
 
         self.assertEqual(len(context), 1)
         self.assertEqual(context["robot_answer"][0:19], "Alors c'est parti !")
 
+    def test_return_start_discussion_display_first_question(self):
+        """
+        test if the user have don't answers
+        to all the questionnaire and have
+        not writes this weight goal
+        """
+        # data
+        data_dict = {"height": False, "actual_weight": False,
+                     "cruising_weight": False, "weight_goal": False}
+        old_robot_question = False
+        user_answer = False
 
+        # call method
+        context = self.new_controller.return_start_discussion(self.user_created.id, old_robot_question,
+                                                              data_dict, user_answer)
+
+        first_id_question = self.new_questions_list.create_questions_id_list()[0]
+        first_question = RobotQuestion.objects.values_list("text").get(id=first_id_question)[0]
+        self.assertEqual(len(context), 2)
+        self.assertEqual(context["question"], first_question)
+        self.assertTrue(context["answers"])
+
+    def test_return_start_discussion_display_second_question(self):
+        """
+        test if the user have don't answers
+        to all the questionnaire and have
+        not writes this weight goal
+        """
+        # get user
+        user = IdentityUser.objects.get(id=self.user_created.id)
+
+        # data
+        data_dict = {"height": False, "actual_weight": False,
+                     "cruising_weight": False, "weight_goal": False}
+        index_id = 0
+        old_robot_question_id = self.new_questions_list.create_questions_id_list()[index_id]
+        old_robot_question = RobotQuestion.objects.values_list("text").get(id=old_robot_question_id)[0]
+        user_answer_id = DiscussionSpace.objects.values_list("user_answer").filter(robot_question=old_robot_question_id).order_by("id").first()[0]
+        user_answer = UserAnswer.objects.values_list("text").get(id=user_answer_id)[0]
+
+        # get advices list to the user before called the method
+        advice_user_before = user.advices_to_user.values_list("id").order_by("robot_advice_type")
+        number_advice_before = len(advice_user_before)
+
+        # call method
+        context = self.new_controller.return_start_discussion(self.user_created.id, old_robot_question,
+                                                              data_dict, user_answer)
+
+        # get advices list to the user after called the method
+        advice_user_after = user.advices_to_user.values_list("id").order_by("robot_advice_type")
+        number_advice_after = len(advice_user_after)
+
+        second_question_id = self.new_questions_list.create_questions_id_list()[index_id + 1]
+        second_question = RobotQuestion.objects.values_list("text").get(id=second_question_id)[0]
+        self.assertEqual(context["question"], second_question)
+        self.assertTrue(context["answers"])
+        self.assertEqual(number_advice_before, number_advice_after - 1)
+
+    def test_return_start_discussion_display_weight_question(self):
+        """
+        test if the id question list
+        is empty : display weight questions
+        """
+        # data
+        data_dict = {"height": False, "actual_weight": False,
+                     "cruising_weight": False, "weight_goal": False}
+        old_robot_question_id = self.new_questions_list.create_questions_id_list()[-1]
+        old_robot_question = RobotQuestion.objects.values_list("text").get(id=old_robot_question_id)[0]
+        user_answer_id = DiscussionSpace.objects.values_list("user_answer").filter(robot_question=old_robot_question_id).order_by("id").first()[0]
+        user_answer = UserAnswer.objects.values_list("text").get(id=user_answer_id)[0]
+
+        # call method
+        context = self.new_controller.return_start_discussion(self.user_created.id, old_robot_question,
+                                                              data_dict, user_answer)
+
+        dict_questions = {"height": "Quelle taille fais-tu ? (au format x,xx)",
+                          "actual_weight": "Quel est ton poids actuel ?",
+                          "cruising_weight": "Quel est ton poids de croisière (poids le plus longtemps "
+                                             "maintenu sans effort) ?",
+                          "weight_goal": "Quel est ton poids d'objectif ?"}
+        self.assertEqual(context["robot_answer"], None)
+        self.assertEqual(context["goal_weight_text"], "Nous allons maintenant définir ton objectif.")
+        self.assertEqual(context["dict_questions"], dict_questions)
