@@ -732,3 +732,66 @@ class TestsController(TestCase):
         self.assertEqual(context["robot_answer"], None)
         self.assertEqual(context["goal_weight_text"], "Nous allons maintenant définir ton objectif.")
         self.assertEqual(context["dict_questions"], dict_questions)
+
+    def test_return_start_discussion_display_end_discussion_answer_2(self):
+        """
+        test if the user selects the answer
+        2 to the first question :
+        end discussion
+        """
+        # get user
+        user = IdentityUser.objects.get(id=self.user_created.id)
+
+        # data
+        data_dict = {"height": False, "actual_weight": False,
+                     "cruising_weight": False, "weight_goal": False}
+
+        old_robot_question = "Bonjour, je me présente ''My Dietetic Challenge'' ! " \
+                             "Mon objectif à partir d'aujourd'hui est de t'aider dans " \
+                             "ton parcours de perte de poids en la rendant plus attrayante ! " \
+                             "Mais avant de nous lancer dans cette FOLLE aventure, " \
+                             "j'ai besoin d'en connaître plus sur toi ! Es-tu prêt(e) ?"
+        user_answer = "non"
+
+        # call method
+        context = self.new_controller.return_start_discussion(self.user_created.id, old_robot_question,
+                                                              data_dict, user_answer)
+
+        # get advices list to the user after called the method
+        advice_user_after = user.advices_to_user.values_list("id").order_by("robot_advice_type")
+        number_advice = len(advice_user_after)
+
+        self.assertEqual(context["robot_answer"], 'Dommage… une autre fois peut-être !')
+        self.assertEqual(number_advice, 0)
+
+    def test_return_start_discussion_display_end_discussion_answer_3(self):
+        """
+        test if the user selects the answer
+        3 to the first question :
+        end discussion
+        """
+        # get user
+        user = IdentityUser.objects.get(id=self.user_created.id)
+
+        # data
+        data_dict = {"height": False, "actual_weight": False,
+                     "cruising_weight": False, "weight_goal": False}
+
+        old_robot_question = "Bonjour, je me présente ''My Dietetic Challenge'' ! " \
+                             "Mon objectif à partir d'aujourd'hui est de t'aider dans " \
+                             "ton parcours de perte de poids en la rendant plus attrayante ! " \
+                             "Mais avant de nous lancer dans cette FOLLE aventure, " \
+                             "j'ai besoin d'en connaître plus sur toi ! Es-tu prêt(e) ?"
+        user_answer = "j'hésite encore ..."
+
+        # call method
+        context = self.new_controller.return_start_discussion(self.user_created.id, old_robot_question,
+                                                              data_dict, user_answer)
+
+        # get advices list to the user after called the method
+        advice_user_after = user.advices_to_user.values_list("id").order_by("robot_advice_type")
+        number_advice = len(advice_user_after)
+
+        self.assertEqual(context["robot_answer"], 'Très bien ! Je reste à ta disposition et me '
+                                                  'tiens prêt lorsque ta motivation sera au plus haut.')
+        self.assertEqual(number_advice, 0)
