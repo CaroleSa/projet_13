@@ -25,6 +25,11 @@ def index(request):
     return render(request, 'dietetic/index.html', context)
 
 
+def legal_notices(request):
+    context = {}
+    return render(request, 'dietetic/legal_notices.html', context)
+
+
 def dietetic_space(request):
     # get data
     id_user = request.user.id

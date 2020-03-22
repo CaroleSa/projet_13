@@ -134,8 +134,9 @@ i {
     background-image : url("../img/background_section.jpg");
     background-size: 40vh;
     background-position : top;
-    min-height : 58vh;
+    height : 58vh;
     box-shadow : 0px 5px 10px grey;
+    overflow:auto;
 }
 #home_text{
     font-size : 1.5em ;
@@ -184,7 +185,7 @@ h2{
     border-right: 2px black outset;
 }
 #text_my_results{
-    padding: 5vh;
+    padding: 2.5vh;
 }
 .input_number{
     padding: 0vh;
