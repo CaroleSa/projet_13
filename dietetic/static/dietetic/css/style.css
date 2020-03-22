@@ -24,14 +24,20 @@
 .col-lg-offset-8 {
     margin-left: 66%;
 }
-.col-lg-offset-1 {
-    margin-left: 8%;
+.col-lg-offset-5 {
+    margin-left: 40%;
+}
+.col-lg-offset-4 {
+    margin-left: 33%;
+}
+.col-lg-offset-3 {
+    margin-left: 25%;
 }
 .col-lg-offset-2 {
     margin-left: 16%;
 }
-.col-lg-offset-4 {
-    margin-left: 33%;
+.col-lg-offset-1 {
+    margin-left: 8%;
 }
 
 
@@ -213,6 +219,13 @@ h2{
 .fa-key:hover{
     color : rgb(   20, 126, 62   );
 }
+.text_white{
+    color : rgb( 229, 216, 203 );
+}
+.text_white:hover{
+    color : rgb( 255, 255, 255 );
+    text-decoration : none;
+}
 
 
 /*  FOOTER   */
@@ -231,4 +244,11 @@ h2{
 }
 .fab:hover{
     color : rgb(162, 152, 141);
+}
+#ml:hover{
+    color : rgb(162, 152, 141);
+    text-decoration : none;
+}
+#ml{
+    color : rgb( 105, 85, 64 );
 }
