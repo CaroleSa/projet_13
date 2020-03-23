@@ -57,10 +57,10 @@ def my_results(request):
     user = get_user_model()
     id = user.objects.get(id=request.user.id)
     final_weight = ProfileUser.objects.values_list("final_weight").get(user=id)[0]
-    starting_date = ResultsUser.objects.values_list("weighing_date").filter(user=id).first()[0]
-    last_date = ResultsUser.objects.values_list("weighing_date").filter(user=id).last()[0]
-    starting_weight = ResultsUser.objects.values_list("weight").filter(user=id).first()[0]
-    last_weight = ResultsUser.objects.values_list("weight").filter(user=id).last()[0]
+    starting_date = ResultsUser.objects.values_list("weighing_date").filter(user=id).order_by("weighing_date").first()[0]
+    last_date = ResultsUser.objects.values_list("weighing_date").filter(user=id).order_by("weighing_date").last()[0]
+    starting_weight = ResultsUser.objects.values_list("weight").filter(user=id).order_by("weighing_date").first()[0]
+    last_weight = ResultsUser.objects.values_list("weight").filter(user=id).order_by("weighing_date").last()[0]
     total_goal = float(starting_weight - final_weight)
 
     # get return Calculation class

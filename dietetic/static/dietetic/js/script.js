@@ -87,5 +87,18 @@ function drawChart() {
 }
 
 
+//     display account login and create account if user clicks on the user logo
+
+var $nav = $("#login_nav");
+var $logo = $(".fa-user-circle");
+$logo.on('click', function() {
+    if ($nav.css('display') == "block") {
+        $nav.css('display', "none");} else{
+        $nav.css('display', "block");
+}
+});
+
+
+
 
 

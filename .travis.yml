@@ -27,3 +27,4 @@ branches:
   only:
     - master
     - develop1
+    - develop2
