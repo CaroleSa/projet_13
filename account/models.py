@@ -24,21 +24,25 @@ class UserManager(BaseUserManager):
         user = self.model(username=username, email=email, **extra_fields)
         user.set_password(password)
         user.save(using=self._db)
+
         return user
 
     def create_superuser(self, email, username, password):
         """
         Creates and saves a superuser with the given email and password.
         """
-        user = self.create_user(
+        user_created = self.create_user(
             email=email,
             username=username,
             password=password,
         )
-        user.staff = True
-        user.admin = True
-        user.save(using=self._db)
+        user = StatusUser.objects.create(user=user_created)
+        user.is_staff = True
+        user.superuser = True
+        user.save()
+
         return user
+
 
 class IdentityUser(AbstractBaseUser):
     username = models.CharField(max_length=150, validators=[UnicodeUsernameValidator()],
