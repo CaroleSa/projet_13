@@ -126,6 +126,10 @@ class TestDemo(StaticLiveServerTestCase):
         time.sleep(1)
         self.browser.find_element_by_id("submitButton").click()
 
+        user_logo = self.browser.find_element_by_class_name("fa-user-circle")
+        if user_logo:
+            user_logo.click()
+
     def test_1_user_access_account(self):
         """
         the user accesses
@@ -141,12 +145,7 @@ class TestDemo(StaticLiveServerTestCase):
 
         # login user
         data_user = self.create_user_not_start_program()[1]
-        # login user
-        for key, value in data_user.items():
-            time.sleep(1)
-            self.browser.find_element_by_id(key).send_keys(value)
-        time.sleep(1)
-        self.browser.find_element_by_id("submitButton").click()
+        self.login_user(data_user)
 
         # test access user page
         self.browser.find_element_by_id("user").click()

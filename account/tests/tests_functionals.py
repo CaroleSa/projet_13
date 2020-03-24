@@ -61,6 +61,9 @@ class TestsFunctionals(StaticLiveServerTestCase):
 
         # url retrieved if user clicks on login button
         # or create account
+        user_logo = self.browser.find_element_by_class_name("fa-user-circle")
+        if user_logo:
+            user_logo.click()
         self.browser.find_element_by_id("create_account").click()
         self.assertEqual(self.browser.current_url,
                          self.live_server_url + "/account/create_account/")
@@ -95,6 +98,10 @@ class TestsFunctionals(StaticLiveServerTestCase):
         login_message = self.browser.find_element_by_id("login_message").text
         self.assertEqual(confirm_message, "Votre compte a bien été créé.")
         self.assertEqual(login_message, "Bonjour {} ! Vous êtes bien connecté.".format(self.pseudo_create_account))
+
+        user_logo = self.browser.find_element_by_class_name("fa-user-circle")
+        if user_logo:
+            user_logo.click()
 
         # check the button nav is display or not
         dict_nav = {"poll": self.assertFalse, "program": self.assertFalse,
@@ -192,6 +199,10 @@ class TestsFunctionals(StaticLiveServerTestCase):
         login_message = self.browser.find_element_by_id("login_message").text
         self.assertEqual(login_message, "Bonjour {} ! Vous êtes bien connecté.".format(self.pseudo))
 
+        user_logo = self.browser.find_element_by_class_name("fa-user-circle")
+        if user_logo:
+            user_logo.click()
+
     def test_login_false_email(self):
         """ test login user with false email """
         self.browser.get(self.live_server_url + "/account/login/")
@@ -256,8 +267,14 @@ class TestsFunctionals(StaticLiveServerTestCase):
         self.assertEqual(confirm_message, "Votre mot de passe a bien été modifié.")
 
         # logout user
+        user_logo = self.browser.find_element_by_class_name("fa-user-circle")
+        if user_logo:
+            user_logo.click()
         self.browser.find_element_by_id("logout_account").click()
         # login user with the new password
+        user_logo = self.browser.find_element_by_class_name("fa-user-circle")
+        if user_logo:
+            user_logo.click()
         self.dict_data_access_account["id_password"] = new_password
         for key, value in self.dict_data_access_account.items():
             self.browser.find_element_by_id(key).send_keys(value)
@@ -306,6 +323,9 @@ class TestsFunctionals(StaticLiveServerTestCase):
 
         # delete the user's account
         self.browser.find_element_by_id("delete_user").click()
+        user_logo = self.browser.find_element_by_class_name("fa-user-circle")
+        if user_logo:
+            user_logo.click()
         message = self.browser.find_element_by_id("message_login").text
         self.assertEqual(message, "Votre compte a bien été supprimé.")
 

@@ -183,6 +183,10 @@ class TestsFunctionals(StaticLiveServerTestCase):
             self.browser.find_element_by_id(key).send_keys(value)
         self.browser.find_element_by_id("submitButton").click()
 
+        user_logo = self.browser.find_element_by_class_name("fa-user-circle")
+        if user_logo:
+            user_logo.click()
+
     def test_access_home_page(self):
         """
         test if the user clicks
