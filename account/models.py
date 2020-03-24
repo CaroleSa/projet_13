@@ -38,10 +38,10 @@ class UserManager(BaseUserManager):
         )
         user = StatusUser.objects.create(user=user_created)
         user.is_staff = True
-        user.superuser = True
+        user.is_superuser = True
         user.save()
 
-        return user
+        return user_created
 
 
 class IdentityUser(AbstractBaseUser):
