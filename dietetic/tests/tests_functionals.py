@@ -32,6 +32,7 @@ class TestsFunctionals(StaticLiveServerTestCase):
     def setUp(self):
         self.user = get_user_model()
         self.browser = webdriver.Firefox()
+        self.browser.set_window_size(1600, 900)
         self.cursor = connection.cursor()
         self.new_weight_advice_goal = WeightAdviceGoal()
         self.new_calculation = Calculation()
@@ -182,9 +183,6 @@ class TestsFunctionals(StaticLiveServerTestCase):
         for key, value in dict_login.items():
             self.browser.find_element_by_id(key).send_keys(value)
         self.browser.find_element_by_id("submitButton").click()
-
-        if self.browser.find_element_by_class_name("fa-user-circle"):
-            self.browser.find_element_by_class_name("fa-user-circle").click()
 
     def test_access_home_page(self):
         """
