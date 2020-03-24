@@ -30,6 +30,7 @@ class TestDemo(StaticLiveServerTestCase):
     def setUp(self):
         self.user = get_user_model()
         self.browser = webdriver.Firefox()
+        self.browser.set_window_size(1600, 900)
         self.cursor = connection.cursor()
         self.new_weight_advice_goal = WeightAdviceGoal()
         self.new_calculation = Calculation()
@@ -125,10 +126,6 @@ class TestDemo(StaticLiveServerTestCase):
             self.browser.find_element_by_id(key).send_keys(value)
         time.sleep(1)
         self.browser.find_element_by_id("submitButton").click()
-
-        user_logo = self.browser.find_element_by_class_name("fa-user-circle")
-        if user_logo:
-            user_logo.click()
 
     def test_1_user_access_account(self):
         """
