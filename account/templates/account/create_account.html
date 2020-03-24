@@ -1,7 +1,7 @@
-<a href="{% url 'account:login' %}" ><div id="login" class="tab_n tab col-lg-6">&nbsp;Me connecter&nbsp;</div></a>
-<div id="create_account" class="tab_y tab col-lg-6">&nbsp;Créer mon compte&nbsp;</div>
+<a href="{% url 'account:login' %}" ><div id="login" class="tab_n tab col-lg-6 col-md-6 col-sm-6 col-xs-6">&nbsp;Me connecter&nbsp;</div></a>
+<div id="create_account" class="tab_y tab col-lg-6 col-md-6 col-sm-6 col-xs-6">&nbsp;Créer mon compte&nbsp;</div>
 <div class="contents col-lg-12">
-    <form class="col-lg-offset-2 col-lg-8" action="{% url 'account:create_account' %}" method="post">{% csrf_token %}
+    <form class="col-lg-offset-2 col-lg-8 col-md-offset-2 col-md-8 col-sm-offset-2 col-sm-8 col-xs-offset-2 col-xs-8" action="{% url 'account:create_account' %}" method="post">{% csrf_token %}
         <br><p>Pseudo</p>
         <label for="{{ form_create_account.username.id_for_label }}">{{ form_create_account.username }}<br>
         <p>Adresse e-mail</p>
