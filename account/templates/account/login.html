@@ -8,7 +8,7 @@
         <p>Mot de passe</p>
         <label for="{{ form_login.password.id_for_label }}">{{ form_login.password }}
         <br><p id="message_login" class="red bold center col-lg-12">{{error_message}}</p>
-        <input class="col-lg-offset-2 col-lg-8" id="submitButton" type="submit" value="Valider"><br>
+        <input class="center" id="submitButton" type="submit" value="Valider"><br>
     </form>
     {% else %}
     {% if login_message %}
@@ -19,7 +19,7 @@
     {% endif %}
     <br><form action="{% url 'index' %}" method="post">{% csrf_token %}
         <input type="hidden" name="logout" value="True" />
-        <input id="logout_account" class="col-lg-offset-2 col-lg-8" type="submit" onclick="location.href='{% url 'index' %}'" value="Me déconnecter"/><br><br>
+        <input id="logout_account" class="center" type="submit" onclick="location.href='{% url 'index' %}'" value="Me déconnecter"/><br><br>
     </form>
     {% endif %}
 </div>

@@ -30,15 +30,28 @@
 .col-lg-offset-4 {
     margin-left: 33%;
 }
+.col-sm-offset-4 {
+    margin-left: 33%;
+}
+.col-xs-offset-4 {
+    margin-left: 33%;
+}
+.col-md-offset-4 {
+    margin-left: 33%;
+}
 .col-lg-offset-3 {
     margin-left: 25%;
 }
 .col-lg-offset-2 {
     margin-left: 16%;
 }
+.col-md-offset-2 {
+    margin-left: 16%;
+}
 .col-lg-offset-1 {
     margin-left: 8%;
 }
+
 
 
 /*  HEADER + LOGIN NAV   */
@@ -54,6 +67,7 @@
     right:7vh;
     margin-top : 2vh;
     z-index: 2;
+    text-align:center;
 }
 .fa-user-circle{
     display:none;
@@ -73,8 +87,8 @@
 }
 .tab{
         display:inline-block;
-        margin-left:3px;
-        margin-right:-10px;
+        margin-left:0px;
+        margin-right:-5.5px;
         padding:3px;
         cursor:pointer;
 }
@@ -96,10 +110,10 @@
         background-color:rgb(227, 216, 211);
         margin-top:-1px;
         margin-left:3px;
-        padding:5px;
         border-radius: 0px 0px 5px 5px;
 }
 input{
+    min-width : 70px;
     background:rgb(162, 152, 141);
     border-radius: 5px 0px 5px 0px;
 }

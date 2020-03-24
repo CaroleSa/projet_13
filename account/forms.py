@@ -21,8 +21,8 @@ class LoginForm(ModelForm):
         model = get_user_model()
         fields = ["email", "password"]
         widgets = {
-            'email': EmailInput(attrs={'class': 'form-control'}),
-            'password': TextInput(attrs={'class': 'form-control', 'type': 'password',
+            'email': EmailInput(attrs={'class': 'form-control center'}),
+            'password': TextInput(attrs={'class': 'form-control center', 'type': 'password',
                                          'maxlength': '8', 'minlength': "8"})
         }
 
@@ -37,9 +37,9 @@ class CreateAccountForm(ModelForm):
         model = get_user_model()
         fields = ["username", "email", "password"]
         widgets = {
-            'username': TextInput(attrs={'class': 'form-control', 'id': 'pseudo'}),
-            'email': EmailInput(attrs={'class': 'form-control', 'id': 'id_email'}),
-            'password': TextInput(attrs={'class': 'form-control', 'type': 'password',
+            'username': TextInput(attrs={'class': 'form-control center', 'id': 'pseudo'}),
+            'email': EmailInput(attrs={'class': 'form-control center', 'id': 'id_email'}),
+            'password': TextInput(attrs={'class': 'form-control center', 'type': 'password',
                                          'maxlength': '8', 'minlength': "8",
                                          'id': 'password'})
         }
