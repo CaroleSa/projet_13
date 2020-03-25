@@ -39,6 +39,8 @@ class UserManager(BaseUserManager):
         user.is_staff = True
         user.is_superuser = True
         user.save()
+        HistoryUser.objects.create(user=user)
+        StatusUser.objects.create(user=user)
 
         return user
 
