@@ -16,6 +16,7 @@
   <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.2/css/all.min.css">
 
   <!-- Import css file -->
+  <meta name="viewport" content="width=device-width" />
   <link rel="stylesheet" href="{% static 'dietetic/css/style.css' %}">
 
   <!-- Favicon logo -->
@@ -32,8 +33,9 @@
       	    <div class="row">
        		    <div class="col-lg-12" id="header">
           			    <nav class="row">
-                            <i class="col-lg-offset-11 fas fa-user-circle"></i>
-                            <div class="col-lg-offset-9 col-lg-3" id="login_nav">
+                            <img id="logo" src="{% static 'dietetic/img/logo.png' %}" alt="logo"/>
+                            <i class="fas fa-user-circle"></i>
+                            <div class="col-lg-offset-7 col-lg-3" id="login_nav">
                                 <div class="tabs_html">
                                     <div class="tabs">
                                         {% if create_account == "True" %}

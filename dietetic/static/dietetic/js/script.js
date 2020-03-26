@@ -88,7 +88,7 @@ function drawChart() {
 
 
 //     display account login and create account if user clicks on the user logo
-var $col = "col-lg-offset-4 col-lg-5 col-md-offset-4 col-md-5 col-sm-offset-4 col-sm-5 col-xs-offset-4 col-xs-5"
+var $col = "col-lg-offset-2 col-lg-5 col-md-offset-4 col-md-6 col-sm-offset-4 col-sm-8 col-xs-offset-4 col-xs-5"
 var $nav = $("#login_nav");
 var $logo = $(".fa-user-circle");
 var url = window.location.pathname;
