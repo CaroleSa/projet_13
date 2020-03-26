@@ -136,6 +136,14 @@
         font-size : 3em;
     }
 }
+@media screen and (max-width : 575px){
+    .tab{
+        width:200px;
+    }
+    .contents {
+        border: 3px blue solid;
+    }
+}
 .tab{
         display:inline-block;
         margin-left:0px;
