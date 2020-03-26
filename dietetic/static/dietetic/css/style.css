@@ -113,8 +113,10 @@
     margin-left:5vh;
 }
 #login_nav{
-    position:relative;
-    margin-top : 2vh;
+    position:absolute;
+    right:4vh;
+    top:2vh;
+    width:400px;
     z-index: 2;
     text-align:center;
 }
@@ -129,10 +131,9 @@
     .fa-user-circle{
         display:block;
         position:absolute;
-        right:15vh;
+        right:10vh;
         top:9vh;
         font-size : 3em;
-
     }
 }
 .tab{

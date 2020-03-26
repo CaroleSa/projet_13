@@ -88,14 +88,12 @@ function drawChart() {
 
 
 //     display account login and create account if user clicks on the user logo
-var $col = "col-lg-offset-2 col-lg-5 col-md-offset-4 col-md-6 col-sm-offset-4 col-sm-8 col-xs-offset-4 col-xs-5"
 var $nav = $("#login_nav");
 var $logo = $(".fa-user-circle");
 var url = window.location.pathname;
 if ($logo.css('display') == "block") {
     if (url == "/account/login/" || url == "/account/create_account/" && $logo.css('display') == "block") {
         $nav.css('display', "block");
-        $nav.attr('class', $col);
     }
 }
 
@@ -103,7 +101,6 @@ $logo.on('click', function(e) {
     if ($nav.css('display') == "block") {
         $nav.css('display', "none");} else{
         $nav.css('display', "block");
-        $nav.attr('class', $col);
         }
 });
 
