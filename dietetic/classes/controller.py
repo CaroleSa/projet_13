@@ -229,7 +229,7 @@ class Controller:
     def return_weekly_questions_save_weight(self, weekly_weight, id_user):
 
         # get date data
-        context ={}
+        context = {}
         last_weighing_date = ResultsUser.objects.values_list("weighing_date").filter(user=id_user).order_by("weighing_date").last()[0]
         one_week_after_weighing = last_weighing_date + timedelta(days=7)
         present = datetime.now()

@@ -2,7 +2,7 @@
 <a href="{% url 'account:create_account' %}" ><div id="create_account" class="tab_n tab col-lg-6 col-md-6 col-sm-6 col-xs-6">&nbsp;Créer mon compte&nbsp;</div></a>
 <div class="contents col-lg-12">
     {% if authenticated == "False" %}
-    <form class="col-lg-offset-2 col-lg-8 col-md-offset-2 col-md-8 col-sm-offset-2 col-sm-8 col-xs-offset-2 col-xs-8" action="{% url 'account:login' %}" method="post">{% csrf_token %}
+    <form action="{% url 'account:login' %}" method="post">{% csrf_token %}
         <br><p>Adresse e-mail</p>
         <label for="{{ form_login.email.id_for_label }}">{{ form_login.email }}<br>
         <p>Mot de passe</p>

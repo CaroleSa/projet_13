@@ -90,6 +90,9 @@
 .col-lg-offset-1 {
     margin-left: 8%;
 }
+.col-md-offset-1 {
+    margin-left: 8%;
+}
 .col-sm-offset-1 {
     margin-left: 8%;
 }
@@ -140,8 +143,19 @@
     .tab{
         width:200px;
     }
-    .contents {
-        border: 3px blue solid;
+}
+@media screen and (max-width : 414px){
+    .tab{
+        width:170px;
+    }
+    #login_nav{
+        width:340px;
+        left:4px;
+        top:6vh;
+    }
+    .fa-user-circle{
+        right:5vh;
+        top:15vh;
     }
 }
 .tab{
