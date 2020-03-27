@@ -229,7 +229,7 @@ h1{
     }
     .fa-bars{
         text-align: left;
-        margin-left:70px;
+
         vertical-align:middle;
         line-height: 60px;
     }
@@ -237,6 +237,9 @@ h1{
         list-style: none;
     }
     #menu-deroulant a {
+        display:block;
+        position:relative;
+        left:-9vh;
         width:90px;
         border: 4px white solid;
         box-shadow : 2px 1px 6px grey;
