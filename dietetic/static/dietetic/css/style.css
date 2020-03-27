@@ -317,7 +317,10 @@ h2{
 #card{
     padding : 3vh;
     margin-top : 7vh;
+    margin-bottom: 7vh;
     height : 45vh;
+    min-width: 32vh;
+    max-width:32vh;
     border-bottom: 2px black outset;
     border-right: 2px black outset;
     border-radius: 10px 10px 10px 10px;
