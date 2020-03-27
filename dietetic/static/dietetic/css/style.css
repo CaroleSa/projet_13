@@ -303,7 +303,7 @@ h2{
     text-align : left;
     margin-top : 10vh;
 }
-#text_my_results, #graphic_my_results, #text_my_account, #text_program{
+#text_my_results, #graphic_my_results, #text_my_account{
     min-height : 45vh;
 }
 #graphic{
@@ -330,11 +330,27 @@ h2{
 }
 #discussion_space, #text_my_results, #graphic_my_results, #my_account, #my_program{
     background-color : rgb(255, 255, 255);
-    height : 47vh;
+    min-height : 47vh;
     padding : 3vh;
     margin-top : 5vh;
+    margin-bottom : 5vh;
+    margin-right :7vh;
     border-bottom: 2px black outset;
     border-right: 2px black outset;
+}
+#my_program{
+    min-width:310px;
+}
+#next_text{
+    margin-top:90px;
+}
+@media screen and (max-width : 991px){
+    #next_text{
+        margin-top:0px;
+    }
+    .title_meal{
+        margin-top:30px;
+    }
 }
 #text_my_results{
     padding: 2.5vh;
