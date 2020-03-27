@@ -216,6 +216,46 @@ h1{
     position: relative;
     z-index: 1;
 }
+#button_nav_responsive{
+        display:none;
+        height : 7.5vh;
+}
+@media screen and (max-width : 1100px){
+    #button_nav{
+        display:none;
+    }
+    #button_nav_responsive{
+        display:block;
+    }
+    .fa-bars{
+        vertical-align:middle;
+        line-height: 60px;
+    }
+    #menu-deroulant, #menu-deroulant ul {
+        padding: 0;
+        margin: 0;
+        list-style: none;
+    }
+    #menu-deroulant {
+        text-align: left;
+        margin-left:50px;
+    }
+    #menu-deroulant ul li {
+        display: inherit;
+    }
+    #menu-deroulant a {
+        text-decoration: none;
+        display: block;
+	    color:#000;
+    }
+    .logo_nav{
+        text-align:center;
+        margin-top:20px;
+        position: relative;
+        display: inherit;
+        z-index: 2;
+    }
+}
 i {
     font-size : 2em;
 }
@@ -247,6 +287,7 @@ i {
     height : 58vh;
     box-shadow : 0px 5px 10px grey;
     overflow:auto;
+    z-index: 1;
 }
 #home_text{
     font-size : 1.5em ;

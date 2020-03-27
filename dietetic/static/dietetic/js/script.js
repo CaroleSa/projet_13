@@ -87,6 +87,19 @@ function drawChart() {
 }
 
 
+//     display menu if user clicks on the menu logo responsive
+var $nav_responsive = $("#responsive_menu");
+var $menu_logo = $(".fa-bars");
+$nav_responsive.css('display', "none");
+$menu_logo.on('click', function(e) {
+    if ($nav_responsive.css('display') == "block") {
+        $nav_responsive.css('display', "none");
+        } else{
+        $nav_responsive.css('display', "block");
+        }
+});
+
+
 //     display account login and create account if user clicks on the user logo
 var $nav = $("#login_nav");
 var $logo = $(".fa-user-circle");
@@ -97,16 +110,9 @@ if ($logo.css('display') == "block") {
     }
 }
 
-$logo.on('click', function(e) {
+$logo.on('click', function() {
     if ($nav.css('display') == "block") {
         $nav.css('display', "none");} else{
         $nav.css('display', "block");
         }
 });
-
-
-
-
-
-
-
