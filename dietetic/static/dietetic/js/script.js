@@ -90,7 +90,6 @@ function drawChart() {
 //     display menu if user clicks on the menu logo responsive
 var $nav_responsive = $("#responsive_menu");
 var $menu_logo = $(".fa-bars");
-$nav_responsive.css('display', "none");
 $menu_logo.on('click', function(e) {
     if ($nav_responsive.css('display') == "block") {
         $nav_responsive.css('display', "none");

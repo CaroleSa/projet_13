@@ -70,12 +70,12 @@
 	                        <li><i class="fas fa-bars"></i>
 		                        <ul id="responsive_menu">
                                     {% if authenticated == "True" %}
-			                        <li><a id="home" class="logo_nav" href="{% url 'index' %}"><i class="fas fa-home"></i></br>Accueil</a></li>
-			                        <li><a id="user" class="logo_nav" href="{% url 'account:my_account' %}"><i class="fas fa-user"></i></br>Compte</a></li>
-			                        <li><a id="clipboard" class="logo_nav" href="{% url 'dietetic:dietetic_space' %}"><i class="fas fa-clipboard"></i></br>Suivi</a></li>
+			                        <li><a id="home" class="logo_nav" href="{% url 'index' %}"><i class="fas fa-home"></i></br><p>Accueil</p></a></li>
+			                        <li><a id="user" class="logo_nav" href="{% url 'account:my_account' %}"><i class="fas fa-user"></i></br><p>Compte</p></a></li>
+			                        <li><a id="clipboard" class="logo_nav" href="{% url 'dietetic:dietetic_space' %}"><i class="fas fa-clipboard"></i></br><p>Suivi</p></a></li>
 			                        {% if start_questionnaire_completed == True %}
-                                    <li><a id="poll" class="logo_nav" href="{% url 'dietetic:my_results' %}"><i class="fas fa-poll"></i></br>Résultats</a></li>
-                                    <li><a id="program" class="logo_nav" href="{% url 'dietetic:program' %}"><i class="fas fa-utensils"></i></br>Programme</a></li>
+                                    <li><a id="poll" class="logo_nav" href="{% url 'dietetic:my_results' %}"><i class="fas fa-poll"></i></br><p>Résultats</p></a></li>
+                                    <li><a id="program" class="logo_nav" href="{% url 'dietetic:program' %}"><i class="fas fa-utensils"></i></br><p>Programme</p></a></li>
                                     {% endif %}
                                     {% endif %}
 		                        </ul>

@@ -210,7 +210,7 @@ h1{
 
 /*  NAV  */
 #button_nav{
-    min-height : 7.5vh;
+    min-height : 60px;
     background-color : rgb(255, 255, 255);
     box-shadow : 0px -1px 20px grey;
     position: relative;
@@ -218,7 +218,7 @@ h1{
 }
 #button_nav_responsive{
         display:none;
-        height : 7.5vh;
+        height : 60px;
 }
 @media screen and (max-width : 1100px){
     #button_nav{
@@ -228,29 +228,27 @@ h1{
         display:block;
     }
     .fa-bars{
+        text-align: left;
+        margin-left:70px;
         vertical-align:middle;
         line-height: 60px;
     }
     #menu-deroulant, #menu-deroulant ul {
-        padding: 0;
-        margin: 0;
         list-style: none;
     }
-    #menu-deroulant {
-        text-align: left;
-        margin-left:50px;
-    }
-    #menu-deroulant ul li {
-        display: inherit;
-    }
     #menu-deroulant a {
+        width:90px;
+        border: 4px white solid;
+        box-shadow : 2px 1px 6px grey;
+        text-align: center;
+        padding-top:10px;
         text-decoration: none;
-        display: block;
-	    color:#000;
+        background-color : rgb(255,255,255);
+    }
+    #responsive_menu{
+        display:none;
     }
     .logo_nav{
-        text-align:center;
-        margin-top:20px;
         position: relative;
         display: inherit;
         z-index: 2;
