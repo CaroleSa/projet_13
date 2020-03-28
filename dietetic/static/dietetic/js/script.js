@@ -49,6 +49,7 @@ $key.on('click', function() {
     if ($input.css('visibility') == "hidden") {
         $input.css('visibility', "");
         $confirm_message.hide();
+        $error.hide();
     } else{
         $input.css('visibility', "hidden");
     }
