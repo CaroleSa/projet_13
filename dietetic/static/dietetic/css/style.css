@@ -335,6 +335,22 @@ h2{
 #text_my_results, #graphic_my_results, #text_my_account{
     min-height : 45vh;
 }
+@media screen and (max-width : 1472px){
+    #text_my_account{
+        margin-bottom:0px;
+        min-height:11px;
+    }
+    #form_edit_password{
+        margin-bottom:2vh;
+    }
+    #title_edit_password:before, #title_delete_account:before {
+        white-space: pre;
+        content: "\A\A";
+    }
+    #title_delete_account, #title_edit_password{
+        font-weight : bold ;
+    }
+}
 #graphic{
     padding : 3vh;
     border-top: 2px black outset;
