@@ -332,9 +332,7 @@ h2{
     text-align : left;
     margin-top : 10vh;
 }
-#text_my_results, #graphic_my_results, #text_my_account{
-    min-height : 45vh;
-}
+
 @media screen and (max-width : 1472px){
     #text_my_account{
         margin-bottom:0px;
@@ -350,14 +348,6 @@ h2{
     #title_delete_account, #title_edit_password{
         font-weight : bold ;
     }
-}
-#graphic{
-    padding : 3vh;
-    border-top: 2px black outset;
-    border-bottom: 2px black outset;
-    border-left: 2px black outset;
-    border-right: 2px black outset;
-    border-radius: 10px 10px 10px 10px;
 }
 #card{
     padding : 3vh;
@@ -384,6 +374,29 @@ h2{
     border-bottom: 2px black outset;
     border-right: 2px black outset;
 }
+#graphic_my_results{
+    margin:auto;
+    min-width:700px;
+    overflow:auto;
+}
+@media screen and (max-width : 1280px){
+    #graphic_my_results{
+        min-width:500px;
+    }
+}
+@media screen and (max-width : 1024px){
+    #graphic_my_results{
+        margin-top:40px;
+        min-height:400px;
+    }
+}
+@media screen and (max-width : 414px){
+    #graphic_my_results{
+        margin-top:40px;
+        min-width:250px;
+        padding : 0.5vh;
+    }
+}
 #my_program{
     min-width:310px;
 }
@@ -403,6 +416,7 @@ h2{
     text-align : justify;
 }
 #text_my_results{
+    margin:auto;
     padding: 2.5vh;
 }
 .input_number{

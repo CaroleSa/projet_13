@@ -5,7 +5,7 @@
 <div class="row">
     <div class="col-lg-offset-1 col-lg-10" id="my_results">
         <div class="row">
-            <div id="text_my_results" class="col-lg-4">
+            <div id="text_my_results">
                 <p id="starting_date">Suivi démarré le <strong>{{ starting_date }}</strong></p></br>
                 <p id="starting_goal_weight">Poids de départ : {{ starting_weight }} kg</br>Poids d'objectif : {{ final_weight }} kg</p></br>
                 <p id="goal_weight">Ton objectif est de <font class="bold" color="red">- {{ total_goal }} kg</font></p></br>
@@ -19,7 +19,7 @@
                 {% endif %}
             </div>
                 {% if display_info == True %}
-            <div id="graphic_my_results" class="col-lg-offset-1 col-lg-7" >
+            <div id="graphic_my_results">
                 {% endif %}
             </div>
         </div>
