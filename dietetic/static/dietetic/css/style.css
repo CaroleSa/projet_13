@@ -72,6 +72,9 @@
 .col-sm-offset-3 {
     margin-left: 25%;
 }
+.col-xs-offset-3 {
+    margin-left: 25%;
+}
 .col-md-offset-3 {
     margin-left: 25%;
 }
@@ -310,7 +313,8 @@ i {
     background-image : url("../img/background_section.jpg");
     background-size: 40vh;
     background-position : top;
-    height : 58vh;
+    min-height : 58vh;
+    padding:5.5vh;
     box-shadow : 0px 5px 10px grey;
     overflow:auto;
     z-index: 1;
@@ -341,10 +345,8 @@ h2{
 }
 #card{
     padding : 3vh;
-    margin-top : 7vh;
-    margin-bottom: 7vh;
-    margin-right: 20vh;
-    height : 45vh;
+    margin:auto;
+    height : 43vh;
     min-width: 32vh;
     max-width:32vh;
     border-bottom: 2px black outset;
@@ -360,10 +362,8 @@ h2{
 #discussion_space, #text_my_results, #graphic_my_results, #my_account, #my_program{
     background-color : rgb(255, 255, 255);
     min-height : 47vh;
+    margin:auto;
     padding : 3vh;
-    margin-top : 5vh;
-    margin-bottom : 5vh;
-    margin-right :7vh;
     border-bottom: 2px black outset;
     border-right: 2px black outset;
 }
@@ -390,7 +390,12 @@ h2{
 }
 #discussion_space{
     overflow:auto;
-    padding: 7vh;
+    padding: 5vh;
+}
+@media screen and (max-width :991px){
+    #discussion_space{
+        margin-bottom:5vh;
+    }
 }
 .fa-user-times, .fa-key{
     font-size : 2em ;
