@@ -346,16 +346,17 @@ h2{
 #card{
     padding : 3vh;
     margin:auto;
-    height : 43vh;
-    min-width: 32vh;
-    max-width:32vh;
+    min-height : 350px;
+    max-height : 350px;
+    min-width:250px;
+    max-width:250px;
     border-bottom: 2px black outset;
     border-right: 2px black outset;
     border-radius: 10px 10px 10px 10px;
     box-shadow : 6px 6px 20px black;
     background-image : url("../img/front_face.jpg");
     background-repeat : no-repeat ;
-    background-size: 45vh;
+    background-size: cover;
     background-position : top;
     overflow:auto;
 }
