@@ -341,7 +341,7 @@ h2{
         min-height:11px;
     }
     #form_edit_password{
-        margin-bottom:2vh;
+        margin-bottom:8vh;
     }
     #title_edit_password:before, #title_delete_account:before {
         white-space: pre;
