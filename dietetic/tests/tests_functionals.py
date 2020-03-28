@@ -476,7 +476,7 @@ class TestsFunctionals(StaticLiveServerTestCase):
 
         # check graphic is not display
         titre = self.browser.find_element_by_id("title-meal").text
-        self.assertEqual(titre, "Petit-déjeuner :")
+        self.assertEqual(titre, "Petit-déjeuner")
 
     def test_access_discussion_space_week_end(self):
         """
