@@ -45,11 +45,12 @@ if ($error != "") {
 }
 
 var $key = $(".fa-key");
+var $error_text = $(".error");
 $key.on('click', function() {
     if ($input.css('visibility') == "hidden") {
         $input.css('visibility', "");
         $confirm_message.hide();
-        $error.hide();
+        $error_text.hide();
     } else{
         $input.css('visibility', "hidden");
     }
