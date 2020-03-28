@@ -435,7 +435,7 @@ h2{
     background-color : rgb(227, 216, 211);
 }
 .logo_link{
-    margin-top : 1.5vh;
+    margin-top : 0.8vh;
 }
 .fa-github-square{
     margin-left : 2vh;
@@ -451,5 +451,23 @@ h2{
     text-decoration : none;
 }
 #ml{
+    margin-top : 1vh;
     color : rgb( 105, 85, 64 );
+}
+@media screen and (max-width : 991px){
+    #ml{
+        margin:auto;
+        margin-top : 1vh;
+    }
+    .logo_link{
+        margin-bottom : 1vh;
+        margin:auto;
+        margin-bottom:1vh;
+    }
+    #github_link{
+        margin-left:0px;
+    }
+    #linkedin_link{
+        margin-right:0px;
+    }
 }
