@@ -382,6 +382,10 @@ h2{
         margin-top:30px;
     }
 }
+#legal_notices{
+    word-wrap : break-word ;
+    text-align : justify;
+}
 #text_my_results{
     padding: 2.5vh;
 }
