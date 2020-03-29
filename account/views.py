@@ -14,10 +14,11 @@ from django.contrib.auth import update_session_auth_hash
 from .forms import CreateAccountForm
 from .models import HistoryUser, StatusUser
 locale.setlocale(locale.LC_ALL, 'fr_FR.UTF-8')
-'fr_FR'
+# pylint: disable=no-member
 
 
 def create_account(request):
+    """ create_account view """
     user = get_user_model()
 
     # create a context
@@ -33,13 +34,18 @@ def create_account(request):
 
         # checks the validity of the password,
         # email and pseudo format
-        dict = {password: [r"^[a-zA-Z0-9$@%*+\-_!\S]+$", "Mot de passe non valide : peut contenir lettres, "
-                                                         "chiffres ou symboles $@%*+\-_! sans espace. "
-                                                         "Doit être composé de 8 caractères minimum."],
-                email: [r"^[a-z0-9-_.]+@[a-z0-9-]+\.(com|fr)$", "Adresse e-mail non valide."],
-                pseudo: [r"^[a-zA-Z0-9\S]+$", "Pseudo non valide : peut contenir lettres ou chiffres, "
-                                              "sans espace ni symbole."]}
-        for data, regex_message in dict.items():
+        dict_regex_error = {password: [r"^[a-zA-Z0-9$@%*+\-_!\S]+$",
+                                       "Mot de passe non valide : "
+                                       "peut contenir lettres, "
+                                       "chiffres ou symboles $@%*+\-_! "
+                                       "sans espace. Doit être composé de 8 "
+                                       "caractères minimum."],
+                            email: [r"^[a-z0-9-_.]+@[a-z0-9-]+\.(com|fr)$",
+                                    "Adresse e-mail non valide."],
+                            pseudo: [r"^[a-zA-Z0-9\S]+$",
+                                     "Pseudo non valide : peut contenir lettres "
+                                     "ou chiffres, sans espace ni symbole."]}
+        for data, regex_message in dict_regex_error.items():
             regex = regex_message[0]
             result = re.match(regex, data)
             if result is None:
@@ -74,6 +80,7 @@ def create_account(request):
 
 
 def login(request):
+    """ login view """
     user = get_user_model()
 
     # create a context
@@ -86,15 +93,18 @@ def login(request):
         user_authenticate = authenticate(email=email, password=password)
 
         try:
-            id = user.objects.values_list("id").get(email=email)
-            is_active = StatusUser.objects.values_list("is_active").get(user=id)[0]
+            id_user = user.objects.values_list("id").get(email=email)
+            is_active = StatusUser.objects.values_list("is_active").get(user=id_user)[0]
 
-            # login user if the user exists and this account is activate
+            # login user if the user exists
+            # and if this account is activate
             if user_authenticate and is_active is True:
                 auth_login(request, user_authenticate)
-                context = {'login_message': "Bonjour {} ! Vous êtes bien connecté.".format(request.user.username)}
+                pseudo = request.user.username
+                context = {'login_message': "Bonjour {} ! Vous êtes bien connecté.".format(pseudo)}
 
-            # create an error message if the user don't exists
+            # create an error message
+            # if the user don't exists
             # or if the password is false
             else:
                 if is_active is False:
@@ -109,20 +119,23 @@ def login(request):
 
 
 def my_account(request):
-    # get and display user's data
+    """ my_account view """
+    # get user's data
     email = request.user.email
     pseudo = request.user.username
     date_data = HistoryUser.objects.values_list("date_joined").get(user=request.user.id)
-    date_create_account_list = re.findall('\d+', str(date_data))[0:3]
+    date_create_account_list = re.findall(r"\d+", str(date_data))[0:3]
     date_create_account_str = ""+date_create_account_list[2]+" "\
                               +calendar.month_name[int(date_create_account_list[1])]\
                               +" "+date_create_account_list[0]+""
-    context = {"date_create_account": date_create_account_str, "email": email, "pseudo": pseudo}
+    context = {"date_create_account": date_create_account_str,
+               "email": email, "pseudo": pseudo}
 
     if request.method == 'POST':
 
-        # USER'S DEACTIVATION AND DISPLAY THE INDEX PAGE
-        # if the user clicks on the logo "supprimer mon compte"
+        # if the user clicks on the logo
+        # "supprimer mon compte"
+        # user's account deactivate
         delete_account = request.POST.get('delete_account', 'False')
         if delete_account == 'True':
             user = StatusUser.objects.get(user=request.user.id)
