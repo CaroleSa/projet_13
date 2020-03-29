@@ -4,10 +4,10 @@
 """ TestsFunctionals class """
 
 # imports
-from account.models import HistoryUser, ProfileUser, ResultsUser, IdentityUser, StatusUser
 from django.contrib.staticfiles.testing import StaticLiveServerTestCase
 from django.contrib.auth import get_user_model, authenticate
 from selenium import webdriver, common
+from account.models import HistoryUser, ProfileUser, ResultsUser, IdentityUser, StatusUser
 
 
 class TestsFunctionals(StaticLiveServerTestCase):
@@ -21,19 +21,23 @@ class TestsFunctionals(StaticLiveServerTestCase):
         # create user account
         self.user = get_user_model()
         self.pseudo = "pseudo"
-        self.dict_data_access_account = {"id_email": "carole1@test.fr", "id_password": "00000000"}
+        self.dict_data_access_account = {"id_email": "carole1@test.fr",
+                                         "id_password": "00000000"}
+        email = self.dict_data_access_account.get('id_email')
+        password = self.dict_data_access_account.get('id_password')
         self.user_created = self.user.objects.create_user(username=self.pseudo,
-                                                          email=self.dict_data_access_account.get('id_email'),
-                                                          password=self.dict_data_access_account.get('id_password'))
+                                                          email=email,
+                                                          password=password)
         HistoryUser.objects.create(user=self.user_created)
         StatusUser.objects.create(user=self.user_created)
 
         # creation user account data
         self.pseudo_create_account = "pseudotest"
         self.email_create_account = "carole2@test.fr"
+        password = self.dict_data_access_account.get('id_password')
         self.dict_data_create_account = {"pseudo": self.pseudo_create_account,
                                          "id_email": self.email_create_account,
-                                         "password": self.dict_data_access_account.get('id_password')}
+                                         "password": password}
 
     def tearDown(self):
         self.browser.quit()
@@ -80,8 +84,8 @@ class TestsFunctionals(StaticLiveServerTestCase):
         self.browser.find_element_by_id("submitButton").click()
 
         # check that user's account is created
-        id = self.user.objects.values_list("id").get(email=self.email_create_account)
-        is_active = StatusUser.objects.values_list("is_active").get(user=id)[0]
+        user_id = self.user.objects.values_list("id").get(email=self.email_create_account)
+        is_active = StatusUser.objects.values_list("is_active").get(user=user_id)[0]
         self.assertTrue(is_active)
 
         # check that user is login
@@ -93,7 +97,8 @@ class TestsFunctionals(StaticLiveServerTestCase):
         confirm_message = self.browser.find_element_by_id("confirm_message").text
         login_message = self.browser.find_element_by_id("login_message").text
         self.assertEqual(confirm_message, "Votre compte a bien été créé.")
-        self.assertEqual(login_message, "Bonjour {} ! Vous êtes bien connecté.".format(self.pseudo_create_account))
+        self.assertEqual(login_message, "Bonjour {} ! Vous êtes bien connecté."
+                         .format(self.pseudo_create_account))
 
         # check the button nav is display or not
         dict_nav = {"poll": self.assertFalse, "program": self.assertFalse,
@@ -246,7 +251,8 @@ class TestsFunctionals(StaticLiveServerTestCase):
         mail = self.browser.find_element_by_id("mail_account").text
         self.assertEqual(title, "Mon compte")
         self.assertEqual(pseudo, "Pseudo : {}".format(self.pseudo))
-        self.assertEqual(mail, "Adresse e-mail : {}".format(self.dict_data_access_account.get('id_email')))
+        self.assertEqual(mail, "Adresse e-mail : {}"
+                         .format(self.dict_data_access_account.get('id_email')))
 
     def test_edit_password(self):
         """
