@@ -14,9 +14,11 @@ from account.models import HistoryUser, ProfileUser, ResultsUser, IdentityUser
 from dietetic.classes.questions_list import QuestionsList
 from dietetic.classes.weight_advice_goal import WeightAdviceGoal
 locale.setlocale(locale.LC_ALL, 'fr_FR.UTF-8')
+# pylint: disable=no-member
 
 
 class Controller:
+    """ Controller class """
 
     def __init__(self):
         self.new_questions_list = QuestionsList()
@@ -321,8 +323,8 @@ class Controller:
                                 "(identityuser_id, robotadvices_id) VALUES ({}, {})"
                                 .format(id_user, advice_id[0]))
 
-    @staticmethod
-    def return_text_congratulations_restart_program(, id_user):
+    @classmethod
+    def return_text_congratulations_restart_program(cls, id_user):
         """
         return congratulation text
         and restart program
@@ -344,19 +346,26 @@ class Controller:
 
         return text
 
-    def parser_weight(self, data_dict):
-        # get user's data
+    @classmethod
+    def parser_weight(cls, data_dict):
+        """
+        check if the user's
+        answer is valid
+        """
+        # get user's answer
         context = {}
         actual_weight = data_dict.get("actual_weight")
         goal_weight = data_dict.get("weight_goal")
 
+        # if not valid
+        # create an error message
         if float(goal_weight) >= float(actual_weight):
             text = "Ton objectif doit être inférieur à ton poids actuel."
             context = {"error_message": text}
             validate = False
+
+        # if valid
         else:
             validate = True
 
         return validate, context
-
-
