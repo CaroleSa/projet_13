@@ -12,7 +12,7 @@ from django.conf import settings
 from .forms import LoginForm
 
 
-def login_form():
+def login_form(request):
     """
     add login form
     in all contexts

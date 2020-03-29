@@ -1,18 +1,18 @@
 #! /usr/bin/env python3
 # coding: UTF-8
 
-""" views of the account app """
+""" views to the account app """
 
 # Imports
-from django.shortcuts import render
-from .forms import CreateAccountForm, LoginForm
 import re
+import calendar
+import locale
+from django.shortcuts import render
 from django.contrib.auth import get_user_model, authenticate, logout
 from django.contrib.auth import login as auth_login
 from django.contrib.auth import update_session_auth_hash
-from .models import HistoryUser, IdentityUser, StatusUser
-import calendar
-import locale
+from .forms import CreateAccountForm
+from .models import HistoryUser, StatusUser
 locale.setlocale(locale.LC_ALL, 'fr_FR.UTF-8')
 'fr_FR'
 
@@ -31,7 +31,8 @@ def create_account(request):
         email = request.POST.get('email')
         password = request.POST.get('password')
 
-        # checks the validity of the password, email and pseudo format
+        # checks the validity of the password,
+        # email and pseudo format
         dict = {password: [r"^[a-zA-Z0-9$@%*+\-_!\S]+$", "Mot de passe non valide : peut contenir lettres, "
                                                          "chiffres ou symboles $@%*+\-_! sans espace. "
                                                          "Doit être composé de 8 caractères minimum."],
@@ -45,7 +46,8 @@ def create_account(request):
                 context["error_message"] = regex_message[1]
                 return render(request, "dietetic/index.html", context)
 
-        # create user's account and login user
+        # create user's account
+        # and login user
         if form.is_valid() is True:
             logout(request)
             user = user.objects.create_user(username=pseudo, email=email, password=password)
@@ -56,7 +58,8 @@ def create_account(request):
                        "confirm_message": "Votre compte a bien été créé.",
                        "login_message": "Bonjour {} ! Vous êtes bien connecté.".format(pseudo)}
 
-        # create an other error message
+        # create an other
+        # error message
         else:
             try:
                 user = user.objects.get(email=email)
