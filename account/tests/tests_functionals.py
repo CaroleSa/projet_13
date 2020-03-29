@@ -4,11 +4,9 @@
 """ TestsFunctionals class """
 
 # imports
-import time
 from account.models import HistoryUser, ProfileUser, ResultsUser, IdentityUser, StatusUser
 from django.contrib.staticfiles.testing import StaticLiveServerTestCase
 from django.contrib.auth import get_user_model, authenticate
-from django.test import Client
 from selenium import webdriver, common
 
 
@@ -20,7 +18,7 @@ class TestsFunctionals(StaticLiveServerTestCase):
         self.browser = webdriver.Firefox()
         self.browser.set_window_size(1600, 900)
 
-        # CREATE USER ACCOUNT 1
+        # create user account
         self.user = get_user_model()
         self.pseudo = "pseudo"
         self.dict_data_access_account = {"id_email": "carole1@test.fr", "id_password": "00000000"}
@@ -30,7 +28,7 @@ class TestsFunctionals(StaticLiveServerTestCase):
         HistoryUser.objects.create(user=self.user_created)
         StatusUser.objects.create(user=self.user_created)
 
-        # DATA TO CREATE USER ACCOUNT 2
+        # creation user account data
         self.pseudo_create_account = "pseudotest"
         self.email_create_account = "carole2@test.fr"
         self.dict_data_create_account = {"pseudo": self.pseudo_create_account,
@@ -54,7 +52,7 @@ class TestsFunctionals(StaticLiveServerTestCase):
                     "clipboard": self.assertFalse}
         for nav, method in dict_nav.items():
             try:
-                nav = self.browser.find_element_by_id(nav)
+                self.browser.find_element_by_id(nav)
                 nav_display = True
             except common.exceptions.NoSuchElementException:
                 nav_display = False
@@ -103,7 +101,7 @@ class TestsFunctionals(StaticLiveServerTestCase):
                     "clipboard": self.assertTrue}
         for nav, method in dict_nav.items():
             try:
-                nav = self.browser.find_element_by_id(nav)
+                self.browser.find_element_by_id(nav)
                 nav_display = True
             except common.exceptions.NoSuchElementException:
                 nav_display = False
@@ -170,7 +168,7 @@ class TestsFunctionals(StaticLiveServerTestCase):
         """
         self.browser.get(self.live_server_url + "/account/create_account/")
 
-        # create user's account with false password
+        # create user's account with an exists email
         self.dict_data_create_account["id_email"] = self.dict_data_access_account.get('id_email')
         for key, value in self.dict_data_create_account.items():
             self.browser.find_element_by_id(key).send_keys(value)
@@ -181,7 +179,10 @@ class TestsFunctionals(StaticLiveServerTestCase):
         self.assertEqual(error_message, "Ce compte existe déjà.")
 
     def test_login_user(self):
-        """ test login user in login page """
+        """
+        test login user
+        in login page
+        """
         self.browser.get(self.live_server_url + "/account/login/")
 
         # login user
@@ -194,10 +195,13 @@ class TestsFunctionals(StaticLiveServerTestCase):
         self.assertEqual(login_message, "Bonjour {} ! Vous êtes bien connecté.".format(self.pseudo))
 
     def test_login_false_email(self):
-        """ test login user with false email """
+        """
+        test login user
+        with false email
+        """
         self.browser.get(self.live_server_url + "/account/login/")
 
-        # login user
+        # login user with false email
         self.dict_data_access_account["id_email"] = "test@newmail.fr"
         for key, value in self.dict_data_access_account.items():
             self.browser.find_element_by_id(key).send_keys(value)
@@ -208,10 +212,13 @@ class TestsFunctionals(StaticLiveServerTestCase):
         self.assertEqual(login_message, "Ce compte n'existe pas.")
 
     def test_login_false_password(self):
-        """ test login user with false password """
+        """
+        test login user
+        with false password
+        """
         self.browser.get(self.live_server_url + "/account/login/")
 
-        # login user
+        # login user with false password
         self.dict_data_access_account["id_password"] = "25469874"
         for key, value in self.dict_data_access_account.items():
             self.browser.find_element_by_id(key).send_keys(value)
@@ -222,7 +229,10 @@ class TestsFunctionals(StaticLiveServerTestCase):
         self.assertEqual(login_message, "Le mot de passe est incorrect.")
 
     def test_access_my_account_page(self):
-        """ test the access in user's account page """
+        """
+        test the access
+        in user's account page
+        """
         self.test_login_user()
 
         # access user's account page
@@ -239,8 +249,13 @@ class TestsFunctionals(StaticLiveServerTestCase):
         self.assertEqual(mail, "Adresse e-mail : {}".format(self.dict_data_access_account.get('id_email')))
 
     def test_edit_password(self):
-        """ test edit user's password """
+        """
+        test edit
+        user's password
+        """
         self.test_login_user()
+
+        # access to the edit password location
         self.browser.find_element_by_id("user").click()
         self.browser.find_element_by_id("key").click()
 
@@ -256,9 +271,8 @@ class TestsFunctionals(StaticLiveServerTestCase):
         confirm_message = self.browser.find_element_by_id("confirm").text
         self.assertEqual(confirm_message, "Votre mot de passe a bien été modifié.")
 
-        # logout user
-        self.browser.find_element_by_id("logout_account").click()
         # login user with the new password
+        self.browser.find_element_by_id("logout_account").click()
         self.dict_data_access_account["id_password"] = new_password
         for key, value in self.dict_data_access_account.items():
             self.browser.find_element_by_id(key).send_keys(value)
@@ -301,7 +315,10 @@ class TestsFunctionals(StaticLiveServerTestCase):
         self.assertEqual(error_message, "invalide")
 
     def test_delete_account(self):
-        """ test delete user's password """
+        """
+        test delete
+        user's account
+        """
         self.test_login_user()
         self.browser.find_element_by_id("user").click()
 
@@ -330,10 +347,3 @@ class TestsFunctionals(StaticLiveServerTestCase):
         # check the text value that is display
         error_message = self.browser.find_element_by_id("error_message_create").text
         self.assertEqual(error_message, "Ce compte a été supprimé et n'est pas réutilisable.")
-
-
-
-
-
-
-
