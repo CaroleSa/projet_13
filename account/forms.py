@@ -5,16 +5,16 @@
 
 
 # Imports
-from django.forms import ModelForm, TextInput, EmailInput, NumberInput, ValidationError
+from django.forms import ModelForm, TextInput, EmailInput
 from django.contrib.auth import get_user_model
-from django.contrib.auth import authenticate
-from account.models import ProfileUser
 
 
 class LoginForm(ModelForm):
-    """ ModelForm LoginForm
+    """
+    ModelForm LoginForm
     model : custom User
-    fields : email and password """
+    fields : email and password
+    """
 
     class Meta:
         """ Meta class """
@@ -28,9 +28,11 @@ class LoginForm(ModelForm):
 
 
 class CreateAccountForm(ModelForm):
-    """ ModelForm CreateAccountForm
+    """
+    ModelForm CreateAccountForm
     model : custom User
-    fields : username, email and password """
+    fields : username, email and password
+    """
 
     class Meta:
         """ Meta class """
