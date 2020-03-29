@@ -95,7 +95,8 @@ class Controller:
         else:
             try:
                 # SAVE ADVICES TO USER
-                old_question_id = RobotQuestion.objects.values_list("id").get(text=old_robot_question)[0]
+                robot_question_id = RobotQuestion.objects.values_list("id")
+                old_question_id = robot_question_id.get(text=old_robot_question)[0]
                 user_answer_id = UserAnswer.objects.values_list("id").get(text=user_answer)
                 self.save_advices_to_user(user_answer_id, old_question_id, id_user)
 
@@ -132,11 +133,13 @@ class Controller:
         # get the robot question and the user's answers
         robot_question = RobotQuestion.objects.values_list("text").get(id=id_next_question)[0]
         context["question"] = robot_question
-        answers_id = DiscussionSpace.objects.values_list("user_answer").filter(robot_question=id_next_question)
+        answers_id = DiscussionSpace.objects.values_list("user_answer")\
+            .filter(robot_question=id_next_question)
         if answers_id[0][0] is not None:
             answers_text_list = []
             for answer_id in answers_id:
-                answers_text_list.append(UserAnswer.objects.values_list("text").get(id=answer_id[0])[0])
+                text = UserAnswer.objects.values_list("text")
+                answers_text_list.append(text.get(id=answer_id[0])[0])
             context["answers"] = answers_text_list
 
         return context
@@ -183,13 +186,15 @@ class Controller:
                     try:
                         user = user.objects.get(id=id_user)
                         ProfileUser.objects.values_list("starting_weight").get(user=user)[0]
-                        text = "Ton premier objectif de poids a déjà été défini à - " + str(goal) + " kg."
+                        text = "Ton premier objectif de poids a déjà été défini à - " \
+                               + str(goal) + " kg."
                         context["robot_answer"] = text
 
                     except ProfileUser.DoesNotExist:
                         user = user.objects.get(id=id_user)
                         ProfileUser.objects.create(user=user, starting_weight=actual_weight,
-                                                   actual_goal_weight=goal, final_weight=final_weight)
+                                                   actual_goal_weight=goal,
+                                                   final_weight=final_weight)
                         ResultsUser.objects.create(user=user, weight=actual_weight)
                         context["robot_answer"] = text
 
