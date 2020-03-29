@@ -173,7 +173,8 @@ class Controller:
                     # create the end text
                     # of the questionnaire
                     id_type = RobotQuestionType.objects.values_list("id").get(type="end start")[0]
-                    start_text_end = RobotQuestion.objects.values_list("text").get(robot_question_type=id_type)[0]
+                    text = RobotQuestion.objects.values_list("text")
+                    start_text_end = text.get(robot_question_type=id_type)[0]
                     text = advice + start_text_end
 
                     # save user's data
@@ -248,11 +249,13 @@ class Controller:
         # if it's a new week
         if self.new_week is True:
             # delete last user's advice
-            last_advice = user.advices_to_user.values_list("id").order_by("robot_advice_type").first()
+            last_advice = user.advices_to_user.values_list("id").\
+                order_by("robot_advice_type").first()
             user.advices_to_user.remove(last_advice)
 
         # get new user's advice
-        new_advices_user_text = user.advices_to_user.values_list("text").order_by("robot_advice_type").first()[0]
+        text = user.advices_to_user.values_list("text")
+        new_advices_user_text = text.order_by("robot_advice_type").first()[0]
 
         return new_advices_user_text
 
@@ -263,7 +266,8 @@ class Controller:
         """
         # get data
         context = {}
-        last_weighing_date = ResultsUser.objects.values_list("weighing_date").filter(user=id_user).order_by("weighing_date").last()[0]
+        weighing_date = ResultsUser.objects.values_list("weighing_date")
+        last_weighing_date = weighing_date.filter(user=id_user).order_by("weighing_date").last()[0]
         one_week_after_weighing = last_weighing_date + timedelta(days=7)
         present = datetime.now()
         present_date = present.date()
@@ -280,31 +284,36 @@ class Controller:
                 # his weight goal
                 final_weight = ProfileUser.objects.values_list("final_weight").get(user=id_user)[0]
                 if float(weekly_weight) <= final_weight:
-                    context["robot_comment"] = self.return_text_congratulations_restart_program(id_user)
+                    context["robot_comment"] = self.return_text_congratulations_restart_program\
+                        (id_user)
                     self.end = True
 
                 # save weight
                 else:
                     context["robot_comment"] = "J'ai bien pris note de ton poids, " \
-                                               "tu trouveras un récapitulatif dans l'onglet résultats."
+                                               "tu trouveras un récapitulatif dans " \
+                                               "l'onglet résultats."
                     user = IdentityUser.objects.get(id=id_user)
                     ResultsUser.objects.create(user=user, weight=weekly_weight)
                     self.new_week = True
 
             # create robot question
             else:
-                context["robot_comment"] = "Bonjour ! J'éspère que ta semaine s'est bien passée ? " \
-                                           "Que donne ta pesée ce matin ?"
+                context["robot_comment"] = "Bonjour ! J'éspère que ta semaine " \
+                                           "s'est bien passée ? Que donne ta pesée " \
+                                           "ce matin ?"
                 context["robot_weekly_weight"] = True
 
         # during the first week after
         # the weighing last : create robot text
         else:
             month = calendar.month_name[one_week_after_weighing.month]
-            date = "" + calendar.day_name[one_week_after_weighing.weekday()] + " " + str(one_week_after_weighing.day) \
+            date = "" + calendar.day_name[one_week_after_weighing.weekday()] + \
+                   " " + str(one_week_after_weighing.day) \
                    + " " + month + ""
-            context["robot_comment"] = "Retrouvons nous ici {} pour faire le point sur tes prochains résultats " \
-                                       "et voir ton nouveau challenge !".format(date)
+            context["robot_comment"] = "Retrouvons nous ici {} pour faire le point " \
+                                       "sur tes prochains résultats et voir ton nouveau " \
+                                       "challenge !".format(date)
 
         return context
 
