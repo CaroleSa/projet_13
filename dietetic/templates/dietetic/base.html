@@ -34,7 +34,7 @@
        		    <div class="col-lg-12" id="header">
           			    <nav class="row">
                             <img id="logo" src="{% static 'dietetic/img/logo.png' %}" alt="logo"/>
-                            <i class="fas fa-user-circle"></i>
+                            <i class="fas fa-user-circle" id="fa-user-circle"></i>
                             <div id="login_nav">
                                 <div class="tabs_html">
                                     <div class="tabs">
@@ -67,7 +67,7 @@
                     </div>
                     <div class="row" id="button_nav_responsive">
                         <ul id="menu-deroulant">
-	                        <li><i class="fas fa-bars"></i>
+	                        <li><i class="fas fa-bars" id="fa-bars"></i>
 		                        <ul id="responsive_menu">
                                     {% if authenticated == "True" %}
 			                        <li><a id="home" class="logo_nav" href="{% url 'index' %}"><i class="fas fa-home"></i></br><p>Accueil</p></a></li>

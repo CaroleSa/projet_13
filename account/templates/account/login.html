@@ -2,24 +2,24 @@
 <a href="{% url 'account:create_account' %}" ><div id="create_account" class="tab_n tab col-lg-6 col-md-6 col-sm-6 col-xs-6">&nbsp;Créer mon compte&nbsp;</div></a>
 <div class="contents col-lg-12">
     {% if authenticated == "False" %}
-    <form action="{% url 'account:login' %}" method="post">{% csrf_token %}
-        <br><p>Adresse e-mail</p>
-        <label for="{{ form_login.email.id_for_label }}">{{ form_login.email }}<br>
-        <p>Mot de passe</p>
-        <label for="{{ form_login.password.id_for_label }}">{{ form_login.password }}
-        <br><p id="message_login" class="red bold center col-lg-12">{{error_message}}</p>
-        <input class="center" id="submitButton" type="submit" value="Valider"><br>
-    </form>
+        <form action="{% url 'account:login' %}" method="post">{% csrf_token %}
+            <br><p>Adresse e-mail</p>
+            <label for="{{ form_login.email.id_for_label }}">{{ form_login.email }}<br>
+            <p>Mot de passe</p>
+            <label for="{{ form_login.password.id_for_label }}">{{ form_login.password }}
+            <br><p id="message_login" class="red bold center col-lg-12">{{error_message}}</p>
+            <input class="center" id="submitButton" type="submit" value="Valider"><br>
+        </form>
     {% else %}
     {% if login_message %}
     {% if confirm_message %}
-    <br><a id="confirm_message" class="col-lg-12">{{confirm_message}}</a>
+        <br><a id="confirm_message" class="col-lg-12">{{confirm_message}}</a>
     {% endif %}
-    <br><a id="login_message" class="col-lg-12">{{login_message}}</a><br>
+        <br><a id="login_message" class="col-lg-12">{{login_message}}</a><br>
     {% endif %}
-    <br><form action="{% url 'index' %}" method="post">{% csrf_token %}
-        <input type="hidden" name="logout" value="True" />
-        <input id="logout_account" class="center" type="submit" onclick="location.href='{% url 'index' %}'" value="Me déconnecter"/><br><br>
-    </form>
+        <br><form action="{% url 'index' %}" method="post">{% csrf_token %}
+            <input type="hidden" name="logout" value="True" />
+            <input id="logout_account" class="center" type="submit" onclick="location.href='{% url 'index' %}'" value="Me déconnecter"/><br><br>
+        </form>
     {% endif %}
 </div>
