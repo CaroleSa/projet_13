@@ -7,12 +7,16 @@
 from django.contrib.staticfiles.testing import StaticLiveServerTestCase
 from django.contrib.auth import get_user_model, authenticate
 from selenium import webdriver, common
-from account.models import HistoryUser, ProfileUser, ResultsUser, IdentityUser, StatusUser
+from account.models import HistoryUser, StatusUser
+# pylint: disable=no-member
 
 
 class TestsFunctionals(StaticLiveServerTestCase):
-    """ class TestsFunctionals :
-    test the use of the user's account """
+    """
+    class TestsFunctionals :
+    test the use
+    of the user's account
+    """
 
     def setUp(self):
         self.browser = webdriver.Firefox()
@@ -31,7 +35,7 @@ class TestsFunctionals(StaticLiveServerTestCase):
         HistoryUser.objects.create(user=self.user_created)
         StatusUser.objects.create(user=self.user_created)
 
-        # creation user account data
+        # user account data
         self.pseudo_create_account = "pseudotest"
         self.email_create_account = "carole2@test.fr"
         password = self.dict_data_access_account.get('id_password')
