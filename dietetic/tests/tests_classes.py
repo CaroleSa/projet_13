@@ -319,10 +319,10 @@ class TestsCalculation(TestCase):
 
     def test_average_weight_loss(self):
         user_created = self.create_user()
-        starting_date = ResultsUser.objects.values_list("weighing_date").filter(user=user_created).first()[0]
-        last_date = ResultsUser.objects.values_list("weighing_date").filter(user=user_created).last()[0]
-        starting_weight = ResultsUser.objects.values_list("weight").filter(user=user_created).first()[0]
-        last_weight = ResultsUser.objects.values_list("weight").filter(user=user_created).last()[0]
+        starting_date = ResultsUser.objects.values_list("weighing_date").filter(user=user_created).order_by("weighing_date").first()[0]
+        last_date = ResultsUser.objects.values_list("weighing_date").filter(user=user_created).order_by("weighing_date").last()[0]
+        starting_weight = ResultsUser.objects.values_list("weight").filter(user=user_created).order_by("weighing_date").first()[0]
+        last_weight = ResultsUser.objects.values_list("weight").filter(user=user_created).order_by("weighing_date").last()[0]
         total_lost_weight = float(starting_weight - last_weight)
         delta = last_date - starting_date
         number_of_weeks = delta.days / 7
