@@ -73,9 +73,9 @@ def my_results(request):
 
     # get return Calculation class
     new_calculation = Calculation()
-    list_data = new_calculation.create_results_data_list(id)
-    lost_percentage = new_calculation.percentage_lost_weight(id)
-    average_lost_weight = new_calculation.average_weight_loss(id)
+    list_data = new_calculation.create_results_data_list(user)
+    lost_percentage = new_calculation.percentage_lost_weight(user)
+    average_lost_weight = new_calculation.average_weight_loss(user)
     lost_weight = round(starting_weight - last_weight, 1)
 
     # return list_data (user's results)
