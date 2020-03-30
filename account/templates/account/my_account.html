@@ -5,12 +5,16 @@
 <div class="row">
     <div id="my_account" class="col-lg-offset-1 col-lg-10">
         <div class="row">
+
+            <!-- user's data -->
             <div id="text_my_account" class="col-lg-offset-1 col-lg-3">
                 <h2 id="account_title">Mon compte</h2></br>
                 <p>Inscrit depuis le {{date_create_account}}</p><hr />
                 <p class="bold" id="pseudo_account">Pseudo : <font color="green">{{pseudo}}</font></p><hr />
                 <p class="bold" id="mail_account">Adresse e-mail : <font color="blue">{{email}}</font></p><hr /></br>
             </div>
+
+            <!-- edit password form -->
             <div id="form_edit_password" class="col-lg-offset-1 col-lg-3">
                 <p><i id="key" class="fas fa-key"></i>&nbsp;&nbsp;&nbsp;<font id="title_edit_password">Modifier mon mot de passe</font></p>
                 {% if confirm_message %}
@@ -24,6 +28,8 @@
                     <input id="submit_password" class='form-control center col-lg-12' type="submit" value="valider">
                 </form>
             </div>
+
+            <!-- delete account button -->
             <div class="col-lg-offset-1 col-lg-3">
                 <form id="delete_account" action="{% url 'account:my_account' %}" method="post">{% csrf_token %}
                     <input type="hidden" name="delete_account" value="True" />

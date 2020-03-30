@@ -1,5 +1,8 @@
+<!-- Tabs -->
 <a href="{% url 'account:login' %}" ><div id="login" class="tab_n tab col-lg-6 col-md-6 col-sm-6 col-xs-6">&nbsp;Me connecter&nbsp;</div></a>
 <div id="create_account" class="tab_y tab col-lg-6 col-md-6 col-sm-6 col-xs-6">&nbsp;Créer mon compte&nbsp;</div>
+
+<!-- Create account form -->
 <div class="contents col-lg-12">
     <form action="{% url 'account:create_account' %}" method="post">{% csrf_token %}
         <br><p>Pseudo</p>
