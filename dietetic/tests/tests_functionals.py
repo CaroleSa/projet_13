@@ -1,40 +1,42 @@
 #! /usr/bin/env python3
 # coding: UTF-8
 
-""" TestsFunctionals class - dietetic app """
+""" TestsFunctionals class """
 
 # imports
 import random
-import time
 from datetime import date, timedelta
 import calendar
 import locale
-locale.setlocale(locale.LC_ALL, 'fr_FR.UTF-8')
-'fr_FR'
-from account.models import HistoryUser, ProfileUser, ResultsUser, IdentityUser, StatusUser
-from dietetic.models import DiscussionSpace, RobotQuestionType, RobotQuestion, UserAnswer
-from dietetic.classes.weight_advice_goal import WeightAdviceGoal
-from dietetic.classes.calculation import Calculation
+from psycopg2.errors import UniqueViolation
 from django.contrib.staticfiles.testing import StaticLiveServerTestCase
 from django.contrib.auth import get_user_model
 from django.db.utils import IntegrityError
 from django.db import connection
 from selenium import webdriver, common
-from psycopg2.errors import UniqueViolation
-
+from account.models import HistoryUser, ProfileUser, ResultsUser, StatusUser
+from dietetic.models import DiscussionSpace, RobotQuestionType, RobotQuestion, UserAnswer
+from dietetic.classes.weight_advice_goal import WeightAdviceGoal
+from dietetic.classes.calculation import Calculation
+locale.setlocale(locale.LC_ALL, 'fr_FR.UTF-8')
+# pylint: disable=no-member
 
 
 class TestsFunctionals(StaticLiveServerTestCase):
-    """ class TestsFunctionals :
-    test the use of the dietetic challenge """
+    """
+    class TestsFunctionals :
+    test the use of the dietetic challenge
+    """
 
     fixtures = ['data.json']
 
     def setUp(self):
-        self.user = get_user_model()
         self.browser = webdriver.Firefox()
         self.browser.set_window_size(1600, 900)
+
         self.cursor = connection.cursor()
+
+        self.user = get_user_model()
         self.new_weight_advice_goal = WeightAdviceGoal()
         self.new_calculation = Calculation()
         self.question = ""
@@ -76,7 +78,8 @@ class TestsFunctionals(StaticLiveServerTestCase):
             user = HistoryUser.objects.get(user=user_created)
             user.start_questionnaire_completed = True
             user.save()
-            self.cursor.execute("INSERT INTO account_identityuser_advices_to_user (identityuser_id, robotadvices_id) "
+            self.cursor.execute("INSERT INTO account_identityuser_advices_to_user "
+                                "(identityuser_id, robotadvices_id) "
                                 "VALUES ({}, {})".format(id_user, 1))
         except (UniqueViolation, IntegrityError):
             user_created = self.user.objects.get(id=id_user)
@@ -85,9 +88,9 @@ class TestsFunctionals(StaticLiveServerTestCase):
 
     def create_user_one_week_ago(self):
         """
-            create a user
-            who has been following
-            the program for one week
+        create a user
+        who has been following
+        the program for one week
         """
         dict_data_user = {"id_email": "carole3@test.fr", "id_password": "00000000"}
         id_user = 3
@@ -116,11 +119,11 @@ class TestsFunctionals(StaticLiveServerTestCase):
 
     def create_user_without_challenge(self):
         """
-            create a user
-            who has been following
-            the program but have
-            not challenges
-            in the challenge list
+        create a user
+        who has been following
+        the program but have
+        not challenges
+        in the challenge list
         """
         dict_data_user = {"id_email": "carole4@test.fr", "id_password": "00000000"}
         id_user = 4
@@ -137,7 +140,8 @@ class TestsFunctionals(StaticLiveServerTestCase):
             user = HistoryUser.objects.get(user=user_created)
             user.start_questionnaire_completed = True
             user.save()
-            self.cursor.execute("INSERT INTO account_identityuser_advices_to_user (identityuser_id, robotadvices_id) "
+            self.cursor.execute("INSERT INTO account_identityuser_advices_to_user "
+                                "(identityuser_id, robotadvices_id) "
                                 "VALUES ({}, {})".format(id_user, 1))
         except (UniqueViolation, IntegrityError):
             user_created = self.user.objects.get(id=id_user)
@@ -241,7 +245,8 @@ class TestsFunctionals(StaticLiveServerTestCase):
 
         # access dietetic space page
         self.browser.find_element_by_id("clipboard").click()
-        self.assertEqual(self.browser.current_url, self.live_server_url + "/dietetic/dietetic_space/")
+        self.assertEqual(self.browser.current_url,
+                         self.live_server_url + "/dietetic/dietetic_space/")
 
         # test if the user clicks on the first answer
         answer_text = UserAnswer.objects.values_list("text").get(id=1)[0]
@@ -257,7 +262,8 @@ class TestsFunctionals(StaticLiveServerTestCase):
                     robot_question=id_robot_question).order_by("id").count()
                 number = random.randint(0, number_answers - 1)
                 user_answer_id = \
-                DiscussionSpace.objects.values_list("user_answer").filter(robot_question=id_robot_question)[number][0]
+                DiscussionSpace.objects.values_list("user_answer")\
+                    .filter(robot_question=id_robot_question)[number][0]
                 user_answer_text = UserAnswer.objects.values_list("text").get(id=user_answer_id)[0]
                 self.browser.find_element_by_id(user_answer_text).click()
                 self.browser.find_element_by_id("validate_button").click()
@@ -265,18 +271,21 @@ class TestsFunctionals(StaticLiveServerTestCase):
                 break
 
         # check the next questions value
-        id_elt_question_text_dict = {"goal_weight_text": "Nous allons maintenant définir ton objectif.",
+        id_elt_question_text_dict = {"goal_weight_text": "Nous allons maintenant "
+                                                         "définir ton objectif.",
                                      "question_height": "Quelle taille fais-tu ? (au format x,xx)",
                                      "question_actual_weight": "Quel est ton poids actuel ?",
                                      "question_cruising_weight": "Quel est ton poids de croisière "
-                                                                 "(poids le plus longtemps maintenu sans effort) ?",
+                                                                 "(poids le plus longtemps "
+                                                                 "maintenu sans effort) ?",
                                      "question_weight_goal": "Quel est ton poids d'objectif ?"}
         for id_elt, question_text in id_elt_question_text_dict.items():
             question = self.browser.find_element_by_id(id_elt).text
             self.assertEqual(question, question_text)
 
         # user writes this goal weight, ...
-        dict_data = {"height": "1,60", "actual_weight": "60", "cruising_weight": "50", "weight_goal": "50"}
+        dict_data = {"height": "1,60", "actual_weight": "60",
+                     "cruising_weight": "50", "weight_goal": "50"}
         for key, value in dict_data.items():
             self.browser.find_element_by_id(key).send_keys(value)
         self.browser.find_element_by_id("validate_goal").click()
@@ -284,18 +293,20 @@ class TestsFunctionals(StaticLiveServerTestCase):
         # check the robot answer
         advice = self.new_weight_advice_goal.return_weight_advices_goal(dict_data)[1]
         id_type = RobotQuestionType.objects.values_list("id").get(type="end start")[0]
-        start_text_end = RobotQuestion.objects.values_list("text").get(robot_question_type=id_type)[0]
+        start_text_end = RobotQuestion.objects.values_list("text")\
+            .get(robot_question_type=id_type)[0]
         text = advice + start_text_end
         robot_answer = self.browser.find_element_by_id("robot_answer").text
         self.assertEqual(text, robot_answer)
 
-        last_weighing_date = ResultsUser.objects.values_list("weighing_date").filter(user=user_created).last()[0]
+        last_weighing_date = ResultsUser.objects.values_list("weighing_date")\
+            .filter(user=user_created).order_by("weighing_date").last()[0]
         one_week_after_weighing = last_weighing_date + timedelta(days=7)
         month = calendar.month_name[one_week_after_weighing.month]
-        date = "" + calendar.day_name[one_week_after_weighing.weekday()] + " " + str(one_week_after_weighing.day) \
-               + " " + month + ""
+        date_next_challenge = "" + calendar.day_name[one_week_after_weighing.weekday()] + " " \
+                              + str(one_week_after_weighing.day) + " " + month + ""
         robot_text = "Retrouvons nous ici {} pour faire le point sur tes prochains résultats " \
-                     "et voir ton nouveau challenge !".format(date)
+                     "et voir ton nouveau challenge !".format(date_next_challenge)
         text = self.browser.find_element_by_id("robot_comment").text
         self.assertEqual(text, robot_text)
 
@@ -333,13 +344,14 @@ class TestsFunctionals(StaticLiveServerTestCase):
             answer = False
         self.assertFalse(answer)
 
-        last_weighing_date = ResultsUser.objects.values_list("weighing_date").filter(user=user_created).last()[0]
+        last_weighing_date = ResultsUser.objects.values_list("weighing_date")\
+            .filter(user=user_created).order_by("weighing_date").last()[0]
         one_week_after_weighing = last_weighing_date + timedelta(days=7)
         month = calendar.month_name[one_week_after_weighing.month]
-        date = "" + calendar.day_name[one_week_after_weighing.weekday()] + " " + str(one_week_after_weighing.day) \
-               + " " + month + ""
+        date_next_challenge = "" + calendar.day_name[one_week_after_weighing.weekday()] + " " \
+                              + str(one_week_after_weighing.day) + " " + month + ""
         robot_text = "Retrouvons nous ici {} pour faire le point sur tes prochains résultats " \
-                     "et voir ton nouveau challenge !".format(date)
+                     "et voir ton nouveau challenge !".format(date_next_challenge)
         text = self.browser.find_element_by_id("robot_comment").text
         self.assertEqual(text, robot_text)
 
@@ -369,7 +381,7 @@ class TestsFunctionals(StaticLiveServerTestCase):
         # access dietetic space page
         self.browser.find_element_by_id("poll").click()
         self.assertEqual(self.browser.current_url, self.live_server_url + "/dietetic/my_results/")
-        
+
         # check graphic is not display
         try:
             self.browser.find_element_by_id("graphic_my_results")
@@ -377,24 +389,30 @@ class TestsFunctionals(StaticLiveServerTestCase):
         except common.exceptions.NoSuchElementException:
             graphic = False
         self.assertFalse(graphic)
-        
+
         # check values data display
         text_display = self.browser.find_element_by_id("starting_date").text
-        starting_date = ResultsUser.objects.values_list("weighing_date").filter(user=user_created).first()[0]
+        starting_date = ResultsUser.objects.values_list("weighing_date")\
+            .filter(user=user_created).order_by("weighing_date").first()[0]
         month = calendar.month_name[starting_date.month]
-        starting_date = "" + str(starting_date.day) + " " + month + " " + str(starting_date.year) + ""
+        starting_date = "" + str(starting_date.day) + " " + month + " " \
+                        + str(starting_date.year) + ""
         text = "Suivi démarré le {}".format(starting_date)
         self.assertEqual(text, text_display)
 
         text_display = self.browser.find_element_by_id("starting_goal_weight").text
-        starting_weight = ProfileUser.objects.values_list("starting_weight").get(user=user_created)[0]
-        final_weight = ProfileUser.objects.values_list("final_weight").get(user=user_created)[0]
-        text = "Poids de départ : {} kg\nPoids d'objectif : {} kg".format(self.new_calculation.delete_o(starting_weight),
-                                                                          self.new_calculation.delete_o(final_weight))
+        starting_weight = ProfileUser.objects.values_list("starting_weight")\
+            .get(user=user_created)[0]
+        final_weight = ProfileUser.objects.values_list("final_weight")\
+            .get(user=user_created)[0]
+        text = "Poids de départ : {} kg\nPoids d'objectif : {} kg"\
+            .format(self.new_calculation.delete_o(starting_weight),
+                    self.new_calculation.delete_o(final_weight))
         self.assertEqual(text, text_display)
 
         text_display = self.browser.find_element_by_id("goal_weight").text
-        goal_weight = ProfileUser.objects.values_list("actual_goal_weight").get(user=user_created)[0]
+        goal_weight = ProfileUser.objects.values_list("actual_goal_weight")\
+            .get(user=user_created)[0]
         text = "Ton objectif est de - {} kg".format(self.new_calculation.delete_o(goal_weight))
         self.assertEqual(text, text_display)
 
@@ -429,29 +447,34 @@ class TestsFunctionals(StaticLiveServerTestCase):
 
         # check values data display
         text_display = self.browser.find_element_by_id("starting_date").text
-        starting_date = ResultsUser.objects.values_list("weighing_date").filter(user=user_created).first()[0]
+        starting_date = ResultsUser.objects.values_list("weighing_date")\
+            .filter(user=user_created).order_by("weighing_date").first()[0]
         month = calendar.month_name[starting_date.month]
-        date = "" + str(starting_date.day) + " " + month + " " \
-               + str(starting_date.year) + ""
-        text = "Suivi démarré le {}".format(date)
+        starting_date = "" + str(starting_date.day) + " " + month + " " \
+                        + str(starting_date.year) + ""
+        text = "Suivi démarré le {}".format(starting_date)
         self.assertEqual(text, text_display)
 
         text_display = self.browser.find_element_by_id("starting_goal_weight").text
-        starting_weight = ProfileUser.objects.values_list("starting_weight").get(user=user_created)[0]
+        starting_weight = ProfileUser.objects.values_list("starting_weight")\
+            .get(user=user_created)[0]
         final_weight = ProfileUser.objects.values_list("final_weight").get(user=user_created)[0]
-        text = "Poids de départ : {} kg\nPoids d'objectif : {} kg".format(self.new_calculation.delete_o(starting_weight),
-                                                                          self.new_calculation.delete_o(final_weight))
+        text = "Poids de départ : {} kg\nPoids d'objectif : {} kg"\
+            .format(self.new_calculation.delete_o(starting_weight),
+                    self.new_calculation.delete_o(final_weight))
         self.assertEqual(text, text_display)
 
         text_display = self.browser.find_element_by_id("goal_weight").text
-        goal_weight = ProfileUser.objects.values_list("actual_goal_weight").get(user=user_created)[0]
+        goal_weight = ProfileUser.objects.values_list("actual_goal_weight")\
+            .get(user=user_created)[0]
         text = "Ton objectif est de - {} kg".format(self.new_calculation.delete_o(goal_weight))
         self.assertEqual(text, text_display)
 
         percentage = self.new_calculation.percentage_lost_weight(user_created)
         average = self.new_calculation.average_weight_loss(user_created)
-        last_weight = ResultsUser.objects.values_list("weight").filter(user=user_created).last()[0]
-        starting_weight = ResultsUser.objects.values_list("weight").filter(user=user_created).first()[0]
+        weight = ResultsUser.objects.values_list("weight")
+        last_weight = weight.filter(user=user_created).order_by("weighing_date").last()[0]
+        starting_weight = weight.filter(user=user_created).order_by("weighing_date").first()[0]
         total_goal = float(starting_weight - last_weight)
         text_display = self.browser.find_element_by_id("results_display").text
         text = "Tu as perdu {} kg :\ncela correspond à {} % de ton objectif." \
@@ -500,7 +523,8 @@ class TestsFunctionals(StaticLiveServerTestCase):
 
         # check the element display
         question = self.browser.find_element_by_id("robot_comment").text
-        self.assertEqual(question, "Bonjour ! J'éspère que ta semaine s'est bien passée ? Que donne ta pesée ce matin ?")
+        self.assertEqual(question, "Bonjour ! J'éspère que ta semaine s'est bien passée ? "
+                                   "Que donne ta pesée ce matin ?")
 
         # check user writes this weekly weight
         self.browser.find_element_by_id("weekly_weight").send_keys("85")
