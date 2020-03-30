@@ -41,8 +41,8 @@ class Controller:
         space view
         """
         # get data
-        start_questionnaire_completed = HistoryUser.objects.values_list("start_questionnaire_completed") \
-            .get(user=id_user)[0]
+        start_questionnaire_completed = HistoryUser.objects.values_list("start_questionnaire_completed")
+        start_questionnaire_completed = start_questionnaire_completed.get(user=id_user)[0]
         user = IdentityUser.objects.get(id=id_user)
         advice_to_user = user.advices_to_user.all().count()
         context = {}
@@ -53,7 +53,8 @@ class Controller:
 
             # return start discussion text
             # and save first user's data
-            context = self.return_start_discussion(id_user, old_robot_question, data_weight_user, user_answer)
+            context = self.return_start_discussion(id_user, old_robot_question,
+                                                   data_weight_user, user_answer)
 
         # if the user have answered
         # the start questions
