@@ -4,6 +4,8 @@
 {% block informations %}
 <div class="row">
     <div id="discussion_space" class="col-lg-offset-2 col-lg-4">
+
+        <!-- Start questions -->
         {% if robot_answer %}
             <p id="robot_answer">{{robot_answer}}</p>
         {% endif %}
@@ -15,11 +17,13 @@
             <form action="{% url 'dietetic:dietetic_space' %}" method="post">{% csrf_token %}
                 <input type="hidden" name="question" value="{{ question }}" />
                 {% for answer in answers %}
-                    <a><input id="{{answer}}" type="radio" name="answer" value="{{answer}}" required/>&nbsp;&nbsp;&nbsp;{{answer}}<//></br></br>
+                    <a><input id="{{answer}}" type="radio" name="answer" value="{{answer}}" required/>&nbsp;&nbsp;&nbsp;{{answer}}</a></br></br>
                 {% endfor %}
                 <input id="validate_button" type="submit" value="Valider"/></br></br>
             </form>
         {% endif %}
+
+        <!-- Weight goal questions form -->
         {% if dict_questions %}
             <form class="center" action="{% url 'dietetic:dietetic_space' %}" method="post">{% csrf_token %}
                 {% if error_message %}
@@ -37,6 +41,8 @@
                 </br><input id="validate_goal" class="col-lg-3" type="submit" value="Valider"/></br></br>
             </form>
         {% endif %}
+
+        <!-- Weekly weight question form -->
         {% if robot_weekly_weight %}
             <form class="center" action="{% url 'dietetic:dietetic_space' %}" method="post">{% csrf_token %}
                 <input id="weekly_weight" class="center input_number col-lg-3" type="number" step="0.1" min="35" max="200" name="weekly_weight" required/></br></br>
@@ -44,6 +50,8 @@
             </form>
         {% endif %}
     </div>
+
+    <!-- Challenge card -->
     {% if advice %}
     <div id="card" class="col-lg-offset-2 col-lg-2">
         <p id="dietetic_text">{{advice}}</p>
