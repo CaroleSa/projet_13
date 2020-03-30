@@ -9,10 +9,10 @@ import locale
 from datetime import datetime, timedelta
 from django.db import connection
 from django.contrib.auth import get_user_model
-from dietetic.models import RobotAdvices, DiscussionSpace, RobotQuestion, RobotQuestionType, UserAnswer, RobotAdviceType
+from dietetic.models import RobotAdvices, DiscussionSpace, RobotQuestion, \
+    RobotQuestionType, UserAnswer, RobotAdviceType
 from account.models import HistoryUser, ProfileUser, ResultsUser, IdentityUser
-from dietetic.classes.questions_list import QuestionsList
-from dietetic.classes.weight_advice_goal import WeightAdviceGoal
+from dietetic.classes import questions_list, weight_advice_goal
 locale.setlocale(locale.LC_ALL, 'fr_FR.UTF-8')
 # pylint: disable=no-member
 
@@ -21,27 +21,30 @@ class Controller:
     """ Controller class """
 
     def __init__(self):
-        self.new_questions_list = QuestionsList()
-        self.new_weight_advice_goal = WeightAdviceGoal()
+        self.new_questions_list = questions_list.QuestionsList()
+        self.new_weight_advice_goal = weight_advice_goal.WeightAdviceGoal()
         self.cursor = connection.cursor()
         self.new_week = False
         self.end_questions_start = False
         self.end = False
         self.dict_questions = {"height": "Quelle taille fais-tu ? (au format x,xx)",
                                "actual_weight": "Quel est ton poids actuel ?",
-                               "cruising_weight": "Quel est ton poids de croisière (poids le plus longtemps "
+                               "cruising_weight": "Quel est ton poids de croisière "
+                                                  "(poids le plus longtemps "
                                                   "maintenu sans effort) ?",
                                "weight_goal": "Quel est ton poids d'objectif ?"}
         self.goal_text = "Nous allons maintenant définir ton objectif."
 
-    def controller_dietetic_space_view(self, id_user, old_robot_question, data_weight_user, user_answer, weekly_weight):
+    def controller_dietetic_space_view(self, id_user, old_robot_question, data_weight_user,
+                                       user_answer, weekly_weight):
         """
         controller
         to the discussion
         space view
         """
         # get data
-        start_questionnaire_completed = HistoryUser.objects.values_list("start_questionnaire_completed")
+        start_questionnaire_completed = HistoryUser.objects\
+            .values_list("start_questionnaire_completed")
         start_questionnaire_completed = start_questionnaire_completed.get(user=id_user)[0]
         user = IdentityUser.objects.get(id=id_user)
         advice_to_user = user.advices_to_user.all().count()
@@ -104,7 +107,9 @@ class Controller:
                 # GET ID LAST QUESTION OF THE LIST_DATA
                 index_old_id = list_data.index(old_question_id)
 
-            # ID LAST QUESTION DON'T EXISTS > DEFINED GOAL WEIGHT
+            # LAST QUESTION IS WEIGHT
+            # GOAL QUESTION
+            # > DEFINED GOAL WEIGHT
             except RobotQuestion.DoesNotExist:
                 context = self.return_goal_weight_text_save_weight(data_weight_user, id_user)
                 return context
@@ -118,7 +123,7 @@ class Controller:
             # id discussion space concerned : 2 and 3
             id_old_discussion = DiscussionSpace.objects.values_list("id"). \
                 filter(robot_question=old_question_id).get(user_answer=user_answer_id)[0]
-            if id_old_discussion == 2 or id_old_discussion == 3:
+            if id_old_discussion in (2, 3) or id_old_discussion in (2, 3):
                 return context
 
             try:
@@ -126,6 +131,7 @@ class Controller:
                 id_next_question = list_data[index_old_id + 1]
 
             # if the questionnaire is finished
+            # get goal weight questions
             except IndexError:
                 context["goal_weight_text"] = self.goal_text
                 context["dict_questions"] = self.dict_questions
