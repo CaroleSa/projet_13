@@ -5,10 +5,10 @@
 
 # imports
 from django.db import models
-from django.conf import settings
 
 
 class RobotQuestionType(models.Model):
+    """ RobotQuestionType model """
     type = models.CharField(max_length=20, unique=True)
 
     def __str__(self):
@@ -16,6 +16,7 @@ class RobotQuestionType(models.Model):
 
 
 class RobotAdviceType(models.Model):
+    """ RobotAdviceType model """
     type = models.CharField(max_length=20, unique=True)
 
     def __str__(self):
@@ -23,6 +24,7 @@ class RobotAdviceType(models.Model):
 
 
 class RobotQuestion(models.Model):
+    """ RobotQuestion model """
     robot_question_type = models.ForeignKey(RobotQuestionType, on_delete=models.CASCADE)
     text = models.CharField(max_length=700, unique=True)
 
@@ -31,6 +33,7 @@ class RobotQuestion(models.Model):
 
 
 class RobotAdvices(models.Model):
+    """ RobotAdvices model """
     robot_advice_type = models.ForeignKey(RobotAdviceType, on_delete=models.CASCADE)
     text = models.CharField(max_length=1700, unique=True)
 
@@ -39,6 +42,7 @@ class RobotAdvices(models.Model):
 
 
 class UserAnswer(models.Model):
+    """ UserAnswer model """
     discussion_space = models.ManyToManyField(RobotQuestion, through='DiscussionSpace')
     text = models.CharField(max_length=200, null=True, unique=True)
 
@@ -47,6 +51,7 @@ class UserAnswer(models.Model):
 
 
 class DiscussionSpace(models.Model):
+    """ DiscussionSpace model """
     user_answer = models.ForeignKey(UserAnswer, on_delete=models.CASCADE, null=True)
     robot_question = models.ForeignKey(RobotQuestion, on_delete=models.CASCADE)
     robot_advices = models.ForeignKey(RobotAdvices, on_delete=models.CASCADE, null=True)
