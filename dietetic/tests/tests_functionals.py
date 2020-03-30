@@ -434,7 +434,7 @@ class TestsFunctionals(StaticLiveServerTestCase):
         # login user
         self.login_user(user_data)
 
-        # access dietetic space page
+        # access result page
         self.browser.find_element_by_id("poll").click()
 
         # check graphic is display
