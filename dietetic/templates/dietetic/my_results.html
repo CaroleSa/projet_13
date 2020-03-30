@@ -2,9 +2,12 @@
 
 
 {% block informations %}
+
 <div class="row">
     <div class="col-lg-offset-1 col-lg-10" id="my_results">
         <div class="row">
+
+            <!-- User's results text -->
             <div id="text_my_results">
                 <p id="starting_date">Suivi démarré le <strong>{{ starting_date }}</strong></p></br>
                 <p id="starting_goal_weight">Poids de départ : {{ starting_weight }} kg</br>Poids d'objectif : {{ final_weight }} kg</p></br>
@@ -18,11 +21,15 @@
                     <p id="no_results">Pas de résultats pour le moment.<br>Suis l'évolution de ton poids sur un graphique dès la semaine prochaine.</p>
                 {% endif %}
             </div>
+
+            <!-- Graphic : contains user's results -->
                 {% if display_info == True %}
             <div id="graphic_my_results">
                 {% endif %}
             </div>
+
         </div>
     </div>
 </div>
+
 {% endblock %}
