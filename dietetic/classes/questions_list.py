@@ -5,14 +5,18 @@
 
 # Imports
 from dietetic.models import DiscussionSpace, RobotQuestion
+# pylint: disable=no-member
 
 
 class QuestionsList:
+    """ QuestionsList class """
 
-    def create_questions_id_list(self):
-        """ create a list : robot questions
-        by order discussion_space id """
-
+    @classmethod
+    def create_questions_id_list(cls):
+        """
+        create a list : robot questions
+        by order discussion_space id
+        """
         data = DiscussionSpace.objects.values_list("robot_question").order_by("id")
         list_data = []
         for elt in data:
@@ -23,10 +27,10 @@ class QuestionsList:
                 id_question_list.append(i)
 
         id_question_by_type_list = []
-        for id in id_question_list:
-            question = RobotQuestion.objects.get(id=id)
-            type = question.robot_question_type.type
-            if type == "start":
-                id_question_by_type_list.append(id)
+        for id_question in id_question_list:
+            question = RobotQuestion.objects.get(id=id_question)
+            question_type = question.robot_question_type.type
+            if question_type == "start":
+                id_question_by_type_list.append(id_question)
 
         return id_question_by_type_list
