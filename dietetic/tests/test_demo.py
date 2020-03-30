@@ -8,18 +8,18 @@ import random
 from datetime import date, timedelta
 import time
 import locale
-locale.setlocale(locale.LC_ALL, 'fr_FR.UTF-8')
-'fr_FR'
-from account.models import HistoryUser, ProfileUser, ResultsUser, IdentityUser, StatusUser
-from dietetic.models import DiscussionSpace, RobotQuestionType, RobotQuestion, UserAnswer
-from dietetic.classes.weight_advice_goal import WeightAdviceGoal
-from dietetic.classes.calculation import Calculation
+from psycopg2.errors import UniqueViolation
 from django.contrib.staticfiles.testing import StaticLiveServerTestCase
 from django.contrib.auth import get_user_model
 from django.db.utils import IntegrityError
 from django.db import connection
 from selenium import webdriver, common
-from psycopg2.errors import UniqueViolation
+from account.models import HistoryUser, ProfileUser, ResultsUser, StatusUser
+from dietetic.models import DiscussionSpace, RobotQuestion, UserAnswer
+from dietetic.classes.weight_advice_goal import WeightAdviceGoal
+from dietetic.classes.calculation import Calculation
+locale.setlocale(locale.LC_ALL, 'fr_FR.UTF-8')
+# pylint: disable=no-member
 
 
 class TestDemo(StaticLiveServerTestCase):
@@ -28,10 +28,12 @@ class TestDemo(StaticLiveServerTestCase):
     fixtures = ['data.json']
 
     def setUp(self):
-        self.user = get_user_model()
         self.browser = webdriver.Firefox()
         self.browser.set_window_size(1600, 900)
+
         self.cursor = connection.cursor()
+
+        self.user = get_user_model()
         self.new_weight_advice_goal = WeightAdviceGoal()
         self.new_calculation = Calculation()
         self.question = ""
@@ -132,7 +134,8 @@ class TestDemo(StaticLiveServerTestCase):
         the user accesses
         to the account page
         """
-        # login and create account user
+        # access to the login
+        # and create account nav
         self.browser.get(self.live_server_url + "/account/login/")
         time.sleep(5)
         self.browser.find_element_by_id("create_account").click()
@@ -144,13 +147,13 @@ class TestDemo(StaticLiveServerTestCase):
         data_user = self.create_user_not_start_program()[1]
         self.login_user(data_user)
 
-        # test access user page
+        # access my account page
         self.browser.find_element_by_id("user").click()
         time.sleep(3)
         self.browser.find_element_by_id("key").click()
         time.sleep(3)
 
-        # test access discussion space page
+        # access discussion space page
         self.browser.find_element_by_id("clipboard").click()
         time.sleep(3)
 
@@ -169,9 +172,8 @@ class TestDemo(StaticLiveServerTestCase):
                 number_answers = DiscussionSpace.objects.values_list("user_answer").filter(
                     robot_question=id_robot_question).order_by("id").count()
                 number = random.randint(0, number_answers - 1)
-                user_answer_id = \
-                    DiscussionSpace.objects.values_list("user_answer").filter(robot_question=id_robot_question)[number][
-                        0]
+                user_answer = DiscussionSpace.objects.values_list("user_answer")
+                user_answer_id = user_answer.filter(robot_question=id_robot_question)[number][0]
                 user_answer_text = UserAnswer.objects.values_list("text").get(id=user_answer_id)[0]
                 self.browser.find_element_by_id(user_answer_text).click()
                 self.browser.find_element_by_id("validate_button").click()
@@ -180,7 +182,8 @@ class TestDemo(StaticLiveServerTestCase):
                 break
 
         # user writes this goal weight, ...
-        dict_data = {"height": "1,60", "actual_weight": "60", "cruising_weight": "50", "weight_goal": "50"}
+        dict_data = {"height": "1,60", "actual_weight": "60",
+                     "cruising_weight": "50", "weight_goal": "50"}
         for key, value in dict_data.items():
             time.sleep(1)
             self.browser.find_element_by_id(key).send_keys(value)
@@ -188,9 +191,12 @@ class TestDemo(StaticLiveServerTestCase):
         self.browser.find_element_by_id("validate_goal").click()
         time.sleep(10)
 
-        # check the elements display
+        # display the first challenge
         self.browser.find_element_by_id("card").click()
         time.sleep(5)
+
+        # access to the results
+        # and program pages
         self.browser.find_element_by_id("poll").click()
         time.sleep(10)
         self.browser.find_element_by_id("program").click()
@@ -206,11 +212,11 @@ class TestDemo(StaticLiveServerTestCase):
         data_user = self.create_user_4_days_ago()[1]
         self.login_user(data_user)
 
-        # test access discussion space page
+        # access discussion space page
         self.browser.find_element_by_id("clipboard").click()
         time.sleep(5)
 
-        # check the elements display
+        # display actual challenge
         self.browser.find_element_by_id("card").click()
         time.sleep(5)
 
@@ -224,21 +230,21 @@ class TestDemo(StaticLiveServerTestCase):
         data_user = self.create_user_one_week_ago()[1]
         self.login_user(data_user)
 
-        # test access discussion space page
+        # access discussion space page
         self.browser.find_element_by_id("clipboard").click()
         time.sleep(5)
 
-        # check user writes this weekly weight
+        # user writes this weekly weight
         self.browser.find_element_by_id("weekly_weight").send_keys("95")
         time.sleep(2)
         self.browser.find_element_by_id("validate_weekly_weight").click()
         time.sleep(5)
 
-        # check challenge value
+        # display new challenge
         self.browser.find_element_by_id("card").click()
         time.sleep(10)
 
-        # check the results page
+        # access to the results page
         self.browser.find_element_by_id("poll").click()
         time.sleep(10)
 
@@ -251,17 +257,16 @@ class TestDemo(StaticLiveServerTestCase):
         data_user = self.create_user_one_week_ago()[1]
         self.login_user(data_user)
 
-        # test access discussion space page
+        # access discussion space page
         self.browser.find_element_by_id("clipboard").click()
         time.sleep(5)
 
-        # check user writes this weekly weight
+        # user writes this weekly weight
         self.browser.find_element_by_id("weekly_weight").send_keys("50")
         time.sleep(2)
         self.browser.find_element_by_id("validate_weekly_weight").click()
         time.sleep(5)
 
-        # check discussion space value
+        # access to the discussion space page
         self.browser.find_element_by_id("clipboard").click()
         time.sleep(3)
-
