@@ -182,16 +182,17 @@ class Controller:
                     text = advice + start_text_end
 
                     # save user's data
-                    user = get_user_model()
                     context = {}
                     try:
+                        user = get_user_model()
                         user = user.objects.get(id=id_user)
                         ProfileUser.objects.values_list("starting_weight").get(user=user)[0]
-                        text = "Ton premier objectif de poids a déjà été défini à - " \
-                               + str(goal) + " kg."
+                        text = "Ton premier objectif de poids a déjà " \
+                               "été défini à - " + str(goal) + " kg."
                         context["robot_answer"] = text
 
                     except ProfileUser.DoesNotExist:
+                        user = get_user_model()
                         user = user.objects.get(id=id_user)
                         ProfileUser.objects.create(user=user, starting_weight=actual_weight,
                                                    actual_goal_weight=goal,
