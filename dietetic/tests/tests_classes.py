@@ -57,8 +57,8 @@ class TestsReturnWeightAdvicesGoal(TestCase):
 
         advice = "Chaque personne a un poids d'équilibre sur lequel il peut rester longtemps, " \
                  "c'est se qu'on appelle le poids de croisière. Il semble que ton objectif " \
-                 "aille en dessous de ce poids. Je tiens donc à te préciser qu'il est" \
-                 "possible que tu n'arrives pas à le maintenir sur la durée." \
+                 "aille en dessous de ce poids. Je tiens donc à te préciser qu'il est " \
+                 "possible que tu n'arrives pas à le maintenir sur la durée. " \
                  "Je note tout de même cet objectif. "
 
         self.assertEqual(return_advice, advice)
