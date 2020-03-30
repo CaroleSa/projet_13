@@ -9,10 +9,11 @@ import locale
 from datetime import datetime, timedelta
 from django.db import connection
 from django.contrib.auth import get_user_model
+from account.models import HistoryUser, ProfileUser, ResultsUser, IdentityUser
 from dietetic.models import RobotAdvices, DiscussionSpace, RobotQuestion, \
     RobotQuestionType, UserAnswer, RobotAdviceType
-from account.models import HistoryUser, ProfileUser, ResultsUser, IdentityUser
-from dietetic.classes import questions_list, weight_advice_goal
+from dietetic.classes.questions_list import QuestionsList
+from dietetic.classes.weight_advice_goal import WeightAdviceGoal
 locale.setlocale(locale.LC_ALL, 'fr_FR.UTF-8')
 # pylint: disable=no-member
 
@@ -21,8 +22,8 @@ class Controller:
     """ Controller class """
 
     def __init__(self):
-        self.new_questions_list = questions_list.QuestionsList()
-        self.new_weight_advice_goal = weight_advice_goal.WeightAdviceGoal()
+        self.new_questions_list = QuestionsList()
+        self.new_weight_advice_goal = WeightAdviceGoal()
         self.cursor = connection.cursor()
         self.new_week = False
         self.end_questions_start = False
@@ -187,7 +188,6 @@ class Controller:
                     start_text_end = text.get(robot_question_type=id_type)[0]
                     text = advice + start_text_end
 
-                    # save user's data
                     context = {}
                     try:
                         user = get_user_model()
@@ -197,6 +197,7 @@ class Controller:
                                "été défini à - " + str(goal) + " kg."
                         context["robot_answer"] = text
 
+                    # save user's data
                     except ProfileUser.DoesNotExist:
                         user = get_user_model()
                         user = user.objects.get(id=id_user)
