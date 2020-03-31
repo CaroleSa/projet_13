@@ -1,3 +1,6 @@
+#! /usr/bin/env python3
+# coding: UTF-8
+
 """
 ASGI config for dietetic_project project.
 
@@ -7,6 +10,7 @@ For more information on this file, see
 https://docs.djangoproject.com/en/3.0/howto/deployment/asgi/
 """
 
+# imports
 import os
 
 from django.core.asgi import get_asgi_application

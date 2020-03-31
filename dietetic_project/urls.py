@@ -1,3 +1,6 @@
+#! /usr/bin/env python3
+# coding: UTF-8
+
 """dietetic_project URL Configuration
 
 The `urlpatterns` list routes URLs to views. For more information please see:
@@ -13,6 +16,8 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
+
+# imports
 from django.contrib import admin
 from django.urls import include, path
 from django.conf.urls import url
@@ -26,7 +31,6 @@ urlpatterns = [
     url(r'^dietetic/', include('dietetic.urls', namespace='dietetic')),
     path('admin/', admin.site.urls)
 ]
-
 
 if settings.DEBUG:
     import debug_toolbar
