@@ -9,7 +9,7 @@ TestsCalculation class
 """
 
 # imports
-from datetime import datetime, date, timedelta
+from datetime import date, timedelta
 import calendar
 import locale
 from psycopg2.errors import UniqueViolation
@@ -431,10 +431,8 @@ class TestsController(TestCase):
         HistoryUser.objects.create(user=user_created)
         StatusUser.objects.create(user=user_created)
         list_advice_id = [1, 5, 10]
-        for id_advice in list_advice_id:
-            self.cursor.execute("INSERT INTO account_identityuser_advices_to_user "
-                                "(identityuser_id, robotadvices_id) "
-                                "VALUES ({}, {})".format(user_created.id, id_advice))
+        self.add_advice_to_user_created(user_created.id, list_advice_id)
+
         return user_created
 
     def create_user_start_program_number_days_ago(self, number_days):
@@ -450,21 +448,32 @@ class TestsController(TestCase):
         HistoryUser.objects.create(user=user_created)
         StatusUser.objects.create(user=user_created)
         list_advice_id = [1, 5, 10, 15, 17, 21, 24]
-        for id_advice in list_advice_id:
-            self.cursor.execute("INSERT INTO account_identityuser_advices_to_user "
-                                "(identityuser_id, robotadvices_id) "
-                                "VALUES ({}, {})".format(user_created.id, id_advice))
-        ProfileUser.objects.create(user=user_created, starting_weight=60,
+        self.add_advice_to_user_created(user_created.id, list_advice_id)
+        weight = 60
+        ProfileUser.objects.create(user=user_created, starting_weight=weight,
                                    actual_goal_weight=10, final_weight=50)
-        present = datetime.now()
-        present_date = present.date()
-        weighing_date = present_date - timedelta(days=number_days)
-        ResultsUser.objects.create(user=user_created, weighing_date=weighing_date, weight=60)
+        self.add_user_results(number_days, user_created, weight)
         user = HistoryUser.objects.get(user=user_created)
         user.start_questionnaire_completed = True
         user.save()
 
         return user_created
+
+    @classmethod
+    def add_user_results(cls, number_days, user_created, weight):
+        """ add user's results """
+        if number_days < 7:
+            ResultsUser.objects.create(user=user_created, weight=weight)
+        else:
+            number_week = number_days / 7
+            number_week_list = list(range(1, int(number_week) + 1))
+            last_weight = weight - int(number_week)
+            for elt in number_week_list:
+                days = elt * 7
+                weighing_date = date.today() - timedelta(days=int(days))
+                ResultsUser.objects.create(user=user_created,
+                                           weighing_date=weighing_date,
+                                           weight=last_weight + elt)
 
     def create_user_start_program_advices_list_empty(self):
         """
@@ -480,12 +489,10 @@ class TestsController(TestCase):
                                                      email=email, password=password)
         HistoryUser.objects.create(user=user_created)
         StatusUser.objects.create(user=user_created)
-        ProfileUser.objects.create(user=user_created, starting_weight=60,
+        weight = 60
+        ProfileUser.objects.create(user=user_created, starting_weight=weight,
                                    actual_goal_weight=10, final_weight=50)
-        present = datetime.now()
-        present_date = present.date()
-        weighing_date = present_date - timedelta(days=14)
-        ResultsUser.objects.create(user=user_created, weighing_date=weighing_date, weight=60)
+        self.add_user_results(50, user_created, weight)
         user = HistoryUser.objects.get(user=user_created)
         user.start_questionnaire_completed = True
         user.save()
