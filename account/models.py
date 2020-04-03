@@ -72,6 +72,13 @@ class IdentityUser(AbstractBaseUser):
                                               related_query_name='user',
                                               to='auth.Permission',
                                               verbose_name='user permissions')
+    groups = models.ManyToManyField(blank=True, help_text='The groups this user belongs to. '
+                                                          'A user will get all permissions granted '
+                                                          'to each of their groups.',
+                                    related_name='user_set',
+                                    related_query_name='user',
+                                    to='auth.Group',
+                                    verbose_name='groups')
 
     def has_perm(self, perm, obj=None):
         return self.is_superuser
@@ -89,14 +96,6 @@ class IdentityUser(AbstractBaseUser):
 class StatusUser(models.Model):
     """ StatusUser model """
     user = models.OneToOneField(IdentityUser, on_delete=models.CASCADE)
-    groups = models.ManyToManyField(blank=True, help_text='The groups this user belongs to. '
-                                                          'A user will get all permissions granted '
-                                                          'to each of their groups.',
-                                    related_name='user_set',
-                                    related_query_name='user',
-                                    to='auth.Group',
-                                    verbose_name='groups')
-
     is_active = models.BooleanField(default=True, help_text='Designates whether this user should '
                                                             'be treated as active. '
                                                             'Unselect this instead '
