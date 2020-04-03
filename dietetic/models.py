@@ -14,6 +14,9 @@ class RobotQuestionType(models.Model):
     def __str__(self):
         return self.type
 
+    class Meta:
+        verbose_name = "Type de question"
+
 
 class RobotAdviceType(models.Model):
     """ RobotAdviceType model """
@@ -22,6 +25,8 @@ class RobotAdviceType(models.Model):
     def __str__(self):
         return self.type
 
+    class Meta:
+        verbose_name = "Type de conseil"
 
 class RobotQuestion(models.Model):
     """ RobotQuestion model """
@@ -30,6 +35,9 @@ class RobotQuestion(models.Model):
 
     def __str__(self):
         return self.text
+
+    class Meta:
+        verbose_name = "Question"
 
 
 class RobotAdvices(models.Model):
@@ -40,6 +48,9 @@ class RobotAdvices(models.Model):
     def __str__(self):
         return self.text
 
+    class Meta:
+        verbose_name = "Conseil"
+
 
 class UserAnswer(models.Model):
     """ UserAnswer model """
@@ -48,6 +59,9 @@ class UserAnswer(models.Model):
 
     def __str__(self):
         return self.text
+
+    class Meta:
+        verbose_name = "Réponse"
 
 
 class DiscussionSpace(models.Model):
@@ -62,3 +76,6 @@ class DiscussionSpace(models.Model):
 
     def __str__(self):
         return self.robot_answer
+
+    class Meta:
+        verbose_name = "Echange"
