@@ -14,16 +14,15 @@ $card.css('background-image', "url('../../static/dietetic/img/back_face.jpg')");
 //     logo nav animation
 
 const color = {
-  	user: ["/account/my_account/", "52, 151, 49"],
-  	poll: ["/dietetic/my_results/", "222, 32, 101"],
-  	home: ["/", "31, 148, 229"],
-  	clipboard: ["/dietetic/dietetic_space/", "236, 131, 19"],
-  	program: ["/dietetic/program/", "190, 120, 50"]
+  	user: ["#my_account", "52, 151, 49"],
+  	poll: ["#my_results", "222, 32, 101"],
+  	home: ["#home_text", "31, 148, 229"],
+  	clipboard: ["#discussion_space", "236, 131, 19"],
+  	program: ["#my_program", "190, 120, 50"]
 };
 for (const elt in color){
-    var $logo_url = color[elt][0];
-    var $url = window.location.pathname;
-    if ($url == $logo_url) {
+    var $element = $(color[elt][0]);
+    if ($element.css('visibility') == "visible") {
         var $logo = $("#"+elt+"");
   	    var $color = color[elt][1];
   	    $logo.css('color', "rgb("+$color+")");
