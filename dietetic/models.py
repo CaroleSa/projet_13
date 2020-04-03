@@ -9,7 +9,7 @@ from django.db import models
 
 class RobotQuestionType(models.Model):
     """ RobotQuestionType model """
-    type = models.CharField(max_length=20, unique=True)
+    type = models.CharField(max_length=20, unique=True, verbose_name="type de question")
 
     def __str__(self):
         return self.type
@@ -20,7 +20,7 @@ class RobotQuestionType(models.Model):
 
 class RobotAdviceType(models.Model):
     """ RobotAdviceType model """
-    type = models.CharField(max_length=20, unique=True)
+    type = models.CharField(max_length=20, unique=True, verbose_name="type de conseil")
 
     def __str__(self):
         return self.type
@@ -28,10 +28,12 @@ class RobotAdviceType(models.Model):
     class Meta:
         verbose_name = "Type de conseil"
 
+
 class RobotQuestion(models.Model):
     """ RobotQuestion model """
-    robot_question_type = models.ForeignKey(RobotQuestionType, on_delete=models.CASCADE)
-    text = models.CharField(max_length=700, unique=True)
+    robot_question_type = models.ForeignKey(RobotQuestionType, on_delete=models.CASCADE,
+                                            verbose_name="type de question")
+    text = models.CharField(max_length=700, unique=True, verbose_name="question du robot")
 
     def __str__(self):
         return self.text
@@ -42,8 +44,10 @@ class RobotQuestion(models.Model):
 
 class RobotAdvices(models.Model):
     """ RobotAdvices model """
-    robot_advice_type = models.ForeignKey(RobotAdviceType, on_delete=models.CASCADE)
-    text = models.CharField(max_length=1700, unique=True)
+    robot_advice_type = models.ForeignKey(RobotAdviceType, on_delete=models.CASCADE,
+                                          verbose_name="type de conseil")
+    text = models.CharField(max_length=1700, unique=True,
+                            verbose_name="conseil du robot")
 
     def __str__(self):
         return self.text
@@ -55,7 +59,8 @@ class RobotAdvices(models.Model):
 class UserAnswer(models.Model):
     """ UserAnswer model """
     discussion_space = models.ManyToManyField(RobotQuestion, through='DiscussionSpace')
-    text = models.CharField(max_length=200, null=True, unique=True)
+    text = models.CharField(max_length=200, null=True, unique=True,
+                            verbose_name="réponse de l'utilisateur")
 
     def __str__(self):
         return self.text
@@ -66,10 +71,14 @@ class UserAnswer(models.Model):
 
 class DiscussionSpace(models.Model):
     """ DiscussionSpace model """
-    user_answer = models.ForeignKey(UserAnswer, on_delete=models.CASCADE, null=True)
-    robot_question = models.ForeignKey(RobotQuestion, on_delete=models.CASCADE)
-    robot_advices = models.ForeignKey(RobotAdvices, on_delete=models.CASCADE, null=True)
-    robot_answer = models.CharField(max_length=700, null=True)
+    user_answer = models.ForeignKey(UserAnswer, on_delete=models.CASCADE, null=True,
+                                    verbose_name="réponse de l'utilisateur")
+    robot_question = models.ForeignKey(RobotQuestion, on_delete=models.CASCADE,
+                                       verbose_name="question du robot")
+    robot_advices = models.ForeignKey(RobotAdvices, on_delete=models.CASCADE, null=True,
+                                      verbose_name="conseil du robot")
+    robot_answer = models.CharField(max_length=700, null=True,
+                                    verbose_name="réponse du robot")
 
     class Meta:
         unique_together = (("user_answer", "robot_question"),)
