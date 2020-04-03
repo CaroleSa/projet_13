@@ -57,7 +57,7 @@ class IdentityUser(AbstractBaseUser):
     email = models.EmailField(max_length=254, unique=True, verbose_name='email address')
     password = models.CharField(max_length=128, verbose_name='password')
     last_login = models.DateTimeField(blank=True, null=True, verbose_name='last login')
-    advices_to_user = models.ManyToManyField(RobotAdvices)
+    advices_to_user = models.ManyToManyField(RobotAdvices, verbose_name="conseils pour l'utilisateur")
     is_staff = models.BooleanField(default=False, help_text='Designates whether the user '
                                                             'can log into this admin site.',
                                    verbose_name='staff status')
