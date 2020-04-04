@@ -103,6 +103,7 @@ class AdvicesToUser(models.Model):
     class Meta:
         """ Meta class """
         verbose_name = "A destination de l'utilisateur : conseil"
+        unique_together = (("user", "advice"),)
 
 
 class StatusUser(models.Model):
