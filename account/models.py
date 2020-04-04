@@ -128,9 +128,6 @@ class HistoryUser(models.Model):
     start_questionnaire_completed = models.BooleanField(default=False,
                                                         verbose_name='questionnaire validé')
 
-    def __str__(self):
-        return self.date_joined
-
     class Meta:
         """ Meta class """
         verbose_name = "Historique utilisateur"
@@ -146,9 +143,6 @@ class ProfileUser(models.Model):
     final_weight = models.DecimalField(max_digits=4, decimal_places=1, null=True,
                                        verbose_name="poids d'objectif")
 
-    def __str__(self):
-        return self.starting_weight, self.final_weight
-
     class Meta:
         """ Meta class """
         verbose_name = "Profil utilisateur"
@@ -159,9 +153,6 @@ class ResultsUser(models.Model):
     user = models.ForeignKey(IdentityUser, on_delete=models.CASCADE, verbose_name='utilisateur')
     weighing_date = models.DateField(default=date.today, null=True, verbose_name='date de pesée')
     weight = models.DecimalField(max_digits=4, decimal_places=1, null=True, verbose_name='poids')
-
-    def __str__(self):
-        return self.weighing_date, self.weight
 
     class Meta:
         """ Meta class """
