@@ -93,6 +93,7 @@ class IdentityUser(AbstractBaseUser):
     objects = UserManager()
 
     class Meta:
+        """ Meta class """
         verbose_name = "Identité utilisateur"
 
 
@@ -104,19 +105,23 @@ class AdvicesToUser(models.Model):
                                verbose_name='conseil')
 
     class Meta:
+        """ Meta class """
         verbose_name = "A destination de l'utilisateur : conseil"
 
 
 class StatusUser(models.Model):
     """ StatusUser model """
-    user = models.OneToOneField(IdentityUser, on_delete=models.CASCADE, verbose_name='utilisateur')
-    is_active = models.BooleanField(default=True, help_text='Designates whether this user should '
-                                                            'be treated as active. '
-                                                            'Unselect this instead '
-                                                            'of deleting accounts.',
+    user = models.OneToOneField(IdentityUser, on_delete=models.CASCADE,
+                                verbose_name='utilisateur')
+    is_active = models.BooleanField(default=True,
+                                    help_text='Designates whether this '
+                                              'user should be treated as '
+                                              'active. Unselect this instead '
+                                              'of deleting accounts.',
                                     verbose_name='est actif')
 
     class Meta:
+        """ Meta class """
         verbose_name = "Statut utilisateur"
 
 
@@ -124,26 +129,32 @@ class HistoryUser(models.Model):
     """ HistoryUser model """
     user = models.OneToOneField(IdentityUser, on_delete=models.CASCADE, verbose_name='utilisateur')
     date_joined = models.DateTimeField(default=now, verbose_name='date de création')
-    start_questionnaire_completed = models.BooleanField(default=False, verbose_name='questionnaire validé')
+    start_questionnaire_completed = models.BooleanField(default=False,
+                                                        verbose_name='questionnaire validé')
 
     def __str__(self):
         return self.date_joined
 
     class Meta:
+        """ Meta class """
         verbose_name = "Historique utilisateur"
 
 
 class ProfileUser(models.Model):
     """ ProfileUser model """
     user = models.OneToOneField(IdentityUser, on_delete=models.CASCADE, verbose_name='utilisateur')
-    starting_weight = models.DecimalField(max_digits=4, decimal_places=1, null=True, verbose_name='poids de démarrage')
-    actual_goal_weight = models.DecimalField(max_digits=4, decimal_places=1, null=True, verbose_name="poids total à perdre")
-    final_weight = models.DecimalField(max_digits=4, decimal_places=1, null=True, verbose_name="poids d'objectif")
+    starting_weight = models.DecimalField(max_digits=4, decimal_places=1, null=True,
+                                          verbose_name='poids de démarrage')
+    actual_goal_weight = models.DecimalField(max_digits=4, decimal_places=1, null=True,
+                                             verbose_name="poids total à perdre")
+    final_weight = models.DecimalField(max_digits=4, decimal_places=1, null=True,
+                                       verbose_name="poids d'objectif")
 
     def __str__(self):
         return self.starting_weight, self.final_weight
 
     class Meta:
+        """ Meta class """
         verbose_name = "Profil utilisateur"
 
 
@@ -157,5 +168,6 @@ class ResultsUser(models.Model):
         return self.weighing_date, self.weight
 
     class Meta:
+        """ Meta class """
         unique_together = (("user", "weighing_date"),)
         verbose_name = "Résultats utilisateur"
