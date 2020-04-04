@@ -61,24 +61,20 @@ class IdentityUser(AbstractBaseUser):
     is_staff = models.BooleanField(default=False, help_text='Designates whether the user '
                                                             'can log into this admin site.',
                                    verbose_name='statut staff')
-    is_superuser = models.BooleanField(default=False,
-                                       help_text='Designates that this user has '
-                                                 'all permissions without '
-                                                 'explicitly assigning them.',
+    is_superuser = models.BooleanField(default=False, help_text='Designates that this user has '
+                                                                'all permissions without '
+                                                                'explicitly assigning them.',
                                        verbose_name='statut super-utilisateur')
     user_permissions = models.ManyToManyField(blank=True,
                                               help_text='Specific permissions for this user.',
-                                              related_name='user_set',
-                                              related_query_name='user',
+                                              related_name='user_set', related_query_name='user',
                                               to='auth.Permission',
                                               verbose_name='permissions utilisateur')
     groups = models.ManyToManyField(blank=True, help_text='The groups this user belongs to. '
                                                           'A user will get all permissions granted '
                                                           'to each of their groups.',
-                                    related_name='user_set',
-                                    related_query_name='user',
-                                    to='auth.Group',
-                                    verbose_name='groupes')
+                                    related_name='user_set', related_query_name='user',
+                                    to='auth.Group', verbose_name='groupes')
 
     def has_perm(self, perm, obj=None):
         return self.is_superuser
@@ -98,7 +94,7 @@ class IdentityUser(AbstractBaseUser):
 
 
 class AdvicesToUser(models.Model):
-    """ AdvicesToUser class """
+    """ AdvicesToUser model """
     user = models.ForeignKey(IdentityUser, on_delete=models.CASCADE,
                              verbose_name='utilisateur')
     advice = models.ForeignKey(RobotAdvices, on_delete=models.CASCADE,
