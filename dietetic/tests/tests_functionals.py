@@ -16,7 +16,7 @@ from selenium import webdriver, common
 from account.models import HistoryUser, ProfileUser, ResultsUser, \
     StatusUser, AdvicesToUser
 from dietetic.models import DiscussionSpace, RobotQuestionType, \
-    RobotQuestion, UserAnswer
+    RobotQuestion, UserAnswer, RobotAdvices
 from dietetic.classes.weight_advice_goal import WeightAdviceGoal
 from dietetic.classes.calculation import Calculation
 locale.setlocale(locale.LC_ALL, 'fr_FR.UTF-8')
@@ -77,7 +77,8 @@ class TestsFunctionals(StaticLiveServerTestCase):
             user = HistoryUser.objects.get(user=user_created)
             user.start_questionnaire_completed = True
             user.save()
-            AdvicesToUser.objects.create(user=id_user, advice=1)
+            advice = RobotAdvices.objects.get(id=1)
+            AdvicesToUser.objects.create(user=user_created, advice=advice)
         except (UniqueViolation, IntegrityError):
             user_created = self.user.objects.get(id=id_user)
 
@@ -106,7 +107,8 @@ class TestsFunctionals(StaticLiveServerTestCase):
             user.save()
             list_advice_id = [1, 4]
             for id_advice in list_advice_id:
-                AdvicesToUser.objects.create(user=id_user, advice=id_advice)
+                advice = RobotAdvices.objects.get(id=id_advice)
+                AdvicesToUser.objects.create(user=user_created, advice=advice)
         except (UniqueViolation, IntegrityError):
             user_created = self.user.objects.get(id=id_user)
 
@@ -135,7 +137,8 @@ class TestsFunctionals(StaticLiveServerTestCase):
             user = HistoryUser.objects.get(user=user_created)
             user.start_questionnaire_completed = True
             user.save()
-            AdvicesToUser.objects.create(user=id_user, advice=1)
+            advice = RobotAdvices.objects.get(id=1)
+            AdvicesToUser.objects.create(user=user_created, advice=advice)
         except (UniqueViolation, IntegrityError):
             user_created = self.user.objects.get(id=id_user)
 
@@ -165,7 +168,8 @@ class TestsFunctionals(StaticLiveServerTestCase):
             user.save()
             list_advice_id = [1, 4]
             for id_advice in list_advice_id:
-                AdvicesToUser.objects.create(user=id_user, advice=id_advice)
+                advice = RobotAdvices.objects.get(id=id_advice)
+                AdvicesToUser.objects.create(user=user_created, advice=advice)
         except (UniqueViolation, IntegrityError):
             user_created = self.user.objects.get(id=id_user)
 

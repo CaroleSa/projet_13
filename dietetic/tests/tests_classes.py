@@ -280,7 +280,8 @@ class TestsCalculation(TestCase):
             user.save()
             list_advice_id = [1, 4, 8, 10]
             for id_advice in list_advice_id:
-                AdvicesToUser.objects.create(user=id_user, advice=id_advice)
+                advice = RobotAdvices.objects.get(id=id_advice)
+                AdvicesToUser.objects.create(user=user_created, advice=advice)
         except (UniqueViolation, IntegrityError):
             user_created = self.user.objects.get(id=id_user)
 
@@ -427,7 +428,7 @@ class TestsController(TestCase):
         HistoryUser.objects.create(user=user_created)
         StatusUser.objects.create(user=user_created)
         list_advice_id = [1, 5, 10]
-        self.add_advice_to_user_created(user_created.id, list_advice_id)
+        self.add_advice_to_user_created(user_created, list_advice_id)
 
         return user_created
 
@@ -444,7 +445,7 @@ class TestsController(TestCase):
         HistoryUser.objects.create(user=user_created)
         StatusUser.objects.create(user=user_created)
         list_advice_id = [1, 5, 10, 15, 17, 21, 24]
-        self.add_advice_to_user_created(user_created.id, list_advice_id)
+        self.add_advice_to_user_created(user_created, list_advice_id)
         weight = 60
         ProfileUser.objects.create(user=user_created, starting_weight=weight,
                                    actual_goal_weight=10, final_weight=50)
@@ -496,13 +497,14 @@ class TestsController(TestCase):
         return user_created
 
     @classmethod
-    def add_advice_to_user_created(cls, id_user, list_advice_id):
+    def add_advice_to_user_created(cls, user, list_advice_id):
         """
         add new advices
         to the user
         """
         for id_advice in list_advice_id:
-            AdvicesToUser.objects.create(user=id_user, advice=id_advice)
+            advice = RobotAdvices.objects.get(id=id_advice)
+            AdvicesToUser.objects.create(user=user, advice=advice)
 
     def test_parser_weight(self):
         """ test parser_weight method """
@@ -734,7 +736,7 @@ class TestsController(TestCase):
                     .filter(robot_question=id_question)[0][0]
                 old_question_id = id_question
         list_advice_id = [advice_to_add]
-        self.add_advice_to_user_created(user_created.id, list_advice_id)
+        self.add_advice_to_user_created(user_created, list_advice_id)
 
         # get the user's advices
         # before called the method

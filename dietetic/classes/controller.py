@@ -9,7 +9,7 @@ import locale
 from datetime import datetime, timedelta
 from django.contrib.auth import get_user_model
 from account.models import HistoryUser, ProfileUser, ResultsUser, \
-    IdentityUser, AdvicesToUser
+    AdvicesToUser
 from dietetic.models import RobotAdvices, DiscussionSpace, RobotQuestion, \
     RobotQuestionType, UserAnswer, RobotAdviceType
 from dietetic.classes.questions_list import QuestionsList
@@ -24,6 +24,7 @@ class Controller:
     def __init__(self):
         self.new_questions_list = QuestionsList()
         self.new_weight_advice_goal = WeightAdviceGoal()
+        self.user = get_user_model()
         self.new_week = False
         self.end_questions_start = False
         self.end = False
@@ -46,7 +47,7 @@ class Controller:
         start_questionnaire_completed = HistoryUser.objects\
             .values_list("start_questionnaire_completed")
         start_questionnaire_completed = start_questionnaire_completed.get(user=id_user)[0]
-        user = IdentityUser.objects.get(id=id_user)
+        user = self.user.objects.get(id=id_user)
         advice_to_user = user.advices_to_user.all().count()
         context = {}
 
@@ -74,6 +75,7 @@ class Controller:
             # return next advice
             if self.end is False:
                 if advice_to_user == 1:
+
                     self.add_advices_to_user(id_user)
                 context["advice"] = self.return_weekly_advice(id_user)
 
@@ -230,7 +232,7 @@ class Controller:
         if id_advice is not None:
 
             # get user's advices list
-            user = IdentityUser.objects.get(id=id_user)
+            user = self.user.objects.get(id=id_user)
             advices_user_id = user.advices_to_user.values_list("id")
 
             # get advices by question
@@ -247,7 +249,8 @@ class Controller:
                         user.advices_to_user.remove(advices_user)
 
             # add a new advice to user
-            AdvicesToUser.objects.create(user=id_user, advice=id_advice)
+            advice = RobotAdvices.objects.get(id=id_advice)
+            AdvicesToUser.objects.create(user=user, advice=advice)
 
     def return_weekly_advice(self, id_user):
         """
@@ -255,7 +258,7 @@ class Controller:
         weekly advice
         """
         # get user
-        user = IdentityUser.objects.get(id=id_user)
+        user = self.user.objects.get(id=id_user)
 
         # if it's a new week
         if self.new_week is True:
@@ -304,7 +307,7 @@ class Controller:
                     context["robot_comment"] = "J'ai bien pris note de ton poids, " \
                                                "tu trouveras un récapitulatif dans " \
                                                "l'onglet résultats."
-                    user = IdentityUser.objects.get(id=id_user)
+                    user = self.user.objects.get(id=id_user)
                     ResultsUser.objects.create(user=user, weight=weekly_weight)
                     self.new_week = True
 
@@ -328,8 +331,7 @@ class Controller:
 
         return context
 
-    @classmethod
-    def add_advices_to_user(cls, id_user):
+    def add_advices_to_user(self, id_user):
         """
         add new robot
         advices to user
@@ -340,7 +342,9 @@ class Controller:
 
         # add new advices to user
         for advice_id in advices_id:
-            AdvicesToUser.objects.create(user=id_user, advice=advice_id[0])
+            advice = RobotAdvices.objects.get(id=advice_id[0])
+            user = self.user.objects.get(id=id_user)
+            AdvicesToUser.objects.create(user=user, advice=advice)
 
     @classmethod
     def return_text_congratulations_restart_program(cls, id_user):
