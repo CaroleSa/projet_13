@@ -5,9 +5,16 @@
 
 # imports
 from django.contrib import admin
-from account.models import IdentityUser
+from account.models import IdentityUser, AdvicesToUser
 
 
 @admin.register(IdentityUser)
 class CustomUserAdmin(admin.ModelAdmin):
     pass
+
+
+class ProductAdmin(admin.ModelAdmin):
+    list_display = ["user", "advice"]
+
+
+admin.site.register(AdvicesToUser, ProductAdmin)

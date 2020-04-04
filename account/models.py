@@ -53,32 +53,32 @@ class UserManager(BaseUserManager):
 class IdentityUser(AbstractBaseUser):
     """ IdentityUser model """
     username = models.CharField(max_length=150, validators=[UnicodeUsernameValidator()],
-                                verbose_name='username')
+                                verbose_name='pseudo')
     email = models.EmailField(max_length=254, unique=True, verbose_name='email address')
-    password = models.CharField(max_length=128, verbose_name='password')
-    last_login = models.DateTimeField(blank=True, null=True, verbose_name='last login')
-    advices_to_user = models.ManyToManyField(RobotAdvices, verbose_name="conseils pour l'utilisateur")
+    password = models.CharField(max_length=128, verbose_name='mot de passe')
+    last_login = models.DateTimeField(blank=True, null=True, verbose_name='dernière connexion')
+    advices_to_user = models.ManyToManyField(RobotAdvices, through="AdvicesToUser")
     is_staff = models.BooleanField(default=False, help_text='Designates whether the user '
                                                             'can log into this admin site.',
-                                   verbose_name='staff status')
+                                   verbose_name='statut staff')
     is_superuser = models.BooleanField(default=False,
                                        help_text='Designates that this user has '
                                                  'all permissions without '
                                                  'explicitly assigning them.',
-                                       verbose_name='superuser status')
+                                       verbose_name='statut super-utilisateur')
     user_permissions = models.ManyToManyField(blank=True,
                                               help_text='Specific permissions for this user.',
                                               related_name='user_set',
                                               related_query_name='user',
                                               to='auth.Permission',
-                                              verbose_name='user permissions')
+                                              verbose_name='permissions utilisateur')
     groups = models.ManyToManyField(blank=True, help_text='The groups this user belongs to. '
                                                           'A user will get all permissions granted '
                                                           'to each of their groups.',
                                     related_name='user_set',
                                     related_query_name='user',
                                     to='auth.Group',
-                                    verbose_name='groups')
+                                    verbose_name='groupes')
 
     def has_perm(self, perm, obj=None):
         return self.is_superuser
@@ -92,46 +92,70 @@ class IdentityUser(AbstractBaseUser):
 
     objects = UserManager()
 
+    class Meta:
+        verbose_name = "Identité utilisateur"
+
+
+class AdvicesToUser(models.Model):
+    """ AdvicesToUser class """
+    user = models.ForeignKey(IdentityUser, on_delete=models.CASCADE,
+                             verbose_name='utilisateur')
+    advice = models.ForeignKey(RobotAdvices, on_delete=models.CASCADE,
+                               verbose_name='conseil')
+
+    class Meta:
+        verbose_name = "A destination de l'utilisateur : conseil"
+
 
 class StatusUser(models.Model):
     """ StatusUser model """
-    user = models.OneToOneField(IdentityUser, on_delete=models.CASCADE)
+    user = models.OneToOneField(IdentityUser, on_delete=models.CASCADE, verbose_name='utilisateur')
     is_active = models.BooleanField(default=True, help_text='Designates whether this user should '
                                                             'be treated as active. '
                                                             'Unselect this instead '
                                                             'of deleting accounts.',
-                                    verbose_name='active')
+                                    verbose_name='est actif')
+
+    class Meta:
+        verbose_name = "Statut utilisateur"
 
 
 class HistoryUser(models.Model):
     """ HistoryUser model """
-    user = models.OneToOneField(IdentityUser, on_delete=models.CASCADE)
-    date_joined = models.DateTimeField(default=now, verbose_name='date joined')
-    start_questionnaire_completed = models.BooleanField(default=False)
+    user = models.OneToOneField(IdentityUser, on_delete=models.CASCADE, verbose_name='utilisateur')
+    date_joined = models.DateTimeField(default=now, verbose_name='date de création')
+    start_questionnaire_completed = models.BooleanField(default=False, verbose_name='questionnaire validé')
 
     def __str__(self):
         return self.date_joined
 
+    class Meta:
+        verbose_name = "Historique utilisateur"
+
 
 class ProfileUser(models.Model):
     """ ProfileUser model """
-    user = models.OneToOneField(IdentityUser, on_delete=models.CASCADE)
-    starting_weight = models.DecimalField(max_digits=4, decimal_places=1, null=True)
-    actual_goal_weight = models.DecimalField(max_digits=4, decimal_places=1, null=True)
-    final_weight = models.DecimalField(max_digits=4, decimal_places=1, null=True)
+    user = models.OneToOneField(IdentityUser, on_delete=models.CASCADE, verbose_name='utilisateur')
+    starting_weight = models.DecimalField(max_digits=4, decimal_places=1, null=True, verbose_name='poids de démarrage')
+    actual_goal_weight = models.DecimalField(max_digits=4, decimal_places=1, null=True, verbose_name="poids total à perdre")
+    final_weight = models.DecimalField(max_digits=4, decimal_places=1, null=True, verbose_name="poids d'objectif")
 
     def __str__(self):
         return self.starting_weight, self.final_weight
 
+    class Meta:
+        verbose_name = "Profil utilisateur"
+
 
 class ResultsUser(models.Model):
     """ ResultsUser model """
-    user = models.ForeignKey(IdentityUser, on_delete=models.CASCADE)
-    weighing_date = models.DateField(default=date.today, null=True)
-    weight = models.DecimalField(max_digits=4, decimal_places=1, null=True)
+    user = models.ForeignKey(IdentityUser, on_delete=models.CASCADE, verbose_name='utilisateur')
+    weighing_date = models.DateField(default=date.today, null=True, verbose_name='date de pesée')
+    weight = models.DecimalField(max_digits=4, decimal_places=1, null=True, verbose_name='poids')
 
     def __str__(self):
         return self.weighing_date, self.weight
 
     class Meta:
         unique_together = (("user", "weighing_date"),)
+        verbose_name = "Résultats utilisateur"
