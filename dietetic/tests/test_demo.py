@@ -15,7 +15,8 @@ from django.db.utils import IntegrityError
 from selenium import webdriver, common
 from account.models import HistoryUser, ProfileUser, ResultsUser, \
     StatusUser, AdvicesToUser
-from dietetic.models import DiscussionSpace, RobotQuestion, UserAnswer
+from dietetic.models import DiscussionSpace, RobotQuestion, UserAnswer, \
+    RobotAdvices
 from dietetic.classes.weight_advice_goal import WeightAdviceGoal
 from dietetic.classes.calculation import Calculation
 locale.setlocale(locale.LC_ALL, 'fr_FR.UTF-8')
@@ -78,7 +79,8 @@ class TestDemo(StaticLiveServerTestCase):
             user.save()
             list_advice_id = [1, 4]
             for id_advice in list_advice_id:
-                AdvicesToUser.objects.create(user=id_user, advice=id_advice)
+                advice = RobotAdvices.objects.get(id=id_advice)
+                AdvicesToUser.objects.create(user=user_created, advice=advice)
         except (UniqueViolation, IntegrityError):
             user_created = self.user.objects.get(id=id_user)
 
@@ -107,7 +109,8 @@ class TestDemo(StaticLiveServerTestCase):
             user.save()
             list_advice_id = [1, 4]
             for id_advice in list_advice_id:
-                AdvicesToUser.objects.create(user=id_user, advice=id_advice)
+                advice = RobotAdvices.objects.get(id=id_advice)
+                AdvicesToUser.objects.create(user=user_created, advice=advice)
         except (UniqueViolation, IntegrityError):
             user_created = self.user.objects.get(id=id_user)
 
