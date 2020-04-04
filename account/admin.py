@@ -5,11 +5,13 @@
 
 # imports
 from django.contrib import admin
-from account.models import IdentityUser, AdvicesToUser, StatusUser, \
+from django.contrib.auth import get_user_model
+from account.models import AdvicesToUser, StatusUser, \
     HistoryUser, ProfileUser, ResultsUser
 
 
-@admin.register(IdentityUser)
+user_model = get_user_model()
+@admin.register(user_model)
 class CustomUserAdmin(admin.ModelAdmin):
     """ CustomUserAdmin class """
     pass
