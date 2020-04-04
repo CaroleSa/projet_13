@@ -20,8 +20,9 @@ from dietetic.classes.weight_advice_goal import WeightAdviceGoal
 from dietetic.classes.questions_list import QuestionsList
 from dietetic.classes.calculation import Calculation
 from dietetic.classes.controller import Controller
-from dietetic.models import DiscussionSpace, RobotQuestion, RobotAdvices, UserAnswer
-from account.models import ProfileUser, ResultsUser, IdentityUser, StatusUser, \
+from dietetic.models import DiscussionSpace, RobotQuestion, \
+    RobotAdvices, UserAnswer
+from account.models import ProfileUser, ResultsUser, StatusUser, \
     HistoryUser, AdvicesToUser
 locale.setlocale(locale.LC_ALL, 'fr_FR.UTF-8')
 # pylint: disable=no-member
@@ -572,7 +573,7 @@ class TestsController(TestCase):
 
         # count the number of challenges
         # before a call to the method
-        user = IdentityUser.objects.get(id=user_created.id)
+        user = self.user.objects.get(id=user_created.id)
         advice_to_user_before = user.advices_to_user.all().count()
 
         # call method
@@ -649,7 +650,7 @@ class TestsController(TestCase):
         user_created = self.create_user_start_program_number_days_ago(7)
 
         # get user
-        user = IdentityUser.objects.get(id=user_created.id)
+        user = self.user.objects.get(id=user_created.id)
 
         # check the advice returned if new_week == False :
         # first challenge of the program
@@ -687,7 +688,7 @@ class TestsController(TestCase):
 
         # get the user's advices
         # before of called the method
-        user = IdentityUser.objects.get(id=user_created.id)
+        user = self.user.objects.get(id=user_created.id)
         advice_user_list_before = user.advices_to_user.values_list("id")\
             .order_by("robot_advice_type")
         number_advices_before = len(advice_user_list_before)
@@ -721,7 +722,7 @@ class TestsController(TestCase):
         user_created = self.create_new_user()
 
         # get the user
-        user = IdentityUser.objects.get(id=user_created.id)
+        user = self.user.objects.get(id=user_created.id)
 
         # test if the user answer to a question :
         # add a new advice to user
@@ -864,7 +865,7 @@ class TestsController(TestCase):
         user_created = self.create_new_user()
 
         # get user
-        user = IdentityUser.objects.get(id=user_created.id)
+        user = self.user.objects.get(id=user_created.id)
 
         # data
         data_dict = {"height": False, "actual_weight": False,
@@ -938,7 +939,7 @@ class TestsController(TestCase):
         user_created = self.create_new_user()
 
         # get user
-        user = IdentityUser.objects.get(id=user_created.id)
+        user = self.user.objects.get(id=user_created.id)
 
         # data
         data_dict = {"height": False, "actual_weight": False,
@@ -975,7 +976,7 @@ class TestsController(TestCase):
         user_created = self.create_new_user()
 
         # get user
-        user = IdentityUser.objects.get(id=user_created.id)
+        user = self.user.objects.get(id=user_created.id)
 
         # data
         data_dict = {"height": False, "actual_weight": False,
