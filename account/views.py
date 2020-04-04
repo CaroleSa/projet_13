@@ -8,9 +8,8 @@ import re
 import calendar
 import locale
 from django.shortcuts import render
-from django.contrib.auth import get_user_model, authenticate, logout
-from django.contrib.auth import login as auth_login
-from django.contrib.auth import update_session_auth_hash
+from django.contrib.auth import get_user_model, authenticate, logout, \
+    login as auth_login, update_session_auth_hash
 from .forms import CreateAccountForm
 from .models import HistoryUser, StatusUser
 locale.setlocale(locale.LC_ALL, 'fr_FR.UTF-8')
@@ -135,7 +134,7 @@ def my_account(request):
 
         # if the user clicks on the logo
         # "supprimer mon compte"
-        # user's account deactivate
+        # user's account is deactivate
         delete_account = request.POST.get('delete_account', 'False')
         if delete_account == 'True':
             user = StatusUser.objects.get(user=request.user.id)
