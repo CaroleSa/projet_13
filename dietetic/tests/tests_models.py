@@ -120,7 +120,8 @@ class TestsModels(TestCase):
         Test add advice
         and get advices to user
         """
-        AdvicesToUser.objects.create(user=self.user_created, advice=self.advice_id)
+        advice = RobotAdvices.objects.get(id=self.advice_id)
+        AdvicesToUser.objects.create(user=self.user_created, advice=advice)
         advice_to_user = self.user_created.advices_to_user.values_list("text")[0]
         advice = RobotAdvices.objects.values_list("text").get(identityuser=self.id_user)
         self.assertEqual(advice_to_user[0], advice[0])
