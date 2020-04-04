@@ -50,10 +50,14 @@ Modifier la structure de la base de données grâce à la commande :
 
 Insérer les données de démarrage dans la base de données :
     python manage.py loaddata data.json
+    
+Interface d'administration, créer un super-utilisateur :
+    python manage.py createsuperuser
+    puis suivre les indications
 
 Activer le serveur en local avec la commande :
     python manage.py runserver
-    
+    (accès à l'interface d'administration : /admin/)
     
 Ce projet est accessible à cette adresse : A INDIQUER !!!
 
