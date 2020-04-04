@@ -7,9 +7,9 @@
 # imports
 from django.test import TestCase
 from django.contrib.auth import get_user_model
-from django.db import connection
 from dietetic.models import RobotQuestion, RobotQuestionType, RobotAdviceType, \
     UserAnswer, RobotAdvices, DiscussionSpace
+from account.models import AdvicesToUser
 # pylint: disable=no-member
 
 
@@ -120,10 +120,7 @@ class TestsModels(TestCase):
         Test add advice
         and get advices to user
         """
-        cursor = connection.cursor()
-        cursor.execute("INSERT INTO account_identityuser_advices_to_user "
-                       "(identityuser_id, robotadvices_id) "
-                       "VALUES ({}, {})".format(self.id_user, self.advice_id))
+        AdvicesToUser.objects.create(user=self.user_created, advice=self.advice_id)
         advice_to_user = self.user_created.advices_to_user.values_list("text")[0]
         advice = RobotAdvices.objects.values_list("text").get(identityuser=self.id_user)
         self.assertEqual(advice_to_user[0], advice[0])

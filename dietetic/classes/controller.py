@@ -7,9 +7,9 @@
 import calendar
 import locale
 from datetime import datetime, timedelta
-from django.db import connection
 from django.contrib.auth import get_user_model
-from account.models import HistoryUser, ProfileUser, ResultsUser, IdentityUser
+from account.models import HistoryUser, ProfileUser, ResultsUser, \
+    IdentityUser, AdvicesToUser
 from dietetic.models import RobotAdvices, DiscussionSpace, RobotQuestion, \
     RobotQuestionType, UserAnswer, RobotAdviceType
 from dietetic.classes.questions_list import QuestionsList
@@ -24,7 +24,6 @@ class Controller:
     def __init__(self):
         self.new_questions_list = QuestionsList()
         self.new_weight_advice_goal = WeightAdviceGoal()
-        self.cursor = connection.cursor()
         self.new_week = False
         self.end_questions_start = False
         self.end = False
@@ -248,9 +247,7 @@ class Controller:
                         user.advices_to_user.remove(advices_user)
 
             # add a new advice to user
-            self.cursor.execute("INSERT INTO account_identityuser_advices_to_user "
-                                "(identityuser_id, robotadvices_id) VALUES ({}, {})"
-                                .format(id_user, id_advice))
+            AdvicesToUser.objects.create(user=id_user, advice=id_advice)
 
     def return_weekly_advice(self, id_user):
         """
@@ -331,7 +328,8 @@ class Controller:
 
         return context
 
-    def add_advices_to_user(self, id_user):
+    @classmethod
+    def add_advices_to_user(cls, id_user):
         """
         add new robot
         advices to user
@@ -342,9 +340,7 @@ class Controller:
 
         # add new advices to user
         for advice_id in advices_id:
-            self.cursor.execute("INSERT INTO account_identityuser_advices_to_user "
-                                "(identityuser_id, robotadvices_id) VALUES ({}, {})"
-                                .format(id_user, advice_id[0]))
+            AdvicesToUser.objects.create(user=id_user, advice=advice_id[0])
 
     @classmethod
     def return_text_congratulations_restart_program(cls, id_user):

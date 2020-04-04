@@ -12,9 +12,9 @@ from psycopg2.errors import UniqueViolation
 from django.contrib.staticfiles.testing import StaticLiveServerTestCase
 from django.contrib.auth import get_user_model
 from django.db.utils import IntegrityError
-from django.db import connection
 from selenium import webdriver, common
-from account.models import HistoryUser, ProfileUser, ResultsUser, StatusUser
+from account.models import HistoryUser, ProfileUser, ResultsUser, \
+    StatusUser, AdvicesToUser
 from dietetic.models import DiscussionSpace, RobotQuestion, UserAnswer
 from dietetic.classes.weight_advice_goal import WeightAdviceGoal
 from dietetic.classes.calculation import Calculation
@@ -30,8 +30,6 @@ class TestDemo(StaticLiveServerTestCase):
     def setUp(self):
         self.browser = webdriver.Firefox()
         self.browser.set_window_size(1600, 900)
-
-        self.cursor = connection.cursor()
 
         self.user = get_user_model()
         self.new_weight_advice_goal = WeightAdviceGoal()
@@ -64,6 +62,7 @@ class TestDemo(StaticLiveServerTestCase):
         """
         dict_data_user = {"id_email": "carole2@test.fr", "id_password": "00000000"}
         id_user = 2
+
         try:
             user_created = self.user.objects.create_user(id=id_user, username="Carole",
                                                          email=dict_data_user.get('id_email'),
@@ -79,9 +78,7 @@ class TestDemo(StaticLiveServerTestCase):
             user.save()
             list_advice_id = [1, 4]
             for id_advice in list_advice_id:
-                self.cursor.execute("INSERT INTO account_identityuser_advices_to_user "
-                                    "(identityuser_id, robotadvices_id) "
-                                    "VALUES ({}, {})".format(id_user, id_advice))
+                AdvicesToUser.objects.create(user=id_user, advice=id_advice)
         except (UniqueViolation, IntegrityError):
             user_created = self.user.objects.get(id=id_user)
 
@@ -110,9 +107,7 @@ class TestDemo(StaticLiveServerTestCase):
             user.save()
             list_advice_id = [1, 4]
             for id_advice in list_advice_id:
-                self.cursor.execute("INSERT INTO account_identityuser_advices_to_user "
-                                    "(identityuser_id, robotadvices_id) "
-                                    "VALUES ({}, {})".format(id_user, id_advice))
+                AdvicesToUser.objects.create(user=id_user, advice=id_advice)
         except (UniqueViolation, IntegrityError):
             user_created = self.user.objects.get(id=id_user)
 

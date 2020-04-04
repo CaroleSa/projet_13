@@ -12,10 +12,11 @@ from psycopg2.errors import UniqueViolation
 from django.contrib.staticfiles.testing import StaticLiveServerTestCase
 from django.contrib.auth import get_user_model
 from django.db.utils import IntegrityError
-from django.db import connection
 from selenium import webdriver, common
-from account.models import HistoryUser, ProfileUser, ResultsUser, StatusUser
-from dietetic.models import DiscussionSpace, RobotQuestionType, RobotQuestion, UserAnswer
+from account.models import HistoryUser, ProfileUser, ResultsUser, \
+    StatusUser, AdvicesToUser
+from dietetic.models import DiscussionSpace, RobotQuestionType, \
+    RobotQuestion, UserAnswer
 from dietetic.classes.weight_advice_goal import WeightAdviceGoal
 from dietetic.classes.calculation import Calculation
 locale.setlocale(locale.LC_ALL, 'fr_FR.UTF-8')
@@ -33,8 +34,6 @@ class TestsFunctionals(StaticLiveServerTestCase):
     def setUp(self):
         self.browser = webdriver.Firefox()
         self.browser.set_window_size(1600, 900)
-
-        self.cursor = connection.cursor()
 
         self.user = get_user_model()
         self.new_weight_advice_goal = WeightAdviceGoal()
@@ -78,9 +77,7 @@ class TestsFunctionals(StaticLiveServerTestCase):
             user = HistoryUser.objects.get(user=user_created)
             user.start_questionnaire_completed = True
             user.save()
-            self.cursor.execute("INSERT INTO account_identityuser_advices_to_user "
-                                "(identityuser_id, robotadvices_id) "
-                                "VALUES ({}, {})".format(id_user, 1))
+            AdvicesToUser.objects.create(user=id_user, advice=1)
         except (UniqueViolation, IntegrityError):
             user_created = self.user.objects.get(id=id_user)
 
@@ -109,9 +106,7 @@ class TestsFunctionals(StaticLiveServerTestCase):
             user.save()
             list_advice_id = [1, 4]
             for id_advice in list_advice_id:
-                self.cursor.execute("INSERT INTO account_identityuser_advices_to_user "
-                                    "(identityuser_id, robotadvices_id) "
-                                    "VALUES ({}, {})".format(id_user, id_advice))
+                AdvicesToUser.objects.create(user=id_user, advice=id_advice)
         except (UniqueViolation, IntegrityError):
             user_created = self.user.objects.get(id=id_user)
 
@@ -140,9 +135,7 @@ class TestsFunctionals(StaticLiveServerTestCase):
             user = HistoryUser.objects.get(user=user_created)
             user.start_questionnaire_completed = True
             user.save()
-            self.cursor.execute("INSERT INTO account_identityuser_advices_to_user "
-                                "(identityuser_id, robotadvices_id) "
-                                "VALUES ({}, {})".format(id_user, 1))
+            AdvicesToUser.objects.create(user=id_user, advice=1)
         except (UniqueViolation, IntegrityError):
             user_created = self.user.objects.get(id=id_user)
 
@@ -172,9 +165,7 @@ class TestsFunctionals(StaticLiveServerTestCase):
             user.save()
             list_advice_id = [1, 4]
             for id_advice in list_advice_id:
-                self.cursor.execute("INSERT INTO account_identityuser_advices_to_user "
-                                    "(identityuser_id, robotadvices_id) "
-                                    "VALUES ({}, {})".format(id_user, id_advice))
+                AdvicesToUser.objects.create(user=id_user, advice=id_advice)
         except (UniqueViolation, IntegrityError):
             user_created = self.user.objects.get(id=id_user)
 

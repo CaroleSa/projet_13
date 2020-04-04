@@ -14,7 +14,6 @@ import calendar
 import locale
 from psycopg2.errors import UniqueViolation
 from django.test import TestCase
-from django.db import connection
 from django.db.utils import IntegrityError
 from django.contrib.auth import get_user_model
 from dietetic.classes.weight_advice_goal import WeightAdviceGoal
@@ -22,7 +21,8 @@ from dietetic.classes.questions_list import QuestionsList
 from dietetic.classes.calculation import Calculation
 from dietetic.classes.controller import Controller
 from dietetic.models import DiscussionSpace, RobotQuestion, RobotAdvices, UserAnswer
-from account.models import ProfileUser, ResultsUser, IdentityUser, StatusUser, HistoryUser
+from account.models import ProfileUser, ResultsUser, IdentityUser, StatusUser, \
+    HistoryUser, AdvicesToUser
 locale.setlocale(locale.LC_ALL, 'fr_FR.UTF-8')
 # pylint: disable=no-member
 
@@ -256,7 +256,6 @@ class TestsCalculation(TestCase):
 
     def setUp(self):
         self.user = get_user_model()
-        self.cursor = connection.cursor()
         self.new_calculation = Calculation()
 
     def create_user(self):
@@ -281,9 +280,7 @@ class TestsCalculation(TestCase):
             user.save()
             list_advice_id = [1, 4, 8, 10]
             for id_advice in list_advice_id:
-                self.cursor.execute("INSERT INTO account_identityuser_advices_to_user "
-                                    "(identityuser_id, robotadvices_id) "
-                                    "VALUES ({}, {})".format(id_user, id_advice))
+                AdvicesToUser.objects.create(user=id_user, advice=id_advice)
         except (UniqueViolation, IntegrityError):
             user_created = self.user.objects.get(id=id_user)
 
@@ -396,7 +393,6 @@ class TestsController(TestCase):
     fixtures = ['data.json']
 
     def setUp(self):
-        self.cursor = connection.cursor()
         self.user = get_user_model()
         self.new_controller = Controller()
         self.new_questions_list = QuestionsList()
@@ -499,15 +495,14 @@ class TestsController(TestCase):
 
         return user_created
 
-    def add_advice_to_user_created(self, id_user, list_advice_id):
+    @classmethod
+    def add_advice_to_user_created(cls, id_user, list_advice_id):
         """
         add new advices
         to the user
         """
         for id_advice in list_advice_id:
-            self.cursor.execute("INSERT INTO account_identityuser_advices_to_user "
-                                "(identityuser_id, robotadvices_id) "
-                                "VALUES ({}, {})".format(id_user, id_advice))
+            AdvicesToUser.objects.create(user=id_user, advice=id_advice)
 
     def test_parser_weight(self):
         """ test parser_weight method """
