@@ -20,6 +20,7 @@ models_list = {RobotQuestionType: ["type"],
 for model, fields in models_list.items():
 
     class ProductAdmin(admin.ModelAdmin):
+        """ ProductAdmin class """
         list_display = fields
 
     admin.site.register(model, ProductAdmin)
