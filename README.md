@@ -25,7 +25,7 @@ Démarrage : Ces instructions vous permettront de prendre connaissance
 des pré-requis et d’installer le projet afin de pouvoir développer et tester localement.
 
 Pré-requis : 
-    Python 3.7
+    Python 3.7, 3.8
     PostgreSQL : la base de données attendue est une base nommée "dietetic".
 
 Installation :
