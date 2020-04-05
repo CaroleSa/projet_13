@@ -18,219 +18,164 @@
 .col-lg-offset-10 {
     margin-left: 80%;
 }
-.col-lg-offset-9 {
+.col-lg-offset-9, .col-md-offset-9 {
     margin-left: 75%;
 }
-.col-md-offset-9 {
-    margin-left: 75%;
-}
-.col-lg-offset-8 {
+.col-lg-offset-8, .col-sm-offset-8, .col-md-offset-8 {
     margin-left: 66%;
 }
-.col-sm-offset-8 {
-    margin-left: 66%;
-}
-.col-md-offset-8 {
-    margin-left: 66%;
-}
-.col-lg-offset-7 {
-    margin-left: 58%;
-}
-.col-sm-offset-7 {
-    margin-left: 58%;
-}
-.col-md-offset-7 {
+.col-lg-offset-7, .col-sm-offset-7, .col-md-offset-7 {
     margin-left: 58%;
 }
 .col-lg-offset-6 {
     margin-left: 50%;
 }
-.col-lg-offset-5 {
+.col-lg-offset-5, .col-md-offset-5, .col-sm-offset-5 {
     margin-left: 40%;
 }
-.col-md-offset-5 {
-    margin-left: 40%;
-}
-.col-sm-offset-5 {
-    margin-left: 40%;
-}
-.col-lg-offset-4 {
+.col-lg-offset-4, .col-sm-offset-4, .col-md-offset-4, .col-xs-offset-4 {
     margin-left: 33%;
 }
-.col-sm-offset-4 {
-    margin-left: 33%;
-}
-.col-xs-offset-4 {
-    margin-left: 33%;
-}
-.col-md-offset-4 {
-    margin-left: 33%;
-}
-.col-lg-offset-3 {
+.col-lg-offset-3, .col-sm-offset-3, .col-md-offset-3, .col-xs-offset-3 {
     margin-left: 25%;
 }
-.col-sm-offset-3 {
-    margin-left: 25%;
-}
-.col-xs-offset-3 {
-    margin-left: 25%;
-}
-.col-md-offset-3 {
-    margin-left: 25%;
-}
-.col-lg-offset-2 {
+.col-lg-offset-2, .col-sm-offset-2, .col-md-offset-2, .col-xs-offset-2 {
     margin-left: 16%;
 }
-.col-md-offset-2 {
-    margin-left: 16%;
-}
-.col-sm-offset-2 {
-    margin-left: 16%;
-}
-.col-xs-offset-2 {
-    margin-left: 16%;
-}
-.col-lg-offset-1 {
-    margin-left: 8%;
-}
-.col-md-offset-1 {
-    margin-left: 8%;
-}
-.col-sm-offset-1 {
+.col-lg-offset-1, .col-md-offset-1, .col-sm-offset-1 {
     margin-left: 8%;
 }
 
 
-/*  HEADER + LOGIN NAV   */
+/*  HEADER + LOGIN AND CREATE ACCOUNT NAV   */
 #header {
-    background-image : url("../img/background_header.jpg");
+    background-image: url("../img/background_header.jpg");
     background-size: 250vh;
     background-position : left left;
     height: 27vh;
-    background-color : rgb(255, 255, 255);
+    background-color: rgb(255, 255, 255);
 }
-#logo
-{
-    max-width : 100%;
-    min-height : 20vh;
-    max-height : 20vh;
+#logo {
+    max-width: 100%;
+    min-height: 20vh;
+    max-height: 20vh;
     display: block;
-    margin-top:3vh;
-    margin-left:5vh;
+    margin-top: 3vh;
+    margin-left: 5vh;
 }
-#login_nav{
-    position:absolute;
-    right:4vh;
-    top:2vh;
-    width:400px;
+#login_nav {
+    position: absolute;
+    right: 4vh;
+    top: 2vh;
+    width: 400px;
     z-index: 2;
-    text-align:center;
+    text-align: center;
 }
-.fa-user-circle{
-    display:none;
+.fa-user-circle {
+    display: none;
 }
-@media screen and (max-width : 1530px){
-    #login_nav{
-        display:none;
-        margin-top:20vh;
+@media screen and (max-width : 1530px) {
+    #login_nav {
+        display: none;
+        margin-top: 20vh;
     }
-    .fa-user-circle{
-        display:block;
-        position:absolute;
-        right:10vh;
-        top:9vh;
-        font-size : 3em;
+    .fa-user-circle {
+        display: block;
+        position: absolute;
+        right: 10vh;
+        top: 9vh;
+        font-size: 3em;
     }
 }
-@media screen and (max-width : 575px){
+@media screen and (max-width : 575px) {
     .tab{
-        width:200px;
+        width: 200px;
     }
 }
-@media screen and (max-width : 414px){
-    .tab{
-        width:170px;
+@media screen and (max-width : 414px) {
+    .tab {
+        width: 170px;
     }
-    #login_nav{
-        width:340px;
-        left:4px;
-        top:6vh;
+    #login_nav {
+        width: 340px;
+        left: 4px;
+        top: 6vh;
     }
-    .fa-user-circle{
-        right:5vh;
-        top:15vh;
+    .fa-user-circle {
+        right: 5vh;
+        top: 15vh;
     }
 }
-.tab{
-        display:inline-block;
-        margin-left:0px;
-        margin-right:-5.5px;
-        padding:3px;
-        cursor:pointer;
+.tab {
+        display: inline-block;
+        margin-left: 0px;
+        margin-right: -5.5px;
+        padding: 3px;
+        cursor: pointer;
 }
-.tab a{
-        text-decoration:none;
+.tab a {
+        text-decoration: none;
 }
-.tab_n{
-        text-align : center;
-        background:rgb(162, 152, 141);
-        color : rgb(0,0,0);
+.tab_n {
+        text-align: center;
+        background: rgb(162, 152, 141);
+        color: rgb(0,0,0);
 }
-.tab_y{
-        text-align : center;
-        background:rgb(227, 216, 211);
-        padding-bottom:4px;
-        font-weight : bold ;
+.tab_y {
+        text-align: center;
+        background: rgb(227, 216, 211);
+        padding-bottom: 4px;
+        font-weight: bold ;
 }
-.contents{
-        background-color:rgb(227, 216, 211);
-        margin-top:-1px;
-        margin-left:3px;
+.contents {
+        background-color: rgb(227, 216, 211);
+        margin-top: -1px;
+        margin-left: 3px;
         border-radius: 0px 0px 5px 5px;
 }
-input{
-    min-width : 70px;
-    background:rgb(162, 152, 141);
+input {
+    min-width: 70px;
+    background: rgb(162, 152, 141);
     border-radius: 5px 0px 5px 0px;
 }
-.grey{
+.grey {
     color: grey;
 }
-.red{
+.red {
     color: red;
 }
-.bold{
-    font-weight : bold ;
+.bold {
+    font-weight: bold ;
 }
-.center{
-    text-align:center;
+.center {
+    text-align: center;
 }
-h1{
-        margin:0px;
-        padding:0px;
+h1 {
+        margin: 0px;
+        padding: 0px;
 }
 
 
-/*  NAV  */
-#button_nav{
-    min-height : 60px;
-    background-color : rgb(255, 255, 255);
-    box-shadow : 0px -1px 20px grey;
+/*  MENU NAV  */
+#button_nav {
+    min-height: 60px;
+    background-color: rgb(255, 255, 255);
+    box-shadow: 0px -1px 20px grey;
     position: relative;
     z-index: 1;
 }
-#button_nav_responsive{
-        display:none;
-        height : 60px;
+#button_nav_responsive {
+        display: none;
+        height: 60px;
 }
-@media screen and (max-width : 1100px){
+@media screen and (max-width : 1100px) {
     #button_nav{
-        display:none;
+        display: none;
     }
-    #button_nav_responsive{
-        display:block;
+    #button_nav_responsive {
+        display: block;
     }
-    .fa-bars{
+    .fa-bars {
         text-align: left;
 
         vertical-align:middle;
@@ -240,264 +185,263 @@ h1{
         list-style: none;
     }
     #menu-deroulant a {
-        display:block;
-        position:relative;
-        left:-9vh;
-        width:90px;
+        display: block;
+        position: relative;
+        left: -9vh;
+        width: 90px;
         border: 4px white solid;
-        box-shadow : 2px 1px 6px grey;
+        box-shadow: 2px 1px 6px grey;
         text-align: center;
-        padding-top:10px;
+        padding-top: 10px;
         text-decoration: none;
-        background-color : rgb(255,255,255);
+        background-color: rgb(255, 255, 255);
     }
-    #responsive_menu{
-        display:none;
+    #responsive_menu {
+        display: none;
     }
-    .logo_nav{
+    .logo_nav {
         position: relative;
         display: inherit;
         z-index: 2;
     }
 }
-@media screen and (max-width : 800px){
+@media screen and (max-width: 800px) {
     #menu-deroulant a {
-        left:-5.5vh;
+        left: -5.5vh;
     }
 }
-@media screen and (max-width : 770px){
+@media screen and (max-width: 770px) {
     #menu-deroulant a {
-        left:-7vh;
+        left: -7vh;
     }
 }
-@media screen and (max-width : 420px){
+@media screen and (max-width: 420px) {
     #menu-deroulant a {
-        left:-9vh;
+        left: -9vh;
     }
 }
-@media screen and (max-width : 375px){
+@media screen and (max-width: 375px) {
     #menu-deroulant a {
-        left:-10vh;
+        left: -10vh;
     }
 }
-@media screen and (max-width : 360px){
+@media screen and (max-width: 360px) {
     #menu-deroulant a {
-        left:-9vh;
+        left: -9vh;
     }
 }
 i {
-    font-size : 2em;
+    font-size: 2em;
 }
-#user, #poll, #home, #clipboard, #program{
-    color : rgb(0, 0, 0);
+#user, #poll, #home, #clipboard, #program {
+    color: rgb(0, 0, 0);
 }
-#user:hover{
-    color : rgb(52, 151, 49);
+#user:hover {
+    color: rgb(52, 151, 49);
 }
-#poll:hover{
-    color : rgb(222, 32, 101);
+#poll:hover {
+    color: rgb(222, 32, 101);
 }
-#home:hover{
-    color : rgb(31, 148, 229);
+#home:hover {
+    color: rgb(31, 148, 229);
 }
-#clipboard:hover{
-    color : rgb(236, 131, 19);
+#clipboard:hover {
+    color: rgb(236, 131, 19);
 }
-#program:hover{
-    color : rgb(190, 120, 50);
+#program:hover {
+    color: rgb(190, 120, 50);
 }
 
 
 /*  SECTION   */
-#informations{
-    background-image : url("../img/background_section.jpg");
+#informations {
+    background-image: url("../img/background_section.jpg");
     background-size: 40vh;
-    background-position : top;
-    min-height : 58vh;
-    padding:5.5vh;
-    box-shadow : 0px 5px 10px grey;
-    overflow:auto;
+    background-position: top;
+    min-height: 58vh;
+    padding: 5.5vh;
+    box-shadow: 0px 5px 10px grey;
+    overflow: auto;
     z-index: 1;
 }
-#home_text{
-    font-size : 1.5em ;
-    font-family : 'cantarellregular', Arial, "Arial black";
-    color : rgb(0, 0, 0);
-    text-align:center;
+#home_text {
+    font-size: 1.5em ;
+    font-family: 'cantarellregular', Arial, "Arial black";
+    color: rgb(0, 0, 0);
+    text-align: center;
 }
-h2{
-    text-decoration : underline;
+h2 {
+    text-decoration: underline;
 }
-#home_text{
-    text-align : left;
-    margin-top : 10vh;
+#home_text {
+    text-align: left;
+    margin-top: 10vh;
 }
-
-@media screen and (max-width : 1472px){
-    #text_my_account{
-        margin-bottom:0px;
-        min-height:11px;
+@media screen and (max-width: 1472px) {
+    #text_my_account {
+        margin-bottom: 0px;
+        min-height: 11px;
     }
-    #form_edit_password{
-        margin-bottom:8vh;
+    #form_edit_password {
+        margin-bottom: 8vh;
     }
     #title_edit_password:before, #title_delete_account:before {
         white-space: pre;
         content: "\A\A";
     }
-    #title_delete_account, #title_edit_password{
-        font-weight : bold ;
+    #title_delete_account, #title_edit_password {
+        font-weight: bold ;
     }
 }
-#card{
-    padding : 3vh;
-    margin:auto;
-    min-height : 350px;
-    max-height : 350px;
-    min-width:250px;
-    max-width:250px;
+#card {
+    padding: 3vh;
+    margin: auto;
+    min-height: 350px;
+    max-height: 350px;
+    min-width: 250px;
+    max-width: 250px;
     border-bottom: 2px black outset;
     border-right: 2px black outset;
     border-radius: 10px 10px 10px 10px;
-    box-shadow : 6px 6px 20px black;
-    background-image : url("../img/front_face.jpg");
-    background-repeat : no-repeat ;
+    box-shadow: 6px 6px 20px black;
+    background-image: url("../img/front_face.jpg");
+    background-repeat: no-repeat ;
     background-size: cover;
-    background-position : top;
-    overflow:auto;
+    background-position: top;
+    overflow: auto;
 }
-#discussion_space, #text_my_results, #graphic_my_results, #my_account, #my_program{
-    background-color : rgb(255, 255, 255);
-    min-height : 47vh;
-    margin:auto;
-    padding : 3vh;
+#discussion_space, #text_my_results, #graphic_my_results, #my_account, #my_program {
+    background-color: rgb(255, 255, 255);
+    min-height: 47vh;
+    margin: auto;
+    padding: 3vh;
     border-bottom: 2px black outset;
     border-right: 2px black outset;
 }
-#graphic_my_results{
-    margin:auto;
-    min-width:700px;
-    overflow:auto;
+#graphic_my_results {
+    margin: auto;
+    min-width: 700px;
+    overflow: auto;
 }
-@media screen and (max-width : 1280px){
+@media screen and (max-width: 1280px) {
     #graphic_my_results{
-        min-width:500px;
+        min-width: 500px;
     }
 }
-@media screen and (max-width : 1024px){
+@media screen and (max-width: 1024px) {
     #graphic_my_results{
-        margin-top:40px;
-        min-height:400px;
+        margin-top: 40px;
+        min-height: 400px;
     }
 }
-@media screen and (max-width : 414px){
+@media screen and (max-width: 414px) {
     #graphic_my_results{
-        margin-top:40px;
-        min-width:250px;
-        padding : 0.5vh;
+        margin-top: 40px;
+        min-width: 250px;
+        padding: 0.5vh;
     }
 }
-#my_program{
-    min-width:310px;
+#my_program {
+    min-width: 310px;
 }
-#next_text{
-    margin-top:90px;
+#next_text {
+    margin-top: 90px;
 }
-@media screen and (max-width : 991px){
+@media screen and (max-width: 991px) {
     #next_text{
-        margin-top:0px;
+        margin-top: 0px;
     }
     .title_meal{
-        margin-top:30px;
+        margin-top: 30px;
     }
 }
-#legal_notices{
-    word-wrap : break-word ;
-    text-align : justify;
+#legal_notices {
+    word-wrap: break-word ;
+    text-align: justify;
 }
-#text_my_results{
-    margin:auto;
+#text_my_results {
+    margin: auto;
     padding: 2.5vh;
 }
-.input_number{
+.input_number {
     padding: 0vh;
     background-color: white;
 }
-#discussion_space{
-    overflow:auto;
+#discussion_space {
+    overflow: auto;
     padding: 5vh;
 }
-@media screen and (max-width :991px){
+@media screen and (max-width: 991px) {
     #discussion_space{
-        margin-bottom:5vh;
+        margin-bottom: 5vh;
     }
 }
-.fa-user-times, .fa-key{
-    font-size : 2em ;
-    color : rgb(   0, 0, 0   );
-    background-color : rgb(233,226,218);
+.fa-user-times, .fa-key {
+    font-size: 2em;
+    color: rgb(   0, 0, 0   );
+    background-color: rgb(233, 226, 218);
     border-radius: 10px 10px 10px 10px;
-    padding:1vh;
-    border:none;
+    padding: 1vh;
+    border: none;
 }
-#submit_password{
-    background-color : rgb(233,226,218);
-    border:none;
+#submit_password {
+    background-color: rgb(233, 226, 218);
+    border: none;
 }
-.fa-user-times:hover{
-    color : rgb( 173, 36, 9 );
+.fa-user-times:hover {
+    color: rgb(173, 36, 9);
 }
-.fa-key:hover{
-    color : rgb(   20, 126, 62   );
+.fa-key:hover {
+    color: rgb(20, 126, 62);
 }
-.text_white{
-    color : rgb( 229, 216, 203 );
+.text_white {
+    color: rgb(229, 216, 203);
 }
-.text_white:hover{
-    color : rgb( 255, 255, 255 );
-    text-decoration : none;
+.text_white:hover {
+    color: rgb(255, 255, 255);
+    text-decoration: none;
 }
 
 
 /*  FOOTER   */
-#footer{
+#footer {
     min-height : 7vh;
     background-color : rgb(227, 216, 211);
 }
-.logo_link{
+.logo_link {
     margin-top : 0.8vh;
 }
-.fa-github-square{
+.fa-github-square {
     margin-left : 2vh;
 }
-.fab{
+.fab {
     color : rgb(0,0,0);
 }
-.fab:hover{
+.fab:hover {
     color : rgb(162, 152, 141);
 }
-#ml:hover{
+#ml:hover {
     color : rgb(162, 152, 141);
     text-decoration : none;
 }
-#ml{
+#ml {
     margin-top : 1vh;
     color : rgb( 105, 85, 64 );
 }
-@media screen and (max-width : 991px){
-    #ml{
+@media screen and (max-width : 991px) {
+    #ml {
         margin:auto;
         margin-top : 1vh;
     }
-    .logo_link{
+    .logo_link {
         margin-bottom : 1vh;
         margin:auto;
         margin-bottom:1vh;
     }
-    #github_link{
+    #github_link {
         margin-left:0px;
     }
-    #linkedin_link{
+    #linkedin_link {
         margin-right:0px;
     }
 }
