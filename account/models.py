@@ -91,6 +91,7 @@ class IdentityUser(AbstractBaseUser):
     class Meta:
         """ Meta class """
         verbose_name = "Identité utilisateur"
+        ordering = ["is_superuser"]
 
 
 class AdvicesToUser(models.Model):
@@ -104,6 +105,7 @@ class AdvicesToUser(models.Model):
         """ Meta class """
         verbose_name = "A destination de l'utilisateur : conseil"
         unique_together = (("user", "advice"),)
+        ordering = ["user"]
 
 
 class StatusUser(models.Model):
@@ -120,6 +122,7 @@ class StatusUser(models.Model):
     class Meta:
         """ Meta class """
         verbose_name = "Statut utilisateur"
+        ordering = ["is_active"]
 
 
 class HistoryUser(models.Model):
@@ -132,6 +135,7 @@ class HistoryUser(models.Model):
     class Meta:
         """ Meta class """
         verbose_name = "Historique utilisateur"
+        ordering = ["start_questionnaire_completed", "date_joined"]
 
 
 class ProfileUser(models.Model):
@@ -159,3 +163,4 @@ class ResultsUser(models.Model):
         """ Meta class """
         unique_together = (("user", "weighing_date"),)
         verbose_name = "Résultats utilisateur"
+        ordering = ["user", "weighing_date"]

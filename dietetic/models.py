@@ -47,6 +47,7 @@ class RobotQuestion(models.Model):
     class Meta:
         """ Meta class """
         verbose_name = "Question"
+        ordering = ["robot_question_type"]
 
 
 class RobotAdvices(models.Model):
@@ -63,6 +64,7 @@ class RobotAdvices(models.Model):
     class Meta:
         """ Meta class """
         verbose_name = "Conseil"
+        ordering = ["robot_advice_type"]
 
 
 class UserAnswer(models.Model):
@@ -97,6 +99,7 @@ class DiscussionSpace(models.Model):
         """ Meta class """
         unique_together = (("user_answer", "robot_question"),)
         verbose_name = "Echange"
+        ordering = ["id"]
 
     def __str__(self):
         return self.robot_answer
