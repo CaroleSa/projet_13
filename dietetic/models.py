@@ -47,7 +47,6 @@ class RobotQuestion(models.Model):
     class Meta:
         """ Meta class """
         verbose_name = "Question"
-        ordering = ["robot_question_type"]
 
 
 class RobotAdvices(models.Model):
@@ -64,7 +63,6 @@ class RobotAdvices(models.Model):
     class Meta:
         """ Meta class """
         verbose_name = "Conseil"
-        ordering = ["robot_advice_type"]
 
 
 class UserAnswer(models.Model):
