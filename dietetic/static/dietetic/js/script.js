@@ -1,4 +1,6 @@
-//     return card if the user click
+//     DISCUSSION-SPACE PAGE :
+//     flip the card
+//     if the user click on it
 
 var $dietetic_text = $('#dietetic_text');
 $dietetic_text.css('visibility', "hidden");
@@ -11,7 +13,9 @@ $card.css('background-image', "url('../../static/dietetic/img/back_face.jpg')");
 });
 
 
-//     logo nav animation
+//     ALL PAGES :
+//     color the logo clicked
+//     by the user
 
 const color = {
   	user: ["#my_account", "52, 151, 49"],
@@ -31,7 +35,10 @@ for (const elt in color){
 }
 
 
-//     display account option if user clicks on the button key
+//     ACCOUNT PAGE :
+//     displays and removes the password
+//     modification form
+//     if user clicks on the button key
 
 var $input = $("#form_password");
 var $confirm_message = $("#confirm");
@@ -56,7 +63,9 @@ $key.on('click', function() {
 });
 
 
-//     graphic
+//     RESULTS PAGE :
+//     displays the graphic
+//     of the results page
 
 google.charts.load('current', {'packages':['corechart']});
 google.charts.setOnLoadCallback(drawChart);
@@ -92,7 +101,11 @@ function drawChart() {
 }
 
 
-//     display menu if user clicks on the menu logo responsive
+//     RESPONSIVE PAGE :
+//     displays and removes menu
+//     if user clicks on the menu
+//     logo responsive
+
 var $nav_responsive = $("#responsive_menu");
 var $menu_logo = $(".fa-bars");
 $menu_logo.on('click', function(e) {
@@ -104,7 +117,11 @@ $menu_logo.on('click', function(e) {
 });
 
 
-//     display account login and create account if user clicks on the user logo
+//     RESPONSIVE PAGE :
+//     displays and removes form
+//     login and create account
+//     if user clicks on the user logo
+
 var $nav = $("#login_nav");
 var $logo = $(".fa-user-circle");
 var url = window.location.pathname;
