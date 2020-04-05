@@ -18,17 +18,25 @@ class CustomUserAdmin(admin.ModelAdmin):
     list_filter = ["is_staff", "is_superuser"]
 
 
-models_list = {AdvicesToUser: ["user", "advice"],
+models_list = {AdvicesToUser: [["user", "advice"], ["user"]],
                StatusUser: ["user", "is_active"],
-               HistoryUser: ["user", "date_joined", "start_questionnaire_completed"],
+               HistoryUser: [["user", "date_joined", "start_questionnaire_completed"],
+                             ["start_questionnaire_completed"]],
                ProfileUser: ["user", "starting_weight", "actual_goal_weight", "final_weight"],
-               ResultsUser: ["user", "weighing_date", "weight"]}
+               ResultsUser: [["user", "weighing_date", "weight"], ["user"]]}
 
 for model, fields in models_list.items():
 
-    class ProductAdmin(admin.ModelAdmin):
-        """ ProductAdmin class """
-        list_display = fields
-        list_filter = fields
+    class AccountAdmin(admin.ModelAdmin):
+        """ AccountAdmin class """
+        if len(fields) == 2:
+            if type(fields[1]) == list:
+                list_display = fields[0]
+                list_filter = fields[1]
+            else:
+                list_display = fields
+        else:
+            list_display = fields
 
-    admin.site.register(model, ProductAdmin)
+
+    admin.site.register(model, AccountAdmin)
