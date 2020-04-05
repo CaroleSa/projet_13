@@ -18,9 +18,12 @@
             <form action="{% url 'dietetic:dietetic_space' %}" method="post">{% csrf_token %}
                 <input type="hidden" name="question" value="{{ question }}" />
                 {% for answer in answers %}
-                    <a><input id="{{answer}}" type="radio" name="answer" value="{{answer}}" required/>&nbsp;&nbsp;&nbsp;{{answer}}</a></br></br>
+                    <div class="row">
+                        <input class="input_answer" id="{{answer}}" type="radio" name="answer" value="{{answer}}" required/>
+                        <a class="answer_display">{{answer}}</a>
+                    </div></br>
                 {% endfor %}
-                <input id="validate_button" type="submit" value="Valider"/></br></br>
+                <input class="col-lg-offset-1" id="validate_button" type="submit" value="Valider"/></br>
             </form>
         {% endif %}
 
