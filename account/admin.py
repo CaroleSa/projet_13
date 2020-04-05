@@ -14,7 +14,8 @@ user_model = get_user_model()
 @admin.register(user_model)
 class CustomUserAdmin(admin.ModelAdmin):
     """ CustomUserAdmin class """
-    pass
+    list_display = ["username", "email", "is_staff", "is_superuser"]
+    list_filter = ["is_staff", "is_superuser"]
 
 
 models_list = {AdvicesToUser: ["user", "advice"],
@@ -28,5 +29,6 @@ for model, fields in models_list.items():
     class ProductAdmin(admin.ModelAdmin):
         """ ProductAdmin class """
         list_display = fields
+        list_filter = fields
 
     admin.site.register(model, ProductAdmin)
