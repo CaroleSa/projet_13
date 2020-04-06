@@ -256,11 +256,11 @@ i {
 /*  SECTION   */
 .first_step_home, .next_step_home{
     background-color: rgb(250, 250, 250, 0.3);
+    border-radius: 50px;
     margin: auto;
     padding: 15px;
     max-height: 370px;
     width: 270px;
-    border-radius: 50px;
 }
 @media screen and (max-width: 1100px) {
     .next_step_home{
@@ -370,12 +370,10 @@ h2 {
     margin-left: 15px;
 }
 #discussion_space, #text_my_results, #graphic_my_results, #my_account, #my_program {
-    background-color: rgb(255, 255, 255);
+    background-color: rgb(255, 255, 255, 0.4);
     min-height: 47vh;
     margin: auto;
     padding: 3vh;
-    border-bottom: 2px black outset;
-    border-right: 2px black outset;
 }
 #graphic_my_results {
     margin: auto;
