@@ -254,13 +254,19 @@ i {
 
 
 /*  SECTION   */
-.step_home{
+.first_step_home, .next_step_home{
     background-color: rgb(250, 250, 250, 0.3);
     margin: auto;
     padding: 15px;
     max-height: 370px;
     width: 270px;
     border-radius: 50px;
+}
+@media screen and (max-width: 1100px) {
+    .next_step_home{
+        margin: auto;
+        margin-top: 30px;
+    }
 }
 .image_step_home{
     margin-bottom: 20px;

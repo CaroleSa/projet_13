@@ -137,3 +137,17 @@ $logo.on('click', function() {
         $nav.css('display', "block");
         }
 });
+
+
+//     RESPONSIVE HOME PAGE :
+//     align items vertically
+
+function resizePage()
+{
+    var width = $(window).width();
+    if(width < 1100) {
+        $("#home_page").removeClass("row")
+    }
+}
+$(window).resize(resizePage);
+resizePage();
