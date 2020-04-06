@@ -1,4 +1,5 @@
 {% extends 'dietetic/base.html' %}
+{% load static %}
 
 
 {% block informations %}
@@ -10,8 +11,8 @@
         </div>
         <a class="first_step_text">
             Tu es en quête de perte de poids... et tes connaissances sur le sujet sont acquises ?
-            </br>Seulement, les mettre en pratique, est une toute autre histoire...
-            My Dietetic Challenge est donc fait pour toi !
+            </br>Si pour toi les mettre en pratique, est une toute autre histoire...
+            </br>My Dietetic Challenge est fait pour toi !
         </a>
     </div>
 
@@ -26,13 +27,14 @@
 
     <div class="step_home">
         <div class="image_step_home">
+            <img src="{% static 'dietetic/img/questionnaire_logo.png' %}" alt="questionnaire logo"/>
         </div>
         <div class="step">
             <a>Étape 2</a>
         </div>
         <a class="next_step_text">
-            Lorsque je suis connecté(e), je clique sur l'onglet "suivi"
-            pour répondre à mon questionnaire de démarrage.
+            Je clique sur l'onglet "suivi" pour répondre
+            à mon questionnaire de démarrage.
         </a>
     </div>
 

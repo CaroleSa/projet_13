@@ -20,7 +20,7 @@ $card.css('background-image', "url('../../static/dietetic/img/back_face.jpg')");
 const color = {
   	user: ["#my_account", "52, 151, 49"],
   	poll: ["#my_results", "222, 32, 101"],
-  	home: ["#home_text", "31, 148, 229"],
+  	home: [".step_home", "31, 148, 229"],
   	clipboard: ["#discussion_space", "236, 131, 19"],
   	program: ["#my_program", "190, 120, 50"]
 };
