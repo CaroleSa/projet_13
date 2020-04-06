@@ -254,6 +254,34 @@ i {
 
 
 /*  SECTION   */
+.step_home{
+    border: 3px blue solid;
+    margin: auto;
+    padding: 10px;
+    max-height: 370px;
+    width: 270px;
+}
+.image_step_home{
+    border: 3px blue solid;
+    margin-bottom: 20px;
+    height: 150px;
+}
+.step{
+    border: 3px blue solid;
+    height: 40px;
+    margin: auto;
+    margin-bottom: 20px;
+    width: 120px;
+}
+.first_step_text, .next_step_text{
+    display: block;
+    border: 3px blue solid;
+    margin: auto;
+    height: 170px;
+}
+.next_step_text{
+    height: 110px;
+}
 #informations {
     background-image: url("../img/background_section.jpg");
     background-size: 40vh;
