@@ -72,9 +72,9 @@
                     <!-- Menu nav responsive -->
                     <div class="row" id="button_nav_responsive">
                         <ul id="menu-deroulant">
-	                        <li><i class="fas fa-bars" id="fa-bars"></i>
-		                        <ul id="responsive_menu">
-                                    {% if authenticated == "True" %}
+                            {% if authenticated == "True" %}
+	                            <li><i class="fas fa-bars" id="fa-bars"></i>
+		                            <ul id="responsive_menu">
 			                            <li><a id="home" class="logo_nav" href="{% url 'index' %}"><i class="fas fa-home"></i></br><p>Accueil</p></a></li>
 			                            <li><a id="user" class="logo_nav" href="{% url 'account:my_account' %}"><i class="fas fa-user"></i></br><p>Compte</p></a></li>
 			                            <li><a id="clipboard" class="logo_nav" href="{% url 'dietetic:dietetic_space' %}"><i class="fas fa-clipboard"></i></br><p>Suivi</p></a></li>
