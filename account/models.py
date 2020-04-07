@@ -90,7 +90,7 @@ class IdentityUser(AbstractBaseUser):
 
     class Meta:
         """ Meta class """
-        verbose_name = "Identité utilisateur"
+        verbose_name = "Utilisateur"
 
 
 class AdvicesToUser(models.Model):
