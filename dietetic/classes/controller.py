@@ -364,7 +364,7 @@ class Controller:
         user = HistoryUser.objects.get(user=id_user)
         user.start_questionnaire_completed = False
         user.save()
-        ProfileUser.objects.get(user=id_user).delete()
+        ProfileUser.objects.filter(user=id_user).delete()
         ResultsUser.objects.filter(user=id_user).delete()
         AdvicesToUser.objects.filter(user=id_user).delete()
 

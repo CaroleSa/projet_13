@@ -60,7 +60,6 @@ class TestsReturnWeightAdvicesGoal(TestCase):
                  "aille en dessous de ce poids. Je tiens donc à te préciser qu'il est " \
                  "possible que tu n'arrives pas à le maintenir sur la durée. " \
                  "Je note tout de même cet objectif. "
-
         self.assertEqual(return_advice, advice)
 
     def test_return_goal_weight_under_cruising_weight(self):
@@ -84,7 +83,6 @@ class TestsReturnWeightAdvicesGoal(TestCase):
         return_goal = self.new_weight_advice_goal.return_weight_advices_goal(data_weight_user)[0]
 
         user_goal = "impossible"
-
         self.assertEqual(return_goal, user_goal)
 
     def test_return_advice_actual_weight_is_too_low(self):
@@ -98,7 +96,6 @@ class TestsReturnWeightAdvicesGoal(TestCase):
 
         text = "Ton poids actuel est déjà bien bas... je te déconseille " \
                "de perdre plus de poids. "
-
         self.assertEqual(advice, text)
 
     def test_return_goal_weight_actual_weight_is_too_low(self):
@@ -135,7 +132,6 @@ class TestsReturnWeightAdvicesGoal(TestCase):
         advice = "Ton objectif semble trop bas, je te conseille de ne pas " \
                  "aller en dessous de 47.4 kg. " \
                  "C'est donc l'objectif que nous allons fixer ! "
-
         self.assertEqual(return_advice, advice)
 
     def test_return_goal_weight_goal_weight_is_too_low(self):
@@ -170,7 +166,6 @@ class TestsReturnWeightAdvicesGoal(TestCase):
         return_advice = self.new_weight_advice_goal.return_weight_advices_goal(data_weight_user)[1]
 
         advice = "Alors c'est parti ! Partons sur un objectif de - 5 kg. "
-
         self.assertEqual(return_advice, advice)
 
     def test_return_goal_weight_goal_weight_ok(self):
@@ -201,7 +196,6 @@ class TestsReturnQuestionsList(TestCase):
         return_list = self.new_questions_list.create_questions_id_list()
 
         id_question_by_type_list = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 14, 13]
-
         self.assertEqual(list, type(return_list))
         self.assertEqual(14, len(return_list))
         self.assertEqual(id_question_by_type_list, return_list)
@@ -449,14 +443,14 @@ class TestsController(TestCase):
         """ test return_text_congratulations_restart_program method """
         # create user
         user_created = self.create_user_start_program_number_days_ago(60)
-
         # get data
         pseudo = user_created.username
 
         # user's data before
         # called method
-        data_profile_before = ProfileUser.objects.all().count()
-        data_results_before = ResultsUser.objects.all().count()
+        advice_user_before = AdvicesToUser.objects.filter(user=user_created)
+        data_profile_before = ProfileUser.objects.get(user=user_created)
+        data_results_before = ResultsUser.objects.filter(user=user_created)
         before_method = HistoryUser.objects.values_list("start_questionnaire_completed")\
             .get(user=user_created)[0]
 
@@ -466,8 +460,9 @@ class TestsController(TestCase):
 
         # user's data after
         # called method
-        data_profile_after = ProfileUser.objects.all().count()
-        data_results_after = ResultsUser.objects.all().count()
+        advice_user_after = AdvicesToUser.objects.filter(user=user_created)
+        data_profile_after = ProfileUser.objects.filter(user=user_created)
+        data_results_after = ResultsUser.objects.filter(user=user_created)
         after_method = HistoryUser.objects.values_list("start_questionnaire_completed")\
             .get(user=user_created)[0]
 
@@ -476,10 +471,12 @@ class TestsController(TestCase):
         self.assertNotEqual(before_method, after_method)
         self.assertEqual(type(return_text), str)
         self.assertEqual(return_text, text)
-        self.assertEqual(data_profile_after, 0)
-        self.assertEqual(data_results_after, 0)
+        self.assertEqual(len(data_profile_after), 0)
+        self.assertEqual(len(data_results_after), 0)
+        self.assertEqual(len(advice_user_after), 0)
         self.assertNotEqual(data_profile_before, data_profile_after)
         self.assertNotEqual(data_results_before, data_results_after)
+        self.assertNotEqual(advice_user_before, advice_user_after)
 
     def test_add_advices_to_user(self):
         """
@@ -492,18 +489,19 @@ class TestsController(TestCase):
         # count the number of challenges
         # before a call to the method
         user = self.user.objects.get(id=user_created.id)
-        advice_to_user_before = user.advices_to_user.all().count()
+        number_advice_to_user_before = user.advices_to_user.count()
 
         # call method
         self.new_controller.add_advices_to_user(user_created.id)
 
         # count the number of challenges
         # after a call to the method
-        advice_to_user_after = user.advices_to_user.all().count()
-
-        self.assertEqual(advice_to_user_before, 0)
-        self.assertNotEqual(advice_to_user_after, 0)
-        self.assertNotEqual(advice_to_user_after, advice_to_user_before)
+        number_advice_to_user_after = user.advices_to_user.count()
+        advice_to_user = user.advices_to_user.values_list("id")
+        self.assertEqual(number_advice_to_user_before, 0)
+        self.assertEqual(number_advice_to_user_after, 5)
+        for id_advice in advice_to_user:
+            self.assertEqual([(27,), (28,), (29,), (25,), (26,)].count(id_advice), 1)
 
     def test_return_weekly_questions_save_weight(self):
         """

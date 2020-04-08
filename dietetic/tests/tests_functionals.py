@@ -206,6 +206,7 @@ class TestsFunctionals(StaticLiveServerTestCase):
         to the first robot question
         """
         # get user's data
+        user_created = self.create_user_not_start_program()[0]
         user_data = self.create_user_not_start_program()[1]
 
         # login user
@@ -224,6 +225,8 @@ class TestsFunctionals(StaticLiveServerTestCase):
             self.browser.find_element_by_id("validate_button").click()
             robot_answer = self.browser.find_element_by_id("robot_answer").text
             self.assertEqual(robot_answer, robot_answer_text)
+            number_advices = len(AdvicesToUser.objects.filter(user=user_created))
+            self.assertEqual(number_advices, 0)
 
     def test_questionnaire(self):
         """
