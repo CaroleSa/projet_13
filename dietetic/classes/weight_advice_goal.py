@@ -31,7 +31,8 @@ class WeightAdviceGoal:
         actual_imc = actual_weight/(height*height)
         goal_imc = goal_weight/(height*height)
         cruising_imc = cruising_weight/(height*height)
-        user_goal = self.new_calculation.delete_o(actual_weight - goal_weight)
+        user_goal = round(actual_weight - goal_weight, 1)
+        user_goal = self.new_calculation.delete_o(user_goal)
 
         # actual weight is too low
         if actual_imc < 18.5:

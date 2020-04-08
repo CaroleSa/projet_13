@@ -423,6 +423,10 @@ h2 {
 .input_number {
     padding: 0vh;
     background-color: white;
+    max-width: 100px;
+}
+#validate_goal, #validate_weekly_weight{
+    max-width: 100px;
 }
 #discussion_space {
     overflow: auto;
