@@ -50,7 +50,7 @@ class WeightAdviceGoal:
             advice = "Ton objectif semble trop bas, je te conseille de ne pas " \
                      "aller en dessous de "+str(height_min)+" kg. " \
                      "C'est donc l'objectif que nous allons fixer ! "
-            goal = actual_weight - height_min
+            goal = round(actual_weight - height_min, 1)
             final_weight = height_min
 
             return goal, advice, final_weight

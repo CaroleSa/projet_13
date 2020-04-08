@@ -44,11 +44,7 @@ class TestsReturnWeightAdvicesGoal(TestCase):
                             "cruising_weight": "55", "weight_goal": "51"}
         return_goal = self.new_weight_advice_goal.return_weight_advices_goal(data_weight_user)[0]
 
-        actual_weight = round(float(data_weight_user["actual_weight"]), 1)
-        weight_goal = round(float(data_weight_user["weight_goal"]), 1)
-        goal = actual_weight - weight_goal
-
-        self.assertEqual(return_goal, goal)
+        self.assertEqual(return_goal, 9)
 
     def test_return_advice_under_cruising_weight(self):
         """
@@ -76,9 +72,7 @@ class TestsReturnWeightAdvicesGoal(TestCase):
                             "cruising_weight": "55", "weight_goal": "51"}
         return_goal = self.new_weight_advice_goal.return_weight_advices_goal(data_weight_user)[2]
 
-        weight_goal = round(float(data_weight_user["weight_goal"]), 1)
-
-        self.assertEqual(return_goal, weight_goal)
+        self.assertEqual(return_goal, 51)
 
     def test_return_goal_actual_weight_is_too_low(self):
         """
@@ -116,7 +110,7 @@ class TestsReturnWeightAdvicesGoal(TestCase):
                             "cruising_weight": "45", "weight_goal": "40"}
         goal_weight = self.new_weight_advice_goal.return_weight_advices_goal(data_weight_user)[2]
 
-        self.assertEqual(goal_weight, False)
+        self.assertFalse(goal_weight)
 
     def test_return_goal_goal_weight_is_too_low(self):
         """
@@ -127,13 +121,7 @@ class TestsReturnWeightAdvicesGoal(TestCase):
                             "cruising_weight": "45", "weight_goal": "40"}
         return_goal = self.new_weight_advice_goal.return_weight_advices_goal(data_weight_user)[0]
 
-        height = data_weight_user["height"]
-        height = float(height.replace(",", "."))
-        actual_weight = round(float(data_weight_user["actual_weight"]), 1)
-        height_min = round(18.5*(height * height), 1)
-        goal = actual_weight - height_min
-
-        self.assertEqual(return_goal, goal)
+        self.assertEqual(return_goal, 12.6)
 
     def test_return_advice_goal_weight_is_too_low(self):
         """
@@ -144,12 +132,8 @@ class TestsReturnWeightAdvicesGoal(TestCase):
                             "cruising_weight": "45", "weight_goal": "40"}
         return_advice = self.new_weight_advice_goal.return_weight_advices_goal(data_weight_user)[1]
 
-        height = data_weight_user["height"]
-        height = float(height.replace(",", "."))
-        height_min = round(18.5*(height * height), 1)
-        height_min = self.new_calculation.delete_o(height_min)
         advice = "Ton objectif semble trop bas, je te conseille de ne pas " \
-                 "aller en dessous de "+str(height_min)+" kg. " \
+                 "aller en dessous de 47.4 kg. " \
                  "C'est donc l'objectif que nous allons fixer ! "
 
         self.assertEqual(return_advice, advice)
@@ -162,11 +146,8 @@ class TestsReturnWeightAdvicesGoal(TestCase):
         data_weight_user = {"height": "1,60", "actual_weight": "60",
                             "cruising_weight": "45", "weight_goal": "40"}
         return_goal = self.new_weight_advice_goal.return_weight_advices_goal(data_weight_user)[2]
-        height = data_weight_user["height"]
-        height = float(height.replace(",", "."))
-        height_min = round(18.5 * (height * height), 1)
 
-        self.assertEqual(return_goal, height_min)
+        self.assertEqual(return_goal, 47.4)
 
     def test_return_goal_goal_weight_ok(self):
         """
@@ -177,11 +158,7 @@ class TestsReturnWeightAdvicesGoal(TestCase):
                             "cruising_weight": "55", "weight_goal": "55"}
         return_goal = self.new_weight_advice_goal.return_weight_advices_goal(data_weight_user)[0]
 
-        actual_weight = round(float(data_weight_user["actual_weight"]), 1)
-        weight_goal = round(float(data_weight_user["weight_goal"]), 1)
-        goal = actual_weight - weight_goal
-
-        self.assertEqual(return_goal, goal)
+        self.assertEqual(return_goal, 5)
 
     def test_return_advice_goal_weight_ok(self):
         """
@@ -192,11 +169,7 @@ class TestsReturnWeightAdvicesGoal(TestCase):
                             "cruising_weight": "55", "weight_goal": "55"}
         return_advice = self.new_weight_advice_goal.return_weight_advices_goal(data_weight_user)[1]
 
-        actual_weight = round(float(data_weight_user["actual_weight"]), 1)
-        weight_goal = round(float(data_weight_user["weight_goal"]), 1)
-        user_goal = self.new_calculation.delete_o(float(actual_weight - weight_goal))
-        advice = "Alors c'est parti ! Partons sur un objectif de - " \
-                 + str(user_goal) + " kg. "
+        advice = "Alors c'est parti ! Partons sur un objectif de - 5 kg. "
 
         self.assertEqual(return_advice, advice)
 
@@ -209,13 +182,13 @@ class TestsReturnWeightAdvicesGoal(TestCase):
                             "cruising_weight": "55", "weight_goal": "55"}
         return_goal = self.new_weight_advice_goal.return_weight_advices_goal(data_weight_user)[2]
 
-        weight_goal = round(float(data_weight_user["weight_goal"]), 1)
-
-        self.assertEqual(return_goal, weight_goal)
+        self.assertEqual(return_goal, 55)
 
 
 class TestsReturnQuestionsList(TestCase):
     """ TestsReturnQuestionsList class """
+
+    fixtures = ['data.json']
 
     def setUp(self):
         self.new_questions_list = QuestionsList()
@@ -225,29 +198,13 @@ class TestsReturnQuestionsList(TestCase):
         test the return of the method :
         list that contains the id questions
         """
-        # get data
-        data = DiscussionSpace.objects.values_list("robot_question").order_by("id")
-
-        # create a list
-        list_data = []
-        for elt in data:
-            list_data.append(elt[0])
-        id_question_list = []
-        for i in list_data:
-            if i not in id_question_list:
-                id_question_list.append(i)
-
-        id_question_by_type_list = []
-        for id_question in id_question_list:
-            question = RobotQuestion.objects.get(id=id_question)
-            question_type = question.robot_question_type.type
-            if question_type == "start":
-                id_question_by_type_list.append(id_question)
-
         return_list = self.new_questions_list.create_questions_id_list()
+
+        id_question_by_type_list = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 14, 13]
 
         self.assertEqual(id_question_by_type_list, return_list)
         self.assertEqual(list, type(return_list))
+        self.assertEqual(14, len(return_list))
 
 
 class TestsCalculation(TestCase):
