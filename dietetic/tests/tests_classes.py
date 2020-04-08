@@ -933,12 +933,17 @@ class TestsController(TestCase):
                      "cruising_weight": False, "weight_goal": False}
         weekly_weight = False
 
+        advice_user = AdvicesToUser.objects.filter(user=user_created)
+        number_advices_before = len(advice_user)
+
         # call method
         context = self.new_controller.controller_dietetic_space_view(user_created.id,
                                                                      old_robot_question,
                                                                      data_dict, user_answer,
                                                                      weekly_weight)
 
+        advice_user = AdvicesToUser.objects.filter(user=user_created)
+        number_advices_after = len(advice_user)
         robot_question = "D'après toi, as-tu des connaissances en diététique " \
                          "suffisantes pour t'aider à perdre du poids ?"
         robot_answer = "Alors c'est parti ! Voici mes questions …"
@@ -950,6 +955,8 @@ class TestsController(TestCase):
         self.assertTrue(context["answers"])
         self.assertEqual(type(context["answers"]), list)
         self.assertEqual(len(context["answers"]), 3)
+        self.assertEqual(number_advices_before, 0)
+        self.assertEqual(number_advices_after, 1)
 
     def test_controller_dietetic_space_view_start_questionnaire_completed_true_ww_false(self):
         """
@@ -999,12 +1006,19 @@ class TestsController(TestCase):
                      "cruising_weight": False, "weight_goal": False}
         weekly_weight = 58
 
+        advice_user = AdvicesToUser.objects.filter(user=user_created)
+        number_advices_before = len(advice_user)
+
         # call method
         context = self.new_controller.controller_dietetic_space_view(user_created.id,
                                                                      old_robot_question,
                                                                      data_dict, user_answer,
                                                                      weekly_weight)
 
+        advice_user = AdvicesToUser.objects.filter(user=user_created)
+        number_advices_after = len(advice_user)
+        results_user = ResultsUser.objects.values_list("weight").filter(user=user_created)\
+            .order_by("weighing_date")
         robot_comment = "J'ai bien pris note de ton poids, tu trouveras " \
                         "un récapitulatif dans l'onglet résultats."
         advice = "Une faim de loup ! : Tu m'as indiqué"
@@ -1012,6 +1026,9 @@ class TestsController(TestCase):
         self.assertEqual(context["robot_comment"], robot_comment)
         self.assertTrue(context["advice"])
         self.assertEqual(context["advice"][:36], advice)
+        self.assertEqual(len(results_user), 2)
+        self.assertEqual(results_user[1][0], 58)
+        self.assertEqual(number_advices_after + 1, number_advices_before)
 
     def test_controller_dietetic_space_view_start_questionnaire_completed_true_ww_goal(self):
         """
@@ -1036,7 +1053,15 @@ class TestsController(TestCase):
                                                                      data_dict, user_answer,
                                                                      weekly_weight)
 
+        advice_user = AdvicesToUser.objects.filter(user=user_created)
+        results_user = ResultsUser.objects.filter(user=user_created)
+        profile_user = ProfileUser.objects.filter(user=user_created)
+        user = HistoryUser.objects.get(user=user_created.id)
         robot_comment = 'Félicitation pseudo ! Tu as atteints ton objectif !'
         self.assertTrue(context["robot_comment"])
         self.assertEqual(len(context), 1)
         self.assertEqual(context["robot_comment"], robot_comment)
+        self.assertEqual(len(results_user), 0)
+        self.assertEqual(len(profile_user), 0)
+        self.assertFalse(user.start_questionnaire_completed)
+        self.assertEqual(len(advice_user), 0)
