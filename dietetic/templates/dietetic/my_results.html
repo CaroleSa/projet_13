@@ -9,16 +9,22 @@
 
             <!-- User's results text -->
             <div id="text_my_results">
-                <p id="starting_date">Suivi démarré le <strong>{{ starting_date }}</strong></p></br>
-                <p id="starting_goal_weight">Poids de départ : {{ starting_weight }} kg</br>Poids d'objectif : {{ final_weight }} kg</p></br>
-                <p id="goal_weight">Ton objectif est de <font class="bold" color="red">- {{ total_goal }} kg</font></p></br>
+                <p id="starting_date">Suivi démarré le <strong>{{ starting_date }}</strong></p><br>
+                <p id="starting_goal_weight">Poids de départ : {{ starting_weight }} kg<br>
+                    Poids d'objectif : {{ final_weight }} kg</p><br>
+                <p id="goal_weight">
+                    Ton objectif est de <font class="bold" color="red">- {{ total_goal }} kg</font>
+                </p><br>
                 <p class="bold">Mes résultats:</p>
                 {% if display_info == True %}
-                    <p id="results_display">Tu as perdu {{ lost_weight }} kg :</br>
-                    cela correspond à <font class="bold" color="green">{{ lost_percentage }} %</font> de ton objectif.</br>
-                    Ta perte moyenne est de <font class="bold" color="blue">{{ average_lost_weight }} kg</font> par semaine.</p>
+                    <p id="results_display">Tu as perdu {{ lost_weight }} kg :<br>
+                    cela correspond à <font class="bold" color="green">{{ lost_percentage }} %
+                        </font> de ton objectif.<br>
+                    Ta perte moyenne est de
+                        <font class="bold" color="blue">{{ average_lost_weight }} kg</font> par semaine.</p>
                 {% else %}
-                    <p id="no_results">Pas de résultats pour le moment.<br>Suis l'évolution de ton poids sur un graphique dès la semaine prochaine.</p>
+                    <p id="no_results">Pas de résultats pour le moment.<br>
+                        Suis l'évolution de ton poids sur un graphique dès la semaine prochaine.</p>
                 {% endif %}
             </div>
 

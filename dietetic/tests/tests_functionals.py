@@ -225,6 +225,7 @@ class TestsFunctionals(StaticLiveServerTestCase):
             self.browser.find_element_by_id("validate_button").click()
             robot_answer = self.browser.find_element_by_id("robot_answer").text
             self.assertEqual(robot_answer, robot_answer_text)
+            # check that the user has no more advice
             number_advices = len(AdvicesToUser.objects.filter(user=user_created))
             self.assertEqual(number_advices, 0)
 
@@ -268,6 +269,7 @@ class TestsFunctionals(StaticLiveServerTestCase):
             except common.exceptions.NoSuchElementException:
                 break
 
+        # check add advices to user
         number_advices = len(AdvicesToUser.objects.filter(user=user_created))
         self.assertNotEqual(number_advices, 0)
 

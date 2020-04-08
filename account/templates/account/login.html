@@ -1,6 +1,8 @@
 <!-- Tabs -->
 <div id="login" class="tab_y tab col-lg-6 col-md-6 col-sm-6 col-xs-6">&nbsp;Me connecter&nbsp;</div>
-<a href="{% url 'account:create_account' %}" ><div id="create_account" class="tab_n tab col-lg-6 col-md-6 col-sm-6 col-xs-6">&nbsp;Créer mon compte&nbsp;</div></a>
+<a href="{% url 'account:create_account' %}" >
+    <div id="create_account" class="tab_n tab col-lg-6 col-md-6 col-sm-6 col-xs-6">&nbsp;Créer mon compte&nbsp;</div>
+</a>
 
 <!-- Login form -->
 <div class="contents col-lg-12">
@@ -25,7 +27,8 @@
     {% endif %}
         <br><form action="{% url 'index' %}" method="post">{% csrf_token %}
             <input type="hidden" name="logout" value="True" />
-            <input id="logout_account" class="center" type="submit" onclick="location.href='{% url 'index' %}'" value="Me déconnecter"/><br><br>
+            <input id="logout_account" class="center" type="submit"
+                   onclick="location.href='{% url 'index' %}'" value="Me déconnecter"/><br><br>
         </form>
     {% endif %}
 </div>

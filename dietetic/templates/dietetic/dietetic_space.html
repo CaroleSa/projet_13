@@ -19,11 +19,12 @@
                 <input type="hidden" name="question" value="{{ question }}" />
                 {% for answer in answers %}
                     <div class="row">
-                        <input class="input_answer" id="{{answer}}" type="radio" name="answer" value="{{answer}}" required/>
+                        <input class="input_answer" id="{{answer}}" type="radio" name="answer"
+                               value="{{answer}}" required/>
                         <a class="answer_display">{{answer}}</a>
-                    </div></br>
+                    </div><br>
                 {% endfor %}
-                <input class="col-lg-offset-1" id="validate_button" type="submit" value="Valider"/></br>
+                <input class="col-lg-offset-1" id="validate_button" type="submit" value="Valider"/><br>
             </form>
         {% endif %}
 
@@ -37,20 +38,25 @@
                 {% endif %}
                 {% for question_type, question in dict_questions.items %}
                     {% if question_type == "height" %}
-                        <a id="question_height">{{question}}</a></br><input class="center input_number col-lg-3" type="number" step="0.01" min="1.50" max="2.30" id="{{question_type}}" name="{{question_type}}" required/></br></br>
+                        <a id="question_height">{{question}}</a><br>
+                        <input class="center input_number col-lg-3" type="number" step="0.01" min="1.50" max="2.30"
+                               id="{{question_type}}" name="{{question_type}}" required/><br><br>
                     {% else %}
-                        <a id="question_{{question_type}}">{{question}}</a></br><input class="center input_number col-lg-3" type="number" step="0.1" min="35" max="200" id="{{question_type}}" name="{{question_type}}" required/></br></br>
+                        <a id="question_{{question_type}}">{{question}}</a><br>
+                        <input class="center input_number col-lg-3" type="number" step="0.1" min="35" max="200"
+                               id="{{question_type}}" name="{{question_type}}" required/><br><br>
                     {% endif %}
                 {% endfor %}
-                </br><input id="validate_goal" class="col-lg-3" type="submit" value="Valider"/></br></br>
+                <br><input id="validate_goal" class="col-lg-3" type="submit" value="Valider"/><br><br>
             </form>
         {% endif %}
 
         <!-- Weekly weight question form -->
         {% if robot_weekly_weight %}
             <form class="center" action="{% url 'dietetic:dietetic_space' %}" method="post">{% csrf_token %}
-                <input id="weekly_weight" class="center input_number col-lg-3" type="number" step="0.1" min="35" max="200" name="weekly_weight" required/></br></br>
-                </br><input id="validate_weekly_weight" class="col-lg-3" type="submit" value="Valider"/></br></br>
+                <input id="weekly_weight" class="center input_number col-lg-3" type="number" step="0.1"
+                       min="35" max="200" name="weekly_weight" required/><br><br>
+                <br><input id="validate_weekly_weight" class="col-lg-3" type="submit" value="Valider"/><br><br>
             </form>
         {% endif %}
     </div>
