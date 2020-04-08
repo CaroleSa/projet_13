@@ -202,9 +202,9 @@ class TestsReturnQuestionsList(TestCase):
 
         id_question_by_type_list = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 14, 13]
 
-        self.assertEqual(id_question_by_type_list, return_list)
         self.assertEqual(list, type(return_list))
         self.assertEqual(14, len(return_list))
+        self.assertEqual(id_question_by_type_list, return_list)
 
 
 class TestsCalculation(TestCase):
@@ -250,26 +250,15 @@ class TestsCalculation(TestCase):
         test the contains
         of the list returned
         """
-        # get data
         user_created = self.create_user()
-        weighing_date = ResultsUser.objects.values_list("weighing_date")
-        weight = ResultsUser.objects.values_list("weight")
-        starting_date = weighing_date.filter(user=user_created).order_by("weighing_date").first()[0]
-        results_weight_data = weight.filter(user=user_created).order_by("weighing_date")
-        results_date_data = weighing_date.filter(user=user_created).order_by("weighing_date")
-
-        # create a list
-        list_data = [['Semaine', 'Poids']]
-        for weighing_date, weight in zip(results_date_data, results_weight_data):
-            delta = weighing_date[0] - starting_date
-            number_of_weeks = round(delta.days / 7, 0)
-            list_date_weight = [number_of_weeks, float(weight[0])]
-            list_data.append(list_date_weight)
-
         list_return = self.new_calculation.create_results_data_list(user_created)
 
-        self.assertEqual(list_data, list_return)
+        list_data = [['Semaine', 'Poids'], [0.0, 100.0], [1.0, 95.0]]
+
         self.assertEqual(list, type(list_return))
+        self.assertEqual(str, type(list_return[0][0]))
+        self.assertEqual(str, type(list_return[0][1]))
+        self.assertEqual(list_data, list_return)
         for elt in list_return:
             self.assertEqual(list, type(elt))
             self.assertEqual(2, len(elt))
@@ -279,21 +268,10 @@ class TestsCalculation(TestCase):
         test the percentage
         returned by the method
         """
-        # get data
         user_created = self.create_user()
-        weight = ResultsUser.objects.values_list("weight")
-        starting_weight = weight.filter(user=user_created).order_by("weighing_date").first()[0]
-        last_weight = weight.filter(user=user_created).order_by("weighing_date").last()[0]
-        final_weight = ProfileUser.objects.values_list("final_weight").get(user=user_created)[0]
-
-        # calculation
-        total_lost_weight = float(starting_weight - last_weight)
-        total_goal = float(starting_weight - final_weight)
-        lost_percentage = round(int((total_lost_weight * 100) / total_goal), 0)
-
         percentage_return = self.new_calculation.percentage_lost_weight(user_created)
 
-        self.assertEqual(percentage_return, lost_percentage)
+        self.assertEqual(percentage_return, 10)
         self.assertEqual(type(percentage_return), int)
 
     def test_average_weight_loss(self):
@@ -301,27 +279,10 @@ class TestsCalculation(TestCase):
         test average returned
         by the method
         """
-        # get data
         user_created = self.create_user()
-        weighing_date = ResultsUser.objects.values_list("weighing_date")
-        weight = ResultsUser.objects.values_list("weight")
-        starting_date = weighing_date.filter(user=user_created).order_by("weighing_date").first()[0]
-        last_date = weighing_date.filter(user=user_created).order_by("weighing_date").last()[0]
-        starting_weight = weight.filter(user=user_created).order_by("weighing_date").first()[0]
-        last_weight = weight.filter(user=user_created).order_by("weighing_date").last()[0]
-
-        # calculation
-        total_lost_weight = float(starting_weight - last_weight)
-        delta = last_date - starting_date
-        number_of_weeks = delta.days / 7
-        try:
-            average_lost_weight = round(total_lost_weight / number_of_weeks, 1)
-        except ZeroDivisionError:
-            average_lost_weight = 0
-
         average_return = self.new_calculation.average_weight_loss(user_created)
 
-        self.assertEqual(average_return, average_lost_weight)
+        self.assertEqual(average_return, 5.0)
         self.assertEqual(type(average_return), float)
 
     def test_delete_o(self):
@@ -603,19 +564,16 @@ class TestsController(TestCase):
         test the return
         of the new advice
         """
-        # create user
+        # create and get user
         user_created = self.create_user_start_program_number_days_ago(7)
-
-        # get user
         user = self.user.objects.get(id=user_created.id)
 
         # check the advice returned if new_week == False :
         # first challenge of the program
         self.new_controller.new_week = False
         return_advice_1 = self.new_controller.return_weekly_advice(user_created.id)
-        new_advices_user_text_1 = user.advices_to_user.values_list("text")\
-            .order_by("robot_advice_type").first()[0]
-        self.assertEqual(new_advices_user_text_1, return_advice_1)
+        new_advices_user_text_1 = "J'analyse : La deuxième semaine est une semaine particulière"
+        self.assertEqual(new_advices_user_text_1, return_advice_1[:60])
 
         id_advice_returned = RobotAdvices.objects.values_list("id").get(text=return_advice_1)[0]
         advice_user_list = user.advices_to_user.values_list("id").order_by("robot_advice_type")
@@ -625,9 +583,8 @@ class TestsController(TestCase):
         # second, ... challenges of the program
         self.new_controller.new_week = True
         return_advice_2 = self.new_controller.return_weekly_advice(user_created.id)
-        new_advices_user_text_2 = user.advices_to_user.values_list("text")\
-            .order_by("robot_advice_type").first()[0]
-        self.assertEqual(new_advices_user_text_2, return_advice_2)
+        new_advices_user_text_2 = "Une faim de loup ! : Tu m'as indiqué dans ton questionnaire"
+        self.assertEqual(new_advices_user_text_2, return_advice_2[:59])
 
         id_advice_returned = RobotAdvices.objects.values_list("id").get(text=return_advice_2)[0]
         advice_user_list = user.advices_to_user.values_list("id").order_by("robot_advice_type")
@@ -675,10 +632,8 @@ class TestsController(TestCase):
         if the user has answered
         this question yet
         """
-        # create user
+        # create and get user
         user_created = self.create_new_user()
-
-        # get the user
         user = self.user.objects.get(id=user_created.id)
 
         # test if the user answer to a question :
@@ -806,11 +761,12 @@ class TestsController(TestCase):
         context = self.new_controller.return_start_discussion(user_created.id, old_robot_question,
                                                               data_dict, user_answer)
 
-        first_id_question = self.new_questions_list.create_questions_id_list()[0]
-        first_question = RobotQuestion.objects.values_list("text").get(id=first_id_question)[0]
+        first_question = "Bonjour, je me présente ''My Dietetic Challenge'' !"
         self.assertEqual(len(context), 2)
-        self.assertEqual(context["question"], first_question)
+        self.assertEqual(context["question"][:51], first_question)
         self.assertTrue(context["answers"])
+        self.assertEqual(type(context["answers"]), list)
+        self.assertEqual(len(context["answers"]), 3)
 
     def test_return_start_discussion_display_second_question(self):
         """
@@ -818,22 +774,19 @@ class TestsController(TestCase):
         to all the questionnaire and have
         not writes this weight goal
         """
-        # create user
+        # create and get user
         user_created = self.create_new_user()
-
-        # get user
         user = self.user.objects.get(id=user_created.id)
 
         # data
         data_dict = {"height": False, "actual_weight": False,
                      "cruising_weight": False, "weight_goal": False}
-        index_id = 0
-        old_robot_question_id = self.new_questions_list.create_questions_id_list()[index_id]
-        old_robot_question = RobotQuestion.objects.values_list("text")\
-            .get(id=old_robot_question_id)[0]
-        user_answer_id = DiscussionSpace.objects.values_list("user_answer")\
-            .filter(robot_question=old_robot_question_id).order_by("id").first()[0]
-        user_answer = UserAnswer.objects.values_list("text").get(id=user_answer_id)[0]
+        old_robot_question = "Bonjour, je me présente ''My Dietetic Challenge'' ! " \
+                             "Mon objectif à partir d'aujourd'hui est de t'aider dans " \
+                             "ton parcours de perte de poids en la rendant plus attrayante ! " \
+                             "Mais avant de nous lancer dans cette FOLLE aventure, " \
+                             "j'ai besoin d'en connaître plus sur toi ! Es-tu prêt(e) ?"
+        user_answer = "oui"
 
         # get advices list to the user before called the method
         advice_user_before = user.advices_to_user.values_list("id").order_by("robot_advice_type")
@@ -847,10 +800,16 @@ class TestsController(TestCase):
         advice_user_after = user.advices_to_user.values_list("id").order_by("robot_advice_type")
         number_advice_after = len(advice_user_after)
 
-        second_question_id = self.new_questions_list.create_questions_id_list()[index_id + 1]
-        second_question = RobotQuestion.objects.values_list("text").get(id=second_question_id)[0]
-        self.assertEqual(context["question"], second_question)
+        second_question = "D'après toi, as-tu des connaissances en diététique " \
+                          "suffisantes pour t'aider à perdre du poids ?"
+        robot_answer = "Alors c'est parti ! Voici mes questions …"
+        self.assertTrue(context["question"])
+        self.assertEqual(context["question"][:95], second_question)
         self.assertTrue(context["answers"])
+        self.assertEqual(type(context["answers"]), list)
+        self.assertEqual(len(context["answers"]), 3)
+        self.assertTrue(context["robot_answer"])
+        self.assertEqual(context["robot_answer"][:41], robot_answer)
         self.assertEqual(number_advice_before, number_advice_after - 1)
 
     def test_return_start_discussion_display_weight_question(self):
@@ -864,12 +823,8 @@ class TestsController(TestCase):
         # data
         data_dict = {"height": False, "actual_weight": False,
                      "cruising_weight": False, "weight_goal": False}
-        old_robot_question_id = self.new_questions_list.create_questions_id_list()[-1]
-        old_robot_question = RobotQuestion.objects.values_list("text")\
-            .get(id=old_robot_question_id)[0]
-        user_answer_id = DiscussionSpace.objects.values_list("user_answer")\
-            .filter(robot_question=old_robot_question_id).order_by("id").first()[0]
-        user_answer = UserAnswer.objects.values_list("text").get(id=user_answer_id)[0]
+        old_robot_question = "Grignotes-tu après les repas ?"
+        user_answer = "non"
 
         # call method
         context = self.new_controller.return_start_discussion(user_created.id, old_robot_question,
@@ -884,6 +839,7 @@ class TestsController(TestCase):
         self.assertEqual(context["robot_answer"], None)
         self.assertEqual(context["goal_weight_text"], "Nous allons maintenant "
                                                       "définir ton objectif.")
+        self.assertEqual(len(context["dict_questions"]), 4)
         self.assertEqual(context["dict_questions"], dict_questions)
 
     def test_return_start_discussion_display_end_discussion_answer_2(self):
@@ -892,16 +848,13 @@ class TestsController(TestCase):
         2 to the first question :
         end discussion
         """
-        # create user
+        # create and get user
         user_created = self.create_new_user()
-
-        # get user
         user = self.user.objects.get(id=user_created.id)
 
         # data
         data_dict = {"height": False, "actual_weight": False,
                      "cruising_weight": False, "weight_goal": False}
-
         old_robot_question = "Bonjour, je me présente ''My Dietetic Challenge'' ! " \
                              "Mon objectif à partir d'aujourd'hui est de t'aider dans " \
                              "ton parcours de perte de poids en la rendant plus attrayante ! " \
@@ -929,16 +882,13 @@ class TestsController(TestCase):
         3 to the first question :
         end discussion
         """
-        # create user
+        # create and get user
         user_created = self.create_new_user()
-
-        # get user
         user = self.user.objects.get(id=user_created.id)
 
         # data
         data_dict = {"height": False, "actual_weight": False,
                      "cruising_weight": False, "weight_goal": False}
-
         old_robot_question = "Bonjour, je me présente ''My Dietetic Challenge'' ! " \
                              "Mon objectif à partir d'aujourd'hui est de t'aider dans " \
                              "ton parcours de perte de poids en la rendant plus attrayante ! " \
@@ -973,12 +923,12 @@ class TestsController(TestCase):
         user_created = self.create_new_user()
 
         # data
-        old_robot_question_id = self.new_questions_list.create_questions_id_list()[0]
-        old_robot_question = RobotQuestion.objects.values_list("text")\
-            .get(id=old_robot_question_id)[0]
-        user_answer_id = DiscussionSpace.objects.values_list("user_answer")\
-            .filter(robot_question=old_robot_question_id).order_by("id").first()[0]
-        user_answer = UserAnswer.objects.values_list("text").get(id=user_answer_id)[0]
+        old_robot_question = "Bonjour, je me présente ''My Dietetic Challenge'' ! " \
+                             "Mon objectif à partir d'aujourd'hui est de t'aider dans " \
+                             "ton parcours de perte de poids en la rendant plus attrayante ! " \
+                             "Mais avant de nous lancer dans cette FOLLE aventure, " \
+                             "j'ai besoin d'en connaître plus sur toi ! Es-tu prêt(e) ?"
+        user_answer = "oui"
         data_dict = {"height": False, "actual_weight": False,
                      "cruising_weight": False, "weight_goal": False}
         weekly_weight = False
@@ -989,8 +939,17 @@ class TestsController(TestCase):
                                                                      data_dict, user_answer,
                                                                      weekly_weight)
 
+        robot_question = "D'après toi, as-tu des connaissances en diététique " \
+                         "suffisantes pour t'aider à perdre du poids ?"
+        robot_answer = "Alors c'est parti ! Voici mes questions …"
+        self.assertEqual(len(context), 3)
+        self.assertTrue(context["robot_answer"])
+        self.assertEqual(context["robot_answer"], robot_answer)
         self.assertTrue(context["question"])
+        self.assertEqual(context["question"], robot_question)
         self.assertTrue(context["answers"])
+        self.assertEqual(type(context["answers"]), list)
+        self.assertEqual(len(context["answers"]), 3)
 
     def test_controller_dietetic_space_view_start_questionnaire_completed_true_ww_false(self):
         """
@@ -1014,8 +973,14 @@ class TestsController(TestCase):
                                                                      data_dict, user_answer,
                                                                      weekly_weight)
 
+        robot_comment = "Bonjour ! J'éspère que ta semaine s'est bien passée ? " \
+                        "Que donne ta pesée ce matin ?"
+        advice = "J'analyse : La deuxième semaine est une semaine particulière …"
         self.assertTrue(context["robot_comment"])
+        self.assertEqual(context["robot_comment"], robot_comment)
         self.assertTrue(context["robot_weekly_weight"])
+        self.assertTrue(context["advice"])
+        self.assertEqual(context["advice"][:62], advice)
 
     def test_controller_dietetic_space_view_start_questionnaire_completed_true_ww_true(self):
         """
@@ -1040,8 +1005,13 @@ class TestsController(TestCase):
                                                                      data_dict, user_answer,
                                                                      weekly_weight)
 
+        robot_comment = "J'ai bien pris note de ton poids, tu trouveras " \
+                        "un récapitulatif dans l'onglet résultats."
+        advice = "Une faim de loup ! : Tu m'as indiqué"
         self.assertTrue(context["robot_comment"])
+        self.assertEqual(context["robot_comment"], robot_comment)
         self.assertTrue(context["advice"])
+        self.assertEqual(context["advice"][:36], advice)
 
     def test_controller_dietetic_space_view_start_questionnaire_completed_true_ww_goal(self):
         """
@@ -1066,5 +1036,7 @@ class TestsController(TestCase):
                                                                      data_dict, user_answer,
                                                                      weekly_weight)
 
+        robot_comment = 'Félicitation pseudo ! Tu as atteints ton objectif !'
         self.assertTrue(context["robot_comment"])
         self.assertEqual(len(context), 1)
+        self.assertEqual(context["robot_comment"], robot_comment)
