@@ -268,6 +268,9 @@ class TestsFunctionals(StaticLiveServerTestCase):
             except common.exceptions.NoSuchElementException:
                 break
 
+        number_advices = len(AdvicesToUser.objects.filter(user=user_created))
+        self.assertNotEqual(number_advices, 0)
+
         # check the next questions value
         id_elt_question_text_dict = {"goal_weight_text": "Nous allons maintenant "
                                                          "définir ton objectif.",
