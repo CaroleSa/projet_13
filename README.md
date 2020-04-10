@@ -59,6 +59,6 @@ Activer le serveur en local avec la commande :
     python manage.py runserver
     (accès à l'interface d'administration : /admin/)
     
-Ce projet est accessible à cette adresse : https://my_dietetic_challenge.herokuapp.com/
+Ce projet est accessible à cette adresse : https://my-dietetic-challenge.herokuapp.com/
 
 Auteur : Carole Sartori
