@@ -61,45 +61,50 @@ def my_results(request):
     """ my_results view """
     # get data
     user = get_user_model()
-    user = user.objects.get(id=request.user.id)
-    final_weight = ProfileUser.objects.values_list("final_weight").get(user=user)[0]
-    weighing_date = ResultsUser.objects.values_list("weighing_date")
-    weight = ResultsUser.objects.values_list("weight")
-    starting_date = weighing_date.filter(user=user).order_by("weighing_date").first()[0]
-    last_date = weighing_date.filter(user=user).order_by("weighing_date").last()[0]
-    starting_weight = weight.filter(user=user).order_by("weighing_date").first()[0]
-    last_weight = weight.filter(user=user).order_by("weighing_date").last()[0]
-    total_goal = float(starting_weight - final_weight)
 
-    # get return Calculation class
-    new_calculation = Calculation()
-    list_data = new_calculation.create_results_data_list(user)
-    lost_percentage = new_calculation.percentage_lost_weight(user)
-    average_lost_weight = new_calculation.average_weight_loss(user)
-    lost_weight = round(starting_weight - last_weight, 1)
+    try:
+        user = user.objects.get(id=request.user.id)
+        final_weight = ProfileUser.objects.values_list("final_weight").get(user=user)[0]
+        weighing_date = ResultsUser.objects.values_list("weighing_date")
+        weight = ResultsUser.objects.values_list("weight")
+        starting_date = weighing_date.filter(user=user).order_by("weighing_date").first()[0]
+        last_date = weighing_date.filter(user=user).order_by("weighing_date").last()[0]
+        starting_weight = weight.filter(user=user).order_by("weighing_date").first()[0]
+        last_weight = weight.filter(user=user).order_by("weighing_date").last()[0]
+        total_goal = float(starting_weight - final_weight)
 
-    # return list_data (user's results)
-    # to the graphic of the results page
-    get_data = request.GET.get("get_data", "False")
-    if get_data == "True":
-        return JsonResponse(list_data, safe=False)
+        # get return Calculation class
+        new_calculation = Calculation()
+        list_data = new_calculation.create_results_data_list(user)
+        lost_percentage = new_calculation.percentage_lost_weight(user)
+        average_lost_weight = new_calculation.average_weight_loss(user)
+        lost_weight = round(starting_weight - last_weight, 1)
 
-    # if display_info == True
-    # display the graphic
-    # in the results page
-    display_info = False
-    if starting_date != last_date:
-        display_info = True
+        # return list_data (user's results)
+        # to the graphic of the results page
+        get_data = request.GET.get("get_data", "False")
+        if get_data == "True":
+            return JsonResponse(list_data, safe=False)
 
-    # create a context
-    context = {"starting_date": starting_date,
-               "starting_weight": new_calculation.delete_o(starting_weight),
-               "total_goal": new_calculation.delete_o(total_goal),
-               "lost_percentage": lost_percentage,
-               "average_lost_weight": new_calculation.delete_o(average_lost_weight),
-               "display_info": display_info,
-               "final_weight": new_calculation.delete_o(final_weight),
-               "lost_weight": new_calculation.delete_o(lost_weight)}
+        # if display_info == True
+        # display the graphic
+        # in the results page
+        display_info = False
+        if starting_date != last_date:
+            display_info = True
+
+        # create a context
+        context = {"starting_date": starting_date,
+                   "starting_weight": new_calculation.delete_o(starting_weight),
+                   "total_goal": new_calculation.delete_o(total_goal),
+                   "lost_percentage": lost_percentage,
+                   "average_lost_weight": new_calculation.delete_o(average_lost_weight),
+                   "display_info": display_info,
+                   "final_weight": new_calculation.delete_o(final_weight),
+                   "lost_weight": new_calculation.delete_o(lost_weight)}
+
+    except ProfileUser.DoesNotExist:
+        context = {}
 
     return render(request, 'dietetic/my_results.html', context)
 
