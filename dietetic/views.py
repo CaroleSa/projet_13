@@ -103,7 +103,7 @@ def my_results(request):
                    "final_weight": new_calculation.delete_o(final_weight),
                    "lost_weight": new_calculation.delete_o(lost_weight)}
 
-    except ProfileUser.DoesNotExist:
+    except (ProfileUser.DoesNotExist, user.DoesNotExist):
         context = {}
 
     return render(request, 'dietetic/my_results.html', context)
