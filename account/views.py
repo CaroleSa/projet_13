@@ -113,6 +113,8 @@ def login(request):
                     context["error_message"] = "Le mot de passe est incorrect."
         except user.DoesNotExist:
             context["error_message"] = "Ce compte n'existe pas."
+        except StatusUser.DoesNotExist:
+            context["error_message"] = "Ce compte n'y a pas accès."
 
     return render(request, "dietetic/index.html", context)
 

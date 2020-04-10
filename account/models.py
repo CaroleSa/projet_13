@@ -44,8 +44,6 @@ class UserManager(BaseUserManager):
         user.is_staff = True
         user.is_superuser = True
         user.save()
-        HistoryUser.objects.create(user=user)
-        StatusUser.objects.create(user=user)
 
         return user
 
@@ -54,7 +52,7 @@ class IdentityUser(AbstractBaseUser):
     """ IdentityUser model """
     username = models.CharField(max_length=150, validators=[UnicodeUsernameValidator()],
                                 verbose_name='pseudo')
-    email = models.EmailField(max_length=254, unique=True, verbose_name='email address')
+    email = models.EmailField(max_length=254, unique=True, verbose_name='adresse e-mail')
     password = models.CharField(max_length=128, verbose_name='mot de passe')
     last_login = models.DateTimeField(blank=True, null=True, verbose_name='dernière connexion')
     advices_to_user = models.ManyToManyField(RobotAdvices, through="AdvicesToUser")
