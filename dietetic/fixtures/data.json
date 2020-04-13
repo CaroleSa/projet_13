@@ -330,7 +330,7 @@
     "model": "dietetic.UserAnswer",
     "pk": 12,
     "fields": {
-      "text": "oui, je marche ou fais du sport plus intense 30 minutes ou plus par jour"
+      "text": "oui, je marche ou pratique un sport plus intensif 30 minutes ou plus par jour"
     }
   },
   {
