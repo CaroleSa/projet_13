@@ -80,6 +80,8 @@
         margin-top: 20vh;
     }
     .fa-user-circle {
+        text-shadow : 2px 2px 6px black;
+        color: rgb(227, 216, 210);
         display: block;
         position: absolute;
         right: 10vh;
