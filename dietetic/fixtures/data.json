@@ -107,7 +107,7 @@
     "pk": 1,
     "fields": {
       "robot_question_type": 1,
-      "text": "Bonjour, je me présente ''My Dietetic Challenge'' ! Mon objectif à partir d'aujourd'hui est de t'aider dans ton parcours de perte de poids en la rendant plus attrayante ! Mais avant de nous lancer dans cette FOLLE aventure, j'ai besoin d'en connaître plus sur toi ! Es-tu prêt(e) ?"
+      "text": "Bonjour, je me présente \"My Dietetic Challenge\" ! Mon objectif à partir d'aujourd'hui est de t'aider dans ton parcours de perte de poids en la rendant plus attrayante ! Mais avant de nous lancer dans cette FOLLE aventure, j'ai besoin d'en connaître plus sur toi ! Es-tu prêt(e) ?"
     }
   },
   {
@@ -179,7 +179,7 @@
     "pk": 10,
     "fields": {
       "robot_question_type": 1,
-      "text": "Les légumes sont ils présents dans ton assiette midi et soir ? Attention ! Les pommes de terre, lentilles et autres légumes secs ne font pas parti de cette catégorie."
+      "text": "Les légumes sont-ils présents dans ton assiette midi et soir ? Attention ! Les pommes de terre, lentilles et autres légumes secs ne sont pas de cette catégorie."
     }
   },
   {
@@ -219,7 +219,7 @@
     "pk": 15,
     "fields": {
       "robot_question_type": 4,
-      "text": "Ca y est ! Nous sommes arrivé au bout du questionnaire. J'ai bien pris note de tes réponses. Voilà comment va se passer la suite… Ton parcours débute dès aujourd'hui. Pour cela, il te faudra te peser 1 fois par semaine, pas plus ! Chaque jour de pesée, tu me retrouves ici pour m'informer de tes résultats. De mon coté, je te prépare un nouveau challenge ou un conseil à appliquer rigoureusement chaque semaine ! Alors c'est parti ! Pour débuter ta semaine, il te faut juste cliquer sur la carte à coté... à la semaine prochaine !!!"
+      "text": "Ca y est ! Nous sommes arrivé au bout du questionnaire. J'ai bien pris note de tes réponses. Voilà comment va se passer la suite… Ton parcours débute dès aujourd'hui. Pour cela, il te faudra te peser 1 fois par semaine, pas plus ! Tu me retrouveras ici pour m'informer de tes résultats. De mon coté, je te prépare un nouveau challenge ou un conseil à appliquer rigoureusement chaque semaine ! Alors c'est parti ! Pour débuter ta semaine, il te faut juste cliquer sur la carte \"pomme\" qui suit... à la semaine prochaine !!!"
     }
   },
   {
@@ -309,7 +309,7 @@
     "model": "dietetic.UserAnswer",
     "pk": 9,
     "fields": {
-      "text": "de temps en temps, pour les évènements"
+      "text": "de temps en temps, pour les événements"
     }
   },
   {
@@ -372,7 +372,7 @@
     "model": "dietetic.UserAnswer",
     "pk": 18,
     "fields": {
-      "text": "oui, et pourtant je dore 7h minimum par nuit"
+      "text": "oui, et pourtant, je dore 7h minimum par nuit"
     }
   },
   {
@@ -499,13 +499,6 @@
     "pk": 36,
     "fields": {
       "text": "je n'en bois pas"
-    }
-  },
-  {
-    "model": "dietetic.UserAnswer",
-    "pk": 37,
-    "fields": {
-      "text": ""
     }
   },
   {
@@ -770,7 +763,7 @@
     "fields": {
       "robot_question": 8,
       "user_answer": 39,
-      "robot_answer": "Très bonne décision !  Ça te sera d'une grande aide !",
+      "robot_answer": "Très bonne décision ! Ça te sera d'une grande aide !",
       "robot_advices": 11
     }
   },
@@ -981,7 +974,7 @@
     "pk": 1,
     "fields": {
       "robot_advice_type": 3,
-      "text": "J'analyse : La deuxième semaine est une semaine particulière … Et oui, je constate régulièrement que la perte de poids est rarement au rendez-vous, alors que la première semaine sera sans doute la plus importante du suivi. Ne te décourages pas ! Elle repartira de plus belle sur la troisième semaine et les suivantes... L'analyse de ton poids est importante durant le suivi puisqu'elle va te permettre de relativiser certaines semaines où tes résultats ne sont pas ou peu visibles. Voici donc mon conseil  :  1- Equipes-toi d'un carnet de suivi  2- Notes les conseils et challenges que je te propose chaque semaine  3- Inscrits tes résultats et ajoutes-y quelques commentaires en face. J'entends par ''commentaires'', toutes informations susceptibles de perturber ta perte de poids (alimentation riche, traitement antiinflammatoire ou autres, maladie, constipation, grosse perte de poids la semaine précédente, fatigue,  ...). Comment voir si tu as une bonne perte de poids ? Tu trouveras dans l'onglet ''Résultats'' une analyse de ton suivi."
+      "text": "J'analyse : La deuxième semaine est une semaine particulière … Et oui, je constate régulièrement que la perte de poids est rarement au rendez-vous, alors que la première semaine sera sans doute la plus importante du suivi. Ne te décourages pas ! Elle repartira de plus belle sur la troisième semaine et les suivantes... L'analyse de ton poids est importante durant le suivi puisqu'elle va te permettre de relativiser certaines semaines où tes résultats ne sont pas ou peu visibles. Voici donc mon conseil  :  1- Équipes-toi d'un carnet de suivi  2- Notes les conseils et challenges que je te propose chaque semaine  3- Inscris tes résultats et ajoutes-y quelques commentaires en face. J'entends par \"commentaires\", toutes informations susceptibles de perturber ta perte de poids (alimentation riche, traitement antiinflammatoire ou autres, maladie, constipation, grosse perte de poids la semaine précédente, fatigue,  ...). Comment savoir si tu as une bonne perte de poids ? Tu trouveras dans l'onglet \"Résultats\" une analyse de ton suivi."
     }
   },
   {
@@ -989,7 +982,7 @@
     "pk": 2,
     "fields": {
       "robot_advice_type": 10,
-      "text": "J'apprends à l'aimer : L'eau ne semble pas être ton meilleur ami ! Et pourtant, si tu savais !!! Boire va permettre de réveiller tes capacités mentales et physiques, d'hydrater ta peau et c'est un allié perte de poids indéniable. Grâce à l'eau tu vas être au top de ta forme ! Alors c'est parti, je te propose un challenge cette semaine : boire plus et avec plaisir ! Achètes-toi une boisson plaisir (sans sucre). Tu peux choisir :  1- une infusion (tu en trouveras bien une à ton goût !)  2- si tu n'aimes pas l'infusion sans sucre... celle qui contient de la réglisse sera peut être ton amie  3 - du thé ou du café (seulement le matin) et décaféiné l'après-midi avec un petit carré de chocolat noir c'est possible  4- de l'eau pure avec du jus de citron  5- une infusion froide, ... Mmmh, j'ai bien l'impression que cela t'inspire ! Je te propose de boire une grande boisson à chaque repas et à 16h. L'objectif de ce challenge est de constater le changement, tant bien au niveau du bien-être, que du poids. Allé ! C'est parti !"
+      "text": "J'apprends à l'aimer : L'eau ne semble pas être ta meilleure amie ! Et pourtant, si tu savais !!! Boire va permettre de réveiller tes capacités mentales et physiques, d'hydrater ta peau et c'est un allié perte de poids indéniable. Grâce à l'eau tu vas être au top de ta forme ! Alors c'est parti, je te propose un challenge cette semaine : boire plus et avec plaisir ! Achètes-toi une boisson plaisir (sans sucre). Tu peux choisir :  1- une infusion (tu en trouveras bien une à ton goût !)  2- si tu n'aimes pas l'infusion sans sucre... celle qui contient de la réglisse sera peut-être ton amie  3 - du thé ou du café (seulement le matin) et décaféiné l'après-midi avec un petit carré de chocolat noir, c'est possible  4- de l'eau pure avec du jus de citron  5- une infusion froide, ... Mmmh, j'ai bien l'impression que cela t'inspire ! Je te propose de boire une grande boisson à chaque repas et à 16h. L'objectif de ce challenge est de constater un changement, aussi bien au niveau du bien-être, que du poids. Allé ! C'est parti !"
     }
   },
   {
@@ -997,7 +990,7 @@
     "pk": 3,
     "fields": {
       "robot_advice_type": 10,
-      "text": "La soif vient en buvant : Comme le dit l'expression \"la faim vient en mangeant…\" sais-tu que la soif vient en buvant ? Pour ton challenge de la semaine, je te propose de tester la véracité de cette information !  Comment ? En modifiant tes habitudes. Chaque jour doit être composé : d'un grand verre d'eau au réveil et entre les repas et d'une boisson chaude sans sucre en fin de repas. Fais une croix dans ton carnet à chaque fois que tu as soif dans la journée.  Bon, tu vas me dire, c'est bien de boire mais je n'en vois pas l'interêt !  Détrompes-toi !!! Boire va permettre de réveiller tes capacités mentales et physiques, d'hydrater ta peau et c'est un allié perte de poids indéniable, ... ! Bon... allé c'est parti ! Tous à vos bouteilles !"
+      "text": "La soif vient en buvant : Comme le dit l'expression \"la faim vient en mangeant…\" sais-tu que la soif vient en buvant ? Pour ton challenge de la semaine, je te propose de tester la véracité de cette expression ! Comment ? En modifiant tes habitudes. Chaque jour doit être composé : d'un grand verre d'eau au réveil et entre les repas et d'une boisson chaude sans sucre en fin de repas. Fais une croix dans ton carnet à chaque fois que tu as soif dans la journée. Bon, tu vas me dire, c'est bien de boire mais je n'en vois pas l'intérêt !  Détrompes-toi !!! Boire va permettre de réveiller tes capacités mentales et physiques, d'hydrater ta peau et c'est un allié perte de poids indéniable, ... ! Bon... allé c'est parti ! Tous à vos bouteilles !"
     }
   },
   {
@@ -1005,7 +998,7 @@
     "pk": 4,
     "fields": {
       "robot_advice_type": 10,
-      "text": "Je pense à boire : L'eau semble être un ami oublié de ton quotidien ! Et pourtant, si tu savais !!! Boire va permettre de réveiller tes capacités mentales et physiques, d'hydrater ta peau et c'est un allié perte de poids indéniable, … grâce à l'eau tu vas être au top de ta forme ! Alors c'est parti, je te propose un challenge hydratation cette semaine : sortir ta bouteille d'eau du placard pour lui rendre visite régulièrement... ! Voici ce que je te propose : boire 1 grand verre d'eau dès le réveil, puis 3 à 4 gorgées d'eau après chaque passage aux toilettes ! L'objectif de ce challenge est de constater le changement, tant bien au niveau du bien-être, que du poids. Allé ! Hop ! C'est parti !"
+      "text": "Je pense à boire : L'eau semble être une amie oubliée de ton quotidien ! Et pourtant, si tu savais !!! Boire va permettre de réveiller tes capacités mentales et physiques, d'hydrater ta peau et c'est un allié perte de poids indéniable, … grâce à l'eau tu vas être au top de ta forme ! Alors c'est parti, je te propose un challenge hydratation cette semaine : sortir ta bouteille d'eau du placard pour lui rendre visite régulièrement... ! Voici ce que je te propose : boire 1 grand verre d'eau dès le réveil, puis 3 à 4 gorgées d'eau après chaque passage aux toilettes ! L'objectif de ce challenge est de constater un changement, aussi bien au niveau du bien-être, que du poids. Allé ! Hop ! C'est parti !"
     }
   },
   {
@@ -1013,7 +1006,7 @@
     "pk": 5,
     "fields": {
       "robot_advice_type": 6,
-      "text": "Le sucre ... faux ami : Le sucre apporte un moment de plaisir mais il n'est pas indispensable à l'organisme. Il ne va pas te rendre service : stocké facilement sous forme de gras, il va limiter voir stopper ta perte de poids. Voici donc ton challenge de la semaine : boire toutes tes boissons chaudes sans sucre ! Je conçois que cela n'est peut-être pas évident pour toi... mais c'est le but d'un challenge que de te pousser à dépasser tes limites .  Ce dernier dure 1 semaine, nous sommes donc d'accord pour dire que c'est largement faisable ! Alors c'est parti ! Atteignons cet objectif !"
+      "text": "Le sucre ... faux ami : Le sucre apporte un moment de plaisir mais il n'est pas indispensable à l'organisme. Il ne va pas te rendre service : stocké facilement sous forme de gras, il va limiter voir stopper ta perte de poids. Voici donc ton challenge de la semaine : boire toutes tes boissons chaudes sans sucre ! Je conçois que cela n'est peut-être pas évident pour toi... mais c'est le but d'un challenge que de te pousser à dépasser tes limites. Ce dernier dure 1 semaine, nous sommes donc d'accord pour dire que c'est largement faisable ! Alors c'est parti ! Atteignons cet objectif !"
     }
   },
   {
@@ -1021,7 +1014,7 @@
     "pk": 6,
     "fields": {
       "robot_advice_type": 9,
-      "text": "Le sucre ... faux ami : Voici mon conseil de la semaine. Le sucre apporte un moment de plaisir mais il n'est pas indispensable à l'organisme. Il ne va pas te rendre service : stocké facilement sous forme de gras, il va limiter voir stopper ta perte de poids. Et d'autant plus s'il est consommé en dehors d'un repas ! Cela vaut pour le sucre pure mais aussi pour les sodas, les gâteaux, ... Les produits sucrés sont donc fortement déconseillés si tu veux perdre du poids. Ou alors, occasionnelement et au cours d'un repas. Le sucre appelant au sucre, il est parfois plus simple de ne pas en manger du tout. C'est selon la sensibilité de chacun."
+      "text": "Le sucre ... faux ami : Voici mon conseil de la semaine. Le sucre apporte un moment de plaisir mais il n'est pas indispensable à l'organisme. Il ne va pas te rendre service : stocké facilement sous forme de gras, il va limiter voir stopper ta perte de poids. Et d'autant plus s'il est consommé en dehors d'un repas ! Cela vaut pour le sucre pur mais aussi pour les sodas, les gâteaux, ... Les produits sucrés sont donc fortement déconseillés si tu veux perdre du poids. Ou alors, occasionnellement et au cours d'un repas. Le sucre appelant au sucre, il est parfois plus simple de ne pas en manger du tout. C'est selon les sensibilités de chacun."
       }
   },
   {
@@ -1029,7 +1022,7 @@
     "pk": 7,
     "fields": {
       "robot_advice_type": 5,
-      "text": "Alcool et sucre : Les boissons alcoolisées et sucrées ont un apport en calorie et en sucre souvent important. Pour exemple, une canette de soda contient l'équivalent de 7 sucres ! Etant donné que le surplus de sucre dans le sang est directement stocké en graisses… tu comprendras qu'il peut être difficile d'associer perte de poids et ce type de boissons au quotidien. Ton challenge de la semaine sera donc de remplacer l'alcool et les boissons sucrées par un verre d'eau jusqu'à la prochaine pesée. Objectif, battre ton reccord de perte de poids ! Allé hop ! C'est parti !!!!"
+      "text": "Alcool et sucre : Les boissons alcoolisées et sucrées ont un apport en calories et en sucre souvent important. Pour exemple, une canette de soda contient l'équivalent de 7 sucres ! Étant donné que le surplus de sucre dans le sang est directement stocké en graisses… tu comprendras qu'il peut être difficile d'associer perte de poids et ce type de boissons au quotidien. Ton challenge de la semaine sera donc de remplacer l'alcool et les boissons sucrées par un verre d'eau jusqu'à la prochaine pesée. Objectif, battre ton reccord de perte de poids ! Allé hop ! C'est parti !!!!"
       }
   },
   {
@@ -1037,7 +1030,7 @@
     "pk": 8,
     "fields": {
       "robot_advice_type": 4,
-      "text": "Restaurant, faire les bons choix : Manger tous les jours au restaurant n'est pas incompatible avec la perte de poids. Ton challenge cette semaine sera de faire les bons choix. 1- Tout d'abord, il peut être bien de boire un grand verre d'eau avant d'arriver au restaurant afin d'éviter que ta commande soit guidées par ton estomac  2- ensuite, je te conseille de choisir un menu plat-fromage blanc ou plat-salade de fuit  3-Pour finir, le choix du plat est primorial... choisir un poisson blanc, une viande blanche avec un accompagnement de légumes semble le plus approprié.  4- De l'eau et une boisson chaude sans sucre ajouté en guise de boissons et le tour est joué ! Si jamais ton repas te semble gras, tu peux rééquilibrer tes apports en supprimant la matière grasse de ton repas du soir. Ces conseils sont de bonnes habitudes à mettre en place au quotidien ! Je te propose de les suivre cette semaine ! C'est parti !"
+      "text": "Restaurant, faire les bons choix : Manger tous les jours au restaurant n'est pas incompatible avec la perte de poids. Ton challenge cette semaine sera de faire les bons choix. 1- Tout d'abord, il peut être bien de boire un grand verre d'eau avant d'arriver au restaurant afin d'éviter que ta commande soit guidée par ton estomac  2- ensuite, je te conseille de choisir un menu plat-fromage blanc ou plat-salade de fuit  3-Pour finir, le choix du plat est primorial... choisir un poisson blanc, une viande blanche avec un accompagnement de légumes semble le plus approprié.  4- De l'eau et une boisson chaude sans sucre ajouté en guise de boisson et le tour est joué ! Si jamais ton repas te semble gras, tu peux rééquilibrer tes apports en supprimant la matière grasse de ton repas du soir. Ces conseils sont de bonnes habitudes à mettre en place au quotidien ! Je te propose de les suivre cette semaine ! C'est parti !"
       }
   },
   {
@@ -1045,7 +1038,7 @@
     "pk": 9,
     "fields": {
       "robot_advice_type": 8,
-      "text": "Rééquilibrage après sortie restaurant : Manger au restaurant n'est pas incompatible avec la perte de poids. Ton challenge pour ta prochaine sortie restaurant sera de gérer tes choix sur place et de rééquilibrer tes apports sur les repas suivants. 1- Tout d'abord, il peut être bien de manger un yaourt ou boire un grand verre d'eau avant d'arriver au restaurant afin d'éviter que ta commande soit guidées par ton estomac  2- ensuite, choisir un poisson blanc, une viande blanche avec un accompagnement de légumes semble le plus approprié.  3- un fromage blanc ou une salade de fruits en dessert également. 4- de l'eau et une boisson chaude sans sucre ajouté en guise de boissons et le tour est joué ! Que le menu soit imposé ou non, il est impératif de prendre le temps de manger et de t'arrêter lorsque tu n'as plus faim. Si jamais ton repas te semble trop riche, tu peux rééquilibrer tes apports en supprimant la matière grasse et les féculents sur les deux repas qui suivront."
+      "text": "Rééquilibrage après sortie restaurant : Manger au restaurant n'est pas incompatible avec la perte de poids. Ton challenge pour ta prochaine sortie restaurant sera de gérer tes choix sur place et de rééquilibrer tes apports sur les repas suivants. 1- Tout d'abord, il peut être bien de manger un yaourt ou boire un grand verre d'eau avant d'arriver au restaurant afin d'éviter que ta commande soit guidée par ton estomac  2- ensuite, choisir un poisson blanc, une viande blanche avec un accompagnement de légumes semble le plus approprié.  3- un fromage blanc ou une salade de fruits en dessert également. 4- de l'eau et une boisson chaude sans sucre ajouté en guise de boisson et le tour est joué ! Que le menu soit imposé ou non, il est impératif de prendre le temps de manger et de t'arrêter lorsque tu n'as plus faim. Si jamais ton repas te semble trop riche, tu peux rééquilibrer tes apports en supprimant la matière grasse et les féculents sur les deux repas qui suivront."
       }
   },
   {
@@ -1053,7 +1046,7 @@
     "pk": 10,
     "fields": {
       "robot_advice_type": 7,
-      "text": "Plus on est de fous, plus on rit :  Tu m'as indiqué dans ton questionnaire ne pas aimer faire une activité physique. Je te propose donc un challenge spécialement pour toi cette semaine ! Découvrir ses bons cotés !  Tu as le choix de l'activité (marche, piscine, badmington, volley, ...), seulement, tu dois être accompagné(e) : un(e) ami(e), un(e) voisin(e), un(e) cousin(e), ... Profiter d'un moment à plusieurs c'est plus sympa non ? Allé hop, c'est parti pour une nouvelle semaine !"
+      "text": "Plus on est de fous, plus on rit :  Tu m'as indiqué dans ton questionnaire ne pas aimer les activités physiques. Je te propose donc un challenge spécialement pour toi cette semaine ! Découvrir ses bons cotés ! Tu as le choix de l'activité (marche, piscine, badmington, volley, ...), seulement, tu dois être accompagné(e) : un(e) ami(e), un(e) voisin(e), un(e) cousin(e), ... Profiter d'un moment à plusieurs c'est plus sympa non ? Allé hop, c'est parti pour une nouvelle semaine !"
       }
   },
   {
@@ -1061,7 +1054,7 @@
     "pk": 11,
     "fields": {
       "robot_advice_type": 7,
-      "text": "Mise en place :  Tu m'as indiqué dans ton questionnaire que tu souhaitais mettre en place une activité physique. Je te propose donc cette semaine 2 challenges, au choix !  1- J'imagine, ou peut-être pas, qu'il t'arrive de te prélasser le soir devant un bon film ! Si c'est le cas, je te propose de profiter de ce temps pour faire un peu d'exercices... une durée de 10-15 min chaque soir est suffisante : exercices de gym, stepper, vélo elliptique, ... Il n'y a rien de tel pour sculpter ton corps et  déstresser de la journée !   2- Si tu es plutôt du matin, je te propose de te coucher 10-15 minutes plus tôt pour consacrer ce temps le lendemain dans une activité physique : on en profite également pour faire quelques étirrements ! Tu veras que cela te fera le plus grand bien ! Il est important de savoir qu'une activité quotidienne donnera bien plus de résultats que quelques fois dans la semaine. De plus, plus tu augmenteras ta masse musculaire, plus ton corps brulera de graisses. Si tu es amené à continuer ce challenge sur la durée, je te conseille de t'équiper d'un mètre de couture pour prendre tes mensurations (ventre, hanches et cuisse). La masse musculaire pèse sur la balance et peut perturber tes résultats. Le jour de ta pesée, si ta balance ne donne rien mais que les cm sont en baisse, tu pouras considérer que c'est une bonne semaine ! Attention, tes mensurations au niveau du ventre peuvent augmenter si tu es balonné(e) ou constipé(e). Allé, c'est parti pour ce challenge !"
+      "text": "Mise en place :  Tu m'as indiqué dans ton questionnaire que tu souhaitais mettre en place une activité physique. Je te propose donc cette semaine de choisir ton challenge parmis les 2 proposés !  1- J'imagine, ou peut-être pas, qu'il t'arrive de te prélasser le soir devant un bon film ! Si c'est le cas, je te propose de profiter de ce temps pour faire un peu d'exercices... une durée de 10-15 min chaque soir est suffisante : exercices de gym, stepper, vélo elliptique, ... Il n'y a rien de tel pour sculpter ton corps et déstresser de la journée !  2- Si tu es plutôt du matin, je te propose de te coucher 10-15 minutes plus tôt pour consacrer ce temps le lendemain dans une activité physique : on en profite également pour faire quelques étirrements ! Tu veras que cela te fera le plus grand bien ! Il est important de savoir qu'une activité quotidienne donnera bien plus de résultats que quelques fois dans la semaine. De plus, plus tu augmenteras ta masse musculaire, plus ton corps brûlera de graisses. Si tu es amené à continuer ce challenge sur la durée, je te conseille de t'équiper d'un mètre de couture pour prendre tes mensurations (ventre, hanches et cuisse). La masse musculaire pèse sur la balance et peut perturber tes résultats. Le jour de ta pesée, si ta balance ne donne rien mais que les cm sont en baisse, tu pouras considérer que c'est une bonne semaine ! Attention, tes mensurations au niveau du ventre peuvent augmenter si tu es balonné(e) ou constipé(e). Allé, c'est parti pour ce challenge !"
       }
   },
   {
@@ -1069,7 +1062,7 @@
     "pk": 12,
     "fields": {
       "robot_advice_type": 2,
-      "text": "Activité physique et masse musculaire : Tu m'as indiqué dans ton questionnaire que tu faisait régulièrement une activité physique. Dans ton cas, il faut bien prendre en compte que ta masse musculaire peut être ammenée à augmenter et par conséquent à influencer les résultats de ta balance... A partir de cette semaine, je te conseille de t'équiper d'un mètre de couture afin de prendre tes mensurations une fois par semaine (ventre, hanches et cuisse). Le jour de ta pesée, si ta balance ne donne rien mais que les cm sont en baisse, tu pouras considérer que c'est une bonne semaine ! Attention, tes mensurations au niveau du ventre peuvent augmenter si tu es balonné(e) ou constipé(e). Bonne semaine !"
+      "text": "Activité physique et masse musculaire : Tu m'as indiqué dans ton questionnaire que tu faisais régulièrement une activité physique. Dans ton cas, il faut bien prendre en compte que ta masse musculaire peut être amenée à augmenter et par conséquent à influencer les résultats de ta balance... À partir de cette semaine, je te conseille de t'équiper d'un mètre de couture afin de prendre tes mensurations une fois par semaine (ventre, hanches et cuisse). Le jour de ta pesée, si ta balance ne donne rien mais que les cm sont en baisse, tu pouras considérer que c'est une bonne semaine ! Attention, tes mensurations au niveau du ventre peuvent augmenter si tu es balonné(e) ou constipé(e). Bonne semaine !"
       }
   },
   {
@@ -1077,7 +1070,7 @@
     "pk": 13,
     "fields": {
       "robot_advice_type": 7,
-      "text": "Courir après le temps :  Tu m'as indiqué dans ton questionnaire que tu souhaitais mettre en place une activité physique mais que tu ne trouvais pas le temps. Je te propose donc cette semaine 2 challenges, au choix !  1- J'imagine, ou peut-être pas, que tu arrives à trouver le temps de te prélasser le soir devant un bon film ! Si c'est le cas, je te propose de profiter de ce temps pour faire un peu d'exercices... une durée de 10-15 min chaque soir est suffisante : exercices de gym, stepper, vélo elliptique, ... Il n'y a rien de tel pour sculpter ton corps et  déstresser de la journée !   2- Si tu es plutôt du matin, je te propose de te coucher 10-15 minutes plus tôt pour consacrer ce temps le lendemain dans une activité physique : on en profite également pour faire quelques étirrements ! Tu veras que cela te fera le plus grand bien ! Il est important de savoir qu'une activité quotidienne donnera bien plus de résultats que quelques fois dans la semaine. De plus, plus tu augmenteras ta masse musculaire, plus ton corps brulera de graisses. Si tu es amené à continuer ce challenge sur la durée, je te conseille de t'équiper d'un mètre de couture pour prendre tes mensurations (ventre, hanches et cuisse). La masse musculaire pèse sur la balance et peut perturber tes résultats. Le jour de ta pesée, si ta balance ne donne rien mais que les cm sont en baisse, tu pouras considérer que c'est une bonne semaine ! Attention, tes mensurations au niveau du ventre peuvent augmenter si tu es balonné(e) ou constipé(e). Allé, c'est parti pour ce challenge !"
+      "text": "Courir après le temps : Tu m'as indiqué dans ton questionnaire que tu souhaitais mettre en place une activité physique mais que tu ne trouvais pas le temps. Je te propose donc cette semaine de choisir ton challenge parmis les 2 proposés !  1- J'imagine, ou peut-être pas, que tu arrives à trouver le temps de te prélasser le soir devant un bon film ! Si c'est le cas, je te propose de profiter de ce temps pour faire un peu d'exercices... une durée de 10-15 min chaque soir est suffisante : exercices de gym, stepper, vélo elliptique, ... Il n'y a rien de tel pour sculpter ton corps et  déstresser de la journée ! 2- Si tu es plutôt du matin, je te propose de te coucher 10-15 minutes plus tôt pour consacrer ce temps le lendemain dans une activité physique : on en profite également pour faire quelques étirrements ! Tu veras que cela te fera le plus grand bien ! Il est important de savoir qu'une activité quotidienne donnera bien plus de résultats que quelques fois dans la semaine. De plus, plus tu augmenteras ta masse musculaire, plus ton corps brûlera de graisses. Si tu es amené à continuer ce challenge sur la durée, je te conseille de t'équiper d'un mètre de couture pour prendre tes mensurations (ventre, hanches et cuisse). La masse musculaire pèse sur la balance et peut perturber tes résultats. Le jour de ta pesée, si ta balance ne donne rien mais que les cm sont en baisse, tu pouras considérer que c'est une bonne semaine ! Attention, tes mensurations au niveau du ventre peuvent augmenter si tu es balonné(e) ou constipé(e). Allé, c'est parti pour ce challenge !"
       }
   },
   {
@@ -1085,7 +1078,7 @@
     "pk": 14,
     "fields": {
       "robot_advice_type": 7,
-      "text": "Courir après le temps :  Tu m'as indiqué dans ton questionnaire que tu n'avais pas encore pris le temps de réfléchir à la mise en place d'une activité physique. Je te propose de te simplifier la tâche, j'ai pris le temps d'y réfléchir pour toi ! Voici donc 2 challenges pour cette semaine, au choix !  1- J'imagine, ou peut-être pas, que tu arrives à trouver le temps de te prélasser le soir devant un bon film ! Si c'est le cas, je te propose de profiter de ce temps pour faire un peu d'exercices... une durée de 10-15 min chaque soir est suffisante : exercices de gym, stepper, vélo elliptique, ... Il n'y a rien de tel pour sculpter ton corps et  déstresser de la journée !   2- Si tu es plutôt du matin, je te propose de te coucher 10-15 minutes plus tôt pour consacrer ce temps le lendemain dans une activité physique : on en profite également pour faire quelques étirrements ! Tu veras que cela te fera le plus grand bien ! Il est important de savoir qu'une activité quotidienne donnera bien plus de résultats que quelques fois dans la semaine. De plus, plus tu augmenteras ta masse musculaire, plus ton corps brulera de graisses. Si tu es amené à continuer ce challenge sur la durée, je te conseille de t'équiper d'un mètre de couture pour prendre tes mensurations (ventre, hanches et cuisse). La masse musculaire pèse sur la balance et peut perturber tes résultats. Le jour de ta pesée, si ta balance ne donne rien mais que les cm sont en baisse, tu pouras considérer que c'est une bonne semaine ! Attention, tes mensurations au niveau du ventre peuvent augmenter si tu es balonné(e) ou constipé(e). Allé, c'est parti pour ce challenge !"
+      "text": "Courir après le temps : Tu m'as indiqué dans ton questionnaire que tu n'avais pas encore pris le temps de réfléchir à la mise en place d'une activité physique. Je te propose de te simplifier la tâche, j'ai pris le temps d'y réfléchir pour toi ! Je te propose donc cette semaine de choisir ton challenge parmis les 2 proposés !  1- J'imagine, ou peut-être pas, que tu arrives à trouver le temps de te prélasser le soir devant un bon film ! Si c'est le cas, je te propose de profiter de ce temps pour faire un peu d'exercices... une durée de 10-15 min chaque soir est suffisante : exercices de gym, stepper, vélo elliptique, ... Il n'y a rien de tel pour sculpter ton corps et  déstresser de la journée !   2- Si tu es plutôt du matin, je te propose de te coucher 10-15 minutes plus tôt pour consacrer ce temps le lendemain dans une activité physique : on en profite également pour faire quelques étirrements ! Tu veras que cela te fera le plus grand bien ! Il est important de savoir qu'une activité quotidienne donnera bien plus de résultats que quelques fois dans la semaine. De plus, plus tu augmenteras ta masse musculaire, plus ton corps brûlera de graisses. Si tu es amené à continuer ce challenge sur la durée, je te conseille de t'équiper d'un mètre de couture pour prendre tes mensurations (ventre, hanches et cuisse). La masse musculaire pèse sur la balance et peut perturber tes résultats. Le jour de ta pesée, si ta balance ne donne rien mais que les cm sont en baisse, tu pouras considérer que c'est une bonne semaine ! Attention, tes mensurations au niveau du ventre peuvent augmenter si tu es balonné(e) ou constipé(e). Allé, c'est parti pour ce challenge !"
       }
   },
   {
@@ -1093,7 +1086,7 @@
     "pk": 15,
     "fields": {
       "robot_advice_type": 7,
-      "text": "Régularité et résultats :  Tu m'as indiqué dans ton questionnaire que tu effectuais une activité physique quelques jours dans la semaine.  J'ai constaté que les personnes ayant qu'une activité quotidienne obtenaient de bien meilleurs résultats que celles qui pratiquaient une activité quelques fois dans la semaine. Voici donc ton challenge !  A chaque trajet de voiture, je te propose de te garer volontairement plus loin afin d'augmenter ton activité quotidienne. Idem pour les transports en commun. Allé, c'est parti pour ce challenge !"
+      "text": "Régularité et résultats : Tu m'as indiqué dans ton questionnaire que tu effectuais une activité physique quelques jours dans la semaine. J'ai constaté que les personnes ayant une activité quotidienne obtenaient de bien meilleurs résultats que celles qui pratiquaient une activité quelques fois dans la semaine. Voici donc ton challenge ! À chaque trajet de voiture, je te propose de te garer volontairement plus loin afin d'augmenter ton activité quotidienne. Idem pour les transports en commun. Allé, c'est parti pour ce challenge !"
       }
   },
   {
@@ -1101,7 +1094,7 @@
     "pk": 16,
     "fields": {
       "robot_advice_type": 7,
-      "text": "Activité physique et résultats :  Tu m'as indiqué dans ton questionnaire que tu pratiquais occasionnellement une activité physique.  J'ai constaté que les personnes ayant qu'une activité quotidienne obtenaient de bien meilleurs résultats que celles qui pratiquaient une activité de temps en temps. Je te propose donc cette semaine 2 challenges, au choix !  1- J'imagine, ou peut-être pas, qu'il t'arrive de te prélasser le soir devant un bon film ! Si c'est le cas, je te propose de profiter de ce temps pour faire un peu d'exercices... une durée de 10-15 min chaque soir est suffisante : exercices de gym, stepper, vélo elliptique, ... Il n'y a rien de tel pour sculpter ton corps et  déstresser de la journée !   2- Si tu es plutôt du matin, je te propose de te coucher 10-15 minutes plus tôt pour consacrer ce temps le lendemain dans une activité physique : on en profite également pour faire quelques étirrements ! Tu veras que cela te fera le plus grand bien ! Il est important de savoir que plus tu augmenteras ta masse musculaire, plus ton corps brulera de graisses. Si tu es amené à continuer ce challenge sur la durée, je te conseille de t'équiper d'un mètre de couture pour prendre tes mensurations (ventre, hanches et cuisse). La masse musculaire pèse sur la balance et peut perturber tes résultats. Le jour de ta pesée, si ta balance ne donne rien mais que les cm sont en baisse, tu pouras considérer que c'est une bonne semaine ! Attention, tes mensurations au niveau du ventre peuvent augmenter si tu es balonné(e) ou constipé(e). Allé, c'est parti pour ce challenge !"
+      "text": "Activité physique et résultats : Tu m'as indiqué dans ton questionnaire que tu pratiquais occasionnellement une activité physique. J'ai constaté que les personnes ayant une activité quotidienne obtenaient de bien meilleurs résultats que celles qui pratiquaient une activité de temps en temps. Je te propose donc cette semaine de choisir ton challenge parmis les 2 proposés ! 1- J'imagine, ou peut-être pas, qu'il t'arrive de te prélasser le soir devant un bon film ! Si c'est le cas, je te propose de profiter de ce temps pour faire un peu d'exercices... une durée de 10-15 min chaque soir est suffisante : exercices de gym, stepper, vélo elliptique, ... Il n'y a rien de tel pour sculpter ton corps et  déstresser de la journée !   2- Si tu es plutôt du matin, je te propose de te coucher 10-15 minutes plus tôt pour consacrer ce temps le lendemain dans une activité physique : on en profite également pour faire quelques étirrements ! Tu veras que cela te fera le plus grand bien ! Il est important de savoir que plus tu augmenteras ta masse musculaire, plus ton corps brûlera de graisses. Si tu es amené à continuer ce challenge sur la durée, je te conseille de t'équiper d'un mètre de couture pour prendre tes mensurations (ventre, hanches et cuisse). La masse musculaire pèse sur la balance et peut perturber tes résultats. Le jour de ta pesée, si ta balance ne donne rien mais que les cm sont en baisse, tu pouras considérer que c'est une bonne semaine ! Attention, tes mensurations au niveau du ventre peuvent augmenter si tu es balonné(e) ou constipé(e). Allé, c'est parti pour ce challenge !"
       }
   },
   {
@@ -1109,7 +1102,7 @@
     "pk": 17,
     "fields": {
       "robot_advice_type": 10,
-      "text": "Mal manger ou bien dormir : Le manque de sommeil va jouer sur l'appétit, la satiété et va influer sur tes émossions. Autant te dire, que ça risque grandement de perturber tes choix alimentaires et ta motivation par la même occasion ! Cette semaine, je te propose justement de ressentir la différence.  1 - Tout d'abord, je te propose d'inscrire une note (/10) aux critères suivants sur ton carnet, tu referas la même chose en fin de semaine pour observer l'évolution : fatigue en journée, fatigue le matin, fringales entre les repas, stress, gros appétit. 2- Ensuite, on va mettre en place un programme DODO !!! Il te faudra dormir 7 à 8 h par nuit. Si tu as la possibilité, tu peux faire une sièste de 10 à 15 min la journée. Allé hop ! C'est parti ! Tous à vos oreillers !"
+      "text": "Mal manger ou bien dormir : Le manque de sommeil va jouer sur ton appétit, ta satiété et va influer sur tes émotions. Autant te dire, que ça risque grandement de perturber tes choix alimentaires et ta motivation par la même occasion ! Cette semaine, je te propose de constater une évolution positive...  1 - Tout d'abord, je te propose d'inscrire dans ton carnet une note (/10) aux critères suivants, tu referas la même chose en fin de semaine pour observer cette évolution : fatigue en journée, fatigue le matin, fringales entre les repas, stress, gros appétit. 2- Ensuite, on va mettre en place un programme DODO !!! Il te faudra dormir 7 à 8 h par nuit. Si tu en as la possibilité, tu peux faire une sièste de 10 à 15 min la journée. Allé hop ! C'est parti ! Tous à vos oreillers !"
       }
   },
   {
@@ -1117,7 +1110,7 @@
     "pk": 18,
     "fields": {
       "robot_advice_type": 10,
-      "text": "Fatigue et carences :  La fatigue peut avoir bien des causes… un sommeil non-réparateur, un manque d'exposition au soleil, un problème de santé et aussi des carences alimentaires. Il peut être utile d'en profiter pour améliorer la qualité de ton alimentation afin de t'aider sur ce point. C'est donc le sujet du challenge de cette semaine ! Voici 3 points à respecter à la lettre :  1- La vitamine C : prévoir 1 fruit crû ou une crudité à chaque repas  2- La vitamine D : consommer 1 poisson gras dans la semaine (saumon, sardines, maquereau ou hareng)  3- Le magnésium : prévoir un carré de chocolat noir à la fin du repas de midi ou 3 à 4 fruits secs (amandes, noix, noisettes, ...) pas plus car ces derniers sont gras ! A titre indicatif, le manque de fer peut également engendrer une fatigue, ... Allé, c'est parti pour une nouvelle semaine !"
+      "text": "Fatigue et carences :  La fatigue peut avoir bien des causes… un sommeil non-réparateur, un manque d'exposition au soleil, un problème de santé et aussi des carences alimentaires. Il peut être utile d'en profiter pour améliorer la qualité de ton alimentation afin de t'aider sur ce point. C'est donc le sujet du challenge de cette semaine ! Voici 3 points à respecter à la lettre :  1- La vitamine C : prévoir 1 fruit crû ou une crudité à chaque repas  2- La vitamine D : consommer 1 poisson gras dans la semaine (saumon, sardine, maquereau ou hareng)  3- Le magnésium : prévoir un carré de chocolat noir à la fin du repas de midi ou 3 à 4 fruits secs (amandes, noix, noisettes, ...) pas plus car ces derniers sont gras ! A titre indicatif, le manque de fer peut également engendrer une fatigue, ... Allé, c'est parti pour une nouvelle semaine !"
       }
   },
   {
@@ -1125,7 +1118,7 @@
     "pk": 19,
     "fields": {
       "robot_advice_type": 4,
-      "text": "Mes légumes, mes amis ! : Les légumes sont pleins de vitamines, minéraux, riches en eau et en plus ils sont très peu caloriques. Avec un projet de perte de poids sans ou avec peu de légumes tu risques d'obtenir des résultats très limités. Alors pourquoi ne pas les adopter plus régulièrement dans la journée ? Alors voilà ton challenge de la semaine ! Plus de légumes midi et soir, moins de féculents ! Afin de varier et d'organiser ta semaine, je te propose de noter sur ton carnet le nom de 6 légumes que tu apprécis et de les associer à un type de plat. Exemple : carottes - poêlées. Voici quelques idées de type de plat : poêlée, gratin, salade, soupe, velouté, purée, flan, farci, ... C'est bon ? Alors tu es prêt(e) pour cette nouvelle semaine ! Go !"
+      "text": "Mes légumes, mes amis ! : Les légumes sont pleins de vitamines, minéraux, riches en eau et en plus ils sont très peu caloriques. Avec un projet de perte de poids sans ou avec peu de légumes tu risques d'obtenir des résultats très limités. Alors pourquoi ne pas les adopter plus régulièrement dans la journée ? Alors voilà ton challenge de la semaine ! Plus de légumes midi et soir, moins de féculents ! Afin de varier et d'organiser ta semaine, je te propose de noter dans ton carnet le nom de 6 légumes que tu apprécies et de les associer à un type de plat. Exemple : carottes - poêlées. Voici quelques idées de type de plat : poêlée, gratin, salade, soupe, velouté, purée, flan, farci, ... C'est bon ? Alors tu es prêt(e) pour cette nouvelle semaine ! Go !"
       }
   },
   {

@@ -132,13 +132,6 @@ class TestDemo(StaticLiveServerTestCase):
         the user accesses
         to the account page
         """
-        # access to the login
-        # and create account nav
-        self.browser.get(self.live_server_url + "/account/login/")
-        time.sleep(5)
-        self.browser.find_element_by_id("create_account").click()
-        time.sleep(3)
-        self.browser.find_element_by_id("login").click()
         time.sleep(2)
 
         # login user
