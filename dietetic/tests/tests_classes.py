@@ -759,7 +759,7 @@ class TestsController(TestCase):
         context = self.new_controller.return_start_discussion(user_created.id, old_robot_question,
                                                               data_dict, user_answer)
 
-        first_question = "Bonjour, je me présente ''My Dietetic Challenge'' !"
+        first_question = "Bonjour, je me présente \"My Dietetic Challenge\" !"
         self.assertEqual(len(context), 2)
         self.assertEqual(context["question"][:51], first_question)
         self.assertTrue(context["answers"])
@@ -779,7 +779,7 @@ class TestsController(TestCase):
         # data
         data_dict = {"height": False, "actual_weight": False,
                      "cruising_weight": False, "weight_goal": False}
-        old_robot_question = "Bonjour, je me présente ''My Dietetic Challenge'' ! " \
+        old_robot_question = "Bonjour, je me présente \"My Dietetic Challenge\" ! " \
                              "Mon objectif à partir d'aujourd'hui est de t'aider dans " \
                              "ton parcours de perte de poids en la rendant plus attrayante ! " \
                              "Mais avant de nous lancer dans cette FOLLE aventure, " \
@@ -853,7 +853,7 @@ class TestsController(TestCase):
         # data
         data_dict = {"height": False, "actual_weight": False,
                      "cruising_weight": False, "weight_goal": False}
-        old_robot_question = "Bonjour, je me présente ''My Dietetic Challenge'' ! " \
+        old_robot_question = "Bonjour, je me présente \"My Dietetic Challenge\" ! " \
                              "Mon objectif à partir d'aujourd'hui est de t'aider dans " \
                              "ton parcours de perte de poids en la rendant plus attrayante ! " \
                              "Mais avant de nous lancer dans cette FOLLE aventure, " \
@@ -887,7 +887,7 @@ class TestsController(TestCase):
         # data
         data_dict = {"height": False, "actual_weight": False,
                      "cruising_weight": False, "weight_goal": False}
-        old_robot_question = "Bonjour, je me présente ''My Dietetic Challenge'' ! " \
+        old_robot_question = "Bonjour, je me présente \"My Dietetic Challenge\" ! " \
                              "Mon objectif à partir d'aujourd'hui est de t'aider dans " \
                              "ton parcours de perte de poids en la rendant plus attrayante ! " \
                              "Mais avant de nous lancer dans cette FOLLE aventure, " \
@@ -921,7 +921,7 @@ class TestsController(TestCase):
         user_created = self.create_new_user()
 
         # data
-        old_robot_question = "Bonjour, je me présente ''My Dietetic Challenge'' ! " \
+        old_robot_question = "Bonjour, je me présente \"My Dietetic Challenge\" ! " \
                              "Mon objectif à partir d'aujourd'hui est de t'aider dans " \
                              "ton parcours de perte de poids en la rendant plus attrayante ! " \
                              "Mais avant de nous lancer dans cette FOLLE aventure, " \
