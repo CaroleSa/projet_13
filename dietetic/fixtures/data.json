@@ -1134,7 +1134,7 @@
     "pk": 21,
     "fields": {
       "robot_advice_type": 6,
-      "text": "Une faim de loup ! : Tu m'as indiqué dans ton questionnaire avoir régulièrement faim entre les repas. Il est important pour cela d'avoir une assiette équilibrée. C'est donc le but de ce prochain challenge. Il va donc falloir se concentrer sur 3 points :  1- les légumes doivent représenter la moitié de ton assiette  2- tu peux complèter avec des féculents mais tu dois t'arrêter de manger lorsque tu n'as plus faim  3- mettre en place un collation au goûter : un fruit et un produit laitier sans sucre. Allé hop ! C'est parti pour une nouvelle semaine !"
+      "text": "Une faim de loup ! : Tu m'as indiqué dans ton questionnaire avoir régulièrement faim entre les repas. Il est important pour cela d'avoir une assiette équilibrée. C'est donc le but de ce prochain challenge. Il va donc falloir se concentrer sur 3 points : 1- les légumes doivent représenter la moitié de ton assiette  2- tu peux complèter avec des féculents mais tu dois t'arrêter de manger lorsque tu n'as plus faim  3- mettre en place un collation au goûter : un fruit et un produit laitier sans sucre. Allé hop ! C'est parti pour une nouvelle semaine !"
       }
   },
   {
@@ -1158,7 +1158,7 @@
     "pk": 24,
     "fields": {
       "robot_advice_type": 10,
-      "text": "Repas sans faim … : Tu m'as indiqué dans ton questionnaire grignoter régulièrement après les repas. C'est donc le sujet de ton challenge de la semaine. Tu dois suivre les 2 règles suivantes : 1- Finir le repas par une note non-sucrée (un fruit puis un yaourt sans sucre)  2- Te brosser les dents à la fin du repas puis boire un grand verre d'eau. Tu veras du changement rapidement ! Allé hop, tous à vos brosses à dents !"
+      "text": "Repas sans faim … : Tu m'as indiqué dans ton questionnaire grignoter régulièrement après les repas. C'est donc le sujet de ton challenge pour cette nouvelle semaine. Tu dois suivre les 2 règles suivantes : 1- Finir le repas par une note non-sucrée (un fruit puis un yaourt sans sucre)  2- Te brosser les dents à la fin du repas puis boire un grand verre d'eau. Tu veras du changement rapidement ! Allé hop, tous à vos brosses à dents !"
       }
   },
   {
@@ -1166,7 +1166,7 @@
     "pk": 25,
     "fields": {
       "robot_advice_type": 1,
-      "text": "Peur de l'inconnu ? : Dans chaque frigo, on y retrouve régulièrement les mêmes aliments... Il est vrai que l'on prend vite des habitudes et cela nous empêche de découvrir de nouveaux goûts. Dommage, non ? Pour remédier à cela, voici ton nouveau challenge ! Tu devras cuisiner un aliment qui t'es encore inconnu, tu en trouveras bien un, j'en suis sûr ! A la semaine prochaine !"
+      "text": "Peur de l'inconnu ? : Dans chaque frigo, on y retrouve régulièrement les mêmes aliments... Il est vrai que l'on prend vite des habitudes et cela nous empêche de découvrir de nouveaux goûts. Dommage, non ? Pour remédier à cela, voici ton nouveau challenge ! Tu devras cuisiner un aliment qui t'es encore inconnu, tu en trouveras bien un, j'en suis sûr ! À la semaine prochaine !"
       }
   },
   {
@@ -1174,7 +1174,7 @@
     "pk": 26,
     "fields": {
       "robot_advice_type": 1,
-      "text": "Illusion d'optique : On est souvent trompé par la taille des assiettes lorsque l'on se sert. J'imagine que tu t'es déjà rendu compte de cela au restaurant par exemple ? Les assiettes sont souvent très grandes et, par conséquent, on a tendance à plus manger. Alors voilà ton challenge cette semaine : choisir une assiette plus petite que celle que tu utilises au quotidien. Cela permettra de réduire tes repas ! Tous à vos assiettes ! Bonne semaine !"
+      "text": "Illusion d'optique : On est souvent trompé par la taille d'une assiette lorsque l'on se sert. J'imagine que tu t'es déjà rendu compte de cela au restaurant par exemple ? Les assiettes sont souvent très grandes et, par conséquent, on a tendance à plus manger. Alors voilà ton challenge cette semaine : choisir une assiette plus petite que celle que tu utilises au quotidien. Cela permettra de réduire tes repas ! Tous à vos assiettes ! Bonne semaine !"
       }
   },
   {
@@ -1198,7 +1198,7 @@
     "pk": 29,
     "fields": {
       "robot_advice_type": 1,
-      "text": "Mauvais souvenir : Et oui, tout le monde a le mauvais souvenir, enfant, d'avoir mangé un aliment que l'on aimait pas... Et bien cette semaine, nous allons remédier à ça ! Tu vas donc devoir acheter, préparer, cuisiner et déguster un de ces aliments cette semaine. Il serait dommage de rester sur une mauvaise impression, n'est-ce pas ? Allé, c'est parti ! Rien ne doit nous arrêter !"
+      "text": "Mauvais souvenir : Te souviens-tu, étant enfant, avoir tellement détesté un aliment ... que tu n'as jamais osé en remanger depuis ? Et bien cette semaine, nous allons remédier à ça ! Tu vas donc devoir acheter, préparer, cuisiner et déguster un de ces aliments cette semaine. Il serait dommage de rester sur une mauvaise impression, n'est-ce pas ? Allé, c'est parti ! Rien ne doit nous arrêter !"
       }
   }
 ]
