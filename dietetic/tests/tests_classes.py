@@ -761,7 +761,7 @@ class TestsController(TestCase):
 
         first_question = "Bonjour, je me présente \"My Dietetic Challenge\" !"
         self.assertEqual(len(context), 2)
-        self.assertEqual(context["question"][:51], first_question)
+        self.assertEqual(context["question"][:49], first_question)
         self.assertTrue(context["answers"])
         self.assertEqual(type(context["answers"]), list)
         self.assertEqual(len(context["answers"]), 3)
